@@ -12,7 +12,8 @@ import HomePage from '../1_home/HomePage';
 import LoanPage from '../2_loan/LoanPage';
 import DiscoverPage from '../3_discover/DiscoverPage';
 import MyPage from '../4_my/MyPage';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
+import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 
 const popularIcon = require('../../../res/images/ic_polular.png');
 const trendingIcon = require('../../../res/images/ic_trending.png');
@@ -51,11 +52,10 @@ export default class TabPage extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.rootContainer}>
         <TabNavigator 
-          tabBarStyle={{backgroundColor:'rgba(255,255,255,0.5)'}}
-          sceneStyle={{height:Dimensions.get('window').height+100}}
-          tabBarShadowStyle={{backgroundColor:'rgba(255,255,255,0.5)'}}
+          tabBarStyle={{backgroundColor:'rgba(255,255,255,0.8)'}}
+          sceneStyle={{height:GlobalStyles.WINDOW_HEIGHT+100}}
           >
           {this.renderTabNavigator(HomePage, 'Home', '首页', popularIcon)}
           {this.renderTabNavigator(LoanPage, 'Loan', '出借', trendingIcon)}
@@ -68,10 +68,6 @@ export default class TabPage extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
   tabIcon: {
     width: 22,
     height: 22
