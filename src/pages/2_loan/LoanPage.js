@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import {
   Text,
   View,
-  Image,
   FlatList,
   Platform,
   StyleSheet,

@@ -4,21 +4,28 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
   Image,
   ScrollView,
-  StatusBar
+  StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import AppStatusBar from '../../common/AppStatusBar';
 import Swiper from 'react-native-swiper';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles'
+import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Marquee from '../../common/Marquee'
 
 let p1_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674184394&di=316aa1eb2034bca1b9746af29e78db4f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017cc1597b0c83a8012193a31ba999.jpg%401280w_1l_2o_100sh.jpg'
 let p2_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674226142&di=f486f35442645d487186503bf62903e4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017eed57c94e7e0000012e7e8f6312.jpg%401280w_1l_2o_100sh.png'
 let p3_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674255194&di=bea2be5484b6d128cf77e6ec1b203895&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01de9255cb662432f8755e66c8ea92.jpg%401280w_1l_2o_100sh.jpg'
 let p4_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674304224&di=db5ff5bb32be90414fa4dc066eff44f0&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F014d1857ce1a7c0000012e7e4e86b6.jpg%401280w_1l_2o_100sh.jpg'
+const msgArray = [
+  {msgTxt: '1. 扫接送啊接送哦册那扫i几次送啊急哦i超级骚'},
+  {msgTxt: '2. 次哦啊囧超级三哦参加哦i撒从啊手机哦参加哦撒手机啊黄i是'},
+  {msgTxt: '3. 时空怕靠谱纯牛奶扫你才骚就从萨科皮卡车怕时间'},
+  {msgTxt: '4. 岁啊还吃呢少见哦贾长松i接啊词接送i就从撒'},
+]
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -67,7 +74,7 @@ export default class HomePage extends Component {
     return (
       <ParallaxScrollView
         backgroundColor="white"
-        contentBackgroundColor="pink"
+        contentBackgroundColor="#F0F0F0"
         parallaxHeaderHeight={200}
         stickyHeaderHeight={GlobalStyles.PARALLAX_HEADER_HEIGHT}
         {...parallaxConfig}
@@ -77,14 +84,32 @@ export default class HomePage extends Component {
     )
   }
 
-  render() {
-    let StatusBarView = Platform.OS==='ios'?
-      null:
-      <AppStatusBar 
-          barColor='#AAAAAA'
-          barStyle='light-content'/>
-    let contentView = 
+  renderScrollView() {
+    return (
       <ScrollView>
+        <Marquee
+          data={msgArray}
+          height={30}
+          duration={1000}
+          delay={3000} />
+        <TouchableOpacity style={{
+          backgroundColor:'#66CDAA',
+          marginTop:5,
+          marginLeft:8,
+          marginRight:8,
+          height:150,
+          borderRadius:5,
+          shadowColor:'gray',
+          shadowOffset:{width:0.5, height:0.5},
+          shadowOpacity:0.5,
+          shadowRadius:2,
+          elevation:6,
+          alignItems:'center', 
+          justifyContent:'center'
+        }}>
+        <Text style={{fontSize:30, fontWeight:'bold', color:'#FFFFFF'}}>活 动 栏 位</Text>
+        </TouchableOpacity>
+
         <Text>Scroll me</Text>
         <Text>Scroll me</Text>
         <Text>Scroll me</Text>
@@ -135,10 +160,19 @@ export default class HomePage extends Component {
         <Text>Scroll me11111</Text>
         <Text>Scroll me11111</Text>
       </ScrollView>
+    )
+  }
+
+  render() {
+    let StatusBarView = Platform.OS==='ios'?
+      null:
+      <AppStatusBar 
+          barColor='#AAAAAA'
+          barStyle='light-content'/>
     return (
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
-        {this.renderParallaxView({}, contentView)}
+        {this.renderParallaxView({}, this.renderScrollView())}
       </View>
     )
   }
@@ -146,7 +180,7 @@ export default class HomePage extends Component {
 
 const styles = StyleSheet.create({
   banner_image: {
-    width:Dimensions.get('window').width,
+    width:GlobalStyles.WINDOW_WIDTH,
     height:200
   },
   parallax_fixHeader: {
@@ -166,5 +200,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     paddingTop:GlobalStyles.STATUSBAR_HEIGHT,
-  }
+  },
 })
