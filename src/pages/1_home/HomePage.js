@@ -14,7 +14,8 @@ import AppStatusBar from '../../common/AppStatusBar';
 import Swiper from 'react-native-swiper';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
-import Marquee from '../../common/Marquee'
+import Marquee from '../../common/Marquee';
+import HomeProduct from './HomeProduct';
 
 let p1_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674184394&di=316aa1eb2034bca1b9746af29e78db4f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017cc1597b0c83a8012193a31ba999.jpg%401280w_1l_2o_100sh.jpg'
 let p2_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674226142&di=f486f35442645d487186503bf62903e4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017eed57c94e7e0000012e7e8f6312.jpg%401280w_1l_2o_100sh.png'
@@ -86,80 +87,35 @@ export default class HomePage extends Component {
 
   renderScrollView() {
     return (
-      <ScrollView>
+      <View>
         <Marquee
           data={msgArray}
-          height={30}
+          fontSize={11}
+          height={20}
           duration={1000}
           delay={3000} />
-        <TouchableOpacity style={{
-          backgroundColor:'#66CDAA',
-          marginTop:5,
-          marginLeft:8,
-          marginRight:8,
-          height:150,
-          borderRadius:5,
-          shadowColor:'gray',
-          shadowOffset:{width:0.5, height:0.5},
-          shadowOpacity:0.5,
-          shadowRadius:2,
-          elevation:6,
-          alignItems:'center', 
-          justifyContent:'center'
-        }}>
-        <Text style={{fontSize:30, fontWeight:'bold', color:'#FFFFFF'}}>活 动 栏 位</Text>
-        </TouchableOpacity>
-
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-        <Text>Scroll me11111</Text>
-      </ScrollView>
+        <View>
+          <TouchableOpacity style={{
+            backgroundColor:'#66CDAA',
+            marginTop:5,
+            marginBottom:5,
+            marginLeft:8,
+            marginRight:8,
+            height:150,
+            shadowColor:'gray',
+            shadowOffset:{width:0.5, height:0.5},
+            shadowOpacity:0.5,
+            shadowRadius:2,
+            elevation:2,
+            alignItems:'center', 
+            justifyContent:'center'
+          }}>
+          <Text style={{fontSize:30, fontWeight:'bold', color:'#FFFFFF'}}>活 动 栏 位</Text>
+          </TouchableOpacity>
+        </View>
+        <HomeProduct
+          {...this.props} />
+      </View>
     )
   }
 

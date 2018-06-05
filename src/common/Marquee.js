@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   View,
   Text,
-  ViewPropTypes,
-  Animated,
-  Easing,
   Image,
+  Easing,
+  Animated,
+  StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {GlobalStyles} from '../../res/styles/GlobalStyles';
@@ -45,7 +44,7 @@ export default class Marquee extends Component {
     return this.props.data.map((item, index) => {
       return (
         <View key={index} style={[styles.bar, {height:this.mHeight}]}>
-          <Text style={styles.barText}>{item.msgTxt}</Text>
+          <Text style={[styles.barText, {fontSize:this.props.fontSize}]}>{item.msgTxt}</Text>
         </View>
       )
     })
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
     marginRight:5,
     overflow: 'hidden',
     backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 5,
+    borderRadius: 2,
     flexDirection: 'row',
   },
   wrapper: {
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
     width:GlobalStyles.WINDOW_WIDTH-53,
     marginLeft: 5,
     color: '#FFFFFF',
-    fontSize: 14,
   },
   signContainer: {
     justifyContent:'center', 
