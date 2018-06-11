@@ -39,7 +39,7 @@ export default class HomeProduct extends Component {
               color:'#4A4A4A'
             }}>{'嘉季丰'}</Text>
           </View>
-          {ViewUtils.renderLine(0.3, '#BDBDBD')}
+          {ViewUtils.renderLine('#BDBDBD')}
           <View style={{
             alignItems:'center',
             paddingTop:30

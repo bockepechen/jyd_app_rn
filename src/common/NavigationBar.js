@@ -46,17 +46,20 @@ export default class NavigationBar extends Component {
     let titleView = 
       this.props.titleView?
         this.props.titleView:
-        <Text style={{
-          color: this.props.titleColor?this.props.titleColor:'white',
-          fontSize: this.props.titleSize?this.props.titleSize:20,
-        }}>{this.props.title}</Text>
+        <View style={styles.titleView}>
+          <Text style={{
+            color: this.props.titleColor?this.props.titleColor:'white',
+            fontSize: this.props.titleSize?this.props.titleSize:20,
+          }}>
+            {this.props.title}
+          </Text>
+        </View>
+
 
     let content = 
       <View style={[styles.navBar, {backgroundColor:this.props.navColor,}]}>
         {this.getButtonElement(this.props.leftButton)}
-        <View style={styles.titleView}>
-          {titleView}
-        </View>
+        {titleView}
         {this.getButtonElement(this.props.rightButton)}
       </View>
 

@@ -8,10 +8,23 @@ import {
 import {GlobalStyles} from '../../res/styles/GlobalStyles'
 
 export default class ViewUtils {
-  static renderLine(height, color) {
+  static renderLine(color, isVertical, padding_start, padding_end) {
+    let container_style = isVertical?
+    {
+      paddingTop:padding_start?padding_start:2,
+      paddingBottom:padding_end?padding_end:2,
+      width:1/GlobalStyles.PIXEL_RATIO
+    }:
+    {
+      paddingLeft:padding_start?padding_start:8,
+      paddingRight:padding_end?padding_end:8,
+      height:1/GlobalStyles.PIXEL_RATIO,
+    };
     return (
-      <View style={[styles.line_container, {height:height}]}>
-        <View style={[styles.line, {backgroundColor:color}]}/>
+      <View style={[{
+        backgroundColor:'#FFFFFF',
+      },container_style]}>
+        <View style={{flex:1, backgroundColor:color}}/>
       </View>
     )
   }
@@ -28,14 +41,6 @@ export default class ViewUtils {
 }
 
 const styles = StyleSheet.create({
-  line_container: {
-    backgroundColor:'#FFFFFF',
-    paddingLeft:8,
-    paddingRight:8,
-  },
-  line: {
-    flex:1,
-  },
   back_btn_container: {
     paddingLeft: GlobalStyles.WINDOW_WIDTH*0.01,
   },

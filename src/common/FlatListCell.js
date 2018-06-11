@@ -11,6 +11,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {GlobalStyles} from '../../res/styles/GlobalStyles'
+import ViewUtils from '../utils/ViewUtils'
 
 export default class FlatListCell extends PureComponent {
   constructor(props) {
@@ -31,9 +32,7 @@ export default class FlatListCell extends PureComponent {
               source={require('../../res/images/ic_computer.png')}/>
             <Text style={{color:this.props.selected?'#636363':'blue'}}>{`嘉季丰  ${this.props.data.item}`}</Text>
           </View>
-          <View style={styles.cellLineContainer}>
-            <View style={styles.cellLine}/>
-          </View>
+          {ViewUtils.renderLine('#BDBDBD')}
           <View style={styles.cellContentContainer}>
             <View style={styles.cellContent1}>
               <View style={styles.cellContent1_1}>
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
     flexDirection:'row', 
     paddingLeft:5,
     alignItems:'center',
+    marginBottom:10,
   },
   cellTitleImage: {
     width:12, 
@@ -85,17 +85,6 @@ const styles = StyleSheet.create({
   },
   cellTitleText: {
     color:'#636363'
-  },
-  cellLineContainer: {
-    backgroundColor:'#FFFFFF',
-    paddingLeft:0,
-    paddingRight:0,
-    height:0.8,
-    marginTop:4,
-  },
-  cellLine: {
-    flex:1,
-    backgroundColor:'#BDBDBD'
   },
   cellContentContainer: {
     height:100,
