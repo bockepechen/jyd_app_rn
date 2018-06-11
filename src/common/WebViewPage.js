@@ -14,7 +14,6 @@ export default class WebViewPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    console.log(this.navData);
     this.state = {
       wv_url:this.navData.url,
     }

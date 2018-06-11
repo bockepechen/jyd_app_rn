@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AppStatusBar from '../../common/AppStatusBar';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles'
+import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import ViewUtils from '../../utils/ViewUtils';
 
 const picArray1 = [
   {uri:require('../../../res/images/3_d_1.png'), text:'公司简介'},
@@ -100,6 +101,7 @@ export default class DiscoverPage extends Component {
               source={{uri:'http://www.jiayidai.com/cms/banner/636628659055750744_466076817243312675.jpg'}}/>
           </View>
         </View>
+        {ViewUtils.renderTransparentTabNavFoot()}
       </View>
     )
   }

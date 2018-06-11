@@ -10,6 +10,7 @@ import {
 import NavigationBar from '../../common/NavigationBar';
 import FlatListCell from '../../common/FlatListCell';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
+import ViewUtils from '../../utils/ViewUtils';
 
 const CITY_NAMES = ['北京','上海','广州','天津','深圳','杭州','苏州','成都','武汉','西安','重庆','济南','无锡'];
 
@@ -46,6 +47,13 @@ export default class LoanPage extends PureComponent {
       selected.set(id, !selected.get(id));
       return {selected};
     });
+    let navData = {
+      title:'嘉季丰'
+    };
+    this.props.navigation.navigate('LoanPageDetails',{
+      data:navData,
+      ...this.props
+    })
   };
 
   keyExtractor = (data, index) => {return String(index);}
@@ -81,7 +89,8 @@ export default class LoanPage extends PureComponent {
               titleColor={'red'}
               refreshing={this.state.isRefresh}
               onRefresh={this.loadData} />
-          }/>
+          }
+          ListFooterComponent={ViewUtils.renderTransparentTabNavFoot()}/>
       </View>
     )
   }

@@ -198,6 +198,7 @@ export default class MyPage extends Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
+        {ViewUtils.renderTransparentTabNavFoot()}
       </View>
     )
   }

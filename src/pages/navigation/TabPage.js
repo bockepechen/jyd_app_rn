@@ -55,7 +55,7 @@ export default class TabPage extends Component {
       <View style={GlobalStyles.rootContainer}>
         <TabNavigator 
           tabBarStyle={{backgroundColor:'rgba(255,255,255,0.8)'}}
-          // sceneStyle={{height:GlobalStyles.WINDOW_HEIGHT+100}}
+          sceneStyle={{height:GlobalStyles.WINDOW_HEIGHT+GlobalStyles.TAB_NAVIGATATOR_HEIGHT}}
           >
           {this.renderTabNavigator(HomePage, 'Home', '首页', popularIcon)}
           {this.renderTabNavigator(LoanPage, 'Loan', '出借', trendingIcon)}

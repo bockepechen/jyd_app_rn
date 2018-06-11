@@ -2,6 +2,7 @@ import {createStackNavigator, createSwitchNavigator} from 'react-navigation'
 import Welcome from '../welcome/Welcome';
 import TabPage from './TabPage';
 import WebViewPage from '../../common/WebViewPage';
+import LoanPageDetails from '../2_loan/LoanPageDetails'
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -10,6 +11,9 @@ const AppStackNavigator = createStackNavigator(
     },
     WebViewPage:{
       screen:WebViewPage,
+    },
+    LoanPageDetails:{
+      screen:LoanPageDetails,
     }
   },{
     navigationOptions:{

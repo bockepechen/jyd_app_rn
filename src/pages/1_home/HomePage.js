@@ -16,6 +16,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import Marquee from '../../common/Marquee';
 import HomeProduct from './HomeProduct';
+import ViewUtils from '../../utils/ViewUtils';
 
 let p1_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674184394&di=316aa1eb2034bca1b9746af29e78db4f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017cc1597b0c83a8012193a31ba999.jpg%401280w_1l_2o_100sh.jpg'
 let p2_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674226142&di=f486f35442645d487186503bf62903e4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017eed57c94e7e0000012e7e8f6312.jpg%401280w_1l_2o_100sh.png'
@@ -129,6 +130,7 @@ export default class HomePage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
+        {ViewUtils.renderTransparentTabNavFoot()}
       </View>
     )
   }

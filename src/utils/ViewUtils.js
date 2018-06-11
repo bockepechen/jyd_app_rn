@@ -13,12 +13,12 @@ export default class ViewUtils {
     {
       paddingTop:padding_start?padding_start:2,
       paddingBottom:padding_end?padding_end:2,
-      width:1/GlobalStyles.PIXEL_RATIO
+      width:GlobalStyles.PIXEL
     }:
     {
       paddingLeft:padding_start?padding_start:8,
       paddingRight:padding_end?padding_end:8,
-      height:1/GlobalStyles.PIXEL_RATIO,
+      height:GlobalStyles.PIXEL,
     };
     return (
       <View style={[{
@@ -36,6 +36,12 @@ export default class ViewUtils {
         <Image style={[styles.back_btn_image, {tintColor:color}]}
           source={require('../../res/images/ic_arrow_back_white_36pt.png')}/>
       </TouchableOpacity>
+    )
+  }
+
+  static renderTransparentTabNavFoot() {
+    return (
+      <View style={{height:GlobalStyles.TAB_NAVIGATATOR_HEIGHT}}/>
     )
   }
 }
