@@ -45,7 +45,9 @@ export default class MyPage extends Component {
           flexDirection:'row',
           justifyContent:'space-between',
         }}>
-          <TouchableOpacity style={{
+          <TouchableOpacity 
+          onPress={()=>{this.props.navigation.navigate('RegisterPage')}}
+          style={{
             flexDirection:'row',
             alignItems:'center',
           }}>
