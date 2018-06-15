@@ -3,9 +3,9 @@ import {
   View,
   Platform,
   StatusBar,
-  StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {GlobalStyles} from '../../res/styles/GlobalStyles'
 
 /**
  * StatusBarStyle: "default" | "light-content" | "dark-content"
@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 const DEFAULT_STATUSBAR_STYLE = 'dark-content';
 const DEFAULT_STATUSBAR_COLOR = 'rgba(255,255,255,1)';
 const DEFAULT_STATUSBAR_TRANSLUCENT = false;
-const STATUS_BAR_HEIGHT_IOS = 20;
 
 export default class AppStatusBar extends Component {
 
@@ -43,18 +42,9 @@ export default class AppStatusBar extends Component {
   }
   render() {
     return (
-      <View style={[
-          styles.statusBar, 
-          {backgroundColor:this._barColor}
-        ]}>
+      <View style={{backgroundColor:this._barColor, height:GlobalStyles.STATUSBAR_HEIGHT}}>
         <StatusBar {...this.state.statusBar_conf}/>
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  statusBar: {
-    height: Platform.OS==='ios'?STATUS_BAR_HEIGHT_IOS:0,
-  },
-})

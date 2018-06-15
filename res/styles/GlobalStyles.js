@@ -1,11 +1,14 @@
 import {
   Dimensions,
   PixelRatio,
-  Platform
+  Platform,
+  DeviceInfo,
 } from 'react-native';
 
+let  STATUSBAR_HEIGHT_IOS = DeviceInfo.isIPhoneX_deprecated?44:20;
+
 export var GlobalStyles = {
-  STATUSBAR_HEIGHT: Platform.OS==='ios'?20:0,
+  STATUSBAR_HEIGHT: Platform.OS==='ios'?STATUSBAR_HEIGHT_IOS:0,
   NAVBAR_HEIGHT: Platform.OS==='ios'?50:45,
   PARALLAX_HEADER_HEIGHT:Platform.OS==='ios'?20+40:40,
   TAB_NAVIGATATOR_HEIGHT:49,

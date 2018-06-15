@@ -5,11 +5,10 @@ import {
   Text,
   View,
   Image,
-  ScrollView,
+  DeviceInfo,
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
-import NavigationBar from '../../common/NavigationBar';
 import AppStatusBar from '../../common/AppStatusBar';
 import Swiper from 'react-native-swiper';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -17,6 +16,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import Marquee from '../../common/Marquee';
 import HomeProduct from './HomeProduct';
 import ViewUtils from '../../utils/ViewUtils';
+import AndroidBackHandler from '../../utils/AndroidBackHandler'
 
 let p1_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674184394&di=316aa1eb2034bca1b9746af29e78db4f&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017cc1597b0c83a8012193a31ba999.jpg%401280w_1l_2o_100sh.jpg'
 let p2_uri = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527674226142&di=f486f35442645d487186503bf62903e4&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F017eed57c94e7e0000012e7e8f6312.jpg%401280w_1l_2o_100sh.png'
@@ -32,6 +32,7 @@ const msgArray = [
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
+    this.AndroidBackHandler = new AndroidBackHandler(props);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -40,9 +41,17 @@ export default class HomePage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener();
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
+  }
+
   renderSwiper() {
     return (
-      <View style={{height:200}}>
+      <View style={{height:DeviceInfo.isIPhoneX_deprecated?244:200}}>
         <Swiper
           horizontal={true}
           paginationStyle={{bottom: 10}}>
@@ -77,7 +86,7 @@ export default class HomePage extends Component {
       <ParallaxScrollView
         backgroundColor="white"
         contentBackgroundColor="#F0F0F0"
-        parallaxHeaderHeight={200}
+        parallaxHeaderHeight={DeviceInfo.isIPhoneX_deprecated?244:200}
         stickyHeaderHeight={GlobalStyles.PARALLAX_HEADER_HEIGHT}
         {...parallaxConfig}
         >

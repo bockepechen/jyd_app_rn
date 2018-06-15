@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
   Image,
-  Platform,
   StyleSheet,
-  Dimensions
 } from 'react-native';
 import HomePage from '../1_home/HomePage';
 import LoanPage from '../2_loan/LoanPage';
@@ -14,6 +10,7 @@ import MyPage from '../4_my/MyPage';
 import TabNavigator from 'react-native-tab-navigator';
 import SplashScreen from 'react-native-splash-screen';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import SafeAreaViewPlus from '../../common/SafeAreaViewPlus';
 
 const popularIcon = require('../../../res/images/ic_polular.png');
 const trendingIcon = require('../../../res/images/ic_trending.png');
@@ -51,8 +48,11 @@ export default class TabPage extends Component {
   }
 
   render() {
-    return (
-      <View style={GlobalStyles.rootContainer}>
+    let safeRootView = 
+      <SafeAreaViewPlus 
+        topInset={true}
+        bottomInset={false}
+        bottomColor='rgba(255,255,255,0.8)'>
         <TabNavigator 
           tabBarStyle={{backgroundColor:'rgba(255,255,255,0.8)'}}
           sceneStyle={{height:GlobalStyles.WINDOW_HEIGHT+GlobalStyles.TAB_NAVIGATATOR_HEIGHT}}
@@ -62,8 +62,9 @@ export default class TabPage extends Component {
           {this.renderTabNavigator(DiscoverPage, 'Dicover', '发现', favoriteIcon)}
           {this.renderTabNavigator(MyPage, 'My', '我的', myIcon)}
         </TabNavigator>
-      </View>
-    )
+      </SafeAreaViewPlus>
+
+    return safeRootView;
   }
 }
 
