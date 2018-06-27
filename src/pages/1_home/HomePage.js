@@ -74,7 +74,10 @@ export default class HomePage extends Component {
     config.renderFixedHeader = () => (
       <View style={styles.parallax_fixHeader}>
         <Text style={{fontSize:10, fontWeight:'bold'}}>{'左侧按钮'}</Text>
-        <Text style={{fontSize:10, fontWeight:'bold'}}>{'右侧按钮'}</Text>
+        <Text style={{fontSize:10, fontWeight:'bold'}}
+          onPress={()=>{
+            this.props.navigation.navigate('Calendar4Payback')
+          }}>{'回款日历'}</Text>
       </View>
     );
     return config;

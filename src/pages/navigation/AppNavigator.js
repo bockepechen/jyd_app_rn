@@ -8,6 +8,8 @@ import LoginPage from '../register/LoginPage';
 import SmsCodePage from '../register/SmsCodePage';
 import SetPwdPage from '../register/SetPwdPage';
 import ForgetPwdPage from '../register/ForgetPwdPage';
+import Calendar4Payback from '../4_my/Calendar4Payback';
+import EchartView from '../4_my/EchartView';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -34,6 +36,12 @@ const AppStackNavigator = createStackNavigator(
     },
     ForgetPwdPage:{
       screen:ForgetPwdPage,
+    },
+    Calendar4Payback:{
+      screen:Calendar4Payback,
+    },
+    EchartView:{
+      screen:EchartView,
     },
   },{
     navigationOptions:{

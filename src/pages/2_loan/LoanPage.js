@@ -11,12 +11,15 @@ import NavigationBar from '../../common/NavigationBar';
 import FlatListCell from '../../common/FlatListCell';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import ViewUtils from '../../utils/ViewUtils';
+import {AppConfig} from '../../config/AppConfig';
+import DataResponsitory from '../../dao/DataResponsitory'
 
 const CITY_NAMES = ['北京','上海','广州','天津','深圳','杭州','苏州','成都','武汉','西安','重庆','济南','无锡'];
 
 export default class LoanPage extends PureComponent {
   constructor(props) {
     super(props);
+    this.dataResponsitory = new DataResponsitory();
     this.state = {
       sourceData: [],
       selected: new Map(),
@@ -24,10 +27,19 @@ export default class LoanPage extends PureComponent {
     }
   }
 
+  componentWillMount() {
+    // let url = AppConfig.REQUEST_HOST+'/rd/getListData';
+    let url = AppConfig.REQUEST_HOST_PRO+'/AuthorityM_Serv/logout/test';
+    this.dataResponsitory.fetchNetResponsitory(url, false)
+      .then((result) => {
+        this.setState({sourceData:result.items})
+        // console.log(result);
+      })
+      .catch((error) => {console.log(error)});
+  }
+
   componentDidMount() {
-    this.setState({
-      sourceData:CITY_NAMES
-    })
+    
   }
 
   renderFlatListItem = (data) => {

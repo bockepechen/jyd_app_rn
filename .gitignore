@@ -56,3 +56,8 @@ buck-out/
 *.jsbundle
 .vscode/.react/index.bundle
 .vscode/.react/index.map
+.vscode/.react/debuggerWorker.js
+android/app/release/app-release.apk
+android/app/jyd_android.jks
+android/app/release/output.json
+.vscode/launch.json

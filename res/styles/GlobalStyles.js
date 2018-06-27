@@ -15,6 +15,7 @@ export var GlobalStyles = {
   WINDOW_WIDTH:Dimensions.get('window').width,
   WINDOW_HEIGHT:Dimensions.get('window').height,
   PIXEL: 1/PixelRatio.get(),
+  SCROLLVIEW_BOTTOM_HEIGHT:Platform.OS==='ios'?0:30,
   rootContainer: {
     flex:1,
     backgroundColor:'#F0F0F0',

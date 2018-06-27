@@ -8,6 +8,7 @@ import {
   RefreshControl,
   Image,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -187,12 +188,29 @@ export default class MyPage extends Component {
             </TouchableOpacity>
             {ViewUtils.renderLine('#BDBDBD', false, 30, -1)}
 
-            <TouchableOpacity style={styles.scroll_view_cell_container}>
+            <TouchableOpacity style={styles.scroll_view_cell_container}
+              onPress={()=> {
+                AsyncStorage.clear((error)=>{console.log(error)});
+              }}>
               <View style={styles.scroll_view_cell_column1}>
                 <Image style={styles.scroll_view_cell_column1_img}
                   source={require('../../../res/images/ic_trending.png')}/>
                 <Text style={styles.scroll_view_cell_column1_txt}>
-                  {'查看我的资产详情'}
+                  {'清除缓存数据'}
+                </Text>
+              </View>
+              <Image style={styles.scroll_view_cell_column2_img}
+                source={require('../../../res/images/ic_tiaozhuan.png')}/>
+            </TouchableOpacity>
+            {ViewUtils.renderLine('#BDBDBD', false, 30, -1)}
+            
+            <TouchableOpacity style={styles.scroll_view_cell_container}
+              onPress={()=> {this.props.navigation.navigate('EchartView')}}>
+              <View style={styles.scroll_view_cell_column1}>
+                <Image style={styles.scroll_view_cell_column1_img}
+                  source={require('../../../res/images/ic_trending.png')}/>
+                <Text style={styles.scroll_view_cell_column1_txt}>
+                  {'图标控件'}
                 </Text>
               </View>
               <Image style={styles.scroll_view_cell_column2_img}
