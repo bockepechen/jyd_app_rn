@@ -4,15 +4,16 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  RefreshControl,
   Image,
   TouchableOpacity,
-  AsyncStorage,
+  TouchableHighlight,
+  ImageBackground,
 } from 'react-native';
-import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
-import ViewUtils from '../../utils/ViewUtils'
+import {scaleSize} from '../../utils/FitViewUtils';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import {ImageStores} from '../../../res/styles/ImageStores';
+import AppStatusBar from '../../common/AppStatusBar';
 
 export default class MyPage extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class MyPage extends Component {
     this.state = {
       isRefresh: false,
       isEye: true,
+      image_eye: ImageStores.me_3,
     }
   }
 
@@ -31,295 +33,258 @@ export default class MyPage extends Component {
     }, 2000);
   }
 
-  renderNavTitleView() {
-    return (
-      <View key={'nav_title_android'} style={{
-        justifyContent:'flex-end',
+  hideNum = () => {
+    this.setState({
+      isEye: !this.state.isEye, 
+    }, () => {
+      this.setState({
+        image_eye:this.state.isEye?ImageStores.me_3:ImageStores.me_2
+      })
+    });
+  }
+
+  getParallaxRenderConfig(params) {
+    let config = {};
+    config.renderForeground = () => (
+      <View style={{marginTop:scaleSize(228)}}>
+      <View style={{marginLeft:scaleSize(81), marginRight:scaleSize(81), height:scaleSize(210), flexDirection:'row', justifyContent:'space-evenly'}}>
+        <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
+          <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'总资产(元)'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+        </View>
+        <View style={{backgroundColor:'white', width:1, height:scaleSize(210)}}/>
+        <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
+          <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'累计回报(元)'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+        </View>
+      </View>
+      <ImageBackground 
+        source={ImageStores.me_9}
+        resizeMode={'stretch'}
+        style={{marginTop:scaleSize(90), width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(309), flexDirection:'row'}}>
+        <View style={{marginLeft:scaleSize(108), marginTop:scaleSize(36), width:scaleSize(555), height:scaleSize(159)}}>
+          <View style={{flexDirection:'row', alignItems:'flex-end'}}>
+            <Text style={{fontSize:scaleSize(36), color:'#656565'}}>{'账户余额(元):'}</Text>
+            <TouchableHighlight
+              underlayColor='rgba(0,0,0,0)'
+              onPress={this.hideNum} >
+              <Image source={this.state.image_eye} resizeMode={'stretch'} style={{marginLeft:scaleSize(36), width:scaleSize(69), height:scaleSize(54)}}/>
+            </TouchableHighlight>
+          </View>
+          <Text style={{marginTop:scaleSize(39), width:scaleSize(555), fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+        </View>
+        <View style={{marginTop:scaleSize(81), marginLeft:scaleSize(21), height:scaleSize(84), flexDirection:'row'}}>
+          <TouchableHighlight
+            underlayColor='rgba(0,0,0,0)'>
+            <ImageBackground source={ImageStores.me_5} resizeMode={'stretch'} style={{width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
+              <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ffffff'}}>{'充值'}</Text>
+            </ImageBackground>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='rgba(0,0,0,0)'>
+            <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{marginLeft:scaleSize(27), width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
+              <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ff3a49'}}>{'提现'}</Text>
+            </ImageBackground>
+          </TouchableHighlight>
+        </View>
+      </ImageBackground>
+      </View>
+    );
+    config.renderBackground = () => (
+      <Image 
+        source={ImageStores.me_1} 
+        resizeMode={'stretch'} 
+        style={{
+          width:GlobalStyles.WINDOW_WIDTH,
+          height:scaleSize(837)
+        }}/>
+    );
+    config.renderStickyHeader = () => (
+      <View style={styles.parallax_stickyHeader}>
+        <Text style={{fontSize:18, color:'white'}}>{''}</Text>
+      </View>
+    );
+    config.renderFixedHeader = () => (
+      <View style={{
         position:'absolute',
         top:0,
-        bottom:Platform.OS==='ios'?3:2,
-        left:10,
-        right:10,
+        bottom:0,
+        left:scaleSize(78),
+        right:scaleSize(60),
+        backgroundColor:'rgba(0,0,0,0)',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
       }}>
-        <View style={{
-          alignItems:'center',
-          flexDirection:'row',
-          justifyContent:'space-between',
-        }}>
-          <TouchableOpacity 
-          onPress={()=>{this.props.navigation.navigate('RegisterPage')}}
-          style={{
-            flexDirection:'row',
-            alignItems:'center',
-          }}>
-          <Image style={{
-            width:Platform.OS==='ios'?23:20,
-            height:Platform.OS==='ios'?23:20,
-            tintColor:'#BDBDBD',
-            marginRight:5}}
-            source={require('../../../res/images/ic_my.png')}/>
-            <Text style={{
-              color:'#4A4A4A',
-              fontSize:12
-            }}>{'138****2629'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{
-            alignItems:'center',
-            justifyContent:'center'
-          }}>
-            <Image style={{
-              width:Platform.OS==='ios'?18:16,
-              height:Platform.OS==='ios'?18:16,
-              tintColor:'#BDBDBD',
-              marginBottom:Platform.OS==='ios'?4:2}}
-              source={require('../../../res/images/ic_contacts.png')}/>
-              <Text style={{
-                color:'#4A4A4A',
-                fontSize:Platform.OS==='ios'?11:10
-              }}>{'明细'}</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <Image 
+              source={ImageStores.me_10} 
+              resizeMode={'stretch'} 
+              style={{width:scaleSize(96), height:scaleSize(96)}}/>
+            <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{'用户13752768957'}</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
+          <Image 
+            source={ImageStores.bar1}
+            resizeMode={'stretch'}
+            style={{width:scaleSize(75), height:scaleSize(75)}} />
+        </TouchableHighlight>
+      </View>
+    );
+    return config;
+  }
+
+  renderParallaxView(params, contentView) {
+    let parallaxConfig = this.getParallaxRenderConfig(params);
+    return (
+      <ParallaxScrollView
+        showsVerticalScrollIndicator={false}
+        backgroundColor='#E8152E'
+        contentBackgroundColor="#F0F0F0"
+        parallaxHeaderHeight={scaleSize(837)}
+        stickyHeaderHeight={scaleSize(150)}
+        {...parallaxConfig}
+        >
+        {contentView}
+      </ParallaxScrollView>
+    )
+  }
+
+  renderGridView() {
+    return (
+      <View style={{marginTop:scaleSize(6)}}>
+        <ImageBackground source={ImageStores.me_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(516)}}>
+          <View style={{flex:1, borderWidth:0, flexDirection:'column', justifyContent:'space-evenly'}}>
+            <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
+              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                <Image 
+                  source={ImageStores.sy_3}
+                  resizeMode={'stretch'}
+                  style={{marginLeft:scaleSize(105), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
+                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                  {'资产详情'}
+                </Text>
+              </View>
+              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                <Image 
+                  source={ImageStores.sy_3}
+                  resizeMode={'stretch'}
+                  style={{marginLeft:scaleSize(48), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
+                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                  {'我的出借'}
+                </Text>
+              </View>
+            </View>
+            <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
+              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                <Image 
+                  source={ImageStores.sy_3}
+                  resizeMode={'stretch'}
+                  style={{marginLeft:scaleSize(105), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
+                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                  {'我的红包'}
+                </Text>
+              </View>
+              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                <Image 
+                  source={ImageStores.sy_3}
+                  resizeMode={'stretch'}
+                  style={{marginLeft:scaleSize(48), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
+                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                  {'我的嘉金币'}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     )
   }
 
-  hideNum = () => {
-    this.setState({
-      isEye: !this.state.isEye
-    });
+  renderItemView() {
+    let views = [];
+    let data = [
+      {
+        img:ImageStores.me_7,
+        title:'回款日历',
+        callback:() => this.Calendar4Payback('kkkkkkk'),
+      },
+      {
+        img:ImageStores.me_8,
+        title:'风险评测',
+        callback:()=>{},
+      },
+      {
+        img:ImageStores.me_7,
+        title:'客户服务',
+        callback:()=>{this.props.navigation.navigate('RotateAnimate')},
+      },
+      {
+        img:ImageStores.me_8,
+        title:'我的二维码',
+        callback:()=>{this.props.navigation.navigate('RegisterPage')},
+      },
+    ]
+    data.map((item, index) => {
+      views.push(
+        <TouchableHighlight key={index}
+          underlayColor='rgba(0,0,0,0)'
+          onPress={item.callback}>
+          <View style={{backgroundColor:'#ffffff', width:GlobalStyles.WINDOW_WIDTH}}>
+            <View style={{marginLeft:scaleSize(63), marginRight:scaleSize(63), height:scaleSize(135), flexDirection:'row', justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row'}}>
+                <Image source={item.img} resizeMode={'stretch'} style={{width:scaleSize(66), height:scaleSize(66), alignSelf:'center'}}/>
+                <Text style={{marginLeft:scaleSize(36), alignSelf:'center', fontSize:scaleSize(42), color:'#989898'}}>{item.title}</Text>
+              </View>
+              <Image source={ImageStores.me_6} resizeMode={'stretch'} style={{width:scaleSize(27), height:scaleSize(45), alignSelf:'center'}}/>
+            </View>
+            <View style={{backgroundColor:'#f2f2f2', width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(3)}}/>
+          </View>
+        </TouchableHighlight>
+      )
+    })
+    return (
+      <View style={{marginTop:scaleSize(27)}}>
+        {views}
+      </View>
+    )
   }
+
+  renderScrollView() {
+    return (
+      <View>
+        {this.renderGridView()}
+        {this.renderItemView()}
+      </View>
+    )
+  }
+
+  Calendar4Payback(str) {
+    console.log(str);
+    this.props.navigation.navigate('Calendar4Payback');
+  }
+
   render() {
+    let StatusBarView = 
+      <AppStatusBar 
+          barColor='#E8152E'
+          barStyle='light-content'/>
     return (
       <View style={GlobalStyles.rootContainer}>
-        <NavigationBar
-        navColor='#FFFFFF'
-        statusBarColor='#AAAAAA'
-        statusBarStyle='light-content'
-        titleView={this.renderNavTitleView()}
-        />
-        <ScrollView
-        refreshControl={
-          <RefreshControl 
-            title={'加载中...'}
-            colors={['red']}
-            tintColor={'red'}
-            titleColor={'red'}
-            refreshing={this.state.isRefresh}
-            onRefresh={this.loadData} />
-        }>
-
-          <View style={styles.personal_panel_container}>
-            <Text style={styles.personal_row1_txt}>
-              {'可用余额(元)'}
-            </Text>
-            <View style={styles.personal_row2_container}>
-              <Text style={styles.personal_row2_txt}>
-                {this.state.isEye?'0.00':'****'}
-              </Text>
-              <TouchableOpacity onPress={this.hideNum}>
-                <Image style={styles.personal_row2_img}
-                source={this.state.isEye?
-                  require('../../../res/images/eye_opened.png'):
-                  require('../../../res/images/eye_closed.png')}/>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.personal_row3_container}>
-              <View style={styles.personal_row3_column_container}>
-                <View>
-                  <Text style={styles.personal_row3_column_txt1}>
-                    {'代收本息总额(元)'}
-                  </Text>
-                  <Text style={styles.personal_row3_column_txt2}>
-                    {this.state.isEye?'0.00':'****'}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.personal_row3_column_container}>
-                <View>
-                  <Text style={styles.personal_row3_column_txt1}>
-                    {'累计已收利息及奖励(元)'}
-                  </Text>
-                  <Text style={styles.personal_row3_column_txt2}>
-                    {this.state.isEye?'0.00':'****'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.personal_row4_container}>
-              <TouchableOpacity style={[styles.personal_row4_btn,{borderWidth:0.5,borderColor:'#FF3030',}]}>
-                <Text style={{color:'#FF3030',fontSize:15}}>
-                  {'充 值'}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.personal_row4_btn,{
-                backgroundColor:'#FF3030'
-              }]}>
-                <Text style={{color:'#FFFFFF',fontSize:15}}>
-                  {'提 现'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={styles.scroll_view_container}>
-            <TouchableOpacity style={styles.scroll_view_cell_container}>
-              <View style={styles.scroll_view_cell_column1}>
-                <Image style={styles.scroll_view_cell_column1_img}
-                  source={require('../../../res/images/ic_trending.png')}/>
-                <Text style={styles.scroll_view_cell_column1_txt}>
-                  {'查看我的资产详情'}
-                </Text>
-              </View>
-              <Image style={styles.scroll_view_cell_column2_img}
-                source={require('../../../res/images/ic_tiaozhuan.png')}/>
-            </TouchableOpacity>
-            {ViewUtils.renderLine('#BDBDBD', false, 30, -1)}
-
-            <TouchableOpacity style={styles.scroll_view_cell_container}>
-              <View style={styles.scroll_view_cell_column1}>
-                <Image style={styles.scroll_view_cell_column1_img}
-                  source={require('../../../res/images/ic_trending.png')}/>
-                <Text style={styles.scroll_view_cell_column1_txt}>
-                  {'查看我的资产详情'}
-                </Text>
-              </View>
-              <Image style={styles.scroll_view_cell_column2_img}
-                source={require('../../../res/images/ic_tiaozhuan.png')}/>
-            </TouchableOpacity>
-            {ViewUtils.renderLine('#BDBDBD', false, 30, -1)}
-
-            <TouchableOpacity style={styles.scroll_view_cell_container}
-              onPress={()=> {
-                AsyncStorage.clear((error)=>{console.log(error)});
-              }}>
-              <View style={styles.scroll_view_cell_column1}>
-                <Image style={styles.scroll_view_cell_column1_img}
-                  source={require('../../../res/images/ic_trending.png')}/>
-                <Text style={styles.scroll_view_cell_column1_txt}>
-                  {'清除缓存数据'}
-                </Text>
-              </View>
-              <Image style={styles.scroll_view_cell_column2_img}
-                source={require('../../../res/images/ic_tiaozhuan.png')}/>
-            </TouchableOpacity>
-            {ViewUtils.renderLine('#BDBDBD', false, 30, -1)}
-            
-            <TouchableOpacity style={styles.scroll_view_cell_container}
-              onPress={()=> {this.props.navigation.navigate('EchartView')}}>
-              <View style={styles.scroll_view_cell_column1}>
-                <Image style={styles.scroll_view_cell_column1_img}
-                  source={require('../../../res/images/ic_trending.png')}/>
-                <Text style={styles.scroll_view_cell_column1_txt}>
-                  {'图标控件'}
-                </Text>
-              </View>
-              <Image style={styles.scroll_view_cell_column2_img}
-                source={require('../../../res/images/ic_tiaozhuan.png')}/>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-        {ViewUtils.renderTransparentTabNavFoot()}
+        {StatusBarView}
+        {this.renderParallaxView({}, this.renderScrollView())}
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  personal_panel_container: {
-    backgroundColor:'#FFFFFF',
-  },
-  personal_row1_txt: {
-    color:'#212121',
-    marginTop:25,
-    marginLeft:15
-  },
-  personal_row2_container: {
-    flexDirection:'row',
+  parallax_stickyHeader: {
+    justifyContent: 'center',
     alignItems:'center',
-    justifyContent:'space-between',
-    marginTop:20,
-    marginLeft:15,
-    marginRight:15,
-  },
-  personal_row2_txt: {
-    fontSize:35,
-    color:'red'
-  },
-  personal_row2_img: {
-    width:25,
-    height:25,
-    tintColor:'#212121'
-  },
-  personal_row3_container: {
-    flexDirection:'row',
-    marginTop:20,
-    marginLeft:15,
-    marginRight:10,
-    marginBottom:20
-  },
-  personal_row3_column_container: {
-    flexDirection:'row',
-    alignItems:'flex-end',
-    marginRight:30
-  },
-  personal_row3_column_img: {
-    width:35,
-    height:35,
-    tintColor:'red',
-    marginRight:5,
-  },
-  personal_row3_column_txt1: {
-    color:'#BDBDBD',
-    fontSize:12,
-    marginBottom:10
-  },
-  personal_row3_column_txt2: {
-    color:'#212121',
-    fontSize:15,
-  },
-  personal_row4_container: {
-    flexDirection:'row',
-    justifyContent:'space-between',
-    paddingTop:10,
-    paddingBottom:30,
-    paddingLeft:40,
-    paddingRight:40,
-  },
-  personal_row4_btn: {
-    width:GlobalStyles.WINDOW_WIDTH*0.35,
-    height:35,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:5,
-  },
-  scroll_view_container: {
-    backgroundColor:'#FFFFFF',
-    marginTop:15,
-  },
-  scroll_view_cell_container: {
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-between',
-    height:60,
-  },
-  scroll_view_cell_column1:{
-    flexDirection:'row',
-    alignItems:'center',
-    marginLeft:15
-  },
-  scroll_view_cell_column1_img:{
-    width:20,
-    height:20,
-    tintColor:'red',
-    marginRight:10
-  },
-  scroll_view_cell_column1_txt:{
-    color:'#212121',
-  },
-  scroll_view_cell_column2_img:{
-    width:25,
-    height:25,
-    tintColor:'red',
-    marginRight:15
+    height:scaleSize(150),
+    backgroundColor:'#e7142d',
   },
 })

@@ -1,6 +1,12 @@
 import {
   AsyncStorage
 } from 'react-native';
+import {AppConfig} from '../config/AppConfig';
+import {ExceptionMsg} from './ExceptionMsg';
+
+export var Storage_Key = {
+  LS_REG_COUNTDOWN: 'reg_cd',
+}
 
 export default class DataResponsitory {
   /**
@@ -30,11 +36,11 @@ export default class DataResponsitory {
   }
   /**
    * 取得手机本地缓存数据
-   * @param {*} url 
+   * @param {*} key 
    */
-  fetchLocalResponsitory(url) {
+  fetchLocalResponsitory(key) {
     return new Promise((resolve, reject) => {
-      AsyncStorage.getItem(url, (error, result) => {
+      AsyncStorage.getItem(key, (error, result) => {
         if (error) {
           reject(error);
         } else {
@@ -50,55 +56,58 @@ export default class DataResponsitory {
 
   /**
    * 取得网络数据
-   * @param {*} url 
+   * @param {*} url
+   * @param {*} params
    */
-  fetchNetResponsitory(url, ifStore) {
-    return new Promise((resolve, reject) => {
-      fetch(url)
+  fetchNetResponsitory(url, params) {
+    // 网络请求Promise
+    var fetchRequest = new Promise((resolve, reject) => {
+      fetch(AppConfig.REQUEST_HOST+url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params)
+      })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson) {
-          if(ifStore) {
-            try {
-              saveResponsitory(url, 
-                {items:responseJson.items, timestamp:Date.now()}, 
-                () => {});
-            } catch(e) {
-              reject(e);
-            }
-          }
-          resolve(responseJson);
-        } else {
-          reject(new Error('NetResponsitory is null.'));
-        }
+        resolve(responseJson);
       })
-      .catch((error) => {
-        reject(error);
+      .catch((e) => {
+        reject(e.message);
       })
+    });
+    // 超时等待Promise
+    var timeoutRequset = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          return_code:'8888',
+          return_msg:ExceptionMsg.REQUEST_TIMEOUT
+        })
+      }, AppConfig.REQUEST_TIMEOUT);
     })
+    // Promise竞态，返回先执行完的Promise
+    return Promise.race([fetchRequest, timeoutRequset]);
   }
 
   /**
    * 将网络数据缓存到手机本地
-   * @param {*} url 
+   * @param {*} key 
    * @param {*} items 
-   * @param {*} callBack 
    */
-  saveResponsitory(url, items, callBack) {
-    AsyncStorage.setItem(url, JSON.stringify(items))
-      .then(callBack)
-      .catch((error) => {
-        throw(error);
-      });
+  saveLocalStorage(key, items, callback) {
+    AsyncStorage.setItem(key, JSON.stringify(items), callback);
   }
 
   /**
-   * 检查时间是否过期（有效期：4小时）
+   * 检查时间是否过期
    * @param {*} lastLongTime 
+   * @param {*} interval (默认有效期：4小时)
    */
-  checkOverDue(lastLongTime) {
+  checkOverDue(lastLongTime, interval=4*60*60) {
     let diff_time = Math.floor((Date.now() - lastLongTime)/1000);
-    if (diff_time >= 4*60*60) {
+    if (diff_time >= interval) {
       return true
     } else {
       return false;

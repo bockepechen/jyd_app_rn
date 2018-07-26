@@ -21,6 +21,8 @@
       "platform": "ios",
       "sourceMaps": true,
       "target": "iPhone 6s Plus",
+      // "target": "iPhone 6s",
+      // "target": "iPhone X",
       "outDir": "${workspaceRoot}/.vscode/.react"
     }
   ]

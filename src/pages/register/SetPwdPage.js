@@ -1,355 +1,175 @@
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
-  TouchableOpacity ,
   Image,
+  Keyboard,
   TextInput,
-  AsyncStorage
+  ImageBackground,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import {Transitioner} from 'react-navigation'
-import NavigationBar from '../../common/NavigationBar';
-import LoadingSpinner from '../../common/LoadingSpinner';
-import Snackbars from '../../common/Snackbars';
-import Utils from '../../utils/Utils';
-import AutoHideKeyboard from '../../common/AutoHideKeyboard';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
-var height = GlobalStyles.WINDOW_HEIGHT;
-var width = GlobalStyles.WINDOW_WIDTH;
+import NavigationBar from '../../common/NavigationBar';
+import ViewUtils from '../../utils/ViewUtils';
+import {scaleSize} from '../../utils/FitViewUtils';
+import {ImageStores} from '../../../res/styles/ImageStores';
+import {NetReqModel} from '../../Moidel/NetReqModel';
+import Utils from '../../utils/Utils';
+import DataResponsitory from '../../dao/DataResponsitory';
+import LoadingIcon from '../../common/LoadingIcon';
+
 export default class SetPwdPage extends Component {
   constructor(props){
     super(props);
+    this.dataResponsitory = new DataResponsitory();
     this.state={
-      user:{
-        tel:'',
-        pwd:'',
-        telShow:''
-      },
-      status:false,
-      secureTextEntry:true,
-      isLoading:false,
-      isSnackbars:false,
+      isEyeOpen: false,
+      isFillPwd: false,
+      isLoading: false,
     }
   }
-  //回退按钮
-  getLeftButton(callBack) {
-    return <TouchableOpacity
-        style={{marginLeft:16,marginTop:-2}}
-        onPress={callBack}>
-        <Image
-            source={require('../../../res/images/back.png')}/>
-    </TouchableOpacity>
-  }
-  //返回方法
-  myBack(){
+
+  navGoback = () => {
     this.props.navigation.goBack();
   }
-  //跳转下一页方法
-  goto(routeName,params){
-    this.props.navigation.popToTop()
-  }
-  //监听密码输入框
-  myOnChangeText(text){
+
+  switchVisible = () => {
     this.setState({
-      user:{
-        tel:this.state.user.tel,
-        pwd:text,
-      },
-      status:text === '' ? false : true
+      isEyeOpen: !this.state.isEyeOpen
     })
   }
-  //监听手机号输入
-  myOnChangeTel(text){
-    this.setState({
-      user:{
-        tel:text,
-      },
-      status:text === '' ? false : true
-    })
+
+  changePwd = (pwd) => {
+    this.passWord = pwd;
+    if (pwd.length >= 6) {
+      this.setState({isFillPwd: true});
+    } else {
+      this.setState({isFillPwd: false});
+    }
   }
-  
-  //第一次注册时 “下一步”的按钮
-  myRegisterStepOneBtn(){
-    this.setState({
-      isLoading:!this.state.isLoading
-    })
-    setTimeout(
-      () => {
-        this.setState({
-          isLoading:!this.state.isLoading,
-        })
-        this.goto();
-      },
-      1000
-    );
-  }
-  //snackbars 提示信息方法  pwd
-  mySnackbars(){
-    if(this.state.user.pwd.length < 8){
-      this.snackbarsContent = '密码太短';
-      this.setState({
-        isSnackbars:!this.state.isSnackbars
-      })
-      setTimeout(
-        () => {
-            this.setState({
-              isSnackbars:!this.state.isSnackbars
-            })
-            this.snackbarsContent = '';
-        },
-        2000);
-    } 
-  }
-  //snackbars 提示信息方法  tel
-  mySnackbarsTel(){
-    if(this.state.user.tel.length < 8){
-      this.snackbarsContent = '手机号太短';
-      this.setState({
-        isSnackbars:!this.state.isSnackbars
-      })
-      setTimeout(
-        () => {
-            this.setState({
-              isSnackbars:!this.state.isSnackbars
-            })
-            this.snackbarsContent = '';
-        },
-        2000);
-    }else{
-      let telArray = this.state.user.tel.split('');
-      for(var i=0,len=telArray.length;i<len;i++){
-        if(i>3 && i <8){
-          telArray[i] = '*'
-        }
-      }
-      let myTelShow = telArray.join('');
-      this.setState({
-        user:{
-          tel:this.state.user.tel,
-          pwd:this.state.user.pwd,
-          telShow:myTelShow
-        }
-      });
-      AsyncStorage.setItem('user',JSON.stringify(this.state.user),(error,result)=>{
-        if (!error) {
-          AsyncStorage.getItem('countDownDate',(error,result)=>{
-              let datetime = Utils.fotmatDatetime(20,'yyyy-MM-dd hh:mm:ss')
-              if(!error)
-              {
-                  if(!result){
-                      AsyncStorage.setItem('countDownDate',datetime,(error1,result1)=>{
-                          if(!error1){
-                              this.goto('SmsCodePage', { countDownDatetime: datetime});
-                          }
-                      });
-                  }
-                  else{
-                      var nowDate = new Date();
-                      var oldDate = new Date(result.replace(/-/g,"/"))
-                      this.goto('SmsCodePage', { countDownDatetime: oldDate > nowDate ? result : false});
-                  }
-              }
+
+  doneReg = async () => {
+    if(false) {
+      // TODO 电话号码验证未通过
+      console.log(`密码校验：${Utils.checkoutPWD(this.passWord)}`)
+      return false;
+    } else {
+      Keyboard.dismiss();
+      // 启动Loading动画
+      this.setState({isLoading:true});
+      NetReqModel.tel_pwd = await this.passWord;
+      let url = await '/signIn/setPassword';
+      this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+        .then((result) => {
+          console.log(result);
+          // 返回数据，关闭Loading动画
+          this.setState({isLoading:false}, () => {
+            if (result.return_code === '0000') {
+             // TODO 跳转到指定的App页面
+             console.log('注册成功');
+            } else {
+             // TODO 返回错误信息，进行Toast提示返回错误信息，进行Toast提示
+            }
           })
-        }
-      });
+        })
+        .catch((e) => {
+          console.log(e);
+          // TODO Toast提示异常
+          // 关闭Loading动画
+          if(this.state.isLoading) {
+            this.setState({isLoading:false});
+          }
+        })
     }
   }
-  //清除输入内容
-  clearText(){
-    this.setState({
-      user:{
-        tel:this.state.user.tel,
-        pwd:''
-      },
-      status:false
-    })
-  }
-  //显示密码开关
-  switchEye(){
-    this.setState({
-      secureTextEntry:!this.state.secureTextEntry
-    })
-  }
-  //输入框的icon标
-  inputIconRender(clearTextFunc,switchEyeFunc){
-    if(this.state.status)
-    {
-      return <View style={styles.myInputIcon}>
-              <Image 
-                style={{marginRight:5}}
-                onPress={clearTextFunc}
-                source={require('../../../res/images/cross.png')}/>
-              <Image 
-                onPress={switchEyeFunc}
-                source={require('../../../res/images/eye-close.png')}/>
-            </View>
-    }
-    else{
-      return <View style={styles.myInputIcon}>
-            </View>
-    }
-  }
-  //清除的cross icon
-  iconCross = (myFunc)=>{
-    return  <TouchableOpacity 
-                onPress={myFunc}
-                style={{marginRight:10}}
-            > 
-            <Image 
-              source={require('../../../res/images/cross.png')}/>
-        </TouchableOpacity>
-  }
-  //密码是否显示明文的 icon
-  iconEye = (myFunc)=>{
-    return <TouchableOpacity 
-                onPress={myFunc}
-                style={{paddingTop:3}}
-           >
-           <Image 
-              onPress={myFunc}
-              source={this.state.secureTextEntry ? require('../../../res/images/eye-close.png') : require('../../../res/images/eye.png')}/>
-        </TouchableOpacity>
-  }
-  myrender() {
-    //提示性信息
-    let alertView =<Snackbars style={{position:'absolute',marginTop:-50,width: width, height: 50, backgroundColor: '#FE332F',alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{fontSize: 16,color:'#fff',marginTop:8}}>{this.snackbarsContent}</Text>
-                  </Snackbars>
-    //加载loading 半透明页面
-    let loadingSpinner = <LoadingSpinner visible={this.state.isLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
-    //input的icon标
-    let inputIcon = <View style={styles.myInputIcon}>
-        {this.state.status ? this.iconCross(()=>this.clearText()) : null}
-        {this.state.status ? this.iconEye(()=>this.switchEye()) : null}
-      </View>
-    //底部 验证码登陆和忘记密码
-    let myBottom = <View style={styles.contentBottom}> 
-                      <Text style={styles.contentBottomType}>验证码登陆</Text>
-                      <View style={styles.myVertical}></View>
-                      <Text style={styles.contentBottomType}>忘记密码</Text>
-                  </View>
-    //中间的文字描述
-    let middleContent = <Text style={{fontSize:13,marginTop:24,color:'#343434'}}>密码长度为8-16位</Text>
-    let pwdInput = <View style={styles.myInputView}>
-                    <TextInput
-                      style={styles.myInput}
-                      onChangeText={(text)=>this.myOnChangeText(text)}
-                      value={this.state.user.pwd}
-                      placeholder='登陆密码'
-                      placeholderTextColor='#CDCDCD'
-                      secureTextEntry={this.state.secureTextEntry}
-                    />
-                    {inputIcon}
-                  </View>
-    let telInput = <View style={styles.myInputView}>
-                    <TextInput
-                      style={styles.myInput}
-                      onChangeText={(text)=>this.myOnChangeTel(text)}
-                      value={this.state.user.pwd}
-                      placeholder='手机号'
-                      placeholderTextColor='#CDCDCD'
-                      keyboardType={'numeric'}
-                    />
-                  </View>
-    let RegisterStepOneBtn = <TouchableOpacity
-                    disabled={!this.state.status} 
-                    onPress={()=>{this.myRegisterStepOneBtn()}}
-                    style={styles.loginBtn}
-                    activeOpacity={1}
-                  >
-                    <Text style={[{color:'#fff',fontSize:20},this.state.status ? {opacity:1} : {opacity:0.8}]}>确认注册</Text>
-                  </TouchableOpacity>
+
+  renderPWDView() {
     return (
-      <View style={styles.containter}>
-        {loadingSpinner}
-        <NavigationBar title=''
-          leftButton={this.getLeftButton(()=>this.myBack())}
-          navColor='#fff'
-          statusBarColor='#AAAAAA'
-          statusBarStyle='light-content'/>
-        {this.state.isSnackbars ? alertView : null}
-        <View style={styles.content}>
-          <Text style={{fontSize:26,color:'#343434'}}>欢迎登陆</Text>
-          {middleContent}
-          {pwdInput}
-          {RegisterStepOneBtn}
-        </View>  
+      <View 
+        style={{
+          position:'absolute', 
+          top:scaleSize(117), 
+          width:GlobalStyles.WINDOW_WIDTH, 
+          alignItems:'center',
+        }}>
+        <View style={{width:scaleSize(1134), height:scaleSize(426), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
+          <Text style={{marginTop:scaleSize(75), fontSize:scaleSize(48), color:'#998675'}}>{'请设置登录密码'}</Text>
+          <View style={{marginTop:scaleSize(72), width:scaleSize(999), height:scaleSize(93), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center", borderWidth:0}}>
+            <TextInput 
+              style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(12), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0, borderWidth:0}}
+              maxLength={20}
+              clearButtonMode={'while-editing'}
+              placeholder={'请设置6-20位数字和字母作为登录密码'}
+              placeholderTextColor='#c3c3c3'
+              underlineColorAndroid='rgba(0,0,0,0)'
+              secureTextEntry={!this.state.isEyeOpen}
+              onChangeText={this.changePwd}
+              />
+            <TouchableHighlight 
+              style={{marginRight:scaleSize(12)}}
+              underlayColor='rgba(0,0,0,0)'
+              onPress={this.switchVisible}>
+              <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+            </TouchableHighlight>
+          </View>
+        </View>
+        <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
+        <TouchableHighlight 
+          style={{marginTop:scaleSize(42)}}
+          underlayColor='rgba(0,0,0,0)'
+          onPress={this.doneReg}>
+          <ImageBackground 
+            source={this.state.isFillPwd?ImageStores.sy_17:ImageStores.cp_1} 
+            resizeMode={'stretch'} 
+            style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
+            <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:this.state.isFillPwd?'#FFFFFF':'#656565'}}>{'完成注册'}</Text>
+          </ImageBackground>
+        </TouchableHighlight>
       </View>
     )
   }
+
+  renderCorpLogo() {
+    return (
+      <View 
+        style={{
+          position:'absolute', 
+          top:scaleSize(1215), 
+          width:GlobalStyles.WINDOW_WIDTH, 
+          alignItems:'center',
+        }}>
+        <Image source={ImageStores.dl_2} resizeMode={'stretch'} style={{width:scaleSize(288), height:scaleSize(288)}}/>
+        <Text style={{marginTop:scaleSize(78), fontSize:scaleSize(36), fontWeight:'200', color:'#998675'}}>
+          {`Copyright @ ${new Date().getFullYear()} jiayidai.com`}
+        </Text>
+      </View>
+    )
+  }
+
   render(){
-    return (<AutoHideKeyboard 
-          content={this.myrender()}
-      />);
+    return (
+      <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
+        <View style={GlobalStyles.rootContainer}>
+          <NavigationBar 
+            title={'注册'}
+            titleColor='#FFFFFF'
+            titleSize={scaleSize(56)}
+            navColor='#E8152E'
+            statusBarColor='#E8152E'
+            statusBarStyle='light-content'
+            leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}/>
+          <View>
+            <Image
+              source={ImageStores.dl_6}
+              resizeMode={'stretch'}
+              style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(456)}}/>
+              {this.renderPWDView()}
+              {this.renderCorpLogo()}
+          </View>
+          {this.state.isLoading?(<LoadingIcon />):null}
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 }
-let styles = StyleSheet.create({
-  containter:{
-    flex:1,
-    backgroundColor:'#fff',
-    paddingLeft:0,
-    paddingRight:0,
-    paddingTop:0,
-    paddingBottom:0,
-    zIndex:0,
-  },
-  content:{
-    marginLeft:26,
-    marginTop:70,
-  },
-  myInputView:{
-    marginTop:120,
-    width:(width-26*2),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  myInput:{
-    flex:1,
-    height: 40,
-    padding:0,
-    borderColor: '#CDCDCD', 
-    borderWidth: 0,
-    borderBottomWidth:1,
-    color:'#343434',
-    fontSize:20,
-    paddingRight: 0,
-  },
-  myInputIcon:{
-    flexDirection:'row',
-    borderColor: '#CDCDCD', 
-    borderWidth: 0,
-    borderBottomWidth:1,
-    height:40,
-    paddingTop:10
-  },
-  contentBottom:{
-    flexDirection:'row',
-    marginTop:45,
-    justifyContent:'center',
-    // alignItems:'center'
-  },
-  contentBottomType:{
-    color:'#2B86C9',
-    fontSize:13,
-  },
-  myVertical:{
-    borderColor:'#CDCDCD',
-    borderWidth:0,
-    borderLeftWidth:1,
-    height:15,
-    marginLeft:16,
-    marginRight:16,
-  },
-  loginBtn:{
-    backgroundColor:'#FE332F',
-    alignItems:'center',
-    justifyContent:'center',
-    marginTop:20,
-    width:(width-26*2),
-    height:50,
-    borderRadius:50,
-  }
-});

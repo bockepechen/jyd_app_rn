@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {GlobalStyles} from '../../res/styles/GlobalStyles'
+import {GlobalStyles} from '../../res/styles/GlobalStyles';
+import {ImageStores} from '../../res/styles/ImageStores';
+import {scaleSize} from './FitViewUtils';
 
 export default class ViewUtils {
   static renderLine(color, isVertical, padding_start, padding_end) {
@@ -33,25 +35,23 @@ export default class ViewUtils {
     return (
       <TouchableOpacity style={styles.back_btn_container} 
         onPress={callback}>
-        <Image style={[styles.back_btn_image, {tintColor:color}]}
-          source={require('../../res/images/ic_arrow_back_white_36pt.png')}/>
+        <Image 
+          source={ImageStores.cp_10}
+          resizeMode={'stretch'}
+          style={{width:scaleSize(27), height:scaleSize(45)}}/>
       </TouchableOpacity>
     )
   }
 
   static renderTransparentTabNavFoot() {
     return (
-      <View style={{height:GlobalStyles.TAB_NAVIGATATOR_HEIGHT}}/>
+      <View style={{height:GlobalStyles.BOTTOM_TAB_NAV_HEIGHT}}/>
     )
   }
 }
 
 const styles = StyleSheet.create({
   back_btn_container: {
-    paddingLeft: GlobalStyles.WINDOW_WIDTH*0.01,
+    paddingLeft: scaleSize(75),
   },
-  back_btn_image: {
-    width:24, 
-    height:24,
-  }
 })

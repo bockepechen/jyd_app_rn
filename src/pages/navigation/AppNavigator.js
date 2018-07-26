@@ -4,12 +4,10 @@ import TabPage from './TabPage';
 import WebViewPage from '../../common/WebViewPage';
 import LoanPageDetails from '../2_loan/LoanPageDetails'
 import RegisterPage from '../register/RegisterPage';
-import LoginPage from '../register/LoginPage';
-import SmsCodePage from '../register/SmsCodePage';
+import AuthPage from '../register/AuthPage';
 import SetPwdPage from '../register/SetPwdPage';
-import ForgetPwdPage from '../register/ForgetPwdPage';
 import Calendar4Payback from '../4_my/Calendar4Payback';
-import EchartView from '../4_my/EchartView';
+import RotateAnimate from '../4_my/RotateAnimate';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -25,28 +23,22 @@ const AppStackNavigator = createStackNavigator(
     RegisterPage:{
       screen:RegisterPage,
     },
-    LoginPage:{
-      screen:LoginPage,
-    },
-    SmsCodePage:{
-      screen:SmsCodePage,
-    },
     SetPwdPage:{
       screen:SetPwdPage,
-    },
-    ForgetPwdPage:{
-      screen:ForgetPwdPage,
     },
     Calendar4Payback:{
       screen:Calendar4Payback,
     },
-    EchartView:{
-      screen:EchartView,
+    AuthPage:{
+      screen:AuthPage,
+    },
+    RotateAnimate:{
+      screen:RotateAnimate,
     },
   },{
     navigationOptions:{
       header:null
-    }
+    },
   }
 )
 

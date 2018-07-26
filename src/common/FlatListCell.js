@@ -7,7 +7,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 import {GlobalStyles} from '../../res/styles/GlobalStyles'
-import ViewUtils from '../utils/ViewUtils'
+import ViewUtils from '../utils/ViewUtils';
+import {ImageStores} from '../../res/styles/ImageStores';
 
 export default class FlatListCell extends PureComponent {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class FlatListCell extends PureComponent {
           onPress={this._onPress}>
           <View style={styles.cellTitle}>
             <Image style={styles.cellTitleImage}
-              source={require('../../res/images/ic_computer.png')}/>
+              source={ImageStores.sy_3}/>
             <Text style={{color:this.props.selected?'#636363':'blue'}}>{`${this.props.data.item.pName}`}</Text>
           </View>
           {ViewUtils.renderLine('#BDBDBD')}

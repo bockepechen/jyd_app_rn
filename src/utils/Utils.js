@@ -21,4 +21,47 @@ export default class Utils {
         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
         return fmt; 
     }
+
+    /**
+     * 获取随机字
+     * @param {*} len 
+     */
+    static randomToken(len) {
+        let tokenId = '';
+        len = len || 32;
+        /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+        let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+        let maxPos = $chars.length;
+        for (i = 0; i < len; i++) {
+            tokenId += $chars.charAt(Math.floor(Math.random() * maxPos));
+    　　}
+        return tokenId;
+    }
+
+    /**
+     * 计算时间间隔(秒)
+     * @param {*} oriTime 
+     * @param {*} tarTime 
+     */
+    static getInterval(oriTime, tarTime=Date.now()) {
+        return Math.floor((tarTime - oriTime)/1000);
+    }
+
+    /**
+     * 验证手机号合法性
+     * @param {*} tel 
+     */
+    static checkoutTel(tel) {
+        var PHONE_NUMBER_REG = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+        return PHONE_NUMBER_REG.test(tel);
+    }
+
+    /**
+     * 验证密码复杂度
+     * @param {*} pwd
+     */
+    static checkoutPWD(pwd) {
+        var PWD_REG = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+        return PWD_REG.test(pwd);
+    }
 }
