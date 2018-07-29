@@ -6,6 +6,7 @@ import {ExceptionMsg} from './ExceptionMsg';
 
 export var Storage_Key = {
   LS_REG_COUNTDOWN: 'reg_cd',
+  LS_REG_USERINFO: 'user_info',
 }
 
 export default class DataResponsitory {

@@ -16,7 +16,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {NetReqModel} from '../../Moidel/NetReqModel';
 import Utils from '../../utils/Utils';
-import DataResponsitory from '../../dao/DataResponsitory';
+import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 
 export default class SetPwdPage extends Component {
@@ -67,7 +67,14 @@ export default class SetPwdPage extends Component {
           this.setState({isLoading:false}, () => {
             if (result.return_code === '0000') {
              // TODO 跳转到指定的App页面
-             console.log('注册成功');
+             NetReqModel.jyd_pubData.user_id = result.user_id;
+             this.dataResponsitory.saveLocalStorage(
+              Storage_Key.LS_REG_USERINFO,
+              {
+                user_id: result.user_id,
+                token_id: NetReqModel.jyd_pubData.token_id
+              }
+             )
             } else {
              // TODO 返回错误信息，进行Toast提示返回错误信息，进行Toast提示
             }

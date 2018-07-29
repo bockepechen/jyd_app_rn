@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Image,
   StyleSheet,
-  NetInfo
+  NetInfo,
+  Platform
 } from 'react-native';
 import HomePage from '../1_home/HomePage';
 import LoanPage from '../2_loan/LoanPage';
@@ -43,6 +44,7 @@ export default class TabPage extends Component {
     console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
     GlobalStyles.CONNECTION_TYPE = connectionInfo;
     NetReqModel.jyd_pubData.network_type = connectionInfo.type;
+    NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
     DeviceInfo.getIPAddress().then(ip => {
       console.log(`当前手机IP：${ip}`);
     })
