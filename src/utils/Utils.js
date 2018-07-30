@@ -64,4 +64,28 @@ export default class Utils {
         var PWD_REG = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
         return PWD_REG.test(pwd);
     }
+    /**
+     * 格式化money
+     * s为要格式化的money
+     * n为小数位数
+     */
+    static fmoney(s, n){   
+        if(s==='')
+            return;
+        var r = ""
+        var l ;
+        if(n){
+            n = n > 0 && n <= 20 ? n : 2;   
+            s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
+            l = s.split(".")[0].split("").reverse();  
+            r = "." + s.split(".")[1]; 
+        }else{
+            l = s.split(".")[0].split("").reverse(); 
+        } 
+        var t = "";   
+        for(let i = 0; i < l.length; i ++ ) {   
+            t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
+        }   
+        return t.split("").reverse().join("") + r;   
+    } 
 }
