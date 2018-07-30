@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   ImageBackground,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 import AppStatusBar from '../../common/AppStatusBar';
 import Swiper from 'react-native-swiper';
@@ -20,6 +20,10 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import ProductCardMain from '../2_loan/ProductCardMain';
 import ProductCardSub from '../2_loan/ProductCardSub';
+import LoadingIcon from '../../common/LoadingIcon';
+import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import {NetReqModel} from '../../Moidel/NetReqModel';
+import Utils from '../../utils/Utils';
 
 const msgArray = [
   {msgTxt: '1. 你好放假放到卡拉斯京分开了的撒'},
@@ -28,18 +32,28 @@ const msgArray = [
   {msgTxt: '4. 岁啊还吃呢少见哦贾长松i接啊词接送i就从撒'},
 ]
 let isAndroid = Platform.OS==='android'?true:false;
+let refreshRate = 60;
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
+    this.refreshing = false;
+    this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
     this.state = {
       sourceData: ['银行存管','风险控制','合作机构','关于我们'],
       selected: new Map(),
+      isLoading: false,
+      refreshing : false,
+      httpRes:{}
     }
+  }
+
+  componentWillMount() { 
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
+    this.getInfoData()
   }
 
   componentWillUnmount() {
@@ -47,6 +61,50 @@ export default class HomePage extends Component {
   }
 
   keyExtractor = (data, index) => {return String(index);}
+
+  _onRefresh(){
+    this.setState({refreshing: true});
+    this.getInfoData()
+  }
+
+  async getInfoData() {
+    this.setState({
+      isLoading:true
+    });
+    NetReqModel.jyd_pubData.user_id = await "";
+    NetReqModel.jyd_pubData.source_type = await "0001";
+    NetReqModel.jyd_pubData.system_id = await "Android 7";
+    NetReqModel.jyd_pubData.network_type = await "wifi";
+    NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+    let url = await '/firstPage';
+    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    .then((result) => {
+      console.log(result);
+      for(var i = 0 ; i < result.appsellinfos.length ; i++){
+        result.appsellinfos[i].ExpectedYearYield = Utils.fmoney(result.appsellinfos[i].ExpectedYearYield*100,2)
+        result.appsellinfos[i].ExpectedYield = Utils.fmoney(result.appsellinfos[i].ExpectedYield*100,2)
+      }
+      // 返回数据，关闭Loading动画
+      this.setState(
+        {
+          isLoading:false,
+          httpRes : result
+        }
+        , () => {
+          if(this.refreshing){
+            this.refreshing = false;
+          }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+      // TODO Toast提示异常
+      // 关闭Loading动画
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
+  }
 
   renderFlatListItem = (data) => {
     return (
@@ -86,7 +144,13 @@ export default class HomePage extends Component {
 
   renderSwiper() {
     let swiperViews = [];
-    let swiperSourceData = [ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1];
+    // let swiperSourceData = [ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1];
+    let swiperSourceData = this.state.httpRes.AppMainHeadBanners ? [] : [ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1];
+    if(this.state.httpRes.AppMainHeadBanners){
+        for(var i = 0 ; i < this.state.httpRes.AppMainHeadBanners.length ; i++){
+          swiperSourceData[i] = this.state.httpRes.AppMainHeadBanners[i].ImgPath
+        }
+    }
     swiperSourceData.map((item, index) => {
       swiperViews.push(
         <TouchableHighlight 
@@ -94,7 +158,7 @@ export default class HomePage extends Component {
           underlayColor='rgba(0,0,0,0)' 
           onPress={()=>{console.log(`press me ${index}`)}}>
           <Image 
-            source={item} 
+            source={this.state.httpRes.AppMainHeadBanners ? {uri : this.state.httpRes.AppMainHeadBanners[index].ImgPath} : item} 
             resizeMode={'stretch'} 
             style={{
               width:GlobalStyles.WINDOW_WIDTH,
@@ -185,11 +249,19 @@ export default class HomePage extends Component {
     // );
     return config;
   }
-
   renderParallaxView(params, contentView) {
     let parallaxConfig = this.getParallaxRenderConfig(params);
     return (
       <ParallaxScrollView
+        ref="pullToRefresh"
+        onScroll = {
+          (e) => {
+            if(!this.refreshing && e.nativeEvent.contentOffset.y+refreshRate < 0){
+              this.refreshing = true;
+              this.getInfoData();
+            }
+          }
+        }
         showsVerticalScrollIndicator={false}
         backgroundColor='#E8152E'
         contentBackgroundColor="#F0F0F0"
@@ -288,8 +360,8 @@ export default class HomePage extends Component {
         delay={3000} />*/}
         {this.renderTopNavIconViews()}
         {this.renderSubTitleLine('首页推荐', 72)}
-        <ProductCardMain isRestMoney={false} ifSell={true} top={scaleSize(24)} data={''}/>
-        <ProductCardSub isRestMoney={true} ifSell={true} top={0} bottom={0} data={''}/>
+        <ProductCardMain isRestMoney={false} ifSell={true} top={scaleSize(24)} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''}/>
+        <ProductCardSub isRestMoney={true} ifSell={true} top={0} bottom={0} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[0] : ''}/>
 
         <View style={{marginTop:scaleSize(32), alignItems:'center', justifyContent:'center'}}>
           <Text style={{fontSize:scaleSize(36), color:'#3b92f0'}}>{'*市场有风险, 投资需谨慎'}</Text>
@@ -297,7 +369,7 @@ export default class HomePage extends Component {
 
         <View style={{marginTop:scaleSize(69), alignItems:'center', justifyContent:'center'}}>
           <Image 
-            source={ImageStores.sy_2} 
+            source={this.state.httpRes.AppSubHeadBanners && this.state.httpRes.AppSubHeadBanners.length > 0 ? {uri : this.state.httpRes.AppSubHeadBanners[0].ImgPath} : ImageStores.sy_2} 
             resizeMode={'stretch'} 
             style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(510)}}/>
         </View>
@@ -310,7 +382,7 @@ export default class HomePage extends Component {
             resizeMode={'stretch'}
             style={{marginLeft:scaleSize(132), width:scaleSize(150), height:scaleSize(150)}}/>
           <View style={{marginLeft:scaleSize(42), width:scaleSize(324), height:scaleSize(150)}}>
-            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'30,078万'}</Text>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes.AccumulativeAmount ? Utils.fmoney(this.state.httpRes.AccumulativeAmount) : '30,078'}万</Text>
             <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#998675'}}>{'累计交易金额'}</Text>
           </View>
           <Image
@@ -318,7 +390,7 @@ export default class HomePage extends Component {
             resizeMode={'stretch'}
             style={{marginLeft:scaleSize(36), width:scaleSize(150), height:scaleSize(150)}}/>
           <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
-            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'995天'}</Text>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes.AccumulativeDays ? this.state.httpRes.AccumulativeDays : '990'}天</Text>
             <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#998675'}}>{'安全运营'}</Text>
           </View>
         </View>
@@ -343,6 +415,7 @@ export default class HomePage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
+        {this.state.isLoading?(<LoadingIcon />):null}
       </View>
     )
   }
