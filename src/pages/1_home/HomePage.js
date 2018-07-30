@@ -43,7 +43,6 @@ export default class HomePage extends Component {
       sourceData: ['银行存管','风险控制','合作机构','关于我们'],
       selected: new Map(),
       isLoading: false,
-      refreshing : false,
       httpRes:{}
     }
   }
@@ -61,11 +60,6 @@ export default class HomePage extends Component {
   }
 
   keyExtractor = (data, index) => {return String(index);}
-
-  _onRefresh(){
-    this.setState({refreshing: true});
-    this.getInfoData()
-  }
 
   async getInfoData() {
     this.setState({
