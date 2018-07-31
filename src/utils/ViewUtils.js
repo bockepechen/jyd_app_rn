@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   View,
+  Text,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -8,6 +9,7 @@ import {
 import {GlobalStyles} from '../../res/styles/GlobalStyles';
 import {ImageStores} from '../../res/styles/ImageStores';
 import {scaleSize} from './FitViewUtils';
+import Toast from 'react-native-easy-toast'
 
 export default class ViewUtils {
   static renderLine(color, isVertical, padding_start, padding_end) {
@@ -43,6 +45,24 @@ export default class ViewUtils {
     )
   }
 
+  static renderRightBtn(title, callback) {
+    return (
+      <TouchableOpacity style={styles.right_btn_container} 
+        onPress={callback}>
+        <Text style={{fontSize:scaleSize(42), color:'#ffffff'}}>{title}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  static renderToast() {
+    return (
+      <Toast
+        opacity={0.6}
+        positionValue={100}
+        ref='toast'/>
+    )
+  }
+
   static renderTransparentTabNavFoot() {
     return (
       <View style={{height:GlobalStyles.BOTTOM_TAB_NAV_HEIGHT}}/>
@@ -53,5 +73,8 @@ export default class ViewUtils {
 const styles = StyleSheet.create({
   back_btn_container: {
     paddingLeft: scaleSize(75),
+  },
+  right_btn_container: {
+    paddingRight: scaleSize(51),
   },
 })
