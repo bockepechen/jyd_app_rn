@@ -22,10 +22,9 @@ import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
-import { AppConfig } from '../../config/AppConfig';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
-export default class RegisterPage extends Component {
+export default class LoginPage extends Component {
   constructor(props){
     super(props);
     this.dataResponsitory = new DataResponsitory();
@@ -33,11 +32,9 @@ export default class RegisterPage extends Component {
       logo_initPos: new Animated.Value(0),
       input_initPos: new Animated.Value(0),
       rotateValue: new Animated.Value(0),//旋转角度的初始值
-      // springValue: new Animated.Value(0.3), //弹跳初始值
-      isFillTel:false,
-      isInviteCode:false,
       isRotate:true,
       isLoading: false,
+      isEyeOpen: false,
     }
   }
 
@@ -53,17 +50,8 @@ export default class RegisterPage extends Component {
         toValue: 60,
         easing: Easing.linear
       }),
-      // Animated.spring(
-      //   this.state.springValue,
-      //   {
-      //     toValue: 1,
-      //     friction: 1
-      //   }
-      // )
     ]).start(()=>{'Animate start parallelly.'})
   }
-
-  componentWillUnmount() {}
 
   navGoback = () => {
     if(this.state.isLoading) {
@@ -76,59 +64,96 @@ export default class RegisterPage extends Component {
     }
   }
 
-  changeTel = (tel) => {
-    this.telNum = tel;
-    if (tel.length === 11) {
-      this.setState({isFillTel: true});
-    } else {
-      this.setState({isFillTel: false});
-    }
-  }
-
-  showInviteCode = () => {
+  switchVisible = () => {
     this.setState({
-      isInviteCode: !this.state.isInviteCode
+      isEyeOpen: !this.state.isEyeOpen
     })
   }
 
-  async goNext() {
+  login = async () => {
+    Keyboard.dismiss();
+    if(!this.telNum || !this.pwd) {
+      this.refs.toast.show('手机号和密码不能为空');
+    } else if(!Utils.checkoutTel(this.telNum)) {
+      this.refs.toast.show('请输入正确手机号');
+    } else {
+      // 启动Loading动画
+      this.setState({isLoading:true});
+      // 设置远程接口访问参数 (同步执行)
+      global.NetReqModel.tel_phone = await this.telNum;
+      global.NetReqModel.tel_pwd = await this.pwd;
+      global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+      let url = await '/login';
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+       .then((result) => {
+         // 返回数据，关闭Loading动画
+         this.setState({isLoading:false}, () => {
+           if (result.return_code === '0000') {
+             global.NetReqModel.jyd_pubData.user_id = result.user_id;
+             global.NetReqModel.jyd_pubData.user_name = result.user_name;
+             this.dataResponsitory.saveLocalStorage(
+              Storage_Key.LS_REG_USERINFO,
+              {
+                user_id: result.user_id,
+                user_name: result.user_name,
+                token_id: global.NetReqModel.jyd_pubData.token_id
+              },
+              () => {
+                this.refs.toast.show('登录成功');
+              }
+             )
+            } else {
+              this.refs.toast.show(result.return_msg);
+           }
+         })
+       })
+       .catch((e) => {
+         this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+         // 关闭Loading动画
+         if(this.state.isLoading) {
+           this.setState({isLoading:false});
+         }
+       })
+    }
+  }
+
+  forgetPWD = async () => {
     Keyboard.dismiss();
     if(!this.telNum) {
       this.refs.toast.show('手机号不能为空');
     } else if(!Utils.checkoutTel(this.telNum)) {
       this.refs.toast.show('请输入正确手机号');
-    }  else {
-      // 启动Loading动画
+    } else {
       this.setState({isLoading:true});
       // 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
       let adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
       // 跳转下页面参数设置
       let navigation_params = {
-        pageTitle:'注册',
-        nextPage:'SetPwdPage',
+        pageTitle:'忘记密码',
+        nextPage:'ResetPwdPage',
         tel: this.telNum,
         cryptTel: `${this.telNum.substring(0,3)} **** ${this.telNum.substring(7)}`,
         authcodeCD: adaptAuthCodeCD.authcodeCD
       };
-      // 没有发送过验证码或者验证码过期，调用网络接口重新发送
-      if (adaptAuthCodeCD.ifSendAuthCode) {
+      if  (adaptAuthCodeCD.ifSendAuthCode) {
         // 设置远程接口访问参数 (同步执行)
         global.NetReqModel.tel_phone = await this.telNum;
-        global.NetReqModel.refer_code = await this.referCode;
         global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
-        let url = await '/signIn/register';
+        let url = await '/password/forgetPwd';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
          .then((result) => {
            // 返回数据，关闭Loading动画
            this.setState({isLoading:false}, () => {
              if (result.return_code === '0000') {
-              this.props.navigation.navigate('AuthPage', navigation_params);
+               global.NetReqModel.jyd_pubData.user_id = result.user_id;
+               this.props.navigation.navigate('AuthPage', navigation_params);
              } else {
               this.refs.toast.show(result.return_msg);
              }
            })
          })
          .catch((e) => {
+           console.log(e);
            this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
            // 关闭Loading动画
            if(this.state.isLoading) {
@@ -143,8 +168,8 @@ export default class RegisterPage extends Component {
     }
   }
 
-  goLoginPage = () => {
-    this.props.navigation.navigate('LoginPage');
+  goRegisterPage = () => {
+    this.props.navigation.navigate('RegisterPage');
   }
 
   renderInputView() {
@@ -158,7 +183,7 @@ export default class RegisterPage extends Component {
           alignItems:'center',
           transform:[{translateY:this.state.input_initPos}],
         }}>
-        <View style={{width:scaleSize(1134), height:this.state.isInviteCode?scaleSize(426):scaleSize(282), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
+        <View style={{width:scaleSize(1134), height:scaleSize(426), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
           <View style={{marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
             <TextInput 
               style={{marginTop:scaleSize(0), marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
@@ -168,45 +193,47 @@ export default class RegisterPage extends Component {
               placeholder={'手机号码'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              onChangeText={this.changeTel}
+              defaultValue={global.NetReqModel.tel_phone}
+              onChangeText={(t) => {this.telNum=t}}
               />
           </View>
-          <TouchableOpacity 
-            style={{marginTop:scaleSize(36), flexDirection:'row', alignItems:'center'}}
-            onPress={this.showInviteCode}>
-            <View style={{borderWidth:0, justifyContent:'center', height:scaleSize(36)}}>
-            <Image source={this.state.isInviteCode?ImageStores.dl_8:ImageStores.dl_7} resizeMode={'stretch'} style={{width:scaleSize(36), height:scaleSize(36)}}/>
-            </View>
-            <Text style={{marginLeft:scaleSize(21), fontSize:scaleSize(36), color:'#c3c3c3'}}>{'我有推荐码'}</Text>
-          </TouchableOpacity>
-          {
-            this.state.isInviteCode?
-              (
-                <View style={{marginTop:scaleSize(30), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
-                  <TextInput 
-                    style={{marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
-                    maxLength={11}
-                    keyboardType={kbType}
-                    clearButtonMode={'while-editing'}
-                    placeholder={'推荐人手机号码 (选填)'}
-                    placeholderTextColor='#c3c3c3'
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                    onChangeText = {(code) => {this.referCode = code}}
-                    />
-                </View>
-              ):null
-          }
+          <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+            <TextInput 
+              style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
+              maxLength={20}
+              clearButtonMode={'while-editing'}
+              placeholder={'登录密码'}
+              placeholderTextColor='#c3c3c3'
+              underlineColorAndroid='rgba(0,0,0,0)'
+              secureTextEntry={!this.state.isEyeOpen}
+              onChangeText = {(p) => {this.pwd = p}}
+              />
+              <TouchableHighlight 
+                style={{marginRight:scaleSize(12)}}
+                underlayColor='rgba(0,0,0,0)'
+                onPress={this.switchVisible}>
+                <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+              </TouchableHighlight>
+          </View>
+          <View style={{marginTop:scaleSize(42), width:scaleSize(1134), height:20, alignItems:'flex-end'}}>
+            <TouchableHighlight
+              style={{marginRight:scaleSize(99)}}
+              underlayColor='rgba(0,0,0,0)'
+              onPress={this.forgetPWD}>
+              <Text style={{fontSize:scaleSize(36), color:'#3b92f0'}}>{'忘记密码'}</Text>
+            </TouchableHighlight>
+          </View>
         </View>
         <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
         <TouchableHighlight 
           style={{marginTop:scaleSize(42)}}
           underlayColor='rgba(0,0,0,0)'
-          onPress={()=>{this.state.isFillTel?this.goNext():null}}>
+          onPress={this.login}>
           <ImageBackground 
-            source={this.state.isFillTel?ImageStores.sy_17:ImageStores.cp_1} 
+            source={ImageStores.sy_17} 
             resizeMode={'stretch'} 
             style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-            <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:this.state.isFillTel?'#FFFFFF':'#656565'}}>{'下一步'}</Text>
+            <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'登 录'}</Text>
           </ImageBackground>
         </TouchableHighlight>
       </Animated.View>
@@ -238,14 +265,14 @@ export default class RegisterPage extends Component {
       <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={GlobalStyles.rootContainer}>
           <NavigationBar 
-            title={'注册'}
+            title={'登录'}
             titleColor='#FFFFFF'
             titleSize={scaleSize(56)}
             navColor='#E8152E'
             statusBarColor='#E8152E'
             statusBarStyle='light-content'
             leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
-            rightButton={ViewUtils.renderRightBtn('登录', this.goLoginPage)}/>
+            rightButton={ViewUtils.renderRightBtn('注册', this.goRegisterPage)}/>
           <View>
             <Image
               source={ImageStores.dl_6}

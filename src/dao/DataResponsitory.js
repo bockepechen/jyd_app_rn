@@ -3,6 +3,7 @@ import {
 } from 'react-native';
 import {AppConfig} from '../config/AppConfig';
 import {ExceptionMsg} from './ExceptionMsg';
+import Utils from '../utils/Utils';
 
 export var Storage_Key = {
   LS_REG_COUNTDOWN: 'reg_cd',
@@ -113,6 +114,32 @@ export default class DataResponsitory {
     } else {
       return false;
     }
+  }
+
+  /**
+   * 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
+   */
+  adaptAuthCodeCD() {
+    let result = {
+      ifSendAuthCode: true,
+      authcodeCD: AppConfig.AUTHCODE_CD
+    }
+    return new Promise((resolve) => {
+      this.fetchLocalResponsitory(Storage_Key.LS_REG_COUNTDOWN)
+      .then(res => {
+        if(res) {
+          let diff_time = res.currentCd - Utils.getInterval(res.timeStamp);
+          if(diff_time > 0) {
+            result.ifSendAuthCode = false;
+            result.authcodeCD = diff_time;
+          }
+        }
+        resolve(result);
+      })
+      .catch(e => {
+        reject(result);
+      })
+    })
   }
 
 }

@@ -1,11 +1,13 @@
 import {createStackNavigator, createSwitchNavigator} from 'react-navigation'
 import Welcome from '../welcome/Welcome';
 import TabPage from './TabPage';
-import WebViewPage from '../../common/WebViewPage';
-import LoanPageDetails from '../2_loan/LoanPageDetails'
 import RegisterPage from '../register/RegisterPage';
 import AuthPage from '../register/AuthPage';
 import SetPwdPage from '../register/SetPwdPage';
+import LoginPage from '../register/LoginPage';
+import ResetPwdPage from '../register/ResetPwdPage';
+import WebViewPage from '../../common/WebViewPage';
+import LoanPageDetails from '../2_loan/LoanPageDetails'
 import Calendar4Payback from '../4_my/Calendar4Payback';
 import RotateAnimate from '../4_my/RotateAnimate';
 
@@ -14,23 +16,29 @@ const AppStackNavigator = createStackNavigator(
     TabPage:{
       screen:TabPage,
     },
-    WebViewPage:{
-      screen:WebViewPage,
-    },
-    LoanPageDetails:{
-      screen:LoanPageDetails,
-    },
     RegisterPage:{
       screen:RegisterPage,
     },
     SetPwdPage:{
       screen:SetPwdPage,
     },
-    Calendar4Payback:{
-      screen:Calendar4Payback,
-    },
     AuthPage:{
       screen:AuthPage,
+    },
+    LoginPage:{
+      screen:LoginPage,
+    },
+    ResetPwdPage:{
+      screen:ResetPwdPage,
+    },
+    WebViewPage:{
+      screen:WebViewPage,
+    },
+    LoanPageDetails:{
+      screen:LoanPageDetails,
+    },
+    Calendar4Payback:{
+      screen:Calendar4Payback,
     },
     RotateAnimate:{
       screen:RotateAnimate,

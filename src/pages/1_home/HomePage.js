@@ -22,15 +22,8 @@ import ProductCardMain from '../2_loan/ProductCardMain';
 import ProductCardSub from '../2_loan/ProductCardSub';
 import LoadingIcon from '../../common/LoadingIcon';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import {NetReqModel} from '../../Moidel/NetReqModel';
 import Utils from '../../utils/Utils';
 
-const msgArray = [
-  {msgTxt: '1. 你好放假放到卡拉斯京分开了的撒'},
-  {msgTxt: '2. 次哦啊囧超级三哦参加哦i撒从啊手机哦参加哦撒手机啊黄i是'},
-  {msgTxt: '3. 时空怕靠谱纯牛奶扫你才骚就从萨科皮卡车怕时间'},
-  {msgTxt: '4. 岁啊还吃呢少见哦贾长松i接啊词接送i就从撒'},
-]
 let isAndroid = Platform.OS==='android'?true:false;
 let refreshRate = 60;
 export default class HomePage extends Component {
@@ -45,9 +38,6 @@ export default class HomePage extends Component {
       isLoading: false,
       httpRes:{}
     }
-  }
-
-  componentWillMount() { 
   }
 
   componentDidMount() {
@@ -65,13 +55,8 @@ export default class HomePage extends Component {
     this.setState({
       isLoading:true
     });
-    NetReqModel.jyd_pubData.user_id = await "";
-    NetReqModel.jyd_pubData.source_type = await "0001";
-    NetReqModel.jyd_pubData.system_id = await "Android 7";
-    NetReqModel.jyd_pubData.network_type = await "wifi";
-    NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/firstPage';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
       for(var i = 0 ; i < result.appsellinfos.length ; i++){

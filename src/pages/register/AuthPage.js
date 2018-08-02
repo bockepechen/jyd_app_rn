@@ -13,10 +13,10 @@ import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AuthCode from './AuthCode';
-import {NetReqModel} from '../../Moidel/NetReqModel';
 import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import { AppConfig } from '../../config/AppConfig';
 import LoadingIcon from '../../common/LoadingIcon';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 export default class AuthPage extends Component {
   constructor(props){
@@ -66,26 +66,25 @@ export default class AuthPage extends Component {
   }
 
   finishInput = async (t) => {
-    // console.log(`输入验证码为：${t}`);
+    Keyboard.dismiss();
     // 启动Loading动画
     this.setState({isLoading:true});
-    NetReqModel.tel_code = await t;
+    global.NetReqModel.tel_code = await t;
     let url = await '/signIn/securityCode';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         // 返回数据，关闭Loading动画
         this.setState({isLoading:false}, () => {
           if (result.return_code === '0000') {
-          clearInterval(this.timer);
-           this.props.navigation.navigate('SetPwdPage');
+            clearInterval(this.timer);
+            this.props.navigation.navigate(this.navData.nextPage);
           } else {
-           // TODO 返回错误信息，进行Toast提示返回错误信息，进行Toast提示
+            this.refs.toast.show(result.return_msg);
           }
         })
       })
       .catch((e) => {
-        console.log(e);
-        // TODO Toast提示异常
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         // 关闭Loading动画
         if(this.state.isLoading) {
           this.setState({isLoading:false});
@@ -94,25 +93,30 @@ export default class AuthPage extends Component {
   }
 
   reSendAuthCode = async () => {
+    // 重置倒计时，开启倒计时
+    this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
+      this.authCode_countDown();
+    });
     let url = await '/sendMessage/registerCode';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
-        console.log(result);
         // 返回数据，关闭Loading动画
         this.setState({isLoading:false}, () => {
           if (result.return_code === '0000') {
-            // 发送成功，重置倒计时
-            this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
-              this.authCode_countDown();
-            });
+            // TODO 重新发送成功
           } else {
-           // TODO 返回错误信息，进行Toast提示返回错误信息，进行Toast提示
+            // 发送未成功，立即停止倒计时
+            clearInterval(this.timer);
+            this.setState({validTime:0})
+            this.refs.toast.show(result.return_msg);
           }
         })
       })
       .catch((e) => {
-        console.log(e);
-        // TODO Toast提示异常
+        // 发送未成功，立即停止倒计时
+        clearInterval(this.timer);
+        this.setState({validTime:0})
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         // 关闭Loading动画
         if(this.state.isLoading) {
           this.setState({isLoading:false});
@@ -183,7 +187,7 @@ export default class AuthPage extends Component {
       <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
         <View style={GlobalStyles.rootContainer}>
           <NavigationBar 
-            title={'注册'}
+            title={this.navData.pageTitle}
             titleColor='#FFFFFF'
             titleSize={scaleSize(56)}
             navColor='#E8152E'
@@ -199,6 +203,7 @@ export default class AuthPage extends Component {
               {this.renderCorpLogo()}
           </View>
           {this.state.isLoading?(<LoadingIcon />):null}
+          {ViewUtils.renderToast()}
         </View>
       </TouchableWithoutFeedback>
     )
