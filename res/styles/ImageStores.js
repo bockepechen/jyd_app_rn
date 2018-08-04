@@ -63,4 +63,5 @@ export var ImageStores = {
   qt_1: require('../imgs/qt_1.png'),
   ld_1: require('../imgs/ld_1.png'),
   ld_2: require('../imgs/ld_2.png'),
+  qt_1: require('../imgs/qt_1.png'),
 }

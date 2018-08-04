@@ -252,30 +252,39 @@ export default class HomePage extends Component {
       </ParallaxScrollView>
     )
   }
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
 
+    });
+  }
   renderTopNavIconViews() {
     let topNavIconViews = [];
     let IconDatas = [
       {
         iconImg:ImageStores.sy_22,
-        iconName:'每日签到'
+        iconName:'每日签到',
+        url:'MessagePage'
       },
       {
         iconImg:ImageStores.sy_23,
-        iconName:'邀请好友'
+        iconName:'邀请好友',
+        url:'MessagePage'
       },
       {
         iconImg:ImageStores.sy_24,
-        iconName:'我的奖励'
+        iconName:'我的奖励',
+        url:'MessagePage'
       },
       {
         iconImg:ImageStores.sy_25,
-        iconName:'消息中心'
+        iconName:'消息中心',
+        url:'MessagePage'
       },
     ];
     IconDatas.map((item, index) => {
       topNavIconViews.push(
         <TouchableOpacity 
+          onPress={()=>{this.goto(item.url)}} 
           key={index} 
           style={{flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
           <Image 

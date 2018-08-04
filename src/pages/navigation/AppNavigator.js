@@ -10,6 +10,8 @@ import WebViewPage from '../../common/WebViewPage';
 import LoanPageDetails from '../2_loan/LoanPageDetails'
 import Calendar4Payback from '../4_my/Calendar4Payback';
 import RotateAnimate from '../4_my/RotateAnimate';
+import MessagePage from '../1_home/MessagePage';
+import MsgListItemDetail from '../1_home/MsgListItemDetail';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -42,6 +44,12 @@ const AppStackNavigator = createStackNavigator(
     },
     RotateAnimate:{
       screen:RotateAnimate,
+    },
+    MessagePage:{
+      screen:MessagePage
+    },
+    MsgListItemDetail:{
+      screen:MsgListItemDetail
     },
   },{
     navigationOptions:{
