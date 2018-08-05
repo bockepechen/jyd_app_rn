@@ -29,13 +29,13 @@ export default class MessagePage extends PureComponent {
   }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress',     
-    this.onBackButtonPressAndroid);
+    if(isAndroid)
+      BackHandler.addEventListener('hardwareBackPress',this.onBackButtonPressAndroid);
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', 
-    this.onBackButtonPressAndroid);
+    if(isAndroid)
+      BackHandler.removeEventListener('hardwareBackPress',this.onBackButtonPressAndroid);
   }
 
   componentWillMount() {
