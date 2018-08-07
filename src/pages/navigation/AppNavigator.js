@@ -13,6 +13,7 @@ import RotateAnimate from '../4_my/RotateAnimate';
 import MessagePage from '../1_home/MessagePage';
 import MsgListItemDetail from '../1_home/MsgListItemDetail';
 import QualificationPage from '../3_discover/QualificationPage';
+import SettingPage from '../4_my/SettingPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -54,6 +55,9 @@ const AppStackNavigator = createStackNavigator(
     },
     QualificationPage:{
       screen:QualificationPage
+    },
+    SettingPage:{
+      screen:SettingPage
     },
   },{
     navigationOptions:{

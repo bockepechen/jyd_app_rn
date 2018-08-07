@@ -25,6 +25,12 @@ export default class MyPage extends Component {
     }
   }
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+
+    });
+  }
+
   loadData = () => {
     this.setState({isRefresh:true});
     setTimeout(() => {
@@ -125,7 +131,7 @@ export default class MyPage extends Component {
             <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{'用户13752768957'}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
+        <TouchableHighlight onPress={()=>this.goto('SettingPage')} underlayColor='rgba(0,0,0,0)'>
           <Image 
             source={ImageStores.bar1}
             resizeMode={'stretch'}

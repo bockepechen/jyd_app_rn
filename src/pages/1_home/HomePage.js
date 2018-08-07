@@ -191,6 +191,7 @@ export default class HomePage extends Component {
         </TouchableHighlight>
         <Text style={{fontSize:scaleSize(56), color:'#ffffff'}}>{'嘉e贷'}</Text>
         <TouchableHighlight 
+          onPress={()=>this.goto('SettingPage')}
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1, flexDirection:'row', justifyContent:'flex-end'}}>
           <Image 
