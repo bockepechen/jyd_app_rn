@@ -12,6 +12,7 @@ import Calendar4Payback from '../4_my/Calendar4Payback';
 import RotateAnimate from '../4_my/RotateAnimate';
 import MessagePage from '../1_home/MessagePage';
 import MsgListItemDetail from '../1_home/MsgListItemDetail';
+import QualificationPage from '../3_discover/QualificationPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -50,6 +51,9 @@ const AppStackNavigator = createStackNavigator(
     },
     MsgListItemDetail:{
       screen:MsgListItemDetail
+    },
+    QualificationPage:{
+      screen:QualificationPage
     },
   },{
     navigationOptions:{

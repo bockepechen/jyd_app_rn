@@ -30,15 +30,15 @@ export default class TabStationMessage extends Component {
     }
 
     componentDidMount() {
-        global.NetReqModel.tel_phone = "15822753827";
-        // global.NetReqModel.tel_phone = "13502151376";
+        // global.NetReqModel.tel_phone = "15822753827";
+        global.NetReqModel.tel_phone = "13502151376";
         this._onRefresh();
     }
 
     async getInfoData() {
         global.NetReqModel.page_number = await this.state.next_page;
-        global.NetReqModel.jyd_pubData.user_id = await "91";
-        // global.NetReqModel.jyd_pubData.user_id = await "4";
+        // global.NetReqModel.jyd_pubData.user_id = await "91";
+        global.NetReqModel.jyd_pubData.user_id = await "4";
         global.NetReqModel.jyd_pubData.source_type = await "0001";
         global.NetReqModel.jyd_pubData.system_id = await "Android 7";
         global.NetReqModel.jyd_pubData.network_type = await "wifi";
@@ -200,7 +200,7 @@ export default class TabStationMessage extends Component {
 
     _onEndReached = ()=>{
         //如果是正在加载中或没有更多数据了，则返回
-        if(this.state.next_page === "" || global.NetReqModel.tel_phone === ""){
+        if(this.state.next_page === "" || this.state.next_page === "1"  || global.NetReqModel.tel_phone === ""){
             return ;
         }
         //获取数据

@@ -22,11 +22,11 @@ export default class ProductCardMain extends Component {
 
   render() {
     let top1 = 
-        <Text style={{marginTop:isIOS?scaleSize(63):scaleSize(51), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.SellName}</Text>
+        <Text style={{marginTop:isIOS?scaleSize(63):scaleSize(51), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
     let top2 = 
       <View style={{marginTop:isIOS?scaleSize(63):scaleSize(51), width:GlobalStyles.WINDOW_WIDTH, flexDirection:'row', alignItems:'flex-end'}}>
-        <Text style={{marginLeft:scaleSize(148), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.SellName}</Text>
-        <Text style={{marginLeft:scaleSize(477), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+this.props.data.SurplusMoney}元</Text>
+        <Text style={{marginLeft:scaleSize(148), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
+        <Text style={{marginLeft:scaleSize(477), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+this.props.data.surplusmoney}元</Text>
       </View>
 
     return (
@@ -38,11 +38,11 @@ export default class ProductCardMain extends Component {
             source={ImageStores.sy_19} 
             resizeMode={'stretch'} 
             style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(594), flexDirection:'column', alignItems:'center'}} >
-            {this.props.data.SurplusMoney?top2:top1}
+            {this.props.data.surplusmoney?top2:top1}
             <Text style={{marginTop:scaleSize(81), fontWeight:'bold', fontSize:scaleSize(36), color:'#989898'}}>{'年化利率'}</Text>
             <View style={{marginTop:isIOS?scaleSize(30):scaleSize(24), width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(90), flexDirection:'row', alignItems:'flex-end', justifyContent:'center'}}>
               <View style={{ height:scaleSize(72)}}>
-                <Text style={{fontSize:scaleSize(72), fontWeight:'200', color:'#998675'}}>{this.props.data.ExpectedYearYield}</Text>
+                <Text style={{fontSize:scaleSize(72), fontWeight:'200', color:'#998675'}}>{this.props.data.expectedyearyield}</Text>
               </View>
               <View style={{ height:scaleSize(42)}}>
                 <Text style={{fontSize:scaleSize(42), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -51,7 +51,7 @@ export default class ProductCardMain extends Component {
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{' + '}</Text>
               </View>
               <View style={{ height:scaleSize(90)}}>
-                <Text style={{fontSize:scaleSize(90), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.ExpectedYield}</Text>
+                <Text style={{fontSize:scaleSize(90), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.expectedyield}</Text>
               </View>
               <View style={{ height:scaleSize(54)}}>
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#ff3a49'}}>{'%'}</Text>
@@ -63,7 +63,7 @@ export default class ProductCardMain extends Component {
                 <Text style={{fontSize:scaleSize(26), color:'#ff3a49'}}>{'出借奖励'}</Text>
               </ImageBackground>
             </View>
-            <Text style={{marginTop:isIOS?scaleSize(54):scaleSize(48), fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.ExpiresDays}天</Text>
+            <Text style={{marginTop:isIOS?scaleSize(54):scaleSize(48), fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
           </ImageBackground>
           <TouchableHighlight
             underlayColor='rgba(0,0,0,0)'

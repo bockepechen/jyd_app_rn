@@ -19,6 +19,12 @@ export default class DiscoverPage extends Component {
     super(props);
   }
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+
+    });
+  }
+
   renderSwiper() {
     let swiperViews = [];
     let swiperSourceData = [
@@ -123,7 +129,7 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.sy_22,
         title: '企业资质',
-        callback: null
+        callback: () => {this.goto('QualificationPage')}
       },
       {
         img: ImageStores.sy_23,
@@ -147,7 +153,7 @@ export default class DiscoverPage extends Component {
     })
     line2_data.map((item, index) => {
       line2_views.push(
-        <TouchableOpacity key={index} style={{alignItems:'center'}}>
+        <TouchableOpacity key={index} style={{alignItems:'center'}} onPress={item.callback}>
           <Image source={item.img} resizeMode={'stretch'} style={{width:scaleSize(138), height:scaleSize(138)}}/>
           <Text style={{marginTop:scaleSize(24), fontSize:scaleSize(36), color:'#656565'}}>{item.title}</Text>
         </TouchableOpacity>

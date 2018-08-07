@@ -31,9 +31,7 @@ export default class TabOfficialPost extends Component {
 
   componentDidMount() {
     // this.getInfoData();
-    this.setState({},()=>{
-      this._onRefresh();
-    })
+    this._onRefresh();
   }
 
   async getInfoData() {
@@ -199,7 +197,7 @@ export default class TabOfficialPost extends Component {
 
   _onEndReached = ()=>{
       //如果是正在加载中或没有更多数据了，则返回
-      if(this.state.next_page === ""){
+      if(this.state.next_page === "" || this.state.next_page === "1"){
           return ;
       }
       //获取数据
