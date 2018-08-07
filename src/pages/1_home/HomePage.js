@@ -181,7 +181,7 @@ export default class HomePage extends Component {
         paddingLeft:scaleSize(60),
         paddingRight:scaleSize(60),
       }}>
-        <TouchableHighlight 
+        <TouchableHighlight
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1,flexDirection:'row', justifyContent:'flex-start'}}>
           <Image 

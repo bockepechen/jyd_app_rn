@@ -14,6 +14,7 @@ import MessagePage from '../1_home/MessagePage';
 import MsgListItemDetail from '../1_home/MsgListItemDetail';
 import QualificationPage from '../3_discover/QualificationPage';
 import SettingPage from '../4_my/SettingPage';
+import AccountSecurityPage from '../4_my/AccountSecurityPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -58,6 +59,9 @@ const AppStackNavigator = createStackNavigator(
     },
     SettingPage:{
       screen:SettingPage
+    },
+    AccountSecurityPage:{
+      screen:AccountSecurityPage
     },
   },{
     navigationOptions:{

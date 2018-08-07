@@ -5,8 +5,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  TouchableHighlight,
-  ImageBackground,
   Image,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -17,29 +15,41 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {ImageStores} from '../../../res/styles/ImageStores';
 
 let isAndroid = Platform.OS==='android'?true:false;
-export default class SettingPage extends Component {
+export default class AccountSecurityPage extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.listItem = [
         {
-            title:'当前版本',
+            title:'用户信息',
             callback:()=>{console.log('组织信息')}
         },
         {
-            title:'意见反馈',
+            title:'我的银行卡',
             callback:()=>{console.log('组织信息')}
         },
         {
-            title:'清理缓存',
+            title:'手机号码',
+            callback:()=>{console.log('组织信息')}
+        },
+        {
+            title:'联系地址',
+            callback:()=>{console.log('组织信息')}
+        },
+        {
+            title:'修改登录密码',
+            callback:()=>{console.log('组织信息')}
+        },
+        {
+            title:'修改交易密码',
             callback:()=>{console.log('组织信息')}
         },
     ]
     this.state = {
       httpRes:{},
       list:[],
-      cacheSize:0,
-      version:'0.0.0'
+      tel:'138****1234',
+      cardInfo:'工商银行(2341)'
     }
   }
 
@@ -74,11 +84,11 @@ export default class SettingPage extends Component {
   };
 
   _renderItemDetail(index){
-      if(index == 0){
-        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.version}</Text>
+      if(index == 1){
+        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.cardInfo}</Text>
       }
       else if(index == 2){
-        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.cacheSize} M</Text>
+        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.tel}</Text>
       }else{
           return null
       }
@@ -127,17 +137,6 @@ export default class SettingPage extends Component {
       >
         {this._renderItem()}
       </ScrollView>
-      <TouchableHighlight 
-          style={{flex:1,flexDirection:'row',justifyContent:'center'}}
-          underlayColor='rgba(0,0,0,0)'
-          onPress={()=>{this.props.navigation.navigate('LoginPage')}}>
-          <ImageBackground 
-            source={ImageStores.sy_17} 
-            resizeMode={'stretch'} 
-            style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-            <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'退出账号'}</Text>
-          </ImageBackground>
-        </TouchableHighlight>
       </View>
     )
   }

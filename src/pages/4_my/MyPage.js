@@ -5,9 +5,9 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
+  Modal
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
@@ -22,7 +22,16 @@ export default class MyPage extends Component {
       isRefresh: false,
       isEye: true,
       image_eye: ImageStores.me_3,
+      modalVisible: false,
+      modaltext1:"嘉e贷联手江西银行",
+      modaltext2:"积极响应国家政策",
+      modaltext3:"银行存管系统正式上线，请先开通银行存管账户",
+      modaltext4:"开通后即可进行充值、提现、出借等操作",
     }
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   goto(url,JsonObj){
@@ -122,7 +131,7 @@ export default class MyPage extends Component {
         alignItems:'center',
         justifyContent:'space-between',
       }}>
-        <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
+        <TouchableHighlight onPress={()=>this.goto('AccountSecurityPage')} underlayColor='rgba(0,0,0,0)'>
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Image 
               source={ImageStores.me_10} 
@@ -220,7 +229,7 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_8,
         title:'风险评测',
-        callback:()=>{},
+        callback:()=>{this.setModalVisible(true)},
       },
       {
         img:ImageStores.me_7,
@@ -281,6 +290,58 @@ export default class MyPage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
+        <Modal
+          style={{flex:1,}}
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
+            <View style={{flexDirection:'column',justifyContent:'center',height:scaleSize(891),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
+              <View style={{flexDirection:'row',justifyContent:'center'}}>
+                <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext1}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(45)}}>
+                <Image source={ImageStores.me_30} resizeMode={'stretch'} style={{width:scaleSize(522), height:scaleSize(201)}}/>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(60)}}>
+                <Text style={{color:'#998675',fontSize:scaleSize(42)}}>{this.state.modaltext2}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(54)}}>
+                <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext3}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center'}}>
+                <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext4}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(54)}}>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{this.setModalVisible(false)}}>
+                  <ImageBackground 
+                    source={ImageStores.cp_2} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'稍后再说'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{console.log('立即开通')}}>
+                  <ImageBackground 
+                    source={ImageStores.sy_15} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'立即开通'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     )
   }
