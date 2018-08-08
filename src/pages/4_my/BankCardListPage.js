@@ -4,8 +4,7 @@ import {
     Text,
     ScrollView,
     ImageBackground,
-    TouchableHighlight,
-    Image,
+    TouchableOpacity,
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
@@ -31,6 +30,12 @@ export default class BankCardListPage extends Component{
 
     navGoback = () => {
         this.props.navigation.goBack();
+    }
+
+    goto(url,JsonObj){
+        this.props.navigation.navigate(url,{
+
+        });
     }
 
     _renderItem(){
@@ -75,8 +80,10 @@ export default class BankCardListPage extends Component{
         return (
             <View style={{marginTop:scaleSize(30),flexDirection:'row',justifyContent:'center'}}>
                 <View style={{borderColor:'#fff',borderWidth:scaleSize(10),borderRadius:scaleSize(25),width:scaleSize(1173), height:scaleSize(498),justifyContent:'center',alignItems:'center'}}>
-                    <View style={{borderColor:'#fff',borderWidth:scaleSize(10),height:0,borderRadius:scaleSize(25),width:scaleSize(100)}}/>
-                    <View style={{position:'absolute',borderColor:'#fff',borderWidth:scaleSize(10),width:0,borderRadius:scaleSize(25),height:scaleSize(100)}}/>
+                    <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={()=>{this.goto('BindCardPage')}}>
+                        <View style={{borderColor:'#fff',borderWidth:scaleSize(10),height:0,borderRadius:scaleSize(25),width:scaleSize(100)}}/>
+                        <View style={{position:'absolute',borderColor:'#fff',borderWidth:scaleSize(10),width:0,borderRadius:scaleSize(25),height:scaleSize(100)}}/>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -104,7 +111,7 @@ export default class BankCardListPage extends Component{
         return (
             <View style={GlobalStyles.rootContainer}>
                 <NavigationBar 
-                    title='账号与安全'
+                    title='银行卡'
                     titleColor='#FFFFFF'
                     titleSize={scaleSize(56)}
                     navColor='#E8152E'

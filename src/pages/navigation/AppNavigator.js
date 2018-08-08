@@ -16,6 +16,7 @@ import QualificationPage from '../3_discover/QualificationPage';
 import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
+import BindCardPage from '../4_my/BindCardPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -66,6 +67,9 @@ const AppStackNavigator = createStackNavigator(
     },
     BankCardListPage:{
       screen:BankCardListPage
+    },
+    BindCardPage:{
+      screen:BindCardPage
     },
   },{
     navigationOptions:{
