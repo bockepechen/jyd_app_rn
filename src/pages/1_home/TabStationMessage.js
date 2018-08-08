@@ -32,7 +32,12 @@ export default class TabStationMessage extends Component {
     componentDidMount() {
         // global.NetReqModel.tel_phone = "15822753827";
         global.NetReqModel.tel_phone = "13502151376";
-        this._onRefresh();
+        this.setState({
+            next_page : '1'
+        },()=>{
+            this.getInfoData()
+        })
+        // this._onRefresh();
     }
 
     async getInfoData() {
@@ -44,7 +49,7 @@ export default class TabStationMessage extends Component {
         global.NetReqModel.jyd_pubData.network_type = await "wifi";
         global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/usermail';
-        this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
           console.log(result);
           var totalList = [];
@@ -56,7 +61,8 @@ export default class TabStationMessage extends Component {
                 httpRes : result,
                 list : totalList,
                 next_page : result.next_page,
-                itemUrl:result.url
+                itemUrl:result.url,
+                refreshing : false
                 }
                 , () => {
             })
@@ -66,6 +72,7 @@ export default class TabStationMessage extends Component {
                 httpRes : result,
                 list : totalList,
                 next_page : '',
+                refreshing : false
             })
           }
         })
@@ -83,7 +90,7 @@ export default class TabStationMessage extends Component {
         global.NetReqModel.jyd_pubData.network_type = await "wifi";
         global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/readUserMails';
-        this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
             console.log(result);
             if(result.return_code == '0000'){
@@ -120,7 +127,7 @@ export default class TabStationMessage extends Component {
         global.NetReqModel.jyd_pubData.network_type = await "wifi";
         global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/readUserMailsByAppCache';
-        this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
           console.log(result);
         })
@@ -135,7 +142,7 @@ export default class TabStationMessage extends Component {
         }
         this.setState({
             next_page : '1',
-            // list : []
+            refreshing : true
         },()=>{
             this.getInfoData();
         });
@@ -222,7 +229,7 @@ export default class TabStationMessage extends Component {
                 renderItem={this._renderItem}
                 ListFooterComponent={this._renderFooter}//尾巴
                 onEndReached={this._onEndReached}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.01}
                 ItemSeparatorComponent={this._separator}
                 refreshControl={
                     <RefreshControl

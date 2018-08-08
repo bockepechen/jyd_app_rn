@@ -5,6 +5,7 @@ import {
     ScrollView,
     ImageBackground,
     TouchableOpacity,
+    Image
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
@@ -79,12 +80,21 @@ export default class BankCardListPage extends Component{
     _renderItemAdd(){
         return (
             <View style={{marginTop:scaleSize(30),flexDirection:'row',justifyContent:'center'}}>
-                <View style={{borderColor:'#fff',borderWidth:scaleSize(10),borderRadius:scaleSize(25),width:scaleSize(1173), height:scaleSize(498),justifyContent:'center',alignItems:'center'}}>
-                    <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={()=>{this.goto('BindCardPage')}}>
-                        <View style={{borderColor:'#fff',borderWidth:scaleSize(10),height:0,borderRadius:scaleSize(25),width:scaleSize(100)}}/>
-                        <View style={{position:'absolute',borderColor:'#fff',borderWidth:scaleSize(10),width:0,borderRadius:scaleSize(25),height:scaleSize(100)}}/>
+                <ImageBackground 
+                    source={ImageStores.me_33}
+                    resizeMode={'stretch'}
+                    style={{width:scaleSize(1173), height:scaleSize(498), flexDirection:'row'}}>
+                    <TouchableOpacity 
+                        onPress={()=>{this.goto('BindCardPage')}}
+                        style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                        <Image 
+                            source={ImageStores.me_34}
+                            resizeMode={'stretch'}
+                            style={{width:scaleSize(162),height:scaleSize(162)}}
+                        />
+                        <Text style={{marginLeft:scaleSize(60),color:'#c3c3c3',fontSize:scaleSize(60),fontWeight:'bold'}}>{'添加银行卡'}</Text>
                     </TouchableOpacity>
-                </View>
+                </ImageBackground>
             </View>
         )
     }

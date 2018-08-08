@@ -41,7 +41,7 @@ export default class ProductCardSub extends Component {
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{'+'}</Text>
               </View>
               <View style={{height:scaleSize(66)}}>
-                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.expectedyield}</Text>
+                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.improveyearrate}</Text>
               </View>
               <View style={{height:scaleSize(32)}}>
                 <Text style={{fontSize:scaleSize(32), fontWeight:'200', color:'#ff3a49'}}>{'%'}</Text>
@@ -67,10 +67,10 @@ export default class ProductCardSub extends Component {
               underlayColor='rgba(0,0,0,0)'
               onPress={()=>{}}>
               <ImageBackground 
-                source={this.props.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
+                source={this.props.data.buyStatus == '0'?ImageStores.sy_15:ImageStores.cp_2} 
                 resizeMode={'stretch'} 
                 style={{marginTop:this.props.surplusmoney?scaleSize(21):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.props.ifSell?'#FFFFFF':'#656565'}}>{'立即出借'}</Text>
+                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.props.data.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.props.data.display}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>

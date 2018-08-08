@@ -30,7 +30,7 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'手机号码',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('AuthPhoneNumPage')}
         },
         {
             title:'联系地址',

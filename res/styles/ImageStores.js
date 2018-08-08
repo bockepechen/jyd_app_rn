@@ -38,6 +38,8 @@ export var ImageStores = {
   me_11: require('../imgs/me_11.png'),
   me_30: require('../imgs/me_30.png'),
   me_32: require('../imgs/me_32.png'),
+  me_33: require('../imgs/me_33.png'),
+  me_34: require('../imgs/me_34.png'),
   bar1: require('../imgs/bar1.png'),
   bar2: require('../imgs/bar2.png'),
   cp_1: require('../imgs/cp_1.png'),
