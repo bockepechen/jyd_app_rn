@@ -26,7 +26,7 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'我的银行卡',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('BankCardListPage')}
         },
         {
             title:'手机号码',
@@ -57,31 +57,15 @@ export default class AccountSecurityPage extends Component {
    
   }
   
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+
+    });
+  }
+
   navGoback = () => {
     this.props.navigation.goBack();
   }
-
-
-  _onPressItem = (id,item) => {
-    // updater functions are preferred for transactional updates
-    this.props.navigation.navigate('MsgListItemDetail',{
-      data:{
-        url:this.state.itemUrl,
-        // url:"http://y5wtkk.natappfree.cc/product1412/html/messageDetail.html",
-        title:'消息中心',
-        id:item.an_id,
-        jsonObj:global.NetReqModel
-      },
-      ...this.props
-    })
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      this.readedList.push(id);
-      const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id)); // toggle
-      return {selected};
-    });
-  };
 
   _renderItemDetail(index){
       if(index == 1){

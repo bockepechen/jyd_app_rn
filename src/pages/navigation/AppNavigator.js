@@ -15,6 +15,7 @@ import MsgListItemDetail from '../1_home/MsgListItemDetail';
 import QualificationPage from '../3_discover/QualificationPage';
 import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
+import BankCardListPage from '../4_my/BankCardListPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -62,6 +63,9 @@ const AppStackNavigator = createStackNavigator(
     },
     AccountSecurityPage:{
       screen:AccountSecurityPage
+    },
+    BankCardListPage:{
+      screen:BankCardListPage
     },
   },{
     navigationOptions:{

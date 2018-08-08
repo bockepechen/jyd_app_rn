@@ -51,28 +51,6 @@ export default class SettingPage extends Component {
     this.props.navigation.goBack();
   }
 
-
-  _onPressItem = (id,item) => {
-    // updater functions are preferred for transactional updates
-    this.props.navigation.navigate('MsgListItemDetail',{
-      data:{
-        url:this.state.itemUrl,
-        // url:"http://y5wtkk.natappfree.cc/product1412/html/messageDetail.html",
-        title:'消息中心',
-        id:item.an_id,
-        jsonObj:global.NetReqModel
-      },
-      ...this.props
-    })
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      this.readedList.push(id);
-      const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id)); // toggle
-      return {selected};
-    });
-  };
-
   _renderItemDetail(index){
       if(index == 0){
         return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.version}</Text>
