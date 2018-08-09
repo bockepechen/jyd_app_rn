@@ -21,6 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+release_ios/
 
 # Android/IntelliJ
 #
@@ -61,3 +62,4 @@ android/app/release/app-release.apk
 android/app/jyd_android.jks
 android/app/release/output.json
 .vscode/launch.json
+package-lock.json
