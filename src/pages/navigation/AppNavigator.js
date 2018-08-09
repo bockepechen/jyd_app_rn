@@ -12,6 +12,12 @@ import Calendar4Payback from '../4_my/Calendar4Payback';
 import RotateAnimate from '../4_my/RotateAnimate';
 import MessagePage from '../1_home/MessagePage';
 import MsgListItemDetail from '../1_home/MsgListItemDetail';
+import QualificationPage from '../3_discover/QualificationPage';
+import SettingPage from '../4_my/SettingPage';
+import AccountSecurityPage from '../4_my/AccountSecurityPage';
+import BankCardListPage from '../4_my/BankCardListPage';
+import BindCardPage from '../4_my/BindCardPage';
+import AuthPhoneNumPage from '../4_my/AuthPhoneNumPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -50,6 +56,24 @@ const AppStackNavigator = createStackNavigator(
     },
     MsgListItemDetail:{
       screen:MsgListItemDetail
+    },
+    QualificationPage:{
+      screen:QualificationPage
+    },
+    SettingPage:{
+      screen:SettingPage
+    },
+    AccountSecurityPage:{
+      screen:AccountSecurityPage
+    },
+    BankCardListPage:{
+      screen:BankCardListPage
+    },
+    BindCardPage:{
+      screen:BindCardPage
+    },
+    AuthPhoneNumPage:{
+      screen:AuthPhoneNumPage
     },
   },{
     navigationOptions:{

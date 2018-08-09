@@ -31,13 +31,13 @@ export default class ProductCardJxsb extends Component {
         <ImageBackground source={ImageStores.cp_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(372), flexDirection:'row'}}>
           <View style={{marginLeft:scaleSize(108), marginTop:isIOS?scaleSize(69):scaleSize(75), width:scaleSize(450), height:scaleSize(213)}}>
             <View style={{height:scaleSize(51), flexDirection:'row'}}>
-              <Image source={this.paraData.titleImg} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
-              <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.titleName}</Text>
+              <Image source={this.paraData.titleImg ? this.paraData.titleImg : ImageStores.cp_xina} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
+              <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.Description}</Text>
             </View>
             <View style={{marginTop:isIOS?scaleSize(78):scaleSize(72), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
               <View style={{width:scaleSize(282), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
                 <View style={{height:scaleSize(78)}}>
-                  <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.rate}</Text>
+                  <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.YearRate}</Text>
                 </View>
                 <View style={{height:scaleSize(48)}}>
                   <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -49,10 +49,10 @@ export default class ProductCardJxsb extends Component {
             </View>
           </View>
           <View style={{marginLeft:scaleSize(135), marginTop:scaleSize(72), width:scaleSize(372), height:scaleSize(261), alignItems:'center'}}>
-            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{`借款期限 ${this.paraData.period}期`}</Text>
+            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{`借款期限 ${this.paraData.BorrowMonth}期`}</Text>
             {
               this.paraData.isRestMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${this.paraData.restMoney}元`}</Text>):
+                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${this.paraData.restmoneyamount}元`}</Text>):
                 null
             }
             

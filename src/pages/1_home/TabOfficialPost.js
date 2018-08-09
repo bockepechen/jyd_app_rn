@@ -30,10 +30,10 @@ export default class TabOfficialPost extends Component {
   }
 
   componentDidMount() {
-    // this.getInfoData();
-    this.setState({},()=>{
-      this._onRefresh();
+    this.setState({next_page:'1'},()=>{
+      this.getInfoData();
     })
+    // this._onRefresh();
   }
 
   async getInfoData() {
@@ -47,7 +47,7 @@ export default class TabOfficialPost extends Component {
     global.NetReqModel.jyd_pubData.network_type = await "wifi";
     global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/userMail/announcement';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
       var totalList = [];
@@ -59,7 +59,8 @@ export default class TabOfficialPost extends Component {
             httpRes : result,
             list : totalList,
             next_page : result.next_page,
-            itemUrl:result.url
+            itemUrl:result.url,
+            refreshing : false
           }
           , () => {
         })
@@ -68,6 +69,7 @@ export default class TabOfficialPost extends Component {
           httpRes : result,
           list : totalList,
           next_page : '',
+          refreshing : false
         })
       }
     })
@@ -78,14 +80,15 @@ export default class TabOfficialPost extends Component {
 
   async readAll() {
     console.log('22222222');
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
+    // global.NetReqModel.tel_phone = await "15822753827";
+    global.NetReqModel.tel_phone = await "13502151376";
+    global.NetReqModel.jyd_pubData.user_id = await "4";
     global.NetReqModel.jyd_pubData.source_type = await "0001";
     global.NetReqModel.jyd_pubData.system_id = await "Android 7";
     global.NetReqModel.jyd_pubData.network_type = await "wifi";
     global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/userMail/readAnnouncements';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
       if(result.return_code == '0000'){
@@ -122,7 +125,7 @@ export default class TabOfficialPost extends Component {
     global.NetReqModel.jyd_pubData.network_type = await "wifi";
     global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/userMail/readAnnouncementsByAppCache';
-    this.dataResponsitory.fetchNetResponsitory(url, NetReqModel)
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
     })
@@ -134,6 +137,7 @@ export default class TabOfficialPost extends Component {
   _onRefresh() {
     this.setState({
         next_page : '1',
+        refreshing : true
     },()=>{
         this.getInfoData();
     });
@@ -199,7 +203,7 @@ export default class TabOfficialPost extends Component {
 
   _onEndReached = ()=>{
       //如果是正在加载中或没有更多数据了，则返回
-      if(this.state.next_page === ""){
+      if(this.state.next_page === "" || this.state.next_page === "1"){
           return ;
       }
       //获取数据

@@ -29,10 +29,10 @@ export default class ProductCardSub extends Component {
           resizeMode={'stretch'} 
           style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(402), flexDirection:'row'}}>
           <View style={{marginTop:isIOS?scaleSize(78):scaleSize(72), marginLeft:scaleSize(114), width:scaleSize(480), height:scaleSize(234), flexDirection:'column'}}>
-            <Text style={{fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.props.data.SellName}</Text>
+            <Text style={{fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.props.data.sellname}</Text>
             <View style={{marginTop:isIOS?scaleSize(54):scaleSize(48), height:scaleSize(66), flexDirection:'row', alignItems:'flex-end'}}>
               <View style={{height:scaleSize(54)}}>
-                <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{this.props.data.ExpectedYearYield}</Text>
+                <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{this.props.data.expectedyearyield}</Text>
               </View>
               <View style={{height:scaleSize(32)}}>
                 <Text style={{fontSize:scaleSize(32), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -41,7 +41,7 @@ export default class ProductCardSub extends Component {
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{'+'}</Text>
               </View>
               <View style={{height:scaleSize(66)}}>
-                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.ExpectedYield}</Text>
+                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.improveyearrate}</Text>
               </View>
               <View style={{height:scaleSize(32)}}>
                 <Text style={{fontSize:scaleSize(32), fontWeight:'200', color:'#ff3a49'}}>{'%'}</Text>
@@ -57,20 +57,20 @@ export default class ProductCardSub extends Component {
           </View>
           <View style={{backgroundColor:'#f2f2f2', width:GlobalStyles.PIXEL, marginTop:scaleSize(69), marginBottom:scaleSize(69), marginLeft:scaleSize(27)}}/>
           <View style={{marginTop:scaleSize(78), marginLeft:0, width:scaleSize(522), height:scaleSize(261), flexDirection:'column', alignItems:'center'}}>
-            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.ExpiresDays}天</Text>
+            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
             {
               this.props.data.SurplusMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+this.props.data.SurplusMoney}元</Text>)
+                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+this.props.data.surplusmoney}元</Text>)
                 :null
             }
             <TouchableHighlight
               underlayColor='rgba(0,0,0,0)'
               onPress={()=>{}}>
               <ImageBackground 
-                source={this.props.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
+                source={this.props.data.buyStatus == '0'?ImageStores.sy_15:ImageStores.cp_2} 
                 resizeMode={'stretch'} 
-                style={{marginTop:this.props.isRestMoney?scaleSize(21):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.props.ifSell?'#FFFFFF':'#656565'}}>{'立即出借'}</Text>
+                style={{marginTop:this.props.surplusmoney?scaleSize(21):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.props.data.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.props.data.display}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>

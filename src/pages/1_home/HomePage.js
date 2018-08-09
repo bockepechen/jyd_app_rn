@@ -60,8 +60,8 @@ export default class HomePage extends Component {
     .then((result) => {
       console.log(result);
       for(var i = 0 ; i < result.appsellinfos.length ; i++){
-        result.appsellinfos[i].ExpectedYearYield = Utils.fmoney(result.appsellinfos[i].ExpectedYearYield*100,2)
-        result.appsellinfos[i].ExpectedYield = Utils.fmoney(result.appsellinfos[i].ExpectedYield*100,2)
+        result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
+        result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
       }
       // 返回数据，关闭Loading动画
       this.setState(
@@ -181,7 +181,7 @@ export default class HomePage extends Component {
         paddingLeft:scaleSize(60),
         paddingRight:scaleSize(60),
       }}>
-        <TouchableHighlight 
+        <TouchableHighlight
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1,flexDirection:'row', justifyContent:'flex-start'}}>
           <Image 
@@ -191,6 +191,7 @@ export default class HomePage extends Component {
         </TouchableHighlight>
         <Text style={{fontSize:scaleSize(56), color:'#ffffff'}}>{'嘉e贷'}</Text>
         <TouchableHighlight 
+          onPress={()=>this.goto('SettingPage')}
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1, flexDirection:'row', justifyContent:'flex-end'}}>
           <Image 

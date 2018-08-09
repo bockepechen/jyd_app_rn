@@ -27,12 +27,12 @@ export default class ProductCardSbzr extends Component {
         <ImageBackground source={ImageStores.cp_3} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(510), flexDirection:'row'}}>
           <View style={{marginLeft:isIOS?scaleSize(108):scaleSize(114), marginTop:scaleSize(72), width:scaleSize(480), height:scaleSize(345)}}>
             <View style={{height:scaleSize(51), flexDirection:'row'}}>
-              <Image source={this.paraData.titleImg} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
-              <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.titleName}</Text>
+              <Image source={this.paraData.titleImg ? this.paraData.titleImg : ImageStores.cp_cheaa} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
+              <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.description}</Text>
             </View>
             <View style={{marginTop:scaleSize(51), flexDirection:'row', alignItems:'flex-end'}}>
               <View style={{marginLeft:scaleSize(12), height:scaleSize(78)}}>
-                <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.rate}</Text>
+                <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.newyearrate}</Text>
               </View>
               <View style={{height:scaleSize(48)}}>
                 <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -41,12 +41,12 @@ export default class ProductCardSbzr extends Component {
                 <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:'#998675'}}>{'年化利率'}</Text>
               </View>
             </View>
-            <Text style={{marginLeft:scaleSize(12), marginTop:scaleSize(66), fontSize:scaleSize(36), color:'#998675'}}>{`剩余金额(元): ${this.paraData.restMoney}`}</Text>
-            <Text style={{marginLeft:scaleSize(12), marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#998675'}}>{`剩余金额(元): ${this.paraData.transferMoney}`}</Text>
+            <Text style={{marginLeft:scaleSize(12), marginTop:scaleSize(66), fontSize:scaleSize(36), color:'#998675'}}>{`剩余金额(元): ${this.paraData.restmoney}`}</Text>
+            <Text style={{marginLeft:scaleSize(12), marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#998675'}}>{`转让金额(元): ${this.paraData.transferAmoney}`}</Text>
           </View>
           <View style={{marginLeft:isIOS?scaleSize(141):scaleSize(135), marginTop:scaleSize(126), width:scaleSize(336), height:scaleSize(312), alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{'剩余期限'}</Text>
-            <Text style={{marginTop:scaleSize(24), fontSize:scaleSize(48), fontWeight:'bold', color:'#998675'}}>{`${this.paraData.period}期+${this.paraData.addDay}天`}</Text>
+            <Text style={{marginTop:scaleSize(24), fontSize:scaleSize(48), fontWeight:'bold', color:'#998675'}}>{`${this.paraData.month}期+${this.paraData.daysSpan}天`}</Text>
             <ImageBackground 
               source={this.paraData.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
               resizeMode={'stretch'} 
