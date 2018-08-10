@@ -38,9 +38,9 @@ export default class LoanPage extends PureComponent {
           height:scaleSize(2),
         }}>
 
-        <TabJeyx key={'jeyx'} tabLabel={'嘉e优选'}/>
-        <TabJxsb key={'jxsb'} tabLabel={'精选散标'}/>
-        <TabSbzr key={'sbzr'} tabLabel={'散标转让'}/>
+        <TabJeyx key={'jeyx'} tabLabel={'嘉e优选'} {...this.props}/>
+        <TabJxsb key={'jxsb'} tabLabel={'精选散标'} {...this.props}/>
+        <TabSbzr key={'sbzr'} tabLabel={'散标转让'} {...this.props}/>
       </ScrollableTabView>
     )
   }

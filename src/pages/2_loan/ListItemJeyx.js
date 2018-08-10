@@ -31,7 +31,11 @@ export default class ListItemJeyx extends PureComponent {
             <View style={{flex:1,height:scaleSize(135),flexDirection:'row',justifyContent:'center'}} >
                 <Text style={{fontSize:scaleSize(48),color:'#998675',marginTop:scaleSize(48)}}>每日9:00准时开抢</Text>
             </View>
-            <ProductCardMain data={this.props.item}/>
+            <ProductCardMain 
+              data={this.props.item} 
+              onPress={this._onPress}
+              {...this.props}
+            />
         </View>
     }
 
@@ -39,7 +43,7 @@ export default class ListItemJeyx extends PureComponent {
     //   const textColor = this.props.selected || (this.props.item.ua_readstatus == '01') ? "#959595" : "#656565";
       return (
         <View style={{flex:1,backgroundColor:'#fff'}}>
-           {this.props.item.isFirst ? this._MainRender() : <ProductCardSub data={this.props.item}/>}
+           {this.props.item.isFirst ? this._MainRender() : <ProductCardSub data={this.props.item} onPress={this._onPress} {...this.props}/>}
            {this.props.item.isFirst ? <View style={{height:scaleSize(6)}}/> : <View style={{height:scaleSize(18)}}/>}
         </View>
       );

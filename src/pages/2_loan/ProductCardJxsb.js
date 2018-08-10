@@ -55,13 +55,16 @@ export default class ProductCardJxsb extends Component {
                 (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${this.paraData.restmoneyamount}元`}</Text>):
                 null
             }
-            
-            <ImageBackground 
-              source={this.paraData.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
-              resizeMode={'stretch'} 
-              style={{marginTop:this.paraData.isRestMoney?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-              <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.ifSell?'#FFFFFF':'#656565'}}>{this.paraData.ifSell?'立即出借':'还款中'}</Text>
-            </ImageBackground>
+            <TouchableHighlight
+              underlayColor='rgba(0,0,0,0)'
+              onPress={this._onPress1}>
+              <ImageBackground 
+                source={this.paraData.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
+                resizeMode={'stretch'} 
+                style={{marginTop:this.paraData.isRestMoney?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.ifSell?'#FFFFFF':'#656565'}}>{this.paraData.ifSell?'立即出借':'还款中'}</Text>
+              </ImageBackground>
+            </TouchableHighlight>
           </View>
         </ImageBackground>
       </TouchableHighlight>

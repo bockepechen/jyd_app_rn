@@ -30,6 +30,7 @@ export default class AuthPhoneNumPage extends Component{
             isLoading: false,
             isEyeOpen: false,
             validTime: 0,
+            telshow:'137****1234'
         }
     }
 
@@ -116,15 +117,16 @@ export default class AuthPhoneNumPage extends Component{
             <View style={{width:scaleSize(1134), height:scaleSize(426), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
-                  style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
                   maxLength={11}
                   keyboardType={kbType}
                   clearButtonMode={'while-editing'}
                   placeholder={'手机号'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  secureTextEntry={!this.state.isEyeOpen}
                   onChangeText = {(p) => {this.pwd = p}}
+                  editable={false}
+                  value={`您当前认证的手机号为:${this.state.telshow} `}
                   />
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>

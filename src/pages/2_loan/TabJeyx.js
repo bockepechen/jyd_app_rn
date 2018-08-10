@@ -6,6 +6,7 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  DeviceEventEmitter,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
@@ -16,7 +17,6 @@ export default class TabJeyx extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
-    this.loadFlag = false;
     this.state = {
       selected: new Map(),
       httpRes:{},
@@ -28,7 +28,21 @@ export default class TabJeyx extends Component {
   }
 
   componentDidMount() {
-    this._onRefresh();
+    console.log('111')
+    DeviceEventEmitter.addListener('reFreshEmitter',(dic)=>{
+        console.log('222')
+        this.setState({
+          next_page : '1'
+        },()=>{
+          this.getInfoData()
+        })
+    });
+    this.setState({
+      next_page : '1'
+    },()=>{
+      this.getInfoData()
+    })
+    
   }
 
   async getInfoData() {
@@ -57,7 +71,6 @@ export default class TabJeyx extends Component {
             refreshing : false
           }
           , () => {
-            this.loadFlag = false
         })
       }else{
         this.setState({
@@ -74,10 +87,9 @@ export default class TabJeyx extends Component {
   }
   
   _onRefresh() {
-    this.loadFlag = true
     this.setState({
         next_page : '1',
-        // refreshing:true
+        refreshing:true
     },()=>{
         this.getInfoData();
     });
@@ -88,6 +100,25 @@ export default class TabJeyx extends Component {
     this.getInfoData();
   }
 
+  _onPressItem = (id,item) => {
+    // global.NetReqModel.sellInfoId = item.id;
+    global.NetReqModel.sellInfoId = 'JE0902018072001';
+    global.NetReqModel.tel_phone = '15822753827';
+    global.NetReqModel.jyd_pubData.user_id =39
+    global.NetReqModel.jyd_pubData.source_type = '0001'
+    global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+    // console.log(JSON.stringify(global.NetReqModel))
+    this.props.navigation.navigate('JeyxListItemDetail',{
+      data:{
+        // url:this.state.itemUrl,
+        url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
+        title:'嘉e精选',
+        jsonObj:global.NetReqModel
+      },
+      ...this.props
+    });
+  };
+
   _keyExtractor = (item, index) => item.id;
 
   _renderItem = ({item}) => (
@@ -96,6 +127,7 @@ export default class TabJeyx extends Component {
       onPressItem={this._onPressItem}
       selected={!!this.state.selected.get(item.id)}
       item={item}
+      {...this.props}
     />
   );
   _renderFooter = ()=>{
@@ -126,8 +158,7 @@ export default class TabJeyx extends Component {
           return ;
       }else{
         //获取数据
-        if(!this.loadFlag && !this.onEndReachedCalledDuringMomentum){
-          this.loadFlag = true
+        if(!this.onEndReachedCalledDuringMomentum){
           this._onLoad();
           this.onEndReachedCalledDuringMomentum = true;
         }
