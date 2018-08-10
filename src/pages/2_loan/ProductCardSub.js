@@ -19,10 +19,17 @@ export default class ProductCardSub extends Component {
   componentWillReceiveProps(nextProps) {
     this.props = nextProps;
   }
+  _onPress = () => {
+    this.props.onPress(this.props.id,this.props.item);
+  };
+  _onPress1 = () => {
+    cnsole.log('aaa');
+  };
   render() {
     return (
       <TouchableHighlight
         underlayColor='rgba(0,0,0,0)'
+        onPress={this._onPress}
         style={{marginTop:this.props.top, marginBottom:this.props.bottom}}>
         <ImageBackground 
           source={ImageStores.sy_20} 
@@ -65,7 +72,7 @@ export default class ProductCardSub extends Component {
             }
             <TouchableHighlight
               underlayColor='rgba(0,0,0,0)'
-              onPress={()=>{}}>
+              onPress={this._onPress1}>
               <ImageBackground 
                 source={this.props.data.buyStatus == '0'?ImageStores.sy_15:ImageStores.cp_2} 
                 resizeMode={'stretch'} 

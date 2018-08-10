@@ -20,6 +20,10 @@ export default class ProductCardMain extends Component {
     this.props = nextProps;
   }
 
+  _onPress = () => {
+    this.props.onPress(this.props.id,this.props.item);
+  };
+
   render() {
     let top1 = 
         <Text style={{marginTop:isIOS?scaleSize(63):scaleSize(51), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
@@ -32,7 +36,8 @@ export default class ProductCardMain extends Component {
     return (
       <TouchableHighlight
         underlayColor='rgba(0,0,0,0)'
-        onPress={()=>{console.log('')}}>
+        onPress={this._onPress}
+      >
         <View style={{marginTop:scaleSize(this.props.top),height:scaleSize(636), flexDirection:'column', alignItems:'center'}}>
           <ImageBackground 
             source={ImageStores.sy_19} 
@@ -67,7 +72,7 @@ export default class ProductCardMain extends Component {
           </ImageBackground>
           <TouchableHighlight
             underlayColor='rgba(0,0,0,0)'
-            onPress={()=>{console.log('')}}
+            onPress={this._onPress1}
             style={{width:scaleSize(588), height:scaleSize(168), position:'absolute', bottom:0}}>
             <ImageBackground 
               source={this.props.data.buyStatus == '0' ?ImageStores.sy_17:ImageStores.cp_1} 

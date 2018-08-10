@@ -105,12 +105,22 @@ export default class TabJxsb extends Component {
     )
   }
 
-  _onPressItem = (id) => {
-    // console.log(`selected id is ${id}`);
-    this.setState((state) => {
-      const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id));
-      return {selected};
+  _onPressItem = (id,item) => {
+    // global.NetReqModel.sellInfoId = item.id;
+    global.NetReqModel.sellInfoId = '20180704035229010122';
+    global.NetReqModel.tel_phone = '15822753827';
+    global.NetReqModel.jyd_pubData.user_id =39
+    global.NetReqModel.jyd_pubData.source_type = '0001'
+    global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.props.navigation.navigate('JxsbListItemDetail',{
+      data:{
+        // url:this.state.itemUrl,
+        url:"http://3abp2e.natappfree.cc/product1412/html/disperseBiding.html",
+        title:'精选散标',
+        jsonObj:global.NetReqModel
+      },
+      ...this.props
     });
   };
 
