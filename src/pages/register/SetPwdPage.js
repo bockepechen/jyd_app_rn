@@ -18,11 +18,13 @@ import Utils from '../../utils/Utils';
 import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class SetPwdPage extends Component {
   constructor(props){
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state={
       isEyeOpen: false,
       isFillPwd: false,
@@ -30,6 +32,14 @@ export default class SetPwdPage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener();
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
+  }
+  
   navGoback = () => {
     this.props.navigation.goBack();
   }

@@ -17,12 +17,14 @@ import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import { AppConfig } from '../../config/AppConfig';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class AuthPage extends Component {
   constructor(props){
     super(props);
     this.navData = this.props.navigation.state.params;
     this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       validTime: this.navData.authcodeCD,
       isLoading: false,
@@ -31,10 +33,12 @@ export default class AuthPage extends Component {
 
   componentDidMount() {
     this.authCode_countDown();
+    this.AndroidBackHandler.addPressBackListener();
   }
 
   componentWillUnmount() {
     this.timer && clearInterval(this.timer);
+    this.AndroidBackHandler.removePressBackListener();
   }
 
   authCode_countDown() {

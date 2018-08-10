@@ -13,6 +13,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Keyboard,
+  BackHandler,
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -24,11 +25,13 @@ import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class RegisterPage extends Component {
   constructor(props){
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       logo_initPos: new Animated.Value(0),
       input_initPos: new Animated.Value(0),
@@ -61,9 +64,12 @@ export default class RegisterPage extends Component {
       //   }
       // )
     ]).start(()=>{'Animate start parallelly.'})
+    this.AndroidBackHandler.addPressBackListener();
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
+  }
 
   navGoback = () => {
     if(this.state.isLoading) {

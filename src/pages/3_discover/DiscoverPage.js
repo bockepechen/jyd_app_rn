@@ -12,11 +12,22 @@ import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import ViewUtils from '../../utils/ViewUtils';
 
 
 export default class DiscoverPage extends Component {
   constructor(props) {
     super(props);
+    this.AndroidBackHandler = new AndroidBackHandler(this);
+  }
+
+  componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener();
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
   }
 
   goto(url,JsonObj){
@@ -196,6 +207,7 @@ export default class DiscoverPage extends Component {
         {this.renderActivityView()}
         {this.renderBonusView()}
         {this.renderGridView()}
+        {ViewUtils.renderToast()}
       </View>
     );
   }

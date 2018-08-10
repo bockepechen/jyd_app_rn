@@ -58,7 +58,7 @@ export default class ViewUtils {
     return (
       <Toast
         opacity={0.6}
-        positionValue={100}
+        positionValue={130}
         ref='toast'/>
     )
   }
