@@ -21,8 +21,13 @@ export default class ProductCardMain extends Component {
   }
 
   _onPress = () => {
-    this.props.onPress(this.props.id,this.props.item);
+    this.props.onPress(this.props.id,this.props.item,'item');
   };
+
+  _onPressBtn = () => {
+    this.props.onPress(this.props.id,this.props.item,'btn');
+  };
+
 
   render() {
     let top1 = 
@@ -72,7 +77,7 @@ export default class ProductCardMain extends Component {
           </ImageBackground>
           <TouchableHighlight
             underlayColor='rgba(0,0,0,0)'
-            onPress={this._onPress1}
+            onPress={this._onPressBtn}
             style={{width:scaleSize(588), height:scaleSize(168), position:'absolute', bottom:0}}>
             <ImageBackground 
               source={this.props.data.buyStatus == '0' ?ImageStores.sy_17:ImageStores.cp_1} 

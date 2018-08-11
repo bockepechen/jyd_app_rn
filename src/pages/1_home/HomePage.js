@@ -96,6 +96,47 @@ export default class HomePage extends Component {
     )
   }
 
+  _onPress = (id,item,type) => {
+    if(type == 'item')
+    {
+      // global.NetReqModel.sellInfoId = item.id;
+      global.NetReqModel.sellInfoId = 'JE0902018072001';
+      global.NetReqModel.tel_phone = '15822753827';
+      global.NetReqModel.jyd_pubData.user_id =39
+      global.NetReqModel.jyd_pubData.source_type = '0001'
+      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      // console.log(JSON.stringify(global.NetReqModel))
+      this.props.navigation.navigate('JeyxListItemDetail',{
+        data:{
+          // url:this.state.itemUrl,
+          url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
+          title:'嘉e精选',
+          jsonObj:global.NetReqModel
+        },
+        ...this.props
+      });
+    }else{
+      console.log('111aaa');
+      // global.NetReqModel.sellInfoId = item.id;
+      global.NetReqModel.sell_id = 'JE0902018072001';
+      global.NetReqModel.tel_phone = '15822753827';
+      global.NetReqModel.jyd_pubData.user_id ='39'
+      global.NetReqModel.jyd_pubData.source_type = '0001'
+      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      console.log(JSON.stringify(global.NetReqModel))
+      this.props.navigation.navigate('JeyxListItemDetail',{
+        data:{
+          // url:this.state.itemUrl,
+          url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
+          title:'嘉e精选',
+          jsonObj:global.NetReqModel
+        },
+        ...this.props
+      });
+    }
+    
+  };
+
   _onPressItem = (id) => {
     this.setState((state) => {
       const selected = new Map(state.selected);
@@ -349,8 +390,8 @@ export default class HomePage extends Component {
         delay={3000} />*/}
         {this.renderTopNavIconViews()}
         {this.renderSubTitleLine('首页推荐', 72)}
-        <ProductCardMain isRestMoney={false} ifSell={true} top={scaleSize(24)} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''}/>
-        <ProductCardSub isRestMoney={true} ifSell={true} top={0} bottom={0} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[0] : ''}/>
+        <ProductCardMain onPress={this._onPress} top={scaleSize(24)} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[0] : ''}/>
+        <ProductCardSub  onPress={this._onPress} top={0} bottom={0} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''}/>
 
         <View style={{marginTop:scaleSize(32), alignItems:'center', justifyContent:'center'}}>
           <Text style={{fontSize:scaleSize(36), color:'#3b92f0'}}>{'*市场有风险, 投资需谨慎'}</Text>

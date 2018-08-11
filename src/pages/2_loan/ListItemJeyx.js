@@ -22,8 +22,8 @@ export default class ListItemJeyx extends PureComponent {
       this.props = nextProps;
     }
     
-    _onPress = () => {
-      this.props.onPressItem(this.props.id,this.props.item);
+    _onPress = (id,item,type) => {
+      this.props.onPressItem(this.props.id,this.props.item,type);
     };
     
     _MainRender(){
@@ -42,7 +42,7 @@ export default class ListItemJeyx extends PureComponent {
     render() {
     //   const textColor = this.props.selected || (this.props.item.ua_readstatus == '01') ? "#959595" : "#656565";
       return (
-        <View style={{flex:1,backgroundColor:'#fff'}}>
+        <View style={{flex:1}}>
            {this.props.item.isFirst ? this._MainRender() : <ProductCardSub data={this.props.item} onPress={this._onPress} {...this.props}/>}
            {this.props.item.isFirst ? <View style={{height:scaleSize(6)}}/> : <View style={{height:scaleSize(18)}}/>}
         </View>

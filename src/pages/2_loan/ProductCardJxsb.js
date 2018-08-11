@@ -19,7 +19,11 @@ export default class ProductCardJxsb extends Component {
   }
 
   _onPress = () => {
-    this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.id,this.paraData,'item');
+  };
+  
+  _onPressBtn = () => {
+    this.props.onPressItem(this.props.id,this.paraData,'btn');
   };
 
   render() {
@@ -57,12 +61,12 @@ export default class ProductCardJxsb extends Component {
             }
             <TouchableHighlight
               underlayColor='rgba(0,0,0,0)'
-              onPress={this._onPress1}>
+              onPress={this._onPressBtn}>
               <ImageBackground 
-                source={this.paraData.ifSell?ImageStores.sy_15:ImageStores.cp_2} 
+                source={this.paraData.buyStatus == '0' ?ImageStores.sy_17:ImageStores.cp_1} 
                 resizeMode={'stretch'} 
                 style={{marginTop:this.paraData.isRestMoney?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.ifSell?'#FFFFFF':'#656565'}}>{this.paraData.ifSell?'立即出借':'还款中'}</Text>
+                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.paraData.disPlay}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>
