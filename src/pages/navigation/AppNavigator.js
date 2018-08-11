@@ -18,6 +18,9 @@ import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
 import BindCardPage from '../4_my/BindCardPage';
 import AuthPhoneNumPage from '../4_my/AuthPhoneNumPage';
+import AuthPhoneNumNewPage from '../4_my/AuthPhoneNumNewPage';
+import AssetPage from '../4_my/AssetPage';
+import AddressPage from '../4_my/AddressPage';
 import JeyxListItemDetail from '../2_loan/JeyxListItemDetail';
 import JxsbListItemDetail from '../2_loan/JxsbListItemDetail';
 
@@ -82,6 +85,15 @@ const AppStackNavigator = createStackNavigator(
     },
     JxsbListItemDetail:{
       screen:JxsbListItemDetail
+    },
+    AuthPhoneNumNewPage:{
+      screen:AuthPhoneNumNewPage
+    },
+    AddressPage:{
+      screen:AddressPage
+    },
+    AssetPage:{
+      screen:AssetPage
     },
   },{
     navigationOptions:{

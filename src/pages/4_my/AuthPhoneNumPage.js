@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  TextInput,
-  ImageBackground,
   TouchableHighlight,
   TouchableWithoutFeedback,
   Keyboard,
@@ -16,190 +12,214 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
-import LoadingIcon from '../../common/LoadingIcon';
+import AuthCode from './AuthCode';
+import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import { AppConfig } from '../../config/AppConfig';
+import LoadingIcon from '../../common/LoadingIcon';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
-export default class AuthPhoneNumPage extends Component{
-    constructor(props){
-        super(props)
-        this.dataResponsitory = new DataResponsitory();
-        this.AndroidBackHandler = new AndroidBackHandler(this);
-        this.state = {
-            isRotate:true,
-            isLoading: false,
-            isEyeOpen: false,
-            validTime: 0,
-            telshow:'137****1234'
-        }
+export default class AuthPhoneNumPage extends Component {
+  constructor(props){
+    super(props);
+    this.navData = this.props.navigation.state.params;
+    this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.state = {
+      validTime: this.navData.authcodeCD,
+      isLoading: false,
     }
+  }
 
-    componentDidMount() {
-        this.AndroidBackHandler.addPressBackListener();
-    }
+  componentDidMount() {
+    this.authCode_countDown();
+    this.AndroidBackHandler.addPressBackListener();
+  }
 
-    componentWillUnmount() {
-        this.AndroidBackHandler.removePressBackListener();
-    }
+  componentWillUnmount() {
+    this.timer && clearInterval(this.timer);
+    this.AndroidBackHandler.removePressBackListener();
+  }
 
-    async checkCoundDown(){
-        this.adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+
+    });
+  }
+
+  authCode_countDown() {
+    this.timer = setInterval(() => {
+      console.log(this.state.validTime);
+      if (this.state.validTime === 0) {
+        clearInterval(this.timer);
+        console.log('倒数结束');
+      } else {
         this.setState({
-            validTime:!this.adaptAuthCodeCD.ifSendAuthCode ? this.adaptAuthCodeCD.authcodeCD : 0,
+          validTime: this.state.validTime - 1
         })
-    }
-
-    navGoback = () => {
-        this.props.navigation.goBack();
-    }
-
-    reSendAuthCode = async () => {
-        // 重置倒计时，开启倒计时
-        this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
-          this.authCode_countDown();
-        });
-    }
-
-    authCode_countDown() {
-        this.timer = setInterval(() => {
-          console.log(this.state.validTime);
-          if (this.state.validTime === 0) {
-            clearInterval(this.timer);
-            console.log('倒数结束');
-          } else {
-            this.setState({
-              validTime: this.state.validTime - 1
-            })
-          }
-        }, 1000);
-    }
-
-    renderSubTitleLine(subTitle, topDistance) {
-        return (
-          <View style={{ flexDirection:'row', alignItems:'center', marginLeft:scaleSize(60), marginRight:scaleSize(60)}}>
-            <ImageBackground 
-              source={ImageStores.sy_14} 
-              resizeMode={'stretch'} 
-              style={{marginLeft:0, width:scaleSize(258), height:scaleSize(72), justifyContent:'center', alignItems:'center'}}>
-              <Text style={{color:'#f2f2f2', fontSize:scaleSize(32)}}>{subTitle}</Text>
-            </ImageBackground>
-            <View style={{flex:1,backgroundColor:'#c7b299', marginLeft:scaleSize(6), width:scaleSize(870),height:0.5}}/>
-          </View>
-        )
-    }
-
-    renderRemark(){
-        return (
-            <View
-                style={{
-                    flex:1,
-                    position:'absolute', 
-                    top:scaleSize(1150),
-                    width:GlobalStyles.WINDOW_WIDTH, 
-                    alignItems:'center',
-                }}
-            >
-                {this.renderSubTitleLine('温馨提示')}
-                <View style={{marginTop:scaleSize(66),marginLeft:scaleSize(110),marginRight:scaleSize(110)}}>
-                    <Text style={{fontSize:scaleSize(36), color:'#989898'}}>1、修改当前认证手机号码时,您的银行存管手机号码将会同步修改</Text>
-                    <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(18),color:'#989898'}}>2、如有问题,请联系客服400-8780-777</Text>
-                </View>
-            </View>
-        )
-    }
-
-    renderInputView() {
-        let kbType = Platform.OS==='ios'?'number-pad':'numeric';
-        return (
-          <View 
-            style={{
-              position:'absolute', 
-              top:scaleSize(117)+15, 
-              width:GlobalStyles.WINDOW_WIDTH, 
-              alignItems:'center',
-            }}>
-            <View style={{width:scaleSize(1134), height:scaleSize(426), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
-                <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
-                  keyboardType={kbType}
-                  clearButtonMode={'while-editing'}
-                  placeholder={'手机号'}
-                  placeholderTextColor='#c3c3c3'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
-                  editable={false}
-                  value={`您当前认证的手机号为:${this.state.telshow} `}
-                  />
-              </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
-                <TextInput 
-                  style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  maxLength={20}
-                  clearButtonMode={'while-editing'}
-                  placeholder={'短信验证'}
-                  placeholderTextColor='#c3c3c3'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  secureTextEntry={!this.state.isEyeOpen}
-                  onChangeText = {(p) => {this.pwd = p}}
-                  />
-                  <TouchableHighlight 
-                    style={{marginRight:scaleSize(12)}}
-                    underlayColor='rgba(0,0,0,0)'
-                    onPress={this.reSendAuthCode}>
-                    <ImageBackground 
-                        source={ImageStores.me_5}
-                        resizeMode={'stretch'} style={{justifyContent:'center',alignItems:'center',width:scaleSize(249), height:scaleSize(84),marginTop:scaleSize(-50)}}
-                    >
-                        <Text style={{fontSize:scaleSize(36),color:'#fff'}}>{this.state.validTime == 0 ? '获取短信码' : ` ${this.state.validTime}秒 `}</Text>
-                    </ImageBackground>
-                  </TouchableHighlight>
-              </View>
-            </View>
-            <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
-            <TouchableHighlight 
-              style={{marginTop:scaleSize(56)}}
-              underlayColor='rgba(0,0,0,0)'
-              onPress={this.login}>
-              <ImageBackground 
-                source={ImageStores.sy_17} 
-                resizeMode={'stretch'} 
-                style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'下一步'}</Text>
-              </ImageBackground>
-            </TouchableHighlight>
-          </View>
-        )
       }
+    }, 1000);
+  }
 
-    render(){
-        return (
-            <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-                <View style={GlobalStyles.rootContainer}>
-                    <NavigationBar 
-                        title={'绑定银行卡'}
-                        titleColor='#FFFFFF'
-                        titleSize={scaleSize(56)}
-                        navColor='#E8152E'
-                        statusBarColor='#E8152E'
-                        statusBarStyle='light-content'
-                        leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
-                    />
-                    <View>
-                    <Image
-                        source={ImageStores.dl_6}
-                        resizeMode={'stretch'}
-                        style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(456)}}/>
-                        {this.renderInputView()}
-                        {this.renderRemark()}
-                </View>
-                {this.state.isLoading?(<LoadingIcon />):null}
-                {ViewUtils.renderToast()}
-                </View>
-            </TouchableWithoutFeedback>
-        )
-    }
+  navGoback = () => {
+    // 将验证码有效CD保存到本地缓存
+    this.dataResponsitory.saveLocalStorage(
+      Storage_Key.LS_REG_COUNTDOWN, 
+      {
+        currentCd: this.state.validTime,
+        timeStamp: Date.now()
+      }, 
+      () => {
+        this.props.navigation.goBack();
+      }
+    );
+  }
+
+  finishInput = async (t) => {
+    Keyboard.dismiss();
+    // 启动Loading动画
+    this.setState({isLoading:true});
+    global.NetReqModel.tel_code = await t;
+    let url = await '/signIn/securityCode';
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        // 返回数据，关闭Loading动画
+        this.setState({isLoading:false}, () => {
+          if (result.return_code === '0000') {
+            clearInterval(this.timer);
+            this.props.navigation.navigate(this.navData.nextPage);
+          } else {
+            this.refs.toast.show(result.return_msg);
+          }
+        })
+      })
+      .catch((e) => {
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+  }
+
+  reSendAuthCode = async () => {
+    // 重置倒计时，开启倒计时
+    this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
+      this.authCode_countDown();
+    });
+    let url = await '/sendMessage/registerCode';
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        // 返回数据，关闭Loading动画
+        this.setState({isLoading:false}, () => {
+          if (result.return_code === '0000') {
+            // TODO 重新发送成功
+          } else {
+            // 发送未成功，立即停止倒计时
+            clearInterval(this.timer);
+            this.setState({validTime:0})
+            this.refs.toast.show(result.return_msg);
+          }
+        })
+      })
+      .catch((e) => {
+        // 发送未成功，立即停止倒计时
+        clearInterval(this.timer);
+        this.setState({validTime:0})
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+  }
+
+  renderAuthCodeView() {
+    return (
+      <View 
+        style={{
+          position:'absolute', 
+          top:scaleSize(117), 
+          width:GlobalStyles.WINDOW_WIDTH, 
+          alignItems:'center',
+        }}>
+        <View style={{width:scaleSize(1134), height:scaleSize(426), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
+          <Text style={{marginTop:scaleSize(75), fontSize:scaleSize(48), color:'#998675'}}>{'请输入验证码'}</Text>
+          <AuthCode
+            callback={this.finishInput}/>
+          <View style={{marginTop:scaleSize(60), width:scaleSize(999), flexDirection:'row'}}>
+          <Text style={{fontSize:scaleSize(36), color:'#c3c3c3'}}>{`未收到短信验证码 `}</Text>
+          {
+            this.state.validTime !== 0?
+              (<Text style={{fontSize:scaleSize(36), color:'#c3c3c3'}}>{` ${this.state.validTime}秒后重新获取 `}</Text>):
+              (
+                <TouchableHighlight
+                  style={{borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#E8152E'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={this.reSendAuthCode}>
+                  <Text 
+                    style={{fontSize:scaleSize(36), color:'#E8152E'}}>
+                    {`重新获取`}
+                  </Text>
+                </TouchableHighlight>
+              )
+          }
+          </View>
+        </View>
+        <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
+        <View style={{marginTop:scaleSize(30), alignItems:'center'}}>
+          <Text style={{fontSize:scaleSize(54), color:'rgba(232,21,46,0.6)'}}>{'短信验证码已发送至'}</Text>
+          <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(90), color:'rgba(232,21,46,0.6)'}}>{this.navData.cryptTel}</Text>
+        </View>
+      </View>
+    )
+  }
+
+  renderCorpLogo() {
+    return (
+      <View 
+        style={{
+          position:'absolute', 
+          top:scaleSize(1215), 
+          width:GlobalStyles.WINDOW_WIDTH, 
+          alignItems:'center',
+        }}>
+        <TouchableHighlight
+        onPress = {()=>{this.goto('AuthPhoneNumNewPage')}}
+        >
+        <Image source={ImageStores.dl_2} resizeMode={'stretch'} style={{width:scaleSize(288), height:scaleSize(288)}}/>
+        </TouchableHighlight>
+        <Text style={{marginTop:scaleSize(78), fontSize:scaleSize(36), fontWeight:'200', color:'#998675'}}>
+          {`Copyright @ ${new Date().getFullYear()} jiayidai.com`}
+        </Text>
+      </View>
+    )
+  }
+
+  render() {
+    return (
+      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
+        <View style={GlobalStyles.rootContainer}>
+          <NavigationBar 
+            title={this.navData.pageTitle}
+            titleColor='#FFFFFF'
+            titleSize={scaleSize(56)}
+            navColor='#E8152E'
+            statusBarColor='#E8152E'
+            statusBarStyle='light-content'
+            leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}/>
+          <View>
+            <Image
+              source={ImageStores.dl_6}
+              resizeMode={'stretch'}
+              style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(456)}}/>
+              {this.renderAuthCodeView()}
+              {this.renderCorpLogo()}
+          </View>
+          {this.state.isLoading?(<LoadingIcon />):null}
+          {ViewUtils.renderToast()}
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
 }

@@ -173,15 +173,20 @@ export default class MyPage extends Component {
         <ImageBackground source={ImageStores.me_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(516)}}>
           <View style={{flex:1, borderWidth:0, flexDirection:'column', justifyContent:'space-evenly'}}>
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
-              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
-                <Image 
-                  source={ImageStores.sy_3}
-                  resizeMode={'stretch'}
-                  style={{marginLeft:scaleSize(105), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
-                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
-                  {'资产详情'}
-                </Text>
-              </View>
+              <TouchableHighlight 
+                onPress={()=>{this.goto('AssetPage')}}
+                style={{flex:1, borderWidth:0, flexDirection:'row'}}
+              >
+                <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                  <Image 
+                    source={ImageStores.sy_3}
+                    resizeMode={'stretch'}
+                    style={{marginLeft:scaleSize(105), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
+                  <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                    {'资产详情'}
+                  </Text>
+                </View>
+              </TouchableHighlight>
               <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                 <Image 
                   source={ImageStores.sy_3}
@@ -276,23 +281,11 @@ export default class MyPage extends Component {
     )
   }
 
-  Calendar4Payback(str) {
-    console.log(str);
-    this.props.navigation.navigate('Calendar4Payback');
-  }
-
-  render() {
-    let StatusBarView = 
-      <AppStatusBar 
-          barColor='#E8152E'
-          barStyle='light-content'/>
+  renderModal(){
     return (
-      <View style={GlobalStyles.rootContainer}>
-        {StatusBarView}
-        {this.renderParallaxView({}, this.renderScrollView())}
-        <Modal
+      <Modal
           style={{flex:1,}}
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
@@ -342,6 +335,24 @@ export default class MyPage extends Component {
             </View>
           </View>
         </Modal>
+    )
+  }
+
+  Calendar4Payback(str) {
+    console.log(str);
+    this.props.navigation.navigate('Calendar4Payback');
+  }
+
+  render() {
+    let StatusBarView = 
+      <AppStatusBar 
+          barColor='#E8152E'
+          barStyle='light-content'/>
+    return (
+      <View style={GlobalStyles.rootContainer}>
+        {StatusBarView}
+        {this.renderParallaxView({}, this.renderScrollView())}
+        {this.renderModal()}
       </View>
     )
   }

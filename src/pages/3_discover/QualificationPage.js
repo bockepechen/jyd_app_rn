@@ -23,42 +23,42 @@ export default class QualificationPage extends Component {
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.listItem = [
         {
-            img: ImageStores.me_7,
+            img: ImageStores.fx_45,
             title:'组织信息',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_8,
+            img: ImageStores.fx_46,
             title:'证照信息',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_7,
+            img: ImageStores.fx_47,
             title:'管理团队',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_8,
+            img: ImageStores.fx_48,
             title:'企业大事记',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_7,
+            img: ImageStores.fx_49,
             title:'分支机构',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_8,
+            img: ImageStores.fx_50,
             title:'备案登记',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_7,
+            img: ImageStores.fx_51,
             title:'审核信息',
             callback:()=>{console.log('组织信息')}
         },
         {
-            img: ImageStores.me_8,
+            img: ImageStores.fx_52,
             title:'其他信息',
             callback:()=>{console.log('组织信息')}
         },     
@@ -122,7 +122,7 @@ export default class QualificationPage extends Component {
                                 marginTop:scaleSize(33)
                             }} 
                         />
-                        <Text style={{marginLeft:scaleSize(36),marginTop:scaleSize(48)}}>{item.title}</Text>
+                        <Text style={{marginLeft:scaleSize(36),color:'#989898',marginTop:scaleSize(48)}}>{item.title}</Text>
                     </View>
                     <Image 
                         source={ImageStores.me_6} 

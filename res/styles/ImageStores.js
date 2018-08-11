@@ -68,4 +68,12 @@ export var ImageStores = {
   ld_1: require('../imgs/ld_1.png'),
   ld_2: require('../imgs/ld_2.png'),
   qt_1: require('../imgs/qt_1.png'),
+  fx_45: require('../imgs/fx_45.png'),
+  fx_46: require('../imgs/fx_46.png'),
+  fx_47: require('../imgs/fx_47.png'),
+  fx_48: require('../imgs/fx_48.png'),
+  fx_49: require('../imgs/fx_49.png'),
+  fx_50: require('../imgs/fx_50.png'),
+  fx_51: require('../imgs/fx_51.png'),
+  fx_52: require('../imgs/fx_52.png'),
 }
