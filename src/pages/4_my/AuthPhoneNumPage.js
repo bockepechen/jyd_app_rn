@@ -20,11 +20,13 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class AuthPhoneNumPage extends Component{
     constructor(props){
         super(props)
         this.dataResponsitory = new DataResponsitory();
+        this.AndroidBackHandler = new AndroidBackHandler(this);
         this.state = {
             isRotate:true,
             isLoading: false,
@@ -34,8 +36,12 @@ export default class AuthPhoneNumPage extends Component{
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        this.AndroidBackHandler.addPressBackListener();
+    }
 
+    componentWillUnmount() {
+        this.AndroidBackHandler.removePressBackListener();
     }
 
     async checkCoundDown(){

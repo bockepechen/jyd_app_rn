@@ -13,12 +13,14 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {ImageStores} from '../../../res/styles/ImageStores';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class QualificationPage extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.listItem = [
         {
             img: ImageStores.me_7,
@@ -68,7 +70,11 @@ export default class QualificationPage extends Component {
   }
 
   componentDidMount() {
-   
+    this.AndroidBackHandler.addPressBackListener();
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
   }
   
   navGoback = () => {

@@ -16,11 +16,13 @@ import TabOfficialPost from './TabOfficialPost';
 import TabStationMessage from './TabStationMessage';
 import ViewUtils from '../../utils/ViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class MessagePage extends PureComponent {
   constructor(props) {
     super(props);
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.scrollableTabTitle = ['官方公告','站内信']
     this.state = {
         isLoading : false,
@@ -29,11 +31,19 @@ export default class MessagePage extends PureComponent {
   }
 
   componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener(this.componentDidMountCallback());
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener(this.componentWillUnmountCallback());
+  }
+
+  componentDidMountCallback() {
     if(isAndroid)
       BackHandler.addEventListener('hardwareBackPress',this.onBackButtonPressAndroid);
   }
 
-  componentWillUnmount() {
+  componentWillUnmountCallback() {
     if(isAndroid)
       BackHandler.removeEventListener('hardwareBackPress',this.onBackButtonPressAndroid);
   }

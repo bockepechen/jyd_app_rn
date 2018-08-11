@@ -11,22 +11,26 @@ import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class JeyxListItemDetail extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       wv_url:this.navData.url,
     }
   }
   
   componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener();
   }
 
   //页面将要离开的是时候发送通知
   componentWillUnmount(){
     DeviceEventEmitter.emit('reFreshEmitter', {});
+    this.AndroidBackHandler.removePressBackListener();
   }
 
   _onNavigationStateChange = (navState) => {
