@@ -76,15 +76,15 @@ export default class TabJeyx extends Component {
   renderFirst(){
     return (
       <ImageBackground 
-        source={ImageStores.sy_19}
+        source={ImageStores.cp_5}
         resizeMode={'stretch'}
-        style={{flexDirection:'column',justifyContent:'center',alignItems:'center',width:scaleSize(1242), height:scaleSize(666),marginTop:scaleSize(48)}}
+        style={{flexDirection:'column',alignItems:'center',width:scaleSize(1242), height:scaleSize(666),marginTop:scaleSize(48)}}
       >
         <View style={{marginTop:scaleSize(132)}}>
           <Text style={{fontSize:scaleSize(36),color:'#c7b299'}}>{'待收本金(元)'}</Text>
           <Text style={{marginTop:scaleSize(45), fontSize:scaleSize(90),color:'#998675'}}>{this.state.waitContractAmount}</Text>
         </View>
-        <View style={{flexDirection:'row',marginTop:scaleSize(174)}}>
+        <View style={{flexDirection:'row',marginTop:scaleSize(160)}}>
           <View style={{alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'待收回报(元)'}</Text>
             <Text style={{fontSize:scaleSize(58),color:'#998675'}}>{this.state.waitRepay}</Text>
