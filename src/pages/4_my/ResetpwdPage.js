@@ -22,7 +22,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
-export default class AddressPage extends Component{
+export default class ResetpwdPage extends Component{
     constructor(props){
         super(props)
         this.dataResponsitory = new DataResponsitory();
@@ -42,6 +42,12 @@ export default class AddressPage extends Component{
 
     componentWillUnmount() {
         this.AndroidBackHandler.removePressBackListener();
+    }
+
+    switchVisible = () => {
+        this.setState({
+            isEyeOpen: !this.state.isEyeOpen
+        })
     }
 
     setSmscode = async () => {
@@ -163,11 +169,18 @@ export default class AddressPage extends Component{
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
                   maxLength={11}
                   clearButtonMode={'while-editing'}
-                  placeholder={'默认联系人'}
+                  placeholder={'当前密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.pwd = p}}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                  </TouchableHighlight>
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
@@ -175,11 +188,18 @@ export default class AddressPage extends Component{
                   maxLength={11}
                   keyboardType={kbType}
                   clearButtonMode={'while-editing'}
-                  placeholder={'联系电话'}
+                  placeholder={'新密码需为6-20位字母与数字的组合'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.pwd = p}}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                  </TouchableHighlight>
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
@@ -187,11 +207,18 @@ export default class AddressPage extends Component{
                   maxLength={11}
                   keyboardType={kbType}
                   clearButtonMode={'while-editing'}
-                  placeholder={'详细地址'}
+                  placeholder={'请再次输入新密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.pwd = p}}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                </TouchableHighlight>
               </View>
             </View>
             <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
@@ -203,7 +230,7 @@ export default class AddressPage extends Component{
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 
                 style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'提交'}</Text>
+                <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'确认'}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>
@@ -215,7 +242,7 @@ export default class AddressPage extends Component{
             <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
                 <View style={GlobalStyles.rootContainer}>
                     <NavigationBar 
-                        title={'修改地址'}
+                        title={'修改登录密码'}
                         titleColor='#FFFFFF'
                         titleSize={scaleSize(56)}
                         navColor='#E8152E'

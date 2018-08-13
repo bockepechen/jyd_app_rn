@@ -43,7 +43,7 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'修改登录密码',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('ResetpwdPage')}
         },
         {
             title:'修改交易密码',

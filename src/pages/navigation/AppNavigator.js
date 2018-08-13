@@ -21,6 +21,7 @@ import AuthPhoneNumPage from '../4_my/AuthPhoneNumPage';
 import AuthPhoneNumNewPage from '../4_my/AuthPhoneNumNewPage';
 import AssetPage from '../4_my/AssetPage';
 import AddressPage from '../4_my/AddressPage';
+import ResetpwdPage from '../4_my/ResetpwdPage';
 import JeyxListItemDetail from '../2_loan/JeyxListItemDetail';
 import JxsbListItemDetail from '../2_loan/JxsbListItemDetail';
 
@@ -94,6 +95,9 @@ const AppStackNavigator = createStackNavigator(
     },
     AssetPage:{
       screen:AssetPage
+    },
+    ResetpwdPage:{
+      screen:ResetpwdPage
     },
   },{
     navigationOptions:{
