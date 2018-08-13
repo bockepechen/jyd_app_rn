@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   ImageBackground,
   Modal
 } from 'react-native';
@@ -173,7 +174,7 @@ export default class MyPage extends Component {
         <ImageBackground source={ImageStores.me_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(516)}}>
           <View style={{flex:1, borderWidth:0, flexDirection:'column', justifyContent:'space-evenly'}}>
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
-              <TouchableHighlight 
+              <TouchableOpacity 
                 onPress={()=>{this.goto('AssetPage')}}
                 style={{flex:1, borderWidth:0, flexDirection:'row'}}
               >
@@ -186,16 +187,21 @@ export default class MyPage extends Component {
                     {'资产详情'}
                   </Text>
                 </View>
-              </TouchableHighlight>
-              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
-                <Image 
-                  source={ImageStores.sy_3}
-                  resizeMode={'stretch'}
-                  style={{marginLeft:scaleSize(48), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
-                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
-                  {'我的出借'}
-                </Text>
-              </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={()=>{this.goto('MyLoanPage')}}
+                style={{flex:1, borderWidth:0, flexDirection:'row'}}
+              >
+                <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                  <Image 
+                    source={ImageStores.sy_3}
+                    resizeMode={'stretch'}
+                    style={{marginLeft:scaleSize(48), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
+                  <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                    {'我的出借'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
               <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>

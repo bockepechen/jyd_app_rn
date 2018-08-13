@@ -8,6 +8,8 @@ import LoginPage from '../register/LoginPage';
 import ResetPwdPage from '../register/ResetPwdPage';
 import WebViewPage from '../../common/WebViewPage';
 import LoanPageDetails from '../2_loan/LoanPageDetails'
+import JeyxListItemDetail from '../2_loan/JeyxListItemDetail';
+import JxsbListItemDetail from '../2_loan/JxsbListItemDetail';
 import Calendar4Payback from '../4_my/Calendar4Payback';
 import RotateAnimate from '../4_my/RotateAnimate';
 import MessagePage from '../1_home/MessagePage';
@@ -22,8 +24,8 @@ import AuthPhoneNumNewPage from '../4_my/AuthPhoneNumNewPage';
 import AssetPage from '../4_my/AssetPage';
 import AddressPage from '../4_my/AddressPage';
 import ResetpwdPage from '../4_my/ResetpwdPage';
-import JeyxListItemDetail from '../2_loan/JeyxListItemDetail';
-import JxsbListItemDetail from '../2_loan/JxsbListItemDetail';
+import MyLoanPage from '../4_my/MyLoanPage';
+
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -98,6 +100,9 @@ const AppStackNavigator = createStackNavigator(
     },
     ResetpwdPage:{
       screen:ResetpwdPage
+    },
+    MyLoanPage:{
+      screen:MyLoanPage
     },
   },{
     navigationOptions:{

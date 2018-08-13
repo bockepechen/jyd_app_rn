@@ -28,7 +28,6 @@ export default class ProductCardMain extends Component {
     this.props.onPress(this.props.id,this.props.item,'btn');
   };
 
-
   render() {
     let top1 = 
         <Text style={{marginTop:isIOS?scaleSize(63):scaleSize(51), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
