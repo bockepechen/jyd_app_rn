@@ -170,7 +170,7 @@ export default class AccountSecurityPage extends Component {
     return(
       <View style={{flex:1}}>
       <ScrollView
-        style={{marginTop:scaleSize(120)}}
+        // style={{marginTop:scaleSize(120)}}
         scrollEnabled = {false}
       >
         {this._renderItem()}

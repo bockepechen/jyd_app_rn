@@ -73,6 +73,9 @@ export default class ViewUtils {
 const styles = StyleSheet.create({
   back_btn_container: {
     paddingLeft: scaleSize(75),
+    width:scaleSize(150),
+    height:scaleSize(120),
+    justifyContent:'center'
   },
   right_btn_container: {
     paddingRight: scaleSize(51),
