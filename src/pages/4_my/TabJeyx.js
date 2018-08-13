@@ -76,7 +76,7 @@ export default class TabJeyx extends Component {
   renderFirst(){
     return (
       <ImageBackground 
-        source={ImageStores.cp_5}
+        source={ImageStores.cp_5_1}
         resizeMode={'stretch'}
         style={{flexDirection:'column',alignItems:'center',width:scaleSize(1242), height:scaleSize(666),marginTop:scaleSize(48)}}
       >
