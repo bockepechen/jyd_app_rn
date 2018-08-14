@@ -11,6 +11,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import { StackActions } from 'react-navigation';
 
 export default class MsgListItemDetail extends Component {
   constructor(props) {
@@ -57,7 +58,15 @@ export default class MsgListItemDetail extends Component {
   }
   handleMessage(e) {
     console.log('aaaaaaa');
-     this.sendMessage();
+    let obj = eval('('+e.nativeEvent.data+')');
+    if(obj.key == '1'){
+      this.sendMessage();
+    }
+    else if(obj.key == '2'){
+      this.props.navigation.dispatch(StackActions.popToTop());
+    }else{
+
+    }
   }
 
   render() {
@@ -75,7 +84,9 @@ export default class MsgListItemDetail extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
-          source={{uri:this.state.wv_url}}
+          // source={{uri:this.state.wv_url}}
+          // source={{uri:'http://rz23ra.natappfree.cc/product1412/html/bindingJoinSucceed.html'}}
+          source={{uri:'http://localhost:9002/test/wv.html'}}
           // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
