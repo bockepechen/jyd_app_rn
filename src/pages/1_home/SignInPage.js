@@ -5,7 +5,6 @@ import {
   WebView,
   Platform,
   StyleSheet,
-  DeviceEventEmitter,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -14,7 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 
-export default class JeyxListItemDetail extends Component {
+export default class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -29,8 +28,6 @@ export default class JeyxListItemDetail extends Component {
   }
 
   componentWillUnmount() {
-    DeviceEventEmitter.emit('reFreshEmitter', {});
-    DeviceEventEmitter.emit('navreset', {tab:'Home'});
     this.AndroidBackHandler.removePressBackListener();
   }
 
@@ -45,7 +42,7 @@ export default class JeyxListItemDetail extends Component {
   }
 
   sendMessage() {
-    // this.refs.webview.postMessage(this.navData.id);
+    // console.log(this.navData.jsonObj)
     console.log(JSON.stringify(this.navData.jsonObj))
     this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
@@ -87,7 +84,6 @@ export default class JeyxListItemDetail extends Component {
           ref={"webview"}
           scrollEnabled={false}
           source={{uri:this.state.wv_url}}
-          // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

@@ -48,10 +48,10 @@ export default class TabJeyx extends Component {
 
   async getInfoData() {
     global.NetReqModel.PageNum = await this.state.next_page;
-    // global.NetReqModel.tel_phone = await "13502151376";
-    // global.NetReqModel.jyd_pubData.user_id = await "4";
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
+    global.NetReqModel.tel_phone = await "13502151376";
+    global.NetReqModel.jyd_pubData.user_id = await "4";
+    // global.NetReqModel.tel_phone = await "15822753827";
+    // global.NetReqModel.jyd_pubData.user_id = await "91";
     let url = await '/productList/queryInvestList';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -111,7 +111,7 @@ export default class TabJeyx extends Component {
       // global.NetReqModel.tel_phone = '15822753827';
       // global.NetReqModel.jyd_pubData.user_id =39
       global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       // console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
@@ -129,7 +129,7 @@ export default class TabJeyx extends Component {
       // global.NetReqModel.tel_phone = '15822753827';
       // global.NetReqModel.jyd_pubData.user_id ='39'
       global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{

@@ -51,8 +51,36 @@ export default class InvitingFriendsPage extends Component{
         this.props.navigation.goBack();
     }
 
+    goto(url,JsonObj){
+        this.props.navigation.navigate(url,{
+          data:JsonObj ? JsonObj : {}
+        });
+    }
+
     onSharePress() {
         this.actionsheetshare.show()
+    }
+
+    record(){
+        this.goto('InvitingRecordPage',{
+            url:'http://fc57zd.natappfree.cc/product1412/html/inviteRecord.html',
+            jsonObj:global.NetReqModel,
+            title:'邀请记录'
+        })
+    }
+
+    //一键读取
+    getRightButton(callBack) {
+        return <TouchableOpacity
+                style={{marginRight:scaleSize(54),}}
+                onPress={callBack}>
+                <View style={{flexDirection:'row'}}>
+                    <Text
+                        style={{color:'#fff',fontSize:scaleSize(49)}} 
+                    >邀请记录
+                </Text>
+                </View>
+            </TouchableOpacity>
     }
 
     shareWxToOne(){
@@ -123,6 +151,7 @@ export default class InvitingFriendsPage extends Component{
                         statusBarColor='#E8152E'
                         statusBarStyle='light-content'
                         leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
+                        rightButton={this.getRightButton(()=>this.record())}
                     />
                     <View>
                     <Image

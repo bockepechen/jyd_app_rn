@@ -31,6 +31,7 @@ export default class JeyxListItemDetail extends Component {
   //页面将要离开的是时候发送通知
   componentWillUnmount(){
     DeviceEventEmitter.emit('reFreshEmitter', {});
+    DeviceEventEmitter.emit('navreset', {tab:'Home'});
     this.AndroidBackHandler.removePressBackListener();
   }
 

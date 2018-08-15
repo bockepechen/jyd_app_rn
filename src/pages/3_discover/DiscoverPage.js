@@ -32,7 +32,7 @@ export default class DiscoverPage extends Component {
 
   goto(url,JsonObj){
     this.props.navigation.navigate(url,{
-
+      data:JsonObj ? JsonObj : {}
     });
   }
 
@@ -133,7 +133,14 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.fx_54,
         title: '优选商城',
-        callback: null
+        callback: () => {
+          global.NetReqModel.page_number = 1
+          this.goto('MallPage',{
+            url:'http://fc57zd.natappfree.cc/product1412/html/store.html',
+            jsonObj:global.NetReqModel,
+            title:'优选商城'
+          })
+        }
       },
       {
         img: ImageStores.fx_55,

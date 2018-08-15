@@ -3,7 +3,8 @@ import {
   Image,
   StyleSheet,
   NetInfo,
-  Platform
+  Platform,
+  DeviceEventEmitter
 } from 'react-native';
 import HomePage from '../1_home/HomePage';
 import LoanPage from '../2_loan/LoanPage';
@@ -57,6 +58,11 @@ export default class TabPage extends Component {
   }
 
   componentDidMount() {
+    DeviceEventEmitter.addListener('navreset',(dic)=>{
+        this.setState({
+          selectedTab: dic.tab,
+        })
+    });
     SplashScreen.hide();
   }
 

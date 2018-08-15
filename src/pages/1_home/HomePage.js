@@ -80,6 +80,12 @@ export default class HomePage extends Component {
       isLoading:true
     });
     let url = await '/firstPage';
+    global.NetReqModel.tel_phone = await '15822753827';
+    global.NetReqModel.jyd_pubData.user_id = await "91";
+    global.NetReqModel.jyd_pubData.source_type = await "0001";
+    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
+    global.NetReqModel.jyd_pubData.network_type = await "wifi";
+    global.NetReqModel.jyd_pubData.token_id = await '123235h5e3111';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
@@ -128,9 +134,9 @@ export default class HomePage extends Component {
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.sellInfoId = 'JE0902018072001';
       global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id =39
+      global.NetReqModel.jyd_pubData.user_id ='91'
       global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       // console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
@@ -146,9 +152,9 @@ export default class HomePage extends Component {
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.sell_id = 'JE0902018072001';
       global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id ='39'
+      global.NetReqModel.jyd_pubData.user_id ='91'
       global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
@@ -320,39 +326,45 @@ export default class HomePage extends Component {
       </ParallaxScrollView>
     )
   }
+
   goto(url,JsonObj){
     this.props.navigation.navigate(url,{
-
+      data:JsonObj ? JsonObj : {}
     });
   }
+
   renderTopNavIconViews() {
     let topNavIconViews = [];
     let IconDatas = [
       {
         iconImg:ImageStores.sy_22,
         iconName:'每日签到',
-        url:'MessagePage'
+        callback:() => {this.goto('SignInPage',{
+          url:'http://fc57zd.natappfree.cc/product1412/html/signInCash.html',
+          jsonObj:global.NetReqModel,
+          title:'每日签到'
+        })}
       },
       {
         iconImg:ImageStores.sy_23,
         iconName:'邀请好友',
-        url:'MessagePage'
+        callback:() => {console.log('活动专区')}
       },
       {
         iconImg:ImageStores.sy_24,
         iconName:'我的奖励',
-        url:'MessagePage'
+        callback:() => {console.log('活动专区')}
       },
       {
         iconImg:ImageStores.sy_25,
         iconName:'消息中心',
-        url:'MessagePage'
+        callback:() => {this.goto('MessagePage')}
       },
     ];
     IconDatas.map((item, index) => {
       topNavIconViews.push(
         <TouchableOpacity 
-          onPress={()=>{this.goto(item.url)}} 
+          onPress={item.callback} 
           key={index} 
           style={{flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
           <Image 
