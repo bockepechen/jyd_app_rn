@@ -12,6 +12,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import { StackActions } from 'react-navigation';
 
 export default class JeyxListItemDetail extends Component {
   constructor(props) {
@@ -62,7 +63,15 @@ export default class JeyxListItemDetail extends Component {
   }
   handleMessage(e) {
     console.log('aaaaaaa');
-     this.sendMessage();
+    let obj = eval('('+e.nativeEvent.data+')');
+    if(obj.key == '1'){
+      this.sendMessage();
+    }
+    else if(obj.key == '2'){
+      this.props.navigation.dispatch(StackActions.popToTop());
+    }else{
+
+    }
   }
 
   render() {

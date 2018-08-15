@@ -33,7 +33,29 @@ export default class HomePage extends Component {
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
     this.state = {
-      sourceData: ['银行存管','风险控制','合作机构','关于我们'],
+      // sourceData: ['银行存管','风险控制','安全保障','合作机构','关于我们'],
+      sourceData: [
+        {
+          title:'银行存管',
+          img:ImageStores.sy_26
+        },
+        {
+          title:'风险控制',
+          img:ImageStores.sy_27
+        },
+        {
+          title:'安全保障',
+          img:ImageStores.sy_28
+        },
+        {
+          title:'合作机构',
+          img:ImageStores.sy_29
+        },
+        {
+          title:'关于我们',
+          img:ImageStores.sy_30
+        },
+      ],
       selected: new Map(),
       isLoading: false,
       httpRes:{},

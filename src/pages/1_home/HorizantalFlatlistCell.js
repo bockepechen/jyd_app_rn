@@ -31,10 +31,10 @@ export default class HorizantalFlatlistCell extends PureComponent {
             resizeMode={'stretch'} 
             style={{width:scaleSize(480), height:scaleSize(252), alignItems:'center', justifyContent:'flex-start', flexDirection:'row'}}>
             <Image 
-              source={ImageStores.sy_5} 
+              source={this.props.data.item.img}
               resizeMode={'stretch'} 
               style={{marginLeft:scaleSize(42), width:scaleSize(144), height:scaleSize(144)}}/>
-            <Text style={{marginLeft:scaleSize(15), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.props.data.item}</Text>
+            <Text style={{marginLeft:scaleSize(15), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.props.data.item.title}</Text>
           </ImageBackground>
         </TouchableHighlight>
       </View>

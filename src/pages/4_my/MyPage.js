@@ -180,7 +180,7 @@ export default class MyPage extends Component {
               >
                 <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                   <Image 
-                    source={ImageStores.sy_3}
+                    source={ImageStores.me_44}
                     resizeMode={'stretch'}
                     style={{marginLeft:scaleSize(105), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
                   <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
@@ -194,7 +194,7 @@ export default class MyPage extends Component {
               >
                 <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                   <Image 
-                    source={ImageStores.sy_3}
+                    source={ImageStores.me_45}
                     resizeMode={'stretch'}
                     style={{marginLeft:scaleSize(48), marginTop:scaleSize(66), width:scaleSize(150), height:scaleSize(150)}}/>
                   <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(114), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
@@ -206,7 +206,7 @@ export default class MyPage extends Component {
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
               <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                 <Image 
-                  source={ImageStores.sy_3}
+                  source={ImageStores.me_46}
                   resizeMode={'stretch'}
                   style={{marginLeft:scaleSize(105), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
                 <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
@@ -215,7 +215,7 @@ export default class MyPage extends Component {
               </View>
               <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                 <Image 
-                  source={ImageStores.sy_3}
+                  source={ImageStores.me_47}
                   resizeMode={'stretch'}
                   style={{marginLeft:scaleSize(48), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
                 <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
@@ -233,22 +233,22 @@ export default class MyPage extends Component {
     let views = [];
     let data = [
       {
-        img:ImageStores.me_7,
+        img:ImageStores.me_48,
         title:'回款日历',
         callback:() => this.Calendar4Payback('kkkkkkk'),
       },
       {
-        img:ImageStores.me_8,
+        img:ImageStores.me_49,
         title:'风险评测',
         callback:()=>{this.setModalVisible(true)},
       },
       {
-        img:ImageStores.me_7,
+        img:ImageStores.me_50,
         title:'客户服务',
         callback:()=>{this.props.navigation.navigate('RotateAnimate')},
       },
       {
-        img:ImageStores.me_8,
+        img:ImageStores.me_51,
         title:'我的二维码',
         callback:()=>{this.props.navigation.navigate('RegisterPage')},
       },

@@ -78,7 +78,7 @@ export default class DiscoverPage extends Component {
     return (
       <View style={{marginTop:scaleSize(84), width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(150), flexDirection:'row'}}>
         <Image
-          source={ImageStores.sy_3}
+          source={ImageStores.fx_61}
           resizeMode={'stretch'}
           style={{marginLeft:scaleSize(102), width:scaleSize(150), height:scaleSize(150)}}/>
         <TouchableOpacity 
@@ -91,7 +91,7 @@ export default class DiscoverPage extends Component {
           </View>
         </TouchableOpacity>
         <Image
-          source={ImageStores.sy_4}
+          source={ImageStores.fx_62}
           resizeMode={'stretch'}
           style={{marginLeft:scaleSize(36), width:scaleSize(150), height:scaleSize(150)}}/>
         <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
@@ -126,34 +126,34 @@ export default class DiscoverPage extends Component {
     let line2_views = [];
     let line1_data = [
       {
-        img: ImageStores.sy_22,
+        img: ImageStores.fx_53,
         title: '活动专区',
         callback: () => {console.log('活动专区')}
       },
       {
-        img: ImageStores.sy_23,
+        img: ImageStores.fx_54,
         title: '优选商城',
         callback: null
       },
       {
-        img: ImageStores.sy_24,
+        img: ImageStores.fx_55,
         title: '运营报告',
         callback: null
       },
     ];
     let line2_data = [
       {
-        img: ImageStores.sy_22,
+        img: ImageStores.fx_56,
         title: '企业资质',
         callback: () => {this.goto('QualificationPage')}
       },
       {
-        img: ImageStores.sy_23,
+        img: ImageStores.fx_57,
         title: '帮助中心',
         callback: null
       },
       {
-        img: ImageStores.sy_24,
+        img: ImageStores.fx_58,
         title: '官方账号',
         callback: null
       },
