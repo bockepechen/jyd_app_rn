@@ -19,6 +19,7 @@ import QualificationPage from '../3_discover/QualificationPage';
 import InvitingFriendsPage from '../3_discover/InvitingFriendsPage';
 import InvitingRecordPage from '../3_discover/InvitingRecordPage';
 import MallPage from '../3_discover/MallPage';
+import RedPacketPage from '../3_discover/RedPacketPage';
 import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
@@ -119,6 +120,9 @@ const AppStackNavigator = createStackNavigator(
     },
     InvitingRecordPage:{
       screen:InvitingRecordPage
+    },
+    RedPacketPage:{
+      screen:RedPacketPage
     },
   },{
     navigationOptions:{

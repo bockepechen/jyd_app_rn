@@ -19,6 +19,7 @@ export default class JeyxListItemDetail extends Component {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.ifbackhome = false
     this.state = {
       wv_url:this.navData.url,
     }
@@ -31,7 +32,8 @@ export default class JeyxListItemDetail extends Component {
   //页面将要离开的是时候发送通知
   componentWillUnmount(){
     DeviceEventEmitter.emit('reFreshEmitter', {});
-    DeviceEventEmitter.emit('navreset', {tab:'Home'});
+    if(this.ifbackhome)
+      DeviceEventEmitter.emit('navreset', {tab:'Home'});
     this.AndroidBackHandler.removePressBackListener();
   }
 
@@ -67,6 +69,7 @@ export default class JeyxListItemDetail extends Component {
       this.sendMessage();
     }
     else if(obj.key == '2'){
+      this.ifbackhome = true
       this.props.navigation.dispatch(StackActions.popToTop());
     }else{
 

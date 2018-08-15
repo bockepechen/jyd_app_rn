@@ -94,10 +94,15 @@ export default class DiscoverPage extends Component {
           source={ImageStores.fx_62}
           resizeMode={'stretch'}
           style={{marginLeft:scaleSize(36), width:scaleSize(150), height:scaleSize(150)}}/>
-        <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
-          <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'现金红包'}</Text>
-          <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'参与活动 获取红包'}</Text>
-        </View>
+        <TouchableOpacity 
+          style={{height:scaleSize(160)}}
+          onPress={()=>{this.goto('RedPacketPage')}}
+        >
+          <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'现金红包'}</Text>
+            <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'参与活动 获取红包'}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }

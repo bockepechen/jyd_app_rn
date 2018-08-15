@@ -25,7 +25,8 @@ export default class TabJxsb extends Component {
       list:[],
       refreshing: false,
       next_page:"",
-      itemUrl:'',
+      detail_url:'',
+      sell_url:''
     }
   }
 
@@ -57,7 +58,9 @@ export default class TabJxsb extends Component {
             httpRes : result,
             list : totalList,
             next_page : result.next_page,
-            refreshing : false
+            refreshing : false,
+            detail_url:result.detail_url,
+            sell_url:result.sell_url
           }
           , () => {
             // this.loadFlag = false
@@ -116,8 +119,8 @@ export default class TabJxsb extends Component {
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"http://3abp2e.natappfree.cc/product1412/html/disperseBiding.html",
+          url:this.state.detail_url,
+          // url:"http://3abp2e.natappfree.cc/product1412/html/disperseBiding.html",
           title:'精选散标',
           jsonObj:global.NetReqModel
         },
@@ -136,8 +139,9 @@ export default class TabJxsb extends Component {
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/disperseInfo.jsp",
+          url:this.state.sell_url,
+          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/disperseInfo.jsp",
+          // url:"http://10.2.0.155:8099/JYD_RN_Serv/productInfo/disperseInfo.jsp",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
