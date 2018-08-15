@@ -23,7 +23,8 @@ export default class TabJeyx extends Component {
       list:[],
       refreshing: false,
       next_page:"",
-      itemUrl:'',
+      detail_url:'',
+      sell_url:''
     }
   }
 
@@ -68,7 +69,9 @@ export default class TabJeyx extends Component {
             httpRes : result,
             list : totalList,
             next_page : result.next_page,
-            refreshing : false
+            refreshing : false,
+            detail_url:result.detail_url,
+            sell_url:result.sell_url
           }
           , () => {
         })
@@ -103,17 +106,17 @@ export default class TabJeyx extends Component {
   _onPressItem = (id,item,type) => {
     if(type == 'item')
     {
-      // global.NetReqModel.sellInfoId = item.id;
-      global.NetReqModel.sellInfoId = 'JE0902018072001';
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id =39
+      global.NetReqModel.sellInfoId = item.id;
+      // global.NetReqModel.sellInfoId = 'JE0902018072001';
+      // global.NetReqModel.tel_phone = '15822753827';
+      // global.NetReqModel.jyd_pubData.user_id =39
       global.NetReqModel.jyd_pubData.source_type = '0001'
       global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       // console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
+          url:this.state.detail_url,
+          // url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -121,17 +124,18 @@ export default class TabJeyx extends Component {
       });
     }else{
       console.log('111aaa');
-      // global.NetReqModel.sellInfoId = item.id;
-      global.NetReqModel.sell_id = 'JE0902018072001';
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id ='39'
+      global.NetReqModel.sell_id = item.id;
+      // global.NetReqModel.sell_id = 'JE0902018072001';
+      // global.NetReqModel.tel_phone = '15822753827';
+      // global.NetReqModel.jyd_pubData.user_id ='39'
       global.NetReqModel.jyd_pubData.source_type = '0001'
       global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
+          url:this.state.sell_url,
+          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
+          // url:"http://10.2.0.155:8099/JYD_RN_Serv/productInfo/bidingInfo.jsp",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },

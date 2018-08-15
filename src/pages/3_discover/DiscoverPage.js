@@ -81,10 +81,15 @@ export default class DiscoverPage extends Component {
           source={ImageStores.sy_3}
           resizeMode={'stretch'}
           style={{marginLeft:scaleSize(102), width:scaleSize(150), height:scaleSize(150)}}/>
-        <View style={{marginLeft:scaleSize(42), width:scaleSize(333), height:scaleSize(150)}}>
-          <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'邀请好友'}</Text>
-          <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'点击邀请好友赚佣金'}</Text>
-        </View>
+        <TouchableOpacity 
+          style={{height:scaleSize(160)}}
+          onPress={()=>{this.goto('InvitingFriendsPage')}}
+        >
+          <View style={{marginLeft:scaleSize(42), width:scaleSize(333), height:scaleSize(150)}}>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'邀请好友'}</Text>
+            <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'点击邀请好友赚佣金'}</Text>
+          </View>
+        </TouchableOpacity>
         <Image
           source={ImageStores.sy_4}
           resizeMode={'stretch'}

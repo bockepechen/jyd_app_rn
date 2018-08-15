@@ -130,7 +130,7 @@ export default class SettingPage extends Component {
         {this._renderItem()}
       </ScrollView>
       <TouchableHighlight 
-          style={{flex:1,flexDirection:'row',justifyContent:'center'}}
+          style={{flexDirection:'row',marginBottom:scaleSize(500),justifyContent:'center'}}
           underlayColor='rgba(0,0,0,0)'
           onPress={()=>{this.props.navigation.navigate('LoginPage')}}>
           <ImageBackground 

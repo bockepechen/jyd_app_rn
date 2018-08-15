@@ -36,7 +36,9 @@ export default class HomePage extends Component {
       sourceData: ['银行存管','风险控制','合作机构','关于我们'],
       selected: new Map(),
       isLoading: false,
-      httpRes:{}
+      httpRes:{},
+      detail_url:'',
+      sell_url:''
     }
   }
 
@@ -67,7 +69,9 @@ export default class HomePage extends Component {
       this.setState(
         {
           isLoading:false,
-          httpRes : result
+          httpRes : result,
+          detail_url:result.detail_url,
+          sell_url:result.sell_url
         }
         , () => {
           if(this.refreshing){
@@ -108,8 +112,8 @@ export default class HomePage extends Component {
       // console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
+          url:this.state.detail_url,
+          // url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -126,8 +130,8 @@ export default class HomePage extends Component {
       console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          // url:this.state.itemUrl,
-          url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
+          url:this.state.sell_url,
+          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
