@@ -159,7 +159,6 @@ export default class HomePage extends Component {
         ...this.props
       });
     }else{
-      console.log('111aaa');
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.sell_id = 'JE0902018072001';
       global.NetReqModel.tel_phone = '15822753827';
@@ -223,8 +222,7 @@ export default class HomePage extends Component {
 
   renderSwiper() {
     let swiperViews = [];
-    // let swiperSourceData = [ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1];
-    let swiperSourceData = this.state.httpRes.AppMainHeadBanners ? [] : [ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1,ImageStores.sy_1];
+    let swiperSourceData = this.state.httpRes.AppMainHeadBanners ? [] : [ImageStores.F3];
     if(this.state.httpRes.AppMainHeadBanners){
         for(var i = 0 ; i < this.state.httpRes.AppMainHeadBanners.length ; i++){
           swiperSourceData[i] = this.state.httpRes.AppMainHeadBanners[i].ImgPath
@@ -235,8 +233,18 @@ export default class HomePage extends Component {
         <TouchableHighlight 
           key={index}
           underlayColor='rgba(0,0,0,0)' 
-          onPress={()=>{console.log(`press me ${index}`)}}>
-          <Image 
+          onPress={()=>{
+            if(!this.state.httpRes.AppMainHeadBanners)
+             return false
+            this.props.navigation.navigate('HomeItemDetail',{
+              data:{
+                url:this.state.httpRes.AppMainHeadBanners[index].Url,
+                title:this.state.httpRes.AppMainHeadBanners[index].Title,
+              }
+            })}
+          }
+          >
+          <Image
             source={this.state.httpRes.AppMainHeadBanners ? {uri : this.state.httpRes.AppMainHeadBanners[index].ImgPath} : item} 
             resizeMode={'stretch'} 
             style={{
@@ -463,10 +471,23 @@ export default class HomePage extends Component {
         </View>
 
         <View style={{marginTop:scaleSize(69), alignItems:'center', justifyContent:'center'}}>
-          <Image 
-            source={this.state.httpRes.AppSubHeadBanners && this.state.httpRes.AppSubHeadBanners.length > 0 ? {uri : this.state.httpRes.AppSubHeadBanners[0].ImgPath} : ImageStores.sy_2} 
-            resizeMode={'stretch'} 
-            style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(510)}}/>
+          <TouchableOpacity
+            onPress={()=>{
+              if(!this.state.httpRes.AppSubHeadBanners)
+                return false
+              this.props.navigation.navigate('HomeItemDetail',{
+                  data:{
+                    url:this.state.httpRes.AppSubHeadBanners[0].Url,
+                    title:this.state.httpRes.AppSubHeadBanners[0].Title,
+                  }
+                })
+            }}
+          >
+            <Image 
+              source={this.state.httpRes.AppSubHeadBanners && this.state.httpRes.AppSubHeadBanners.length > 0 ? {uri : this.state.httpRes.AppSubHeadBanners[0].ImgPath} : ImageStores.sy_2} 
+              resizeMode={'stretch'} 
+              style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(510)}}/>
+          </TouchableOpacity>
         </View>
 
         {this.renderSubTitleLine('关于我们', 42)}

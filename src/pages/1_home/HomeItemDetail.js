@@ -21,6 +21,7 @@ export default class HomeItemDetail extends Component {
     this.state = {
       wv_url:this.navData.url,
     }
+    console.log(this.props.navigation.state.params)
   }
   
   componentDidMount() {

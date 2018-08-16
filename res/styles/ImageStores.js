@@ -104,4 +104,5 @@ export var ImageStores = {
   fx_60: require('../imgs/fx_60.png'),
   fx_61: require('../imgs/fx_61.png'),
   fx_62: require('../imgs/fx_62.png'),
+  F3:require('../imgs/F3.gif'),
 }
