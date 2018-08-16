@@ -15,6 +15,7 @@ import RotateAnimate from '../4_my/RotateAnimate';
 import MessagePage from '../1_home/MessagePage';
 import MsgListItemDetail from '../1_home/MsgListItemDetail';
 import SignInPage from '../1_home/SignInPage';
+import HomeItemDetail from '../1_home/HomeItemDetail';
 import QualificationPage from '../3_discover/QualificationPage';
 import InvitingFriendsPage from '../3_discover/InvitingFriendsPage';
 import InvitingRecordPage from '../3_discover/InvitingRecordPage';
@@ -123,6 +124,9 @@ const AppStackNavigator = createStackNavigator(
     },
     RedPacketPage:{
       screen:RedPacketPage
+    },
+    HomeItemDetail:{
+      screen:HomeItemDetail
     },
   },{
     navigationOptions:{

@@ -13,7 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 
-export default class MsgListItemDetail extends Component {
+export default class HomeItemDetail extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -56,7 +56,6 @@ export default class MsgListItemDetail extends Component {
     }
   }
   handleMessage(e) {
-    console.log('aaaaaaa');
     let obj = eval('('+e.nativeEvent.data+')');
     if(obj.key == '1'){
       this.sendMessage();
@@ -82,12 +81,8 @@ export default class MsgListItemDetail extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={false}
-          // source={{uri:this.state.wv_url}}
-          // source={{uri:'http://rz23ra.natappfree.cc/product1412/html/bindingJoinSucceed.html'}}
-          // source={{uri:'http://localhost:9002/test/wv.html'}}
-          source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          // source={require('./wv.html')}
+          // scrollEnabled={false}
+          source={{uri:this.state.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

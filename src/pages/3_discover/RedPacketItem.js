@@ -5,7 +5,8 @@ import {
   Image,
   ImageBackground,
   TouchableHighlight,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
@@ -31,44 +32,46 @@ export default class RedPacketItem extends Component {
       <TouchableHighlight 
         underlayColor='rgba(0,0,0,0)'
         onPress={this._onPress}
-        style={{marginBottom:scaleSize(9)}}>
-        <ImageBackground source={ImageStores.cp_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(372), flexDirection:'row'}}>
-          <View style={{marginLeft:scaleSize(108), marginTop:isIOS?scaleSize(69):scaleSize(75), width:scaleSize(450), height:scaleSize(213)}}>
-            <View style={{height:scaleSize(51), flexDirection:'row'}}>
-              <Image source={this.paraData.titleImg ? this.paraData.titleImg : ImageStores.cp_xina} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
-              <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.Description}</Text>
+        style={{alignItems:'center'}}>
+        <ImageBackground 
+          source={this.paraData.status == '1' ? ImageStores.me_23 : ImageStores.me_22} 
+          resizeMode={'stretch'} 
+          style={{width:scaleSize(1062), height:scaleSize(411),
+          flexDirection:'row',justifyContent:'space-between'}}
+        >
+          <View style={{flexDirection:'column'}}>
+            <Text 
+              style={{marginTop:scaleSize(50),marginLeft:scaleSize(60),fontSize:scaleSize(42),color:this.paraData.status == '1' ? '#c7b299' : '#c3c3c3',fontWeight:'bold'}}>
+              {'现金红包'}
+            </Text>
+            <View style={{marginTop:scaleSize(50),flexDirection:'row',height:scaleSize(104)}}>
+              <Text 
+                style={{marginTop:scaleSize(62),marginLeft:scaleSize(99),fontSize:scaleSize(42),color:this.paraData.status == '1' ? '#ff3a49' : '#989898',fontWeight:'bold'}}>
+                {`¥ `}
+              </Text>
+              <Text 
+                style={{fontSize:scaleSize(104),color:this.paraData.status == '1' ? '#ff3a49' : '#989898',fontWeight:'bold'}}>
+                {`${this.paraData.amount}`}
+              </Text>
             </View>
-            <View style={{marginTop:isIOS?scaleSize(78):scaleSize(72), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
-              <View style={{width:scaleSize(282), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
-                <View style={{height:scaleSize(78)}}>
-                  <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.YearRate}</Text>
-                </View>
-                <View style={{height:scaleSize(48)}}>
-                  <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
-                </View>
-              </View>
-              <View style={{marginLeft:isIOS?scaleSize(21):scaleSize(27), marginRight:isIOS?0:scaleSize(12), height:scaleSize(36)}}>
-                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:'#998675'}}>{'年化利率'}</Text>
-              </View>
-            </View>
+            <Text 
+              style={{marginTop:scaleSize(21),marginLeft:scaleSize(99),fontSize:scaleSize(28),color:this.paraData.status == '1' ? '#998675' : '#c3c3c3'}}>
+              {`奖励来源:${this.paraData.award_from}`}
+            </Text>
+            <Text 
+              style={{marginTop:scaleSize(23),marginLeft:scaleSize(99),fontSize:scaleSize(28),color:this.paraData.status == '1' ? '#fff' : '#c3c3c3'}}>
+              {`${this.paraData.status == '1' ? '有效日期' : '使用日期'}:${this.paraData.status == '1' ? (this.paraData.expiry_start_time+' 至 '+(this.paraData.expiry_end_time == '' ? '无限期':this.paraData.expiry_end_time) ) : this.paraData.use_time }`}
+            </Text>
           </View>
-          <View style={{marginLeft:scaleSize(135), marginTop:scaleSize(72), width:scaleSize(372), height:scaleSize(261), alignItems:'center'}}>
-            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{`借款期限 ${this.paraData.BorrowMonth}期`}</Text>
-            {
-              this.paraData.isRestMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${this.paraData.restmoneyamount}元`}</Text>):
-                null
-            }
-            <TouchableHighlight
-              underlayColor='rgba(0,0,0,0)'
-              onPress={this._onPressBtn}>
-              <ImageBackground 
-                source={this.paraData.buyStatus == '0' ?ImageStores.sy_17:ImageStores.cp_1} 
-                resizeMode={'stretch'} 
-                style={{marginTop:this.paraData.isRestMoney?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.paraData.disPlay}</Text>
-              </ImageBackground>
-            </TouchableHighlight>
+          <View style={{marginRight:scaleSize(90),justifyContent:'center'}}>
+            <TouchableOpacity
+              onPress={()=>{}}
+            >
+              <Text 
+                style={{fontSize:scaleSize(60),color:this.paraData.status == '1' ? '#c7b299' : '#e6e6e6',fontWeight:'bold', width:scaleSize(60)}}>
+                {this.paraData.status == '1' ? '打开红包' : '已打开'}
+              </Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </TouchableHighlight>

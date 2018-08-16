@@ -152,6 +152,7 @@ export default class TabOfficialPost extends Component {
 
   _onPressItem = (id,item) => {
     // updater functions are preferred for transactional updates
+    global.NetReqModel.an_id = item.an_id
     this.props.navigation.navigate('MsgListItemDetail',{
       data:{
         url:this.state.itemUrl,

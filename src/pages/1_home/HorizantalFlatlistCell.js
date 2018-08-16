@@ -16,7 +16,7 @@ export default class HorizantalFlatlistCell extends PureComponent {
   }
 
   _onPress = () => {
-    this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.id,this.props.data.item);
   };
 
   render() {

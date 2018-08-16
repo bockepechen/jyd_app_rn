@@ -157,6 +157,7 @@ export default class TabStationMessage extends Component {
 
     _onPressItem = (id,item) => {
         // updater functions are preferred for transactional updates
+        global.NetReqModel.um_id = item.um_id
         this.props.navigation.navigate('MsgListItemDetail',{
           data:{
             url:this.state.itemUrl,

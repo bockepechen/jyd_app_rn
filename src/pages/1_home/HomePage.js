@@ -60,7 +60,13 @@ export default class HomePage extends Component {
       isLoading: false,
       httpRes:{},
       detail_url:'',
-      sell_url:''
+      sell_url:'',
+      aboutUs_url:'',
+      bank_url:'',
+      cooperationOrg_url:'',
+      risk_url:'',
+      safety_url:'',
+      sign_url:''
     }
   }
 
@@ -99,7 +105,13 @@ export default class HomePage extends Component {
           isLoading:false,
           httpRes : result,
           detail_url:result.detail_url,
-          sell_url:result.sell_url
+          sell_url:result.sell_url,
+          aboutUs_url:result.aboutUs_url,
+          bank_url:result.bank_url,
+          cooperationOrg_url:result.cooperationOrg_url,
+          risk_url:result.risk_url,
+          safety_url:result.safety_url,
+          sign_url:result.sign_url
         }
         , () => {
           if(this.refreshing){
@@ -141,7 +153,6 @@ export default class HomePage extends Component {
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:this.state.detail_url,
-          // url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -159,7 +170,6 @@ export default class HomePage extends Component {
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:this.state.sell_url,
-          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -169,16 +179,33 @@ export default class HomePage extends Component {
     
   };
 
-  _onPressItem = (id) => {
+  _onPressItem = (index,item) => {
     this.setState((state) => {
       const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id));
+      selected.set(index, !selected.get(index));
       return {selected};
     });
+    let tempurl = ''
+    if(index == 0){
+      tempurl = this.state.bank_url
+    }
+    else if(index == 1){
+      tempurl = this.state.risk_url
+    }
+    else if(index == 2){
+      tempurl = this.state.safety_url
+    }
+    else if(index == 3){
+      tempurl = this.state.cooperationOrg_url
+    }
+    else if(index == 4){
+      tempurl = this.state.aboutUs_url
+    }
     let navData = {
-      title:'详情页面'
+      title:item.title,
+      url:tempurl
     };
-    this.props.navigation.navigate('LoanPageDetails',{
+    this.props.navigation.navigate('HomeItemDetail',{
       data:navData,
       ...this.props
     })
@@ -340,7 +367,7 @@ export default class HomePage extends Component {
         iconImg:ImageStores.sy_22,
         iconName:'每日签到',
         callback:() => {this.goto('SignInPage',{
-          url:'http://fc57zd.natappfree.cc/product1412/html/signInCash.html',
+          url:this.state.sign_url,
           jsonObj:global.NetReqModel,
           title:'每日签到'
         })}
@@ -348,12 +375,12 @@ export default class HomePage extends Component {
       {
         iconImg:ImageStores.sy_23,
         iconName:'邀请好友',
-        callback:() => {console.log('活动专区')}
+        callback:() => {this.goto('InvitingFriendsPage')}
       },
       {
         iconImg:ImageStores.sy_24,
         iconName:'我的奖励',
-        callback:() => {console.log('活动专区')}
+        callback:() => {this.goto('RedPacketItem')}
       },
       {
         iconImg:ImageStores.sy_25,
