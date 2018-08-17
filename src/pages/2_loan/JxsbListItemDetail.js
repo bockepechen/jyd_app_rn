@@ -48,7 +48,6 @@ export default class JeyxListItemDetail extends Component {
 
   sendMessage() {
     // this.refs.webview.postMessage(this.navData.id);
-    console.log(JSON.stringify(this.navData.jsonObj))
     this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
 
@@ -61,7 +60,6 @@ export default class JeyxListItemDetail extends Component {
     }
   }
   handleMessage(e) {
-    console.log('aaaaaaa');
     let obj = eval('('+e.nativeEvent.data+')');
     if(obj.key == '1'){
       this.sendMessage();

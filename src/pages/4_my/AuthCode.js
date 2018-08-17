@@ -55,7 +55,6 @@ export default class AuthCode extends Component {
   }
 
   _finishInput(t) {
-    // console.log(`录入验证码为：${t}`)
     this.props.callback(t);
     // this.props.onPressItem(t);
   }

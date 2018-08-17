@@ -388,7 +388,7 @@ export default class HomePage extends Component {
       {
         iconImg:ImageStores.sy_24,
         iconName:'我的奖励',
-        callback:() => {this.goto('RedPacketItem')}
+        callback:() => {this.goto('RedPacketPage')}
       },
       {
         iconImg:ImageStores.sy_25,

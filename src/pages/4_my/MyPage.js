@@ -204,15 +204,20 @@ export default class MyPage extends Component {
               </TouchableOpacity>
             </View>
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
-              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
-                <Image 
-                  source={ImageStores.me_46}
-                  resizeMode={'stretch'}
-                  style={{marginLeft:scaleSize(105), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
-                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
-                  {'我的红包'}
-                </Text>
-              </View>
+              <TouchableOpacity
+                onPress={()=>{this.goto('RedPacketPage')}}
+                style={{flex:1, borderWidth:0, flexDirection:'row'}}
+              >
+                <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                  <Image 
+                    source={ImageStores.me_46}
+                    resizeMode={'stretch'}
+                    style={{marginLeft:scaleSize(105), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
+                  <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                    {'我的红包'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
                 <Image 
                   source={ImageStores.me_47}

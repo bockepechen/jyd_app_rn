@@ -29,9 +29,7 @@ export default class TabJeyx extends Component {
   }
 
   componentDidMount() {
-    console.log('111')
     DeviceEventEmitter.addListener('reFreshEmitter',(dic)=>{
-        console.log('222')
         this.setState({
           next_page : '1'
         },()=>{
@@ -99,7 +97,6 @@ export default class TabJeyx extends Component {
   }
 
   _onLoad(){
-    console.log('adfafafdafd');
     this.getInfoData();
   }
 
@@ -112,7 +109,6 @@ export default class TabJeyx extends Component {
       // global.NetReqModel.jyd_pubData.user_id =39
       global.NetReqModel.jyd_pubData.source_type = '0001'
       // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      // console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:this.state.detail_url,
@@ -123,14 +119,12 @@ export default class TabJeyx extends Component {
         ...this.props
       });
     }else{
-      console.log('111aaa');
       global.NetReqModel.sell_id = item.id;
       // global.NetReqModel.sell_id = 'JE0902018072001';
       // global.NetReqModel.tel_phone = '15822753827';
       // global.NetReqModel.jyd_pubData.user_id ='39'
       global.NetReqModel.jyd_pubData.source_type = '0001'
       // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:this.state.sell_url,

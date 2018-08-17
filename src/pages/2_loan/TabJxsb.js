@@ -90,7 +90,6 @@ export default class TabJxsb extends Component {
   }
 
   _onLoad(){
-    console.log('adfafafdafd');
     this.getInfoData();
   }
 
@@ -116,7 +115,6 @@ export default class TabJxsb extends Component {
       global.NetReqModel.jyd_pubData.user_id =39
       global.NetReqModel.jyd_pubData.source_type = '0001'
       global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
           url:this.state.detail_url,
@@ -128,7 +126,6 @@ export default class TabJxsb extends Component {
       });
     }
     else{
-      console.log('111aaa');
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.borrow_id = item.BorrowId;
       global.NetReqModel.tel_phone = '15822753827';
@@ -136,7 +133,6 @@ export default class TabJxsb extends Component {
       global.NetReqModel.jyd_pubData.user_id ='91'
       global.NetReqModel.jyd_pubData.source_type = '0001'
       global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      console.log(JSON.stringify(global.NetReqModel))
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:this.state.sell_url,

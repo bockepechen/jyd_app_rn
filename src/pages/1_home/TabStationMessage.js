@@ -74,7 +74,6 @@ export default class TabStationMessage extends Component {
     }
     
     async readAll() {
-        console.log('333333333');
         global.NetReqModel.tel_phone = await "15822753827";
         global.NetReqModel.jyd_pubData.user_id = await "91";
         global.NetReqModel.jyd_pubData.source_type = await "0001";
@@ -108,7 +107,6 @@ export default class TabStationMessage extends Component {
     }
 
     async readMsg(){
-        console.log('bbbbbbb')
         console.log(this.readedList)
         if(this.readedList.length < 1) return false
         global.NetReqModel.tel_phone = await "15822753827";

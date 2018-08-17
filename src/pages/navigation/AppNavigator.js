@@ -20,7 +20,10 @@ import QualificationPage from '../3_discover/QualificationPage';
 import InvitingFriendsPage from '../3_discover/InvitingFriendsPage';
 import InvitingRecordPage from '../3_discover/InvitingRecordPage';
 import MallPage from '../3_discover/MallPage';
+import ActivityPage from '../3_discover/ActivityPage';
 import RedPacketPage from '../3_discover/RedPacketPage';
+import OperationReportPage from '../3_discover/OperationReportPage';
+import AccountPage from '../3_discover/AccountPage';
 import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
@@ -127,6 +130,15 @@ const AppStackNavigator = createStackNavigator(
     },
     HomeItemDetail:{
       screen:HomeItemDetail
+    },
+    ActivityPage:{
+      screen:ActivityPage
+    },
+    OperationReportPage:{
+      screen:OperationReportPage
+    },
+    AccountPage:{
+      screen:AccountPage
     },
   },{
     navigationOptions:{

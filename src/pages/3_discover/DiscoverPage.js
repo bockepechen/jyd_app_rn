@@ -14,20 +14,83 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import ViewUtils from '../../utils/ViewUtils';
-
+import LoadingIcon from '../../common/LoadingIcon';
+import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 
 export default class DiscoverPage extends Component {
   constructor(props) {
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.dataResponsitory = new DataResponsitory();
+    this.state={
+      isLoading: false,
+      httpRes:{},
+      account_url:'',
+      activity_url:'',
+      audit_url:'',
+      branch_url:'',
+      companyAffair_url:'',
+      invite_url:'',
+      operationReport_url:'',
+      organization_url:'',
+      otherInfo_url:'',
+      papers_url:'',
+      permit_url:'',
+      shopping_url:'',
+      team_url:'',
+    }
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
+    this.getInfoData();
   }
 
   componentWillUnmount() {
     this.AndroidBackHandler.removePressBackListener();
+  }
+
+  async getInfoData() {
+    this.setState({
+      isLoading:true
+    });
+    let url = await '/discover';
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      // 返回数据，关闭Loading动画
+      this.setState(
+        {
+          isLoading:false,
+          httpRes : result,
+          account_url:result.account_url,
+          activity_url:result.activity_url,
+          audit_url:result.audit_url,
+          branch_url:result.branch_url,
+          companyAffair_url:result.companyAffair_url,
+          invite_url:result.invite_url,
+          operationReport_url:result.operationReport_url,
+          organization_url:result.organization_url,
+          otherInfo_url:result.otherInfo_url,
+          papers_url:result.papers_url,
+          permit_url:result.permit_url,
+          shopping_url:result.shopping_url,
+          team_url:result.team_url,
+        }
+        , () => {
+          if(this.refreshing){
+            this.refreshing = false;
+          }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+      // TODO Toast提示异常
+      // 关闭Loading动画
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
   }
 
   goto(url,JsonObj){
@@ -110,18 +173,24 @@ export default class DiscoverPage extends Component {
   renderBonusView() {
     return (
       <View style={{marginTop:scaleSize(39), alignItems:'center', justifyContent:'center'}}>
-        <ImageBackground
-          source={ImageStores.fx_3}
-          resizeMode={'stretch'}
-          style={{width:scaleSize(837), height:scaleSize(297)}}>
-          <View style={{marginLeft:scaleSize(231), marginTop:scaleSize(96), height:scaleSize(28)}}>
-            <Text style={{fontSize:scaleSize(28), color:'#fcee21'}}>{'累计获得'}</Text>
-          </View>
-          <View style={{marginLeft:scaleSize(186), marginTop:scaleSize(21), height:scaleSize(69), flexDirection:'row', alignItems:'flex-end'}}>
-            <Text style={{fontSize:scaleSize(40), color:'#ffffff'}}>{'￥'}</Text>
-            <Text style={{fontSize:scaleSize(69), color:'#ffffff'}}>{'1000000'}</Text>
-          </View>
-        </ImageBackground>
+        <TouchableOpacity
+          onPress={()=>{
+            this.goto('RedPacketPage')
+          }}
+        >
+          <ImageBackground
+            source={ImageStores.fx_3}
+            resizeMode={'stretch'}
+            style={{width:scaleSize(837), height:scaleSize(297)}}>
+            <View style={{marginLeft:scaleSize(231), marginTop:scaleSize(96), height:scaleSize(28)}}>
+              <Text style={{fontSize:scaleSize(28), color:'#fcee21'}}>{'累计获得'}</Text>
+            </View>
+            <View style={{marginLeft:scaleSize(186), marginTop:scaleSize(21), height:scaleSize(69), flexDirection:'row', alignItems:'flex-end'}}>
+              <Text style={{fontSize:scaleSize(40), color:'#ffffff'}}>{'￥'}</Text>
+              <Text style={{fontSize:scaleSize(69), color:'#ffffff'}}>{'1000000'}</Text>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -133,7 +202,13 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.fx_53,
         title: '活动专区',
-        callback: () => {console.log('活动专区')}
+        callback: () => {
+          this.goto('ActivityPage',{
+            url:this.state.activity_url,
+            jsonObj:global.NetReqModel,
+            title:'活动专区'
+          })
+        }
       },
       {
         img: ImageStores.fx_54,
@@ -141,7 +216,7 @@ export default class DiscoverPage extends Component {
         callback: () => {
           global.NetReqModel.page_number = 1
           this.goto('MallPage',{
-            url:'http://fc57zd.natappfree.cc/product1412/html/store.html',
+            url:this.state.shopping_url,
             jsonObj:global.NetReqModel,
             title:'优选商城'
           })
@@ -150,7 +225,13 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.fx_55,
         title: '运营报告',
-        callback: null
+        callback: () => {
+          this.goto('OperationReportPage',{
+            url:this.state.operationReport_url,
+            jsonObj:global.NetReqModel,
+            title:'运营报告'
+          })
+        }
       },
     ];
     let line2_data = [
@@ -162,12 +243,24 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.fx_57,
         title: '帮助中心',
-        callback: null
+        callback: () => {
+          this.goto('OperationReportPage',{
+            url:this.state.hel,
+            jsonObj:global.NetReqModel,
+            title:'帮助中心'
+          })
+        }
       },
       {
         img: ImageStores.fx_58,
         title: '官方账号',
-        callback: null
+        callback: () => {
+          this.goto('AccountPage',{
+            url:this.state.account_url,
+            jsonObj:global.NetReqModel,
+            title:'官方账号'
+          })
+        }
       },
     ];
 
@@ -225,6 +318,7 @@ export default class DiscoverPage extends Component {
         {this.renderBonusView()}
         {this.renderGridView()}
         {ViewUtils.renderToast()}
+        {this.state.isLoading?(<LoadingIcon />):null}
       </View>
     );
   }

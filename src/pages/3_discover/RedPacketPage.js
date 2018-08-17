@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback,
   Modal,
   TouchableHighlight,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
@@ -71,11 +72,9 @@ export default class RedPacketPage extends Component {
     global.NetReqModel.jyd_pubData.token_id = await '89a5ad1adba2f96b';
     // global.NetReqModel.tel_phone = await "15822753827";
     // global.NetReqModel.jyd_pubData.user_id = await "91";
-    console.log(JSON.stringify(global.NetReqModel))
     let url = await '/redEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
-      console.log(result);
       var totalList = [];
       if(result.return_code == '0000'){
         totalList = (this.state.next_page === "1") ? [] : this.state.list;
@@ -106,11 +105,9 @@ export default class RedPacketPage extends Component {
 
   async openRedPacket(index,itemId) {
     global.NetReqModel.red_id = itemId;
-    console.log(JSON.stringify(global.NetReqModel));
     let url = await '/redEnvelope/openRedEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
-      console.log(result);
       if(result.return_code == '0000'){
         this.setModalVisible(true)
         let templist = this.state.list;
@@ -139,6 +136,29 @@ export default class RedPacketPage extends Component {
 
   _onLoad(){
     this.getInfoData();
+  }
+
+  record(){
+      this.goto('InvitingRecordPage',{
+          url:'http://fc57zd.natappfree.cc/product1412/html/inviteRecord.html',
+          jsonObj:global.NetReqModel,
+          title:'红包规则'
+      })
+  }
+
+  //一键读取
+  getRightButton(callBack) {
+      return <TouchableOpacity
+              style={{marginRight:scaleSize(54),}}
+              onPress={callBack}>
+              <View style={{flexDirection:'row'}}>
+                <Text
+                    style={{color:'#fff',fontSize:scaleSize(49)}} 
+                >
+                  {'红包规则'}
+                </Text>
+              </View>
+          </TouchableOpacity>
   }
 
   keyExtractor = (data, index) => {return String(index);}
@@ -283,6 +303,7 @@ renderMainView(){
                   statusBarColor='#E8152E'
                   statusBarStyle='light-content'
                   leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
+                  rightButton={this.getRightButton(()=>this.record())}
               />
               {this.renderMainView()}
               {this.renderModal()}

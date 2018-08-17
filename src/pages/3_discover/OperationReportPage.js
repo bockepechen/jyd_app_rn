@@ -11,14 +11,12 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 
-export default class MsgListItemDetail extends Component {
+export default class MallPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       wv_url:this.navData.url,
@@ -44,8 +42,6 @@ export default class MsgListItemDetail extends Component {
   }
 
   sendMessage() {
-    // this.refs.webview.postMessage(this.navData.id);
-    console.log(this.navData.jsonObj)
     this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
 
@@ -83,12 +79,8 @@ export default class MsgListItemDetail extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={false}
-          // source={{uri:this.state.wv_url}}
-          // source={{uri:'http://rz23ra.natappfree.cc/product1412/html/bindingJoinSucceed.html'}}
-          // source={{uri:'http://localhost:9002/test/wv.html'}}
-          // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          // scrollEnabled={false}
+          source={{uri:this.state.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

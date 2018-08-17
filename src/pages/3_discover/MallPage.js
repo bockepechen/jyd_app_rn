@@ -42,8 +42,6 @@ export default class MallPage extends Component {
   }
 
   sendMessage() {
-    // console.log(this.navData.jsonObj)
-    console.log(JSON.stringify(this.navData.jsonObj))
     this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
 
@@ -56,7 +54,6 @@ export default class MallPage extends Component {
     }
   }
   handleMessage(e) {
-    console.log('aaaaaaa');
     let obj = eval('('+e.nativeEvent.data+')');
     if(obj.key == '1'){
       this.sendMessage();

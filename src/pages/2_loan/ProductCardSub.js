@@ -14,7 +14,6 @@ const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardSub extends Component {
   constructor(props) {
     super(props);
-    // console.log(`参数key: ${this.props.key}`);
   }
   componentWillReceiveProps(nextProps) {
     this.props = nextProps;
@@ -24,7 +23,6 @@ export default class ProductCardSub extends Component {
   };
 
   _onPressBtn = () => {
-    console.log('11dfasfdafa')
     this.props.onPress(this.props.id,this.props.item,'btn');
   };
 

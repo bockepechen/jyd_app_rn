@@ -71,7 +71,6 @@ export default class TabOfficialPost extends Component {
   }
 
   async readAll() {
-    console.log('22222222');
     // global.NetReqModel.tel_phone = await "15822753827";
     global.NetReqModel.tel_phone = await "13502151376";
     global.NetReqModel.jyd_pubData.user_id = await "4";
@@ -106,8 +105,6 @@ export default class TabOfficialPost extends Component {
   }
 
   async readMsg(){
-    console.log('aaaaaaaaa')
-    console.log(this.readedList)
     if(this.readedList.length < 1) return false
     global.NetReqModel.an_id_list = await this.readedList;
     let url = await '/userMail/readAnnouncementsByAppCache';
@@ -130,7 +127,6 @@ export default class TabOfficialPost extends Component {
   }
 
   _onLoad(){
-    console.log('adfafafdafd');
     this.getInfoData();
   }
 
