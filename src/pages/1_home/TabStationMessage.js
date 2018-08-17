@@ -30,8 +30,6 @@ export default class TabStationMessage extends Component {
     }
 
     componentDidMount() {
-        // global.NetReqModel.tel_phone = "15822753827";
-        global.NetReqModel.tel_phone = "13502151376";
         this.setState({
             next_page : '1'
         },()=>{
@@ -42,12 +40,6 @@ export default class TabStationMessage extends Component {
 
     async getInfoData() {
         global.NetReqModel.page_number = await this.state.next_page;
-        // global.NetReqModel.jyd_pubData.user_id = await "91";
-        global.NetReqModel.jyd_pubData.user_id = await "4";
-        global.NetReqModel.jyd_pubData.source_type = await "0001";
-        global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-        global.NetReqModel.jyd_pubData.network_type = await "wifi";
-        // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/usermail';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
@@ -149,7 +141,6 @@ export default class TabStationMessage extends Component {
     }
 
     _onLoad(){
-        console.log('aaaaaaaaaabbbbbbbb');
         this.getInfoData();
     }
 
@@ -160,9 +151,10 @@ export default class TabStationMessage extends Component {
         global.NetReqModel.um_id = item.um_id
         this.props.navigation.navigate('MsgListItemDetail',{
           data:{
-            url:this.state.itemUrl,
+            url:'/userMail/readUsermail',
             title:'消息中心',
-            id:item.um_id
+            id:item.um_id,
+            jsonObj:global.NetReqModel
           },
           ...this.props
         })

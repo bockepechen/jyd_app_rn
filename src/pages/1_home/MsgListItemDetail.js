@@ -11,12 +11,14 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 
 export default class MsgListItemDetail extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       wv_url:this.navData.url,
@@ -86,8 +88,8 @@ export default class MsgListItemDetail extends Component {
           // source={{uri:this.state.wv_url}}
           // source={{uri:'http://rz23ra.natappfree.cc/product1412/html/bindingJoinSucceed.html'}}
           // source={{uri:'http://localhost:9002/test/wv.html'}}
-          source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          // source={require('./wv.html')}
+          // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

@@ -35,7 +35,7 @@ export default class ProductCardJxsb extends Component {
         <ImageBackground source={ImageStores.cp_4} resizeMode={'stretch'} style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(372), flexDirection:'row'}}>
           <View style={{marginLeft:scaleSize(108), marginTop:isIOS?scaleSize(69):scaleSize(75), width:scaleSize(450), height:scaleSize(213)}}>
             <View style={{height:scaleSize(51), flexDirection:'row'}}>
-              <Image source={this.paraData.titleImg ? this.paraData.titleImg : ImageStores.cp_xina} resizeMode={'stretch'} style={{width:scaleSize(126), height:scaleSize(51)}} />
+              <Image source={this.paraData.BorrowTypeId == '1' ? ImageStores.me_28 : ImageStores.me_29} resizeMode={'stretch'} style={{width:scaleSize(48), height:scaleSize(48)}} />
               <Text style={{marginLeft:scaleSize(27), fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.paraData.Description}</Text>
             </View>
             <View style={{marginTop:isIOS?scaleSize(78):scaleSize(72), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>

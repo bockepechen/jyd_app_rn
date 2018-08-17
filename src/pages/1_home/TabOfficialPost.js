@@ -38,14 +38,6 @@ export default class TabOfficialPost extends Component {
 
   async getInfoData() {
     global.NetReqModel.page_number = await this.state.next_page;
-    // global.NetReqModel.tel_phone = await "13502151376";
-    // global.NetReqModel.jyd_pubData.user_id = await "4";
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-    global.NetReqModel.jyd_pubData.network_type = await "wifi";
-    // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/userMail/announcement';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -59,7 +51,7 @@ export default class TabOfficialPost extends Component {
             httpRes : result,
             list : totalList,
             next_page : result.next_page,
-            itemUrl:result.url,
+            itemUrl:'/userMail/readAnnouncement',
             refreshing : false
           }
           , () => {
@@ -117,13 +109,7 @@ export default class TabOfficialPost extends Component {
     console.log('aaaaaaaaa')
     console.log(this.readedList)
     if(this.readedList.length < 1) return false
-    global.NetReqModel.tel_phone = await "15822753827";
     global.NetReqModel.an_id_list = await this.readedList;
-    global.NetReqModel.jyd_pubData.user_id = await "91";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-    global.NetReqModel.jyd_pubData.network_type = await "wifi";
-    // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/userMail/readAnnouncementsByAppCache';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
