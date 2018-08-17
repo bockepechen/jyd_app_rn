@@ -20,6 +20,7 @@ import RedPacketItem from './RedPacketItem';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import NavigationBar from '../../common/NavigationBar';
+import LoadingIcon from '../../common/LoadingIcon';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class RedPacketPage extends Component {
@@ -35,6 +36,7 @@ export default class RedPacketPage extends Component {
       next_page:"",
       itemUrl:'',
       modalVisible: false,
+      isLoading: false
     }
   }
 
@@ -104,11 +106,15 @@ export default class RedPacketPage extends Component {
   }
 
   async openRedPacket(index,itemId) {
+    this.setState({
+      isLoading: true,
+    })
     global.NetReqModel.red_id = itemId;
     let url = await '/redEnvelope/openRedEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       if(result.return_code == '0000'){
+        this.setState({isLoading:false})
         this.setModalVisible(true)
         let templist = this.state.list;
         templist[index].status = '2'
@@ -204,40 +210,22 @@ renderModal(){
           alert('Modal has been closed.');
         }}>
         <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
-          <View style={{flexDirection:'column',justifyContent:'center',height:scaleSize(891),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
-            <View style={{flexDirection:'row',justifyContent:'center'}}>
-              <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext1}</Text>
+          <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',height:scaleSize(531),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
+            <View style={{alignItems:'center',marginTop:scaleSize(69)}}>
+              <Text style={{fontSize:scaleSize(42),color:'#998675',fontWeight:'bold'}}>{'打开红包成功'}</Text>
+              <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(51)}}>{'红包金额将在T+1个工作日内'}</Text>
+              <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(21)}}>{'划拨至您的银行存管电子账户。'}</Text>
             </View>
-            <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(60)}}>
-              <Text style={{color:'#998675',fontSize:scaleSize(42)}}>{this.state.modaltext2}</Text>
-            </View>
-            <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(54)}}>
-              <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext3}</Text>
-            </View>
-            <View style={{flexDirection:'row',justifyContent:'center'}}>
-              <Text style={{color:'#989898',fontSize:scaleSize(36)}}>{this.state.modaltext4}</Text>
-            </View>
-            <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(54)}}>
+            <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(57)}}>
               <TouchableHighlight 
                 style={{flexDirection:'row',justifyContent:'center'}}
                 underlayColor='rgba(0,0,0,0)'
                 onPress={()=>{this.setModalVisible(false)}}>
                 <ImageBackground 
-                  source={ImageStores.cp_2} 
+                  source={ImageStores.me_36} 
                   resizeMode={'stretch'} 
-                  style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'稍后再说'}</Text>
-                </ImageBackground>
-              </TouchableHighlight>
-              <TouchableHighlight 
-                style={{flexDirection:'row',justifyContent:'center'}}
-                underlayColor='rgba(0,0,0,0)'
-                onPress={()=>{console.log('立即开通')}}>
-                <ImageBackground 
-                  source={ImageStores.sy_15} 
-                  resizeMode={'stretch'} 
-                  style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
-                  <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'立即开通'}</Text>
+                  style={{width:scaleSize(336), height:scaleSize(135), alignItems:'center', justifyContent:'center'}}>
+                  <Text style={{fontSize:scaleSize(36), fontWeight:'bold', color:'#FFFFFF'}}>{'确认'}</Text>
                 </ImageBackground>
               </TouchableHighlight>
             </View>
@@ -307,6 +295,7 @@ renderMainView(){
               />
               {this.renderMainView()}
               {this.renderModal()}
+              {this.state.isLoading?(<LoadingIcon />):null}
           </View>
       </TouchableWithoutFeedback>
     )

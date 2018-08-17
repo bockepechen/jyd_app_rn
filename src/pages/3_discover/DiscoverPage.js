@@ -38,6 +38,7 @@ export default class DiscoverPage extends Component {
       permit_url:'',
       shopping_url:'',
       team_url:'',
+      helpCenter_url :'',
     }
   }
 
@@ -76,6 +77,7 @@ export default class DiscoverPage extends Component {
           permit_url:result.permit_url,
           shopping_url:result.shopping_url,
           team_url:result.team_url,
+          helpCenter_url :result.helpCenter_url
         }
         , () => {
           if(this.refreshing){
@@ -245,7 +247,7 @@ export default class DiscoverPage extends Component {
         title: '帮助中心',
         callback: () => {
           this.goto('OperationReportPage',{
-            url:this.state.hel,
+            url:this.state.helpCenter_url,
             jsonObj:global.NetReqModel,
             title:'帮助中心'
           })
