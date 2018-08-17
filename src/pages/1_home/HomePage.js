@@ -58,21 +58,21 @@ export default class HomePage extends Component {
       ],
       selected: new Map(),
       isLoading: false,
-      httpRes:{},
-      detail_url:'',
-      sell_url:'',
-      aboutUs_url:'',
-      bank_url:'',
-      cooperationOrg_url:'',
-      risk_url:'',
-      safety_url:'',
-      sign_url:''
+      httpRes:global.InitNetData.httpRes,
+      detail_url:global.InitNetData.httpRes.detail_url,
+      sell_url:global.InitNetData.httpRes.sell_url,
+      aboutUs_url:global.InitNetData.httpRes.aboutUs_url,
+      bank_url:global.InitNetData.httpRes.bank_url,
+      cooperationOrg_url:global.InitNetData.httpRes.cooperationOrg_url,
+      risk_url:global.InitNetData.httpRes.risk_url,
+      safety_url:global.InitNetData.httpRes.safety_url,
+      sign_url:global.InitNetData.httpRes.sign_url,
     }
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
-    this.getInfoData()
+    // this.getInfoData()
   }
 
   componentWillUnmount() {
@@ -81,53 +81,53 @@ export default class HomePage extends Component {
 
   keyExtractor = (data, index) => {return String(index);}
 
-  async getInfoData() {
-    this.setState({
-      isLoading:true
-    });
-    let url = await '/firstPage';
-    global.NetReqModel.tel_phone = await '15822753827';
-    global.NetReqModel.jyd_pubData.user_id = await "91";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-    global.NetReqModel.jyd_pubData.network_type = await "wifi";
-    global.NetReqModel.jyd_pubData.token_id = await '123235h5e3111';
-    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
-    .then((result) => {
-      console.log(result);
-      for(var i = 0 ; i < result.appsellinfos.length ; i++){
-        result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
-        result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
-      }
-      // 返回数据，关闭Loading动画
-      this.setState(
-        {
-          isLoading:false,
-          httpRes : result,
-          detail_url:result.detail_url,
-          sell_url:result.sell_url,
-          aboutUs_url:result.aboutUs_url,
-          bank_url:result.bank_url,
-          cooperationOrg_url:result.cooperationOrg_url,
-          risk_url:result.risk_url,
-          safety_url:result.safety_url,
-          sign_url:result.sign_url
-        }
-        , () => {
-          if(this.refreshing){
-            this.refreshing = false;
-          }
-      })
-    })
-    .catch((e) => {
-      console.log(e);
-      // TODO Toast提示异常
-      // 关闭Loading动画
-      if(this.state.isLoading) {
-        this.setState({isLoading:false});
-      }
-    })
-  }
+  // async getInfoData() {
+  //   this.setState({
+  //     isLoading:true
+  //   });
+  //   let url = await '/firstPage';
+  //   global.NetReqModel.tel_phone = await '15822753827';
+  //   global.NetReqModel.jyd_pubData.user_id = await "91";
+  //   global.NetReqModel.jyd_pubData.source_type = await "0001";
+  //   global.NetReqModel.jyd_pubData.system_id = await "Android 7";
+  //   global.NetReqModel.jyd_pubData.network_type = await "wifi";
+  //   global.NetReqModel.jyd_pubData.token_id = await '123235h5e3111';
+  //   this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+  //   .then((result) => {
+  //     console.log(result);
+  //     for(var i = 0 ; i < result.appsellinfos.length ; i++){
+  //       result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
+  //       result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
+  //     }
+  //     // 返回数据，关闭Loading动画
+  //     this.setState(
+  //       {
+  //         isLoading:false,
+  //         httpRes : result,
+  //         detail_url:result.detail_url,
+  //         sell_url:result.sell_url,
+  //         aboutUs_url:result.aboutUs_url,
+  //         bank_url:result.bank_url,
+  //         cooperationOrg_url:result.cooperationOrg_url,
+  //         risk_url:result.risk_url,
+  //         safety_url:result.safety_url,
+  //         sign_url:result.sign_url
+  //       }
+  //       , () => {
+  //         if(this.refreshing){
+  //           this.refreshing = false;
+  //         }
+  //     })
+  //   })
+  //   .catch((e) => {
+  //     console.log(e);
+  //     // TODO Toast提示异常
+  //     // 关闭Loading动画
+  //     if(this.state.isLoading) {
+  //       this.setState({isLoading:false});
+  //     }
+  //   })
+  // }
 
   renderFlatListItem = (data) => {
     return (

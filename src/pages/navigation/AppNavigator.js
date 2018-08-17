@@ -152,6 +152,6 @@ export const AppSwitchNavigator = createSwitchNavigator(
     Welcome:Welcome,
     App:AppStackNavigator
   },{
-    initialRouteName:'App'
+    initialRouteName:'Welcome'
   }
 )
