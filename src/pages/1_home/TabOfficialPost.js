@@ -209,7 +209,7 @@ export default class TabOfficialPost extends Component {
         renderItem={this._renderItem}
         ListFooterComponent={this._renderFooter}//尾巴
         onEndReached={this._onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.05}
         ItemSeparatorComponent={this._separator}
         refreshControl={
           <RefreshControl

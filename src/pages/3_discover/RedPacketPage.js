@@ -68,15 +68,19 @@ export default class RedPacketPage extends Component {
   }
 
   async getInfoData() {
+    console.log('aaa')
     global.NetReqModel.page_number = await this.state.next_page;
     global.NetReqModel.tel_phone = await "15903262695";
     global.NetReqModel.jyd_pubData.user_id = await "39";
+    global.NetReqModel.jyd_pubData.source_type = await "0001";
     global.NetReqModel.jyd_pubData.token_id = await '89a5ad1adba2f96b';
     // global.NetReqModel.tel_phone = await "15822753827";
     // global.NetReqModel.jyd_pubData.user_id = await "91";
     let url = await '/redEnvelope';
+    console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
+      console.log(result)
       var totalList = [];
       if(result.return_code == '0000'){
         totalList = (this.state.next_page === "1") ? [] : this.state.list;
@@ -113,6 +117,7 @@ export default class RedPacketPage extends Component {
     let url = await '/redEnvelope/openRedEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
+      console.log(result)
       if(result.return_code == '0000'){
         this.setState({isLoading:false})
         this.setModalVisible(true)
@@ -281,23 +286,21 @@ renderMainView(){
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-          <View style={GlobalStyles.rootContainer}>
-              <NavigationBar 
-                  title={'我的红包'}
-                  titleColor='#FFFFFF'
-                  titleSize={scaleSize(56)}
-                  navColor='#E8152E'
-                  statusBarColor='#E8152E'
-                  statusBarStyle='light-content'
-                  leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
-                  rightButton={this.getRightButton(()=>this.record())}
-              />
-              {this.renderMainView()}
-              {this.renderModal()}
-              {this.state.isLoading?(<LoadingIcon />):null}
-          </View>
-      </TouchableWithoutFeedback>
+      <View style={GlobalStyles.rootContainer}>
+          <NavigationBar 
+              title={'我的红包'}
+              titleColor='#FFFFFF'
+              titleSize={scaleSize(56)}
+              navColor='#E8152E'
+              statusBarColor='#E8152E'
+              statusBarStyle='light-content'
+              leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
+              rightButton={this.getRightButton(()=>this.record())}
+          />
+          {this.renderMainView()}
+          {this.renderModal()}
+          {this.state.isLoading?(<LoadingIcon />):null}
+      </View>
     )
   }
 }

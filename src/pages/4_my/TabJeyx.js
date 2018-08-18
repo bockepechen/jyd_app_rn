@@ -80,18 +80,18 @@ export default class TabJeyx extends Component {
         resizeMode={'stretch'}
         style={{flexDirection:'column',alignItems:'center',width:scaleSize(1242), height:scaleSize(666),marginTop:scaleSize(48)}}
       >
-        <View style={{marginTop:scaleSize(132)}}>
+        <View style={{marginTop:scaleSize(132),alignItems:'center'}}>
           <Text style={{fontSize:scaleSize(36),color:'#c7b299'}}>{'待收本金(元)'}</Text>
-          <Text style={{marginTop:scaleSize(45), fontSize:scaleSize(90),color:'#998675'}}>{this.state.waitContractAmount}</Text>
+          <Text style={{marginTop:scaleSize(40),height:scaleSize(90), fontSize:scaleSize(80),color:'#998675'}}>{this.state.waitContractAmount}</Text>
         </View>
-        <View style={{flexDirection:'row',marginTop:scaleSize(160)}}>
+        <View style={{flexDirection:'row',marginTop: isAndroid ? scaleSize(155) : scaleSize(174)}}>
           <View style={{alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'待收回报(元)'}</Text>
-            <Text style={{fontSize:scaleSize(58),color:'#998675'}}>{this.state.waitRepay}</Text>
+            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{this.state.waitRepay}</Text>
           </View>
           <View style={{alignItems:'center',marginLeft:scaleSize(250)}}>
             <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'累计已收回报(元)'}</Text>
-            <Text style={{fontSize:scaleSize(58),color:'#998675'}}>{this.state.arrivalRepay}</Text>
+            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{this.state.arrivalRepay}</Text>
           </View>
         </View>
       </ImageBackground>
@@ -114,8 +114,8 @@ export default class TabJeyx extends Component {
 
         <TabSubCjz key={'cjz'} tabLabel={'出借中'} />
         <TabSubMjz key={'mjz'} tabLabel={'募集中'} />
-        <TabSubYzc key={'yzc'} tabLabel={'转出中'} />
-        <TabSubZcz key={'zcz'} tabLabel={'已转出'} />
+        <TabSubZcz key={'zcz'} tabLabel={'转出中'} />
+        <TabSubYzc key={'yzc'} tabLabel={'已转出'} />
       </ScrollableTabView>
     )
   }

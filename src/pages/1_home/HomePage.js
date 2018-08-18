@@ -59,14 +59,14 @@ export default class HomePage extends Component {
       selected: new Map(),
       isLoading: false,
       httpRes:global.InitNetData.httpRes,
-      detail_url:global.InitNetData.httpRes.detail_url,
-      sell_url:global.InitNetData.httpRes.sell_url,
-      aboutUs_url:global.InitNetData.httpRes.aboutUs_url,
-      bank_url:global.InitNetData.httpRes.bank_url,
-      cooperationOrg_url:global.InitNetData.httpRes.cooperationOrg_url,
-      risk_url:global.InitNetData.httpRes.risk_url,
-      safety_url:global.InitNetData.httpRes.safety_url,
-      sign_url:global.InitNetData.httpRes.sign_url,
+      detail_url:global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
+      sell_url:global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
+      aboutUs_url:global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
+      bank_url:global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
+      cooperationOrg_url:global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
+      risk_url:global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
+      safety_url:global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
+      sign_url:global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
     }
   }
 
