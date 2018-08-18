@@ -80,7 +80,7 @@ export default class TabSbjq extends Component {
         resizeMode={'stretch'}
         style={{flexDirection:'column',alignItems:'center',width:scaleSize(1242), height:scaleSize(666),marginTop:scaleSize(48)}}
       >
-        <View style={{marginTop:scaleSize(132)}}>
+        <View style={{marginTop:scaleSize(132),alignItems:'center'}}>
           <Text style={{fontSize:scaleSize(36),color:'#c7b299'}}>{'待收本金(元)'}</Text>
           <Text style={{marginTop:scaleSize(45), fontSize:scaleSize(90),color:'#998675'}}>{this.state.waitContractAmount}</Text>
         </View>

@@ -12,7 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
-import ProductCardCjz from './ProductCardCjz';
+import ProductCardCyz from './ProductCardCyz';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabSubCyz extends Component {
@@ -129,7 +129,7 @@ _onEndReached = ()=>{
 
   renderItem = (data) => {
     return (
-      <ProductCardCjz
+      <ProductCardCyz
         id={data.index}
         data={data}
         onPressItem={this._onPressItem}
