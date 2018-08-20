@@ -14,7 +14,7 @@ import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 
 const isIOS = Platform.OS==='ios'?true:false;
-export default class ProductCardCyz extends Component {
+export default class ProductCardYjs extends Component {
   constructor(props) {
     super(props);
     this.paraData = this.props.data.item;
@@ -58,6 +58,9 @@ export default class ProductCardCyz extends Component {
     return res
   }
   getDate2(str){
+    if(str == null){
+        return ''
+    }
     let array = []
     array = str.split(' ')
     return array[0]
@@ -102,8 +105,8 @@ export default class ProductCardCyz extends Component {
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{this.paraData.borrowno}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'起息日期:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{this.getDate2(this.paraData.starttime)}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'结束日期:'}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{this.getDate2(this.paraData.realendtime)}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借金额:'}</Text>
@@ -114,40 +117,17 @@ export default class ProductCardCyz extends Component {
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.getnhll(this.paraData.expectedyearyield)}%`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'预期利息:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.expectprofit} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'已收利息:'}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.arrivledinterest} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借奖励:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.getcjjl(this.paraData.contractamount,this.paraData.improverate)} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'已收出借奖励:'}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.offsetamount} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'账户管理费:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.getzhglf(this.paraData.expectprofit,this.paraData.accountfeerate)} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.accountfee} 元`}</Text>
                     </View>
-                </View>
-                <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(110)}}>
-                    <TouchableOpacity
-                        onPress={()=>{}}
-                        activeOpacity={0.6}
-                        style={{height:scaleSize(84),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
-                    >
-                        <Text style={{color:'#fff',fontSize:scaleSize(42)}}>{'借款协议'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={()=>{}}
-                        activeOpacity={0.6}
-                        style={{height:scaleSize(84),marginLeft:scaleSize(24),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
-                    >
-                        <Text style={{color:'#fff',fontSize:scaleSize(42)}}>{'查看合同'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={()=>{}}
-                        activeOpacity={0.6}
-                        style={{height:scaleSize(84),marginLeft:scaleSize(24),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
-                    >
-                        <Text style={{color:'#fff',fontSize:scaleSize(42)}}>{'回款计划'}</Text>
-                    </TouchableOpacity>
                 </View>
             </ImageBackground>
         </View>

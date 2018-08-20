@@ -141,7 +141,7 @@ _onEndReached = ()=>{
   renderMainView() {
     return(
       <FlatList
-          style={{flex:1,marginTop:scaleSize(45)}}
+          style={{flex:1}}
           ref={(flatList) => (this.flatList = flatList)}
           keyExtractor={this.keyExtractor}
           data={this.state.list}
@@ -161,7 +161,7 @@ _onEndReached = ()=>{
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1,marginTop:scaleSize(51)}}>
         {this.renderMainView()}    
       </View>
     )
