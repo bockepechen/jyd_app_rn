@@ -71,7 +71,7 @@ export default class ProductCardMjz extends Component {
   
   renderItem(item){
     return (
-        <View style={{}}>
+        <View style={{marginBottom:scaleSize(162),marginTop:scaleSize(40)}}>
             <View style={{flexDirection:'column'}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'期待年回报率:'}</Text>
@@ -100,7 +100,7 @@ export default class ProductCardMjz extends Component {
                 onPress={this._onPress}
             >
                 <ImageBackground
-                    source={ImageStores.fx_13}
+                    source={ImageStores.cp_4_1}
                     resizeMode={'stretch'} 
                     style={{height:scaleSize(372),width:scaleSize(1242)}}
                 >
@@ -112,7 +112,7 @@ export default class ProductCardMjz extends Component {
                         <View style={{flexDirection:'row'}}>
                             <Text style={{marginRight:scaleSize(24),height:scaleSize(51),fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{`${this.getDate1(this.paraData.expectendtime)} 服务到期`}</Text>
                             <Image
-                                source={this.state.isSelect === this.props.id ? null : ImageStores.fx_4}
+                                source={this.state.isSelect === this.props.id ? ImageStores.fx_4_1 : ImageStores.fx_4}
                                 resizeMode={'stretch'} 
                                 style={{marginTop:scaleSize(-7),height:scaleSize(54),width:scaleSize(54),marginRight:scaleSize(81)}}
                             />

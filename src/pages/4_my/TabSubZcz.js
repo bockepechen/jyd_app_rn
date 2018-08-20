@@ -160,7 +160,7 @@ _onEndReached = ()=>{
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1,marginTop:scaleSize(45)}}>
         {this.renderMainView()}    
       </View>
     )

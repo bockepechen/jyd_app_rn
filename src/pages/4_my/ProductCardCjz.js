@@ -71,7 +71,7 @@ export default class ProductCardCjz extends Component {
   
   renderItem(item){
     return (
-        <View style={{}}>
+        <View style={{marginTop:scaleSize(40)}}>
             <View style={{flexDirection:'column'}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'期待年回报率:'}</Text>
@@ -86,12 +86,24 @@ export default class ProductCardCjz extends Component {
                     <Text style={{marginRight:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{`${this.getzhglf(item.expectprofit,item.accountfeerate)} 元`}</Text>
                 </View>
             </View>
-            <TouchableOpacity
-                onPress={()=>{}}
-                style={{justifyContent:'center',alignItems:'center',marginBottom:scaleSize(30),marginTop:scaleSize(54)}}
+            <View
+                style={{flexDirection:'row',marginBottom:scaleSize(30),marginTop:scaleSize(54),justifyContent:'center',marginBottom:scaleSize(30),marginTop:scaleSize(54)}}
             >
-                <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'查看服务协议'}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>{}}
+                    activeOpacity={0.6}
+                    style={{justifyContent:'center',borderRadius:scaleSize(15),alignItems:'center',backgroundColor:'#c7b299',width:scaleSize(501),height:scaleSize(84)}}
+                >
+                    <Text style={{fontSize:scaleSize(42),color:'#fff'}}>{'查看合同'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>{}}
+                    activeOpacity={0.6}
+                    style={{marginLeft:scaleSize(24),borderRadius:scaleSize(15),justifyContent:'center',alignItems:'center',backgroundColor:'#c7b299',width:scaleSize(501),height:scaleSize(84)}}
+                >
+                    <Text style={{fontSize:scaleSize(42),color:'#fff'}}>{'债权关系'}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
   }
@@ -106,7 +118,7 @@ export default class ProductCardCjz extends Component {
                 onPress={this._onPress}
             >
                 <ImageBackground
-                    source={ImageStores.fx_13}
+                    source={ImageStores.cp_4_1}
                     resizeMode={'stretch'} 
                     style={{height:scaleSize(372),width:scaleSize(1242)}}
                 >
@@ -118,7 +130,7 @@ export default class ProductCardCjz extends Component {
                         <View style={{flexDirection:'row'}}>
                             <Text style={{marginRight:scaleSize(24),height:scaleSize(51),fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{`${this.getDate1(this.paraData.expectendtime)} 服务到期`}</Text>
                             <Image
-                                source={this.state.isSelect === this.props.id ? null : ImageStores.fx_4}
+                                source={this.state.isSelect === this.props.id ? ImageStores.fx_4_1 : ImageStores.fx_4}
                                 resizeMode={'stretch'} 
                                 style={{marginTop:scaleSize(-7),height:scaleSize(54),width:scaleSize(54),marginRight:scaleSize(81)}}
                             />
