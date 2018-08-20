@@ -34,6 +34,7 @@ export default class AppStatusBar extends Component {
     }
   }
   componentWillUpdate(nextProps, nextState) {
+    StatusBar.setHidden(false);
     StatusBar.setBarStyle(this._barStyle);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor(this._barColor);
