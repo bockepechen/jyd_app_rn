@@ -15,6 +15,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AppStatusBar from '../../common/AppStatusBar';
+import ModalView from '../../common/ModalView';
 
 export default class MyPage extends Component {
   constructor(props) {
@@ -294,14 +295,11 @@ export default class MyPage extends Component {
 
   renderModal(){
     return (
-      <Modal
-          style={{flex:1,}}
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
+      <ModalView
+        style={{flex:1,}}
+        visible={this.state.modalVisible}
+        isPressClosed={false}
+      >
           <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
             <View style={{flexDirection:'column',justifyContent:'center',height:scaleSize(891),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
               <View style={{flexDirection:'row',justifyContent:'center'}}>
@@ -345,7 +343,7 @@ export default class MyPage extends Component {
               </View>
             </View>
           </View>
-        </Modal>
+        </ModalView>
     )
   }
 

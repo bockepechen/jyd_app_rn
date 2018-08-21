@@ -34,6 +34,7 @@ import AssetPage from '../4_my/AssetPage';
 import AddressPage from '../4_my/AddressPage';
 import ResetpwdPage from '../4_my/ResetpwdPage';
 import MyLoanPage from '../4_my/MyLoanPage';
+import FeedbackPage from '../4_my/FeedbackPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -139,6 +140,9 @@ const AppStackNavigator = createStackNavigator(
     },
     AccountPage:{
       screen:AccountPage
+    },
+    FeedbackPage:{
+      screen:FeedbackPage
     },
   },{
     navigationOptions:{

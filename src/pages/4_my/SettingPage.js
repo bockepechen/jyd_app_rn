@@ -16,7 +16,6 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import ShareUtil from '../../utils/ShareUtil';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class SettingPage extends Component {
@@ -27,11 +26,11 @@ export default class SettingPage extends Component {
     this.listItem = [
         {
             title:'当前版本',
-            callback:()=>{this.shareWxToOne()}
+            callback:()=>{console.log('')}
         },
         {
             title:'意见反馈',
-            callback:()=>{this.shareWx()}
+            callback:()=>{this.goto('FeedbackPage')}
         },
         {
             title:'清理缓存',
@@ -54,23 +53,12 @@ export default class SettingPage extends Component {
     this.AndroidBackHandler.removePressBackListener();
   }
 
-  shareWxToOne(){
-    // 2	微信	
-    // 3	朋友圈
-    ShareUtil.share('测试','','http://woodyhello.com','啦啦啦',2,(code,message) =>{
-      console.log('code===>'+code);  
-      console.log('message===>'+message)
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
     });
   }
-  shareWx(){
-    // 2	微信	
-    // 3	朋友圈
-    ShareUtil.share('测试','','http://woodyhello.com','啦啦啦',3,(code,message) =>{
-      console.log('code===>'+code);  
-      console.log('message===>'+message)
-    });
-  }
-  
+
   navGoback = () => {
     this.props.navigation.goBack();
   }

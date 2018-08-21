@@ -153,14 +153,15 @@ export default class AddressPage extends Component{
           <View 
             style={{
               position:'absolute', 
-              top:scaleSize(117)+15, 
+              top:scaleSize(120), 
               width:GlobalStyles.WINDOW_WIDTH, 
               alignItems:'center',
             }}>
             <View style={{width:scaleSize(1134), height:scaleSize(550), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+                <Text style={{color:'#998675',fontSize:scaleSize(36)}}>{'默认联系人:'}</Text>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
                   maxLength={11}
                   clearButtonMode={'while-editing'}
                   placeholder={'默认联系人'}
@@ -169,9 +170,10 @@ export default class AddressPage extends Component{
                   onChangeText = {(p) => {this.pwd = p}}
                   />
               </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+                <Text style={{color:'#998675',fontSize:scaleSize(36)}}>{'联系电话:'}</Text>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
                   maxLength={11}
                   keyboardType={kbType}
                   clearButtonMode={'while-editing'}
@@ -181,10 +183,10 @@ export default class AddressPage extends Component{
                   onChangeText = {(p) => {this.pwd = p}}
                   />
               </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+              <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+                <Text style={{color:'#998675',fontSize:scaleSize(36)}}>{'详细地址:'}</Text> 
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
                   keyboardType={kbType}
                   clearButtonMode={'while-editing'}
                   placeholder={'详细地址'}
