@@ -7,7 +7,8 @@ import {
     Image,
     Keyboard,
     ImageBackground,
-    ScrollView
+    ScrollView,
+    TouchableOpacity
 } from 'react-native'
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
@@ -44,6 +45,35 @@ export default class AssetPage extends Component{
 
     navGoback = () => {
         this.props.navigation.goBack();
+    }
+
+    goto(url,JsonObj){
+        this.props.navigation.navigate(url,{
+          data:JsonObj ? JsonObj : {}
+        });
+    }
+
+    record(){
+        this.goto('',{
+            url:'',
+            jsonObj:global.NetReqModel,
+            title:'红包规则'
+        })
+    }
+  
+    //一键读取
+    getRightButton(callBack) {
+        return <TouchableOpacity
+                style={{marginRight:scaleSize(54),}}
+                onPress={callBack}>
+                <View style={{flexDirection:'row'}}>
+                  <Text
+                      style={{color:'#fff',fontSize:scaleSize(49)}} 
+                  >
+                    {'收支明细'}
+                  </Text>
+                </View>
+            </TouchableOpacity>
     }
 
     renderTop(){
@@ -119,6 +149,7 @@ export default class AssetPage extends Component{
                         statusBarColor='#E8152E'
                         statusBarStyle='light-content'
                         leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
+                        rightButton={this.getRightButton(()=>this.record())}
                     />
                     <View>
                     {/* <Image

@@ -219,15 +219,20 @@ export default class MyPage extends Component {
                   </Text>
                 </View>
               </TouchableOpacity>
-              <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
-                <Image 
-                  source={ImageStores.me_47}
-                  resizeMode={'stretch'}
-                  style={{marginLeft:scaleSize(48), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
-                <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
-                  {'我的嘉金币'}
-                </Text>
-              </View>
+              <TouchableOpacity
+                onPress={()=>{this.goto('')}}
+                style={{flex:1, borderWidth:0, flexDirection:'row'}}
+              >
+                <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
+                  <Image 
+                    source={ImageStores.me_47}
+                    resizeMode={'stretch'}
+                    style={{marginLeft:scaleSize(48), marginTop:scaleSize(39), width:scaleSize(150), height:scaleSize(150)}}/>
+                  <Text style={{marginLeft:scaleSize(48), marginTop:scaleSize(87), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>
+                    {'我的嘉金币'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>
