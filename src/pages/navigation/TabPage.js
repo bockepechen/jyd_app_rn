@@ -16,7 +16,8 @@ import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import SafeAreaViewPlus from '../../common/SafeAreaViewPlus';
 import { scaleSize } from '../../utils/FitViewUtils';
 import { ImageStores } from '../../../res/styles/ImageStores';
-import DeviceInfo from 'react-native-device-info'
+import DeviceInfo from 'react-native-device-info';
+import ModalView from '../../common/ModalView';
 
 export default class TabPage extends Component {
 
@@ -64,6 +65,9 @@ export default class TabPage extends Component {
           selectedTab: dic.tab,
         })
     });
+    DeviceEventEmitter.addListener('showModal', (modalContentView) => {
+      this.refs.modalView.show(modalContentView);
+    });
     SplashScreen.hide();
   }
 
@@ -101,6 +105,7 @@ export default class TabPage extends Component {
           {this.renderTabNavigator(DiscoverPage, 'Dicover', '发现', ImageStores.sy_12, ImageStores.sy_8)}
           {this.renderTabNavigator(MyPage, 'My', '我的', ImageStores.sy_10, ImageStores.sy_7)}
         </TabNavigator>
+        <ModalView ref='modalView'/>
       </SafeAreaViewPlus>
 
     return safeRootView;
