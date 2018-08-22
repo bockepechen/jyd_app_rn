@@ -44,6 +44,7 @@ export default class TabPage extends Component {
     console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
     GlobalStyles.CONNECTION_TYPE = connectionInfo;
     global.NetReqModel.jyd_pubData.network_type = connectionInfo.type;
+    global.NetReqModel.jyd_pubData.source_type = '0001';
     global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
     DeviceInfo.getIPAddress().then(ip => {
       console.log(`当前手机IP：${ip}`);
