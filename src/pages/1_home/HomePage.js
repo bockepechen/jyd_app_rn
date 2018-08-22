@@ -59,14 +59,14 @@ export default class HomePage extends Component {
       selected: new Map(),
       isLoading: false,
       httpRes:global.InitNetData.httpRes,
-      detail_url:global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
-      sell_url:global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
-      aboutUs_url:global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
-      bank_url:global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
-      cooperationOrg_url:global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
-      risk_url:global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
-      safety_url:global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
-      sign_url:global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
+      detail_url:global.InitNetData.httpRes && global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
+      sell_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
+      aboutUs_url:global.InitNetData.httpRes && global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
+      bank_url:global.InitNetData.httpRes && global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
+      cooperationOrg_url:global.InitNetData.httpRes && global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
+      risk_url:global.InitNetData.httpRes && global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
+      safety_url:global.InitNetData.httpRes && global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
+      sign_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
     }
   }
 
@@ -222,8 +222,8 @@ export default class HomePage extends Component {
 
   renderSwiper() {
     let swiperViews = [];
-    let swiperSourceData = this.state.httpRes.AppMainHeadBanners ? [] : [ImageStores.F3];
-    if(this.state.httpRes.AppMainHeadBanners){
+    let swiperSourceData = this.state.httpRes && this.state.httpRes.AppMainHeadBanners ? [] : [ImageStores.F3];
+    if(this.state.httpRes && this.state.httpRes.AppMainHeadBanners){
         for(var i = 0 ; i < this.state.httpRes.AppMainHeadBanners.length ; i++){
           swiperSourceData[i] = this.state.httpRes.AppMainHeadBanners[i].ImgPath
         }
@@ -234,7 +234,7 @@ export default class HomePage extends Component {
           key={index}
           underlayColor='rgba(0,0,0,0)' 
           onPress={()=>{
-            if(!this.state.httpRes.AppMainHeadBanners)
+            if(!this.state.httpRes && !this.state.httpRes.AppMainHeadBanners)
              return false
             this.props.navigation.navigate('HomeItemDetail',{
               data:{
@@ -245,7 +245,7 @@ export default class HomePage extends Component {
           }
           >
           <Image
-            source={this.state.httpRes.AppMainHeadBanners ? {uri : this.state.httpRes.AppMainHeadBanners[index].ImgPath} : item} 
+            source={this.state.httpRes && this.state.httpRes.AppMainHeadBanners ? {uri : this.state.httpRes.AppMainHeadBanners[index].ImgPath} : item} 
             resizeMode={'stretch'} 
             style={{
               width:GlobalStyles.WINDOW_WIDTH,
@@ -463,8 +463,8 @@ export default class HomePage extends Component {
         delay={3000} />*/}
         {this.renderTopNavIconViews()}
         {this.renderSubTitleLine('首页推荐', 72)}
-        <ProductCardMain onPress={this._onPress} top={scaleSize(24)} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[0] : ''}/>
-        <ProductCardSub  onPress={this._onPress} top={0} bottom={0} data={this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''}/>
+        <ProductCardMain onPress={this._onPress} top={scaleSize(24)} data={this.state.httpRes && this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[0] : ''}/>
+        <ProductCardSub  onPress={this._onPress} top={0} bottom={0} data={this.state.httpRes && this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''}/>
 
         <View style={{marginTop:scaleSize(32), alignItems:'center', justifyContent:'center'}}>
           <Text style={{fontSize:scaleSize(36), color:'#3b92f0'}}>{'*市场有风险, 投资需谨慎'}</Text>
@@ -484,7 +484,7 @@ export default class HomePage extends Component {
             }}
           >
             <Image 
-              source={this.state.httpRes.AppSubHeadBanners && this.state.httpRes.AppSubHeadBanners.length > 0 ? {uri : this.state.httpRes.AppSubHeadBanners[0].ImgPath} : ImageStores.sy_2} 
+              source={this.state.httpRes && this.state.httpRes.AppSubHeadBanners && this.state.httpRes.AppSubHeadBanners.length > 0 ? {uri : this.state.httpRes.AppSubHeadBanners[0].ImgPath} : ImageStores.sy_2} 
               resizeMode={'stretch'} 
               style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(510)}}/>
           </TouchableOpacity>
@@ -498,7 +498,7 @@ export default class HomePage extends Component {
             resizeMode={'stretch'}
             style={{marginLeft:scaleSize(132), width:scaleSize(150), height:scaleSize(150)}}/>
           <View style={{marginLeft:scaleSize(42), width:scaleSize(324), height:scaleSize(150)}}>
-            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes.AccumulativeAmount ? Utils.fmoney(this.state.httpRes.AccumulativeAmount) : '30,078'}万</Text>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes && this.state.httpRes.AccumulativeAmount ? Utils.fmoney(this.state.httpRes.AccumulativeAmount) : '30,078'}万</Text>
             <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#998675'}}>{'累计交易金额'}</Text>
           </View>
           <Image
@@ -506,7 +506,7 @@ export default class HomePage extends Component {
             resizeMode={'stretch'}
             style={{marginLeft:scaleSize(36), width:scaleSize(150), height:scaleSize(150)}}/>
           <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
-            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes.AccumulativeDays ? this.state.httpRes.AccumulativeDays : '990'}天</Text>
+            <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{this.state.httpRes && this.state.httpRes.AccumulativeDays ? this.state.httpRes.AccumulativeDays : '990'}天</Text>
             <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#998675'}}>{'安全运营'}</Text>
           </View>
         </View>
