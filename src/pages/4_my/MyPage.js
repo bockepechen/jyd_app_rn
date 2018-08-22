@@ -8,8 +8,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ImageBackground,
-  Modal,
-  Linking
+  Linking,
+  DeviceEventEmitter
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
@@ -19,6 +19,7 @@ import AppStatusBar from '../../common/AppStatusBar';
 import ModalView from '../../common/ModalView';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
+import Utils from '../../utils/Utils';
 
 export default class MyPage extends Component {
   constructor(props) {
@@ -29,31 +30,20 @@ export default class MyPage extends Component {
       isRefresh: false,
       isEye: true,
       image_eye: ImageStores.me_3,
-      modalVisible: false,
-      modalTelVisible: false,
       modaltext1:"嘉e贷联手江西银行",
       modaltext2:"积极响应国家政策",
       modaltext3:"银行存管系统正式上线，请先开通银行存管账户",
       modaltext4:"开通后即可进行充值、提现、出借等操作",
+      httpRes:{},
       totalAmount:0,
       sumRepay:0,
       availBal:0,
-      fundAccountInfo:{
-
-      }
+      fundAccountInfo:{}
     }
   }
 
   componentDidMount(){
     this.getInfoData()
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
-  setModalTelVisible(visible) {
-    this.setState({modalTelVisible: visible});
   }
 
   async getInfoData() {
@@ -63,6 +53,7 @@ export default class MyPage extends Component {
     let url = await '/personCenter';
     global.NetReqModel.tel_phone = await "15822753827";
     global.NetReqModel.jyd_pubData.user_id = await "91";
+    global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
     console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -71,6 +62,10 @@ export default class MyPage extends Component {
         this.setState({
             isLoading:false,
             httpRes : result,
+            totalAmount:result.totalAmount,
+            sumRepay:result.sumRepay,
+            availBal:result.availBal,
+            fundAccountInfo:result.fundAccountInfo
         })
       }
       if(this.state.isLoading) {
@@ -190,7 +185,7 @@ export default class MyPage extends Component {
               source={ImageStores.me_10} 
               resizeMode={'stretch'} 
               style={{width:scaleSize(96), height:scaleSize(96)}}/>
-            <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{'用户13752768957'}</Text>
+            <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{`用户${global.NetReqModel.tel_phone}`}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={()=>this.goto('SettingPage')} underlayColor='rgba(0,0,0,0)'>
@@ -302,12 +297,12 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_49,
         title:'风险评测',
-        callback:()=>{this.setModalVisible(true)},
+        callback:()=>{this.showModalView(true,this.renderModal())},
       },
       {
         img:ImageStores.me_50,
         title:'客户服务',
-        callback:()=>{this.setModalTelVisible(true)},
+        callback:()=>{this.showModalView(true,this.renderTelModal())},
       },
       {
         img:ImageStores.me_51,
@@ -351,7 +346,7 @@ export default class MyPage extends Component {
 
   renderModal(){
     return (
-      <ModalView
+      <View
         style={{flex:1,}}
         visible={this.state.modalVisible}
         isPressClosed={false}
@@ -377,7 +372,7 @@ export default class MyPage extends Component {
                 <TouchableHighlight 
                   style={{flexDirection:'row',justifyContent:'center'}}
                   underlayColor='rgba(0,0,0,0)'
-                  onPress={()=>{this.setModalVisible(false)}}>
+                  onPress={()=>{this.showModalView(false)}}>
                   <ImageBackground 
                     source={ImageStores.cp_2} 
                     resizeMode={'stretch'} 
@@ -399,13 +394,13 @@ export default class MyPage extends Component {
               </View>
             </View>
           </View>
-        </ModalView>
+        </View>
     )
   }
 
   renderTelModal(){
     return (
-      <ModalView
+      <View
         style={{flex:1,}}
         visible={this.state.modalTelVisible}
         isPressClosed={false}
@@ -419,7 +414,7 @@ export default class MyPage extends Component {
                 <TouchableHighlight 
                   style={{flexDirection:'row',justifyContent:'center'}}
                   underlayColor='rgba(0,0,0,0)'
-                  onPress={()=>{this.setModalTelVisible(false)}}>
+                  onPress={()=>{this.showModalView(false)}}>
                   <ImageBackground 
                     source={ImageStores.me_35} 
                     resizeMode={'stretch'} 
@@ -443,8 +438,12 @@ export default class MyPage extends Component {
               </View>
             </View>
           </View>
-        </ModalView>
+        </View>
     )
+  }
+
+  showModalView(visible,renderView) {
+    DeviceEventEmitter.emit('callModal',visible,renderView);
   }
 
   Calendar4Payback(str) {
@@ -461,8 +460,6 @@ export default class MyPage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
-        {this.renderModal()}
-        {this.renderTelModal()}
         {this.state.isLoading?(<LoadingIcon />):null}
       </View>
     )

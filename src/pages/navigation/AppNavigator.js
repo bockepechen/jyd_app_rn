@@ -22,6 +22,7 @@ import InvitingRecordPage from '../3_discover/InvitingRecordPage';
 import MallPage from '../3_discover/MallPage';
 import ActivityPage from '../3_discover/ActivityPage';
 import RedPacketPage from '../3_discover/RedPacketPage';
+import RedPackRulePage from '../3_discover/RedPackRulePage';
 import OperationReportPage from '../3_discover/OperationReportPage';
 import AccountPage from '../3_discover/AccountPage';
 import SettingPage from '../4_my/SettingPage';
@@ -36,6 +37,7 @@ import ResetpwdPage from '../4_my/ResetpwdPage';
 import MyLoanPage from '../4_my/MyLoanPage';
 import FeedbackPage from '../4_my/FeedbackPage';
 import PersonInfoPage from '../4_my/PersonInfoPage';
+import CjzJqgxPage from '../4_my/CjzJqgxPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -147,6 +149,12 @@ const AppStackNavigator = createStackNavigator(
     },
     PersonInfoPage:{
       screen:PersonInfoPage
+    },
+    RedPackRulePage:{
+      screen:RedPackRulePage
+    },
+    CjzJqgxPage:{
+      screen:CjzJqgxPage
     },
   },{
     navigationOptions:{

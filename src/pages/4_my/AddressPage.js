@@ -30,87 +30,83 @@ export default class AddressPage extends Component{
         this.state = {
             isRotate:true,
             isLoading: false,
-            isEyeOpen: false,
-            validTime: 0,
-            telshow:'137****1234'
+            user_name:'',
+            tel_phone:'',
+            address:''
         }
     }
 
     componentDidMount() {
         this.AndroidBackHandler.addPressBackListener();
+        this.getInfoData()
     }
 
     componentWillUnmount() {
         this.AndroidBackHandler.removePressBackListener();
     }
 
-    setSmscode = async () => {
-        this.setState({isLoading:true});
-        // 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
-        let adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
-        // 跳转下页面参数设置
-        let navigation_params = {
-          pageTitle:'忘记密码',
-          nextPage:'ResetPwdPage',
-          tel: this.telNum,
-          cryptTel: `${global.NetReqModel.tel_phone.substring(0,3)} **** ${global.NetReqModel.tel_phone.substring(7)}`,
-          authcodeCD: adaptAuthCodeCD.authcodeCD
-        };
-        if  (adaptAuthCodeCD.ifSendAuthCode) {
-          // 设置远程接口访问参数 (同步执行)
-          global.NetReqModel.tel_phone = await global.NetReqModel.tel_phone;
-          global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
-          let url = await '/password/forgetPwd';
-          this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
-           .then((result) => {
-             // 返回数据，关闭Loading动画
-             this.setState({isLoading:false}, () => {
-               if (result.return_code === '0000') {
-                 global.NetReqModel.jyd_pubData.user_id = result.user_id;
-                 this.props.navigation.navigate('AuthPhoneNumPage', navigation_params);
-               } else {
-                this.refs.toast.show(result.return_msg);
-               }
-             })
-           })
-           .catch((e) => {
-             console.log(e);
-             this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-             // 关闭Loading动画
-             if(this.state.isLoading) {
-               this.setState({isLoading:false});
-             }
-           })
-        } else {
-          this.setState({isLoading:false},() => {
-            this.props.navigation.navigate('AuthPhoneNumPage', navigation_params);
-          });
+    async getInfoData() {
+      this.setState({
+        isLoading:true
+      });
+      let url = await '/accountSafety/contactInfo';
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        if(result.return_code == '0000'){
+          this.setState({
+              isLoading:false,
+              tel_phone : result.tel_phone,
+              address : result.address,
+              user_name : result.user_name,
+          })
         }
-      }
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        // TODO Toast提示异常
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+    }
+
+    async updateInfo() {
+      this.setState({
+        isLoading:true
+      });
+      let url = await '/accountSafety/saveContact';
+      global.NetReqModel.tel_phone = this.state.tel_phone;
+      global.NetReqModel.address = this.state.address;
+      global.NetReqModel.real_name = this.state.user_name;
+      console.log(JSON.stringify(global.NetReqModel));
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        console.log(result);
+        if(result.return_code == '0000'){
+          this.setState({
+              isLoading:false,
+          })
+        }
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        // TODO Toast提示异常
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+    }
 
     navGoback = () => {
         this.props.navigation.goBack();
-    }
-
-    reSendAuthCode = async () => {
-        // 重置倒计时，开启倒计时
-        this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
-          this.authCode_countDown();
-        });
-    }
-
-    authCode_countDown() {
-        this.timer = setInterval(() => {
-          console.log(this.state.validTime);
-          if (this.state.validTime === 0) {
-            clearInterval(this.timer);
-            console.log('倒数结束');
-          } else {
-            this.setState({
-              validTime: this.state.validTime - 1
-            })
-          }
-        }, 1000);
     }
 
     renderSubTitleLine(subTitle, topDistance) {
@@ -162,12 +158,14 @@ export default class AddressPage extends Component{
                 <Text style={{color:'#998675',fontSize:scaleSize(36)}}>{'默认联系人:'}</Text>
                 <TextInput 
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
                   clearButtonMode={'while-editing'}
                   placeholder={'默认联系人'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  value={this.state.user_name}
+                  onChangeText = {(p) => {this.setState({
+                    user_name:p
+                  })}}
                   />
               </View>
               <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -180,7 +178,10 @@ export default class AddressPage extends Component{
                   placeholder={'联系电话'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  value={this.state.tel_phone}
+                  onChangeText = {(p) => {this.setState({
+                    tel_phone:p
+                  })}}
                   />
               </View>
               <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -192,7 +193,10 @@ export default class AddressPage extends Component{
                   placeholder={'详细地址'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  value={this.state.address}
+                  onChangeText = {(p) => {this.setState({
+                    address:p
+                  })}}
                   />
               </View>
             </View>
@@ -200,7 +204,7 @@ export default class AddressPage extends Component{
             <TouchableHighlight 
               style={{marginTop:scaleSize(56)}}
               underlayColor='rgba(0,0,0,0)'
-              onPress={this.setSmscode}>
+              onPress={()=>{this.updateInfo()}}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 

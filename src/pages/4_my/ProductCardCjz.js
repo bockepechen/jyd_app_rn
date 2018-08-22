@@ -39,6 +39,22 @@ export default class ProductCardCjz extends Component {
     this.props.onPressItem(this.props.id,this.paraData,'item');
   };
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+
+  jqgx(){
+    global.NetReqModel.SellLimitConfigId = "a793ac4f065f4c6f82cb760964010abb"
+    JSON.stringify(global.NetReqModel)
+    this.goto('CjzJqgxPage',{
+        url:"/productObligatory/queryProductObligatory",
+        jsonObj:global.NetReqModel,
+        title:'红包规则'
+    })
+  }
+
   getcjjl(contractexpectamount,improverate){
     let res = parseFloat(contractexpectamount)*parseFloat(improverate)
     return res.toFixed(2)
@@ -97,7 +113,7 @@ export default class ProductCardCjz extends Component {
                     <Text style={{fontSize:scaleSize(42),color:'#fff'}}>{'查看合同'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>{}}
+                    onPress={()=>{this.jqgx()}}
                     activeOpacity={0.6}
                     style={{marginLeft:scaleSize(24),borderRadius:scaleSize(15),justifyContent:'center',alignItems:'center',backgroundColor:'#c7b299',width:scaleSize(501),height:scaleSize(84)}}
                 >

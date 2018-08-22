@@ -136,6 +136,18 @@ export default class RedPacketPage extends Component {
     })
   }
 
+  rule(){
+    if(this.state.refreshing){
+      return false
+    }else{
+      this.goto('RedPackRulePage',{
+          url:this.state.httpRes.redRule_url,
+          jsonObj:global.NetReqModel,
+          title:'红包规则'
+      })
+    }
+  }
+
   _onRefresh() {
     // this.loadFlag = true;
     this.setState({
@@ -148,14 +160,6 @@ export default class RedPacketPage extends Component {
 
   _onLoad(){
     this.getInfoData();
-  }
-
-  record(){
-      this.goto('InvitingRecordPage',{
-          url:'http://fc57zd.natappfree.cc/product1412/html/inviteRecord.html',
-          jsonObj:global.NetReqModel,
-          title:'红包规则'
-      })
   }
 
   //一键读取
@@ -296,7 +300,7 @@ renderMainView(){
               statusBarColor='#E8152E'
               statusBarStyle='light-content'
               leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
-              rightButton={this.getRightButton(()=>this.record())}
+              rightButton={this.getRightButton(()=>this.rule())}
           />
           {this.renderMainView()}
           {this.renderModal()}

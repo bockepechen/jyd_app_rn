@@ -31,18 +31,46 @@ export default class ResetpwdPage extends Component{
             isRotate:true,
             isLoading: false,
             isEyeOpen: false,
-            tel_pwdOld:'',
-            tel_pwdNew:'',
-            tel_pwdNewRe:'',
+            httpRes:{},
         }
     }
 
     componentDidMount() {
         this.AndroidBackHandler.addPressBackListener();
+        this.getInfoData();
     }
 
     componentWillUnmount() {
         this.AndroidBackHandler.removePressBackListener();
+    }
+
+    async getInfoData() {
+      this.setState({
+        isLoading:true
+      });
+      let url = await '/accountSafety/userInfo';
+      console.log(JSON.stringify(global.NetReqModel));
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        console.log(result);
+        if(result.return_code == '0000'){
+          this.setState({
+              isLoading:false,
+              httpRes : result,
+          })
+        }
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        // TODO Toast提示异常
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
     }
 
     switchVisible = () => {
@@ -130,7 +158,8 @@ export default class ResetpwdPage extends Component{
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    autoFocus={true}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.real_name ? this.state.httpRes.real_name : ''}
                     />
                 </View>
               </View>
@@ -139,11 +168,11 @@ export default class ResetpwdPage extends Component{
                 <View>
                   <TextInput 
                     style={{marginRight:scaleSize(102),flex:1,color:'#989898' , fontSize:scaleSize(42), paddingTop:0, paddingBottom:0}}
-                    maxLength={20}
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    value = {this.state.tel_pwdOld}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.card_no ? this.state.httpRes.card_no : ''}
                     />
                 </View>
               </View>
@@ -152,11 +181,11 @@ export default class ResetpwdPage extends Component{
                 <View>
                   <TextInput 
                     style={{marginRight:scaleSize(102),flex:1,color:'#989898' , fontSize:scaleSize(42), paddingTop:0, paddingBottom:0}}
-                    maxLength={20}
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    value = {this.state.tel_pwdOld}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.account_id ? this.state.httpRes.account_id : ''}
                     />
                 </View>
               </View>
@@ -165,11 +194,11 @@ export default class ResetpwdPage extends Component{
                 <View>
                   <TextInput 
                     style={{marginRight:scaleSize(102),flex:1,color:'#989898' , fontSize:scaleSize(42), paddingTop:0, paddingBottom:0}}
-                    maxLength={20}
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    value = {this.state.tel_pwdOld}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.tel_phone ? this.state.httpRes.tel_phone : ''}
                     />
                 </View>
               </View>
@@ -178,11 +207,11 @@ export default class ResetpwdPage extends Component{
                 <View>
                   <TextInput 
                     style={{marginRight:scaleSize(102),flex:1,color:'#989898' , fontSize:scaleSize(42), paddingTop:0, paddingBottom:0}}
-                    maxLength={20}
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    value = {this.state.tel_pwdOld}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.bank_name ? this.state.httpRes.bank_name : ''}
                     />
                 </View>
               </View>
@@ -191,30 +220,15 @@ export default class ResetpwdPage extends Component{
                 <View>
                   <TextInput 
                     style={{marginRight:scaleSize(102),flex:1,color:'#989898' , fontSize:scaleSize(42), paddingTop:0, paddingBottom:0}}
-                    maxLength={20}
                     clearButtonMode={'while-editing'}
                     placeholderTextColor='#c3c3c3'
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    value = {this.state.tel_pwdOld}
+                    editable={false}
+                    value={this.state.httpRes && this.state.httpRes.sub_bank_name ? this.state.httpRes.sub_bank_name : ''}
                     />
                 </View>
               </View>
-              
-              
-              
             </View>
-            {/* <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/> */}
-            {/* <TouchableHighlight 
-              style={{marginTop:scaleSize(56)}}
-              underlayColor='rgba(0,0,0,0)'
-              onPress={this.resetpwd}>
-              <ImageBackground 
-                source={ImageStores.sy_17} 
-                resizeMode={'stretch'} 
-                style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'确认'}</Text>
-              </ImageBackground>
-            </TouchableHighlight> */}
           </View>
         )
       }
