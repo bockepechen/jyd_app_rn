@@ -37,7 +37,16 @@ export default class ModalView extends Component {
     }, this._fadeIn());
   }
 
-  // 加载Modal展示动画
+  /**
+   * 关闭Modal方法 (通过该组件引用调用)
+   */
+  close() {
+    this.setState({visible: false})
+  }
+
+  /**
+   * 加载Modal展示动画
+   */
   _fadeIn() {
     this.state.fadeOpacity.setValue(0);
     Animated.timing(this.state.fadeOpacity, {
@@ -47,14 +56,18 @@ export default class ModalView extends Component {
     }).start();
   }
 
-  // 点击遮罩调用关闭方法
+  /**
+   * 点击遮罩调用关闭方法
+   */
   _dimiss() {
     if(this.props.isPressClosed) {
-      this.setState({visible: !this.state.visible})
+      this.setState({visible: false})
     }
   }
 
-  // 渲染Modal方法
+  /**
+   * 渲染Modal方法
+   */
   _renderModalView() {
     return (
       <TouchableWithoutFeedback onPress={()=>{this._dimiss()}}>
