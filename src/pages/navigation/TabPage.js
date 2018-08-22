@@ -65,8 +65,12 @@ export default class TabPage extends Component {
           selectedTab: dic.tab,
         })
     });
-    DeviceEventEmitter.addListener('showModal', (modalContentView) => {
-      this.refs.modalView.show(modalContentView);
+    DeviceEventEmitter.addListener('callModal', (isShow, modalContentView) => {
+      if (isShow) {
+        this.refs.modalView.show(modalContentView);
+      } else {
+        this.refs.modalView.close();
+      }
     });
     SplashScreen.hide();
   }
