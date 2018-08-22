@@ -31,8 +31,9 @@ export default class ResetpwdPage extends Component{
             isRotate:true,
             isLoading: false,
             isEyeOpen: false,
-            validTime: 0,
-            telshow:'137****1234'
+            tel_pwdOld:'',
+            tel_pwdNew:'',
+            tel_pwdNewRe:'',
         }
     }
 
@@ -50,73 +51,48 @@ export default class ResetpwdPage extends Component{
         })
     }
 
-    setSmscode = async () => {
+    resetpwd = async () => {
+        if(this.state.tel_pwdOld == '' || this.state.tel_pwdNew == '' || this.state.tel_pwdNewRe == '')
+        {
+          this.refs.toast.show('输入内容不能为空');
+          return false;
+        }
+        if(this.state.tel_pwdNew != this.state.tel_pwdNewRe){
+          this.refs.toast.show('新密码前后输入的不一致');
+          return false;
+        }
         this.setState({isLoading:true});
-        // 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
-        let adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
-        // 跳转下页面参数设置
-        let navigation_params = {
-          pageTitle:'忘记密码',
-          nextPage:'ResetPwdPage',
-          tel: this.telNum,
-          cryptTel: `${global.NetReqModel.tel_phone.substring(0,3)} **** ${global.NetReqModel.tel_phone.substring(7)}`,
-          authcodeCD: adaptAuthCodeCD.authcodeCD
-        };
-        if  (adaptAuthCodeCD.ifSendAuthCode) {
-          // 设置远程接口访问参数 (同步执行)
-          global.NetReqModel.tel_phone = await global.NetReqModel.tel_phone;
-          global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
-          let url = await '/password/forgetPwd';
-          this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
-           .then((result) => {
-             // 返回数据，关闭Loading动画
-             this.setState({isLoading:false}, () => {
-               if (result.return_code === '0000') {
-                 global.NetReqModel.jyd_pubData.user_id = result.user_id;
-                 this.props.navigation.navigate('AuthPhoneNumPage', navigation_params);
-               } else {
-                this.refs.toast.show(result.return_msg);
-               }
-             })
-           })
-           .catch((e) => {
-             console.log(e);
-             this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-             // 关闭Loading动画
-             if(this.state.isLoading) {
-               this.setState({isLoading:false});
+        // 设置远程接口访问参数 (同步执行)
+        // global.NetReqModel.tel_phone = await 'global.NetReqModel.tel_phone';
+        global.NetReqModel.tel_phone = await '15822854761';
+        global.NetReqModel.tel_pwdOld = this.state.tel_pwdOld
+        global.NetReqModel.tel_pwdNew = this.state.tel_pwdNew
+        console.log(JSON.stringify(global.NetReqModel))
+        let url = await '/password/changePassword';
+        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+         .then((result) => {
+           console.log(result)
+           // 返回数据，关闭Loading动画
+           this.setState({isLoading:false}, () => {
+             if (result.return_code === '0000') {
+              this.refs.toast.show('修改成功');
+             } else {
+              this.refs.toast.show(result.return_msg);
              }
            })
-        } else {
-          this.setState({isLoading:false},() => {
-            this.props.navigation.navigate('AuthPhoneNumPage', navigation_params);
-          });
-        }
-      }
+         })
+         .catch((e) => {
+           console.log(e);
+           this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+           // 关闭Loading动画
+           if(this.state.isLoading) {
+             this.setState({isLoading:false});
+           }
+         })    
+    }
 
     navGoback = () => {
         this.props.navigation.goBack();
-    }
-
-    reSendAuthCode = async () => {
-        // 重置倒计时，开启倒计时
-        this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
-          this.authCode_countDown();
-        });
-    }
-
-    authCode_countDown() {
-        this.timer = setInterval(() => {
-          console.log(this.state.validTime);
-          if (this.state.validTime === 0) {
-            clearInterval(this.timer);
-            console.log('倒数结束');
-          } else {
-            this.setState({
-              validTime: this.state.validTime - 1
-            })
-          }
-        }, 1000);
     }
 
     renderSubTitleLine(subTitle, topDistance) {
@@ -167,12 +143,13 @@ export default class ResetpwdPage extends Component{
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
                   placeholder={'当前密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
+                  value = {this.state.tel_pwdOld}
                   secureTextEntry={!this.state.isEyeOpen}
                   />
                   <TouchableHighlight 
@@ -185,13 +162,13 @@ export default class ResetpwdPage extends Component{
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
-                  keyboardType={kbType}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
                   placeholder={'新密码需为6-20位字母与数字的组合'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  onChangeText = {(p) => {this.setState({tel_pwdNew:p})}}
+                  value = {this.state.tel_pwdNew}
                   secureTextEntry={!this.state.isEyeOpen}
                   />
                   <TouchableHighlight 
@@ -204,13 +181,13 @@ export default class ResetpwdPage extends Component{
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
-                  maxLength={11}
-                  keyboardType={kbType}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
                   placeholder={'请再次输入新密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  onChangeText = {(p) => {this.setState({tel_pwdNewRe:p})}}
+                  value = {this.state.tel_pwdNewRe}
                   secureTextEntry={!this.state.isEyeOpen}
                   />
                   <TouchableHighlight 
@@ -225,7 +202,7 @@ export default class ResetpwdPage extends Component{
             <TouchableHighlight 
               style={{marginTop:scaleSize(56)}}
               underlayColor='rgba(0,0,0,0)'
-              onPress={this.setSmscode}>
+              onPress={this.resetpwd}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 

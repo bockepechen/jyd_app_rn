@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   ImageBackground,
-  Modal
+  Modal,
+  Linking
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
@@ -16,24 +17,74 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AppStatusBar from '../../common/AppStatusBar';
 import ModalView from '../../common/ModalView';
+import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import LoadingIcon from '../../common/LoadingIcon';
 
 export default class MyPage extends Component {
   constructor(props) {
     super(props);
+    this.dataResponsitory = new DataResponsitory();
     this.state = {
+      isLoading:false,
       isRefresh: false,
       isEye: true,
       image_eye: ImageStores.me_3,
       modalVisible: false,
+      modalTelVisible: false,
       modaltext1:"嘉e贷联手江西银行",
       modaltext2:"积极响应国家政策",
       modaltext3:"银行存管系统正式上线，请先开通银行存管账户",
       modaltext4:"开通后即可进行充值、提现、出借等操作",
+      totalAmount:0,
+      sumRepay:0,
+      availBal:0,
+      fundAccountInfo:{
+
+      }
     }
+  }
+
+  componentDidMount(){
+    this.getInfoData()
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
+  }
+
+  setModalTelVisible(visible) {
+    this.setState({modalTelVisible: visible});
+  }
+
+  async getInfoData() {
+    this.setState({
+      isLoading:true
+    });
+    let url = await '/personCenter';
+    global.NetReqModel.tel_phone = await "15822753827";
+    global.NetReqModel.jyd_pubData.user_id = await "91";
+    console.log(JSON.stringify(global.NetReqModel));
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      if(result.return_code == '0000'){
+        this.setState({
+            isLoading:false,
+            httpRes : result,
+        })
+      }
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      // TODO Toast提示异常
+      // 关闭Loading动画
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
   }
 
   goto(url,JsonObj){
@@ -67,12 +118,12 @@ export default class MyPage extends Component {
       <View style={{marginLeft:scaleSize(81), marginRight:scaleSize(81), height:scaleSize(210), flexDirection:'row', justifyContent:'space-evenly'}}>
         <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
           <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'总资产(元)'}</Text>
-          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? this.state.totalAmount :'******'}</Text>
         </View>
         <View style={{backgroundColor:'white', width:1, height:scaleSize(210)}}/>
         <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
           <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'累计回报(元)'}</Text>
-          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? this.state.sumRepay :'******'}</Text>
         </View>
       </View>
       <ImageBackground 
@@ -88,7 +139,7 @@ export default class MyPage extends Component {
               <Image source={this.state.image_eye} resizeMode={'stretch'} style={{marginLeft:scaleSize(36), width:scaleSize(69), height:scaleSize(54)}}/>
             </TouchableHighlight>
           </View>
-          <Text style={{marginTop:scaleSize(39), width:scaleSize(555), fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.state.isEye?'88888888.00':'******'}</Text>
+          <Text style={{marginTop:scaleSize(39), width:scaleSize(555), fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.state.isEye? this.state.availBal :'******'}</Text>
         </View>
         <View style={{marginTop:scaleSize(81), marginLeft:scaleSize(21), height:scaleSize(84), flexDirection:'row'}}>
           <TouchableHighlight
@@ -256,7 +307,7 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_50,
         title:'客户服务',
-        callback:()=>{this.props.navigation.navigate('RotateAnimate')},
+        callback:()=>{this.setModalTelVisible(true)},
       },
       {
         img:ImageStores.me_51,
@@ -352,6 +403,50 @@ export default class MyPage extends Component {
     )
   }
 
+  renderTelModal(){
+    return (
+      <ModalView
+        style={{flex:1,}}
+        visible={this.state.modalTelVisible}
+        isPressClosed={false}
+      >
+          <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
+            <View style={{flexDirection:'column',justifyContent:'center',height:scaleSize(360),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(50)}}>
+                <Text style={{color:'#998675',fontSize:scaleSize(60)}}>{'15822854761'}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(39)}}>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{this.setModalTelVisible(false)}}>
+                  <ImageBackground 
+                    source={ImageStores.me_35} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(135), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:'#656565'}}>{'取消'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{
+                    Linking.openURL(`tel:${`15822854761`}`)
+                  }}>
+                  <ImageBackground 
+                    source={ImageStores.me_36} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(135), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:'#FFFFFF'}}>{'呼叫'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </ModalView>
+    )
+  }
+
   Calendar4Payback(str) {
     console.log(str);
     this.props.navigation.navigate('Calendar4Payback');
@@ -367,6 +462,8 @@ export default class MyPage extends Component {
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
         {this.renderModal()}
+        {this.renderTelModal()}
+        {this.state.isLoading?(<LoadingIcon />):null}
       </View>
     )
   }

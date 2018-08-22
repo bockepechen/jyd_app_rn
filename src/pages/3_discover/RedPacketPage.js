@@ -115,6 +115,7 @@ export default class RedPacketPage extends Component {
     })
     global.NetReqModel.red_id = itemId;
     let url = await '/redEnvelope/openRedEnvelope';
+    console.log(JSON.stringify(global.NetReqModel))
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result)

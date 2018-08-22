@@ -90,19 +90,21 @@ export default class LoginPage extends Component {
       global.NetReqModel.tel_phone = await this.telNum;
       global.NetReqModel.tel_pwd = await this.pwd;
       global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+      console.log(JSON.stringify(global.NetReqModel));
       let url = await '/login';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
        .then((result) => {
+         console.log(result)
          // 返回数据，关闭Loading动画
          this.setState({isLoading:false}, () => {
            if (result.return_code === '0000') {
-             global.NetReqModel.jyd_pubData.user_id = result.user_id;
-             global.NetReqModel.jyd_pubData.user_name = result.user_name;
+             global.NetReqModel.jyd_pubData.user_id = result.user_data.user_id;
+             global.NetReqModel.jyd_pubData.user_name = result.user_data.user_name;
              this.dataResponsitory.saveLocalStorage(
               Storage_Key.LS_REG_USERINFO,
               {
-                user_id: result.user_id,
-                user_name: result.user_name,
+                user_id: result.user_data.user_id,
+                user_name: result.user_data.user_name,
                 token_id: global.NetReqModel.jyd_pubData.token_id
               },
               () => {

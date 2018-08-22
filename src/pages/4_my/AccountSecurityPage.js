@@ -26,7 +26,7 @@ export default class AccountSecurityPage extends Component {
     this.listItem = [
         {
             title:'用户信息',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('PersonInfoPage')}
         },
         {
             title:'我的银行卡',

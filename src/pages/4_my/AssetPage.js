@@ -16,14 +16,17 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
+import LoadingIcon from '../../common/LoadingIcon';
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 
 export default class AssetPage extends Component{
     constructor(props){
         super(props)
+        this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.state = {
+            isLoading:false,
             totalMoney:'120000.00',
             a:'0.00',
             b:'0.00',
@@ -37,11 +40,41 @@ export default class AssetPage extends Component{
 
     componentDidMount() {
         this.AndroidBackHandler.addPressBackListener();
+        this.getInfoData();
     }
 
     componentWillUnmount() {
         this.AndroidBackHandler.removePressBackListener();
     }
+
+    async getInfoData() {
+        this.setState({
+          isLoading:true
+        });
+        let url = await '/assectDetail';
+        console.log(JSON.stringify(global.NetReqModel));
+        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+        .then((result) => {
+          console.log(result);
+          if(result.return_code == '0000'){
+            this.setState({
+                isLoading:false,
+                httpRes : result,
+            })
+          }
+          if(this.state.isLoading) {
+            this.setState({isLoading:false});
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          // TODO Toast提示异常
+          // 关闭Loading动画
+          if(this.state.isLoading) {
+            this.setState({isLoading:false});
+          }
+        })
+      }
 
     navGoback = () => {
         this.props.navigation.goBack();
@@ -151,16 +184,11 @@ export default class AssetPage extends Component{
                         leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
                         rightButton={this.getRightButton(()=>this.record())}
                     />
-                    <View>
-                    {/* <Image
-                        source={ImageStores.dl_6}
-                        resizeMode={'stretch'}
-                        style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(456)}}/> */}
                     {this.renderTop()}
                     {this.renderMainView()}
                     {this.renderSubView()}
-                </View>
-                {ViewUtils.renderToast()}
+                    {ViewUtils.renderToast()}
+                    {this.state.isLoading?(<LoadingIcon />):null}
                 </View>
             </TouchableWithoutFeedback>
         )
