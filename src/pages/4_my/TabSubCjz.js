@@ -39,7 +39,7 @@ export default class TabSubCjz extends Component {
   }
 
   async getInfoData() {
-    global.NetReqModel.tel_phone = await "18312345678";
+    global.NetReqModel.tel_phone = await "18330128418";
     global.NetReqModel.Type = await "1";
     global.NetReqModel.PageNum = this.state.next_page;
     global.NetReqModel.jyd_pubData.user_id = await "39";

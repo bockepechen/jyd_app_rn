@@ -218,7 +218,7 @@ export default class DiscoverPage extends Component {
         callback: () => {
           global.NetReqModel.page_number = 1
           this.goto('MallPage',{
-            url:this.state.shopping_url,
+            url:'/goods',
             jsonObj:global.NetReqModel,
             title:'优选商城'
           })

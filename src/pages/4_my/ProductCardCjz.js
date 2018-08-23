@@ -46,12 +46,24 @@ export default class ProductCardCjz extends Component {
   }
 
   jqgx(){
-    global.NetReqModel.SellLimitConfigId = "a793ac4f065f4c6f82cb760964010abb"
+    global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
     JSON.stringify(global.NetReqModel)
-    this.goto('CjzJqgxPage',{
+    this.goto('CjzItemPage',{
         url:"/productObligatory/queryProductObligatory",
         jsonObj:global.NetReqModel,
-        title:'红包规则'
+        title:'债权关系'
+    })
+  }
+
+  ckht(){
+    global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
+    global.NetReqModel.compact_id = '01'
+    global.NetReqModel.type_id = '01'
+    JSON.stringify(global.NetReqModel)
+    this.goto('CjzItemPage',{
+        url:"/esign/showLcCompact",
+        jsonObj:global.NetReqModel,
+        title:'查看合同'
     })
   }
 
@@ -106,7 +118,7 @@ export default class ProductCardCjz extends Component {
                 style={{flexDirection:'row',marginBottom:scaleSize(30),marginTop:scaleSize(54),justifyContent:'center',marginBottom:scaleSize(30),marginTop:scaleSize(54)}}
             >
                 <TouchableOpacity
-                    onPress={()=>{}}
+                    onPress={()=>{this.ckht()}}
                     activeOpacity={0.6}
                     style={{justifyContent:'center',borderRadius:scaleSize(15),alignItems:'center',backgroundColor:'#c7b299',width:scaleSize(501),height:scaleSize(84)}}
                 >

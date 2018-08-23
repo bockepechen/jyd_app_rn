@@ -84,10 +84,6 @@ export default class MsgListItemDetail extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
-          // source={{uri:this.state.wv_url}}
-          // source={{uri:'http://rz23ra.natappfree.cc/product1412/html/bindingJoinSucceed.html'}}
-          // source={{uri:'http://localhost:9002/test/wv.html'}}
-          // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}

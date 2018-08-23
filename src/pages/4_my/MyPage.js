@@ -138,12 +138,14 @@ export default class MyPage extends Component {
         </View>
         <View style={{marginTop:scaleSize(81), marginLeft:scaleSize(21), height:scaleSize(84), flexDirection:'row'}}>
           <TouchableHighlight
+            onPress={()=>{this.goto('RechargePage')}}
             underlayColor='rgba(0,0,0,0)'>
             <ImageBackground source={ImageStores.me_5} resizeMode={'stretch'} style={{width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
               <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ffffff'}}>{'充值'}</Text>
             </ImageBackground>
           </TouchableHighlight>
           <TouchableHighlight
+            onPress={()=>{}}
             underlayColor='rgba(0,0,0,0)'>
             <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{marginLeft:scaleSize(27), width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
               <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ff3a49'}}>{'提现'}</Text>

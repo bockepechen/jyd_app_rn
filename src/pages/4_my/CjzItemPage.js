@@ -14,7 +14,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 
-export default class CjzJqgxPage extends Component {
+export default class CjzItemPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;

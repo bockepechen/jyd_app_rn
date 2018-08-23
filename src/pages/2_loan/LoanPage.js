@@ -11,13 +11,12 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import TabJeyx from './TabJeyx';
 import TabJxsb from './TabJxsb';
-import TabSbzr from './TabSbzr';
 
 export default class LoanPage extends PureComponent {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
-    this.scrollableTabTitle = ['嘉e优选','精选散标','散标转让']
+    this.scrollableTabTitle = ['嘉e优选','精选散标']
   }
 
   componentWillMount() {
@@ -40,7 +39,6 @@ export default class LoanPage extends PureComponent {
 
         <TabJeyx key={'jeyx'} tabLabel={'嘉e优选'} {...this.props}/>
         <TabJxsb key={'jxsb'} tabLabel={'精选散标'} {...this.props}/>
-        <TabSbzr key={'sbzr'} tabLabel={'散标转让'} {...this.props}/>
       </ScrollableTabView>
     )
   }

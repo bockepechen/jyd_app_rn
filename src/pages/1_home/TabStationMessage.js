@@ -40,6 +40,9 @@ export default class TabStationMessage extends Component {
 
     async getInfoData() {
         global.NetReqModel.page_number = await this.state.next_page;
+        global.NetReqModel.tel_phone = '15822753827'
+        global.NetReqModel.jyd_pubData.user_id = '91'
+        global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
         let url = await '/userMail/usermail';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
@@ -74,11 +77,6 @@ export default class TabStationMessage extends Component {
     }
     
     async readAll() {
-        global.NetReqModel.tel_phone = await "15822753827";
-        global.NetReqModel.jyd_pubData.user_id = await "91";
-        global.NetReqModel.jyd_pubData.source_type = await "0001";
-        global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-        global.NetReqModel.jyd_pubData.network_type = await "wifi";
         // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/readUserMails';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
@@ -109,12 +107,7 @@ export default class TabStationMessage extends Component {
     async readMsg(){
         console.log(this.readedList)
         if(this.readedList.length < 1) return false
-        global.NetReqModel.tel_phone = await "15822753827";
         global.NetReqModel.um_id_list = await this.readedList;
-        global.NetReqModel.jyd_pubData.user_id = await "91";
-        global.NetReqModel.jyd_pubData.source_type = await "0001";
-        global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-        global.NetReqModel.jyd_pubData.network_type = await "wifi";
         // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
         let url = await '/userMail/readUserMailsByAppCache';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)

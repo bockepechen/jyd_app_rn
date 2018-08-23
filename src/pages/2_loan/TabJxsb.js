@@ -40,11 +40,10 @@ export default class TabJxsb extends Component {
   }
 
   async getInfoData() {
-    global.NetReqModel.PageNum = await this.state.next_page;
-    // global.NetReqModel.tel_phone = await "13502151376";
-    // global.NetReqModel.jyd_pubData.user_id = await "4";
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
+    global.NetReqModel.page_number = await this.state.next_page;
+    global.NetReqModel.tel_phone = await "18330128418";
+    global.NetReqModel.jyd_pubData.user_id = await "39";
+    global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
     let url = await '/productList/queryStandardpowderList';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -109,16 +108,10 @@ export default class TabJxsb extends Component {
 
   _onPressItem = (id,item,type) => {
     if(type == 'item'){
-      // global.NetReqModel.sellInfoId = item.id;
-      global.NetReqModel.sellInfoId = '20180704035229010122';
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id =39
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      global.NetReqModel.BorrowId = item.BorrowId;
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
-          url:this.state.detail_url,
-          // url:"http://3abp2e.natappfree.cc/product1412/html/disperseBiding.html",
+          url:'/productDetails/queryStandardpowderDetail',
           title:'精选散标',
           jsonObj:global.NetReqModel
         },
@@ -128,16 +121,10 @@ export default class TabJxsb extends Component {
     else{
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.borrow_id = item.BorrowId;
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.restMoney = parseFloat(item.OriginalAmount) - parseFloat(item.CollectedAmount);
-      global.NetReqModel.jyd_pubData.user_id ='91'
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
+      global.NetReqModel.rest_money = parseFloat(item.OriginalAmount) - parseFloat(item.CollectedAmount);
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:this.state.sell_url,
-          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/disperseInfo.jsp",
-          // url:"http://10.2.0.155:8099/JYD_RN_Serv/productInfo/disperseInfo.jsp",
+          url:'/balanceQuery/queryBalance',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },

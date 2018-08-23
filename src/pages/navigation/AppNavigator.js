@@ -37,7 +37,8 @@ import ResetpwdPage from '../4_my/ResetpwdPage';
 import MyLoanPage from '../4_my/MyLoanPage';
 import FeedbackPage from '../4_my/FeedbackPage';
 import PersonInfoPage from '../4_my/PersonInfoPage';
-import CjzJqgxPage from '../4_my/CjzJqgxPage';
+import CjzItemPage from '../4_my/CjzItemPage';
+import RechargePage from '../4_my/RechargePage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -153,8 +154,11 @@ const AppStackNavigator = createStackNavigator(
     RedPackRulePage:{
       screen:RedPackRulePage
     },
-    CjzJqgxPage:{
-      screen:CjzJqgxPage
+    CjzItemPage:{
+      screen:CjzItemPage
+    },
+    RechargePage:{
+      screen:RechargePage
     },
   },{
     navigationOptions:{

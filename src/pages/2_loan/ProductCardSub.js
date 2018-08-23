@@ -19,11 +19,11 @@ export default class ProductCardSub extends Component {
     this.props = nextProps;
   }
   _onPress = () => {
-    this.props.onPress(this.props.id,this.props.item,'item');
+    this.props.onPress(this.props.id,this.props.data,'item');
   };
 
   _onPressBtn = () => {
-    this.props.onPress(this.props.id,this.props.item,'btn');
+    this.props.onPress(this.props.id,this.props.data,'btn');
   };
 
   render() {

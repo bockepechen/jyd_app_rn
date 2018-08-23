@@ -12,11 +12,13 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
+import {AppConfig} from '../../config/AppConfig';
 
 export default class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
       wv_url:this.navData.url,
@@ -43,8 +45,8 @@ export default class SignInPage extends Component {
 
   sendMessage() {
     // console.log(this.navData.jsonObj)
-    console.log(JSON.stringify(this.navData.jsonObj))
-    this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
+    // console.log(JSON.stringify(this.navData.jsonObj))
+    // this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
 
 
@@ -56,16 +58,16 @@ export default class SignInPage extends Component {
     }
   }
   handleMessage(e) {
-    console.log('aaaaaaa');
-    let obj = eval('('+e.nativeEvent.data+')');
-    if(obj.key == '1'){
-      this.sendMessage();
-    }
-    else if(obj.key == '2'){
-      this.props.navigation.dispatch(StackActions.popToTop());
-    }else{
+    // console.log('aaaaaaa');
+    // let obj = eval('('+e.nativeEvent.data+')');
+    // if(obj.key == '1'){
+    //   this.sendMessage();
+    // }
+    // else if(obj.key == '2'){
+    //   this.props.navigation.dispatch(StackActions.popToTop());
+    // }else{
 
-    }
+    // }
   }
 
   render() {
@@ -83,7 +85,8 @@ export default class SignInPage extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
-          source={{uri:this.state.wv_url}}
+          // source={{uri:this.state.wv_url}}
+          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

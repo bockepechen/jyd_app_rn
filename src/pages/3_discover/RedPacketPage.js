@@ -7,7 +7,6 @@ import {
   Platform,
   ActivityIndicator,
   TouchableWithoutFeedback,
-  Modal,
   TouchableHighlight,
   ImageBackground,
   TouchableOpacity
@@ -21,6 +20,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import NavigationBar from '../../common/NavigationBar';
 import LoadingIcon from '../../common/LoadingIcon';
+import ModalView from '../../common/ModalView';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class RedPacketPage extends Component {
@@ -35,7 +35,6 @@ export default class RedPacketPage extends Component {
       refreshing: false,
       next_page:"",
       itemUrl:'',
-      modalVisible: false,
       isLoading: false
     }
   }
@@ -63,12 +62,7 @@ export default class RedPacketPage extends Component {
     });
   }
 
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
   async getInfoData() {
-    console.log('aaa')
     global.NetReqModel.page_number = await this.state.next_page;
     global.NetReqModel.tel_phone = await "15903262695";
     global.NetReqModel.jyd_pubData.user_id = await "39";
@@ -121,7 +115,7 @@ export default class RedPacketPage extends Component {
       console.log(result)
       if(result.return_code == '0000'){
         this.setState({isLoading:false})
-        this.setModalVisible(true)
+        this.myModal(true,this.renderModal())
         let templist = this.state.list;
         templist[index].status = '2'
         this.setState(
@@ -209,9 +203,17 @@ export default class RedPacketPage extends Component {
     this._onLoad();
 }
 
+myModal(isShow, modalContentView){
+  if (isShow) {
+    this.refs.modalView.show(modalContentView);
+  } else {
+    this.refs.modalView.close();
+  }
+}
+
 renderModal(){
   return (
-    <Modal
+    <View
         style={{flex:1,}}
         animationType="fade"
         transparent={true}
@@ -230,7 +232,7 @@ renderModal(){
               <TouchableHighlight 
                 style={{flexDirection:'row',justifyContent:'center'}}
                 underlayColor='rgba(0,0,0,0)'
-                onPress={()=>{this.setModalVisible(false)}}>
+                onPress={()=>{this.myModal(false)}}>
                 <ImageBackground 
                   source={ImageStores.me_36} 
                   resizeMode={'stretch'} 
@@ -241,7 +243,7 @@ renderModal(){
             </View>
           </View>
         </View>
-      </Modal>
+      </View  >
   )
 }
 
@@ -303,7 +305,7 @@ renderMainView(){
               rightButton={this.getRightButton(()=>this.rule())}
           />
           {this.renderMainView()}
-          {this.renderModal()}
+          <ModalView ref='modalView'/>
           {this.state.isLoading?(<LoadingIcon />):null}
       </View>
     )

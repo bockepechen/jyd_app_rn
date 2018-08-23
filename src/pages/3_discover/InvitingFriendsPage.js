@@ -63,7 +63,7 @@ export default class InvitingFriendsPage extends Component{
 
     record(){
         this.goto('InvitingRecordPage',{
-            url:'http://fc57zd.natappfree.cc/product1412/html/inviteRecord.html',
+            url:'/invest',
             jsonObj:global.NetReqModel,
             title:'邀请记录'
         })

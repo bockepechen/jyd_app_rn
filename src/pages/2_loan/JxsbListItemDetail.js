@@ -13,11 +13,13 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
+import {AppConfig} from '../../config/AppConfig';
 
 export default class JeyxListItemDetail extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.ifbackhome = false
     this.state = {
@@ -87,7 +89,8 @@ export default class JeyxListItemDetail extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
-          source={{uri:this.state.wv_url}}
+          // source={{uri:this.state.wv_url}}
+          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}

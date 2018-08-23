@@ -32,6 +32,9 @@ export default class HomePage extends Component {
     this.refreshing = false;
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
+    global.NetReqModel.tel_phone =  "15822753827";
+    global.NetReqModel.jyd_pubData.user_id =  "91";
+    global.NetReqModel.jyd_pubData.token_id =  "123235h5e3111";
     this.state = {
       // sourceData: ['银行存管','风险控制','安全保障','合作机构','关于我们'],
       sourceData: [
@@ -81,54 +84,6 @@ export default class HomePage extends Component {
 
   keyExtractor = (data, index) => {return String(index);}
 
-  // async getInfoData() {
-  //   this.setState({
-  //     isLoading:true
-  //   });
-  //   let url = await '/firstPage';
-  //   global.NetReqModel.tel_phone = await '15822753827';
-  //   global.NetReqModel.jyd_pubData.user_id = await "91";
-  //   global.NetReqModel.jyd_pubData.source_type = await "0001";
-  //   global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-  //   global.NetReqModel.jyd_pubData.network_type = await "wifi";
-  //   global.NetReqModel.jyd_pubData.token_id = await '123235h5e3111';
-  //   this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
-  //   .then((result) => {
-  //     console.log(result);
-  //     for(var i = 0 ; i < result.appsellinfos.length ; i++){
-  //       result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
-  //       result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
-  //     }
-  //     // 返回数据，关闭Loading动画
-  //     this.setState(
-  //       {
-  //         isLoading:false,
-  //         httpRes : result,
-  //         detail_url:result.detail_url,
-  //         sell_url:result.sell_url,
-  //         aboutUs_url:result.aboutUs_url,
-  //         bank_url:result.bank_url,
-  //         cooperationOrg_url:result.cooperationOrg_url,
-  //         risk_url:result.risk_url,
-  //         safety_url:result.safety_url,
-  //         sign_url:result.sign_url
-  //       }
-  //       , () => {
-  //         if(this.refreshing){
-  //           this.refreshing = false;
-  //         }
-  //     })
-  //   })
-  //   .catch((e) => {
-  //     console.log(e);
-  //     // TODO Toast提示异常
-  //     // 关闭Loading动画
-  //     if(this.state.isLoading) {
-  //       this.setState({isLoading:false});
-  //     }
-  //   })
-  // }
-
   renderFlatListItem = (data) => {
     return (
       <HorizantalFlatlistCell
@@ -143,32 +98,20 @@ export default class HomePage extends Component {
   _onPress = (id,item,type) => {
     if(type == 'item')
     {
-      // global.NetReqModel.sellInfoId = item.id;
-      global.NetReqModel.sellInfoId = 'JE0902018072001';
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id ='91'
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      // console.log(JSON.stringify(global.NetReqModel))
+      global.NetReqModel.sellInfoId = item.sellinfoid;
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:this.state.detail_url,
+          url:'/productDetails/querySellinDetail',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
         ...this.props
       });
     }else{
-      // global.NetReqModel.sellInfoId = item.id;
-      global.NetReqModel.sell_id = 'JE0902018072001';
-      global.NetReqModel.tel_phone = '15822753827';
-      global.NetReqModel.jyd_pubData.user_id ='91'
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
-      console.log(JSON.stringify(global.NetReqModel))
+      global.NetReqModel.sell_id = item.sellinfoid;
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:this.state.sell_url,
+          url:'/personProLend',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -309,32 +252,6 @@ export default class HomePage extends Component {
         </TouchableHighlight>
       </View>
     );
-    // config.renderFixedHeader = () => (
-    //   <View style={{
-    //     position:'absolute',
-    //     top:0,
-    //     bottom:0,
-    //     left:scaleSize(60),
-    //     right:scaleSize(60),
-    //     backgroundColor:'rgba(0,0,0,0)',
-    //     flexDirection:'row',
-    //     alignItems:'center',
-    //     justifyContent:'space-between',
-    //   }}>
-    //     <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
-    //       <Image 
-    //         source={ImageStores.bar2}
-    //         resizeMode={'stretch'}
-    //         style={{width:scaleSize(75), height:scaleSize(75)}} />
-    //     </TouchableHighlight>
-    //     <TouchableHighlight underlayColor='rgba(0,0,0,0)'>
-    //       <Image 
-    //         source={ImageStores.bar1}
-    //         resizeMode={'stretch'}
-    //         style={{width:scaleSize(75), height:scaleSize(75)}} />
-    //     </TouchableHighlight>
-    //   </View>
-    // );
     return config;
   }
   renderParallaxView(params, contentView) {
@@ -375,7 +292,7 @@ export default class HomePage extends Component {
         iconImg:ImageStores.sy_22,
         iconName:'每日签到',
         callback:() => {this.goto('SignInPage',{
-          url:this.state.sign_url,
+          url:'/checkIn',
           jsonObj:global.NetReqModel,
           title:'每日签到'
         })}

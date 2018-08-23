@@ -45,11 +45,10 @@ export default class TabJeyx extends Component {
   }
 
   async getInfoData() {
-    global.NetReqModel.PageNum = await this.state.next_page;
-    global.NetReqModel.tel_phone = await "13502151376";
-    global.NetReqModel.jyd_pubData.user_id = await "4";
-    // global.NetReqModel.tel_phone = await "15822753827";
-    // global.NetReqModel.jyd_pubData.user_id = await "91";
+    global.NetReqModel.page_number = await this.state.next_page;
+    global.NetReqModel.tel_phone = await "18330128418";
+    global.NetReqModel.jyd_pubData.user_id = await "39";
+    global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
     let url = await '/productList/queryInvestList';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -104,15 +103,9 @@ export default class TabJeyx extends Component {
     if(type == 'item')
     {
       global.NetReqModel.sellInfoId = item.id;
-      // global.NetReqModel.sellInfoId = 'JE0902018072001';
-      // global.NetReqModel.tel_phone = '15822753827';
-      // global.NetReqModel.jyd_pubData.user_id =39
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:this.state.detail_url,
-          // url:"http://3abp2e.natappfree.cc/product1412/html/bidingDetail.html",
+          url:'/productDetails/querySellinDetail',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
@@ -120,23 +113,15 @@ export default class TabJeyx extends Component {
       });
     }else{
       global.NetReqModel.sell_id = item.id;
-      // global.NetReqModel.sell_id = 'JE0902018072001';
-      // global.NetReqModel.tel_phone = '15822753827';
-      // global.NetReqModel.jyd_pubData.user_id ='39'
-      global.NetReqModel.jyd_pubData.source_type = '0001'
-      // global.NetReqModel.jyd_pubData.token_id = '123235h5e3'
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:this.state.sell_url,
-          // url:"https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/productInfo/bidingInfo.jsp",
-          // url:"http://10.2.0.155:8099/JYD_RN_Serv/productInfo/bidingInfo.jsp",
+          url:'/personProLend',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },
         ...this.props
       });
     }
-    
   };
 
   _keyExtractor = (item, index) => item.id;
