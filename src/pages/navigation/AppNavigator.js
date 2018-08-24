@@ -40,6 +40,8 @@ import PersonInfoPage from '../4_my/PersonInfoPage';
 import CjzItemPage from '../4_my/CjzItemPage';
 import RechargePage from '../4_my/RechargePage';
 import AssetRecordPage from '../4_my/AssetRecordPage';
+import RechargeBankPage from '../4_my/RechargeBankPage';
+import RechargeLimitPage from '../4_my/RechargeLimitPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -163,6 +165,12 @@ const AppStackNavigator = createStackNavigator(
     },
     AssetRecordPage:{
       screen:AssetRecordPage
+    },
+    RechargeBankPage:{
+      screen:RechargeBankPage
+    },
+    RechargeLimitPage:{
+      screen:RechargeLimitPage
     },
   },{
     navigationOptions:{

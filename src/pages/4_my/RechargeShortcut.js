@@ -20,18 +20,71 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import Utils from '../../utils/Utils';
+import LoadingIcon from '../../common/LoadingIcon';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class RechargeShortcut extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.tx_amount = ''
     this.state = {
+      isLoading:false,
+      card_no:'',
+      bank_name:'',
     }
   }
 
   componentDidMount() {
-    
+    this.getInfoData()
+  }
+
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+
+  async getInfoData() {
+    this.setState({
+      isLoading:true
+    });
+    let url = await '/accountSafety/cardInfo';
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      if(result.return_code == '0000'){
+        this.setState({
+            isLoading:false,
+            card_no:result.card_no,
+            bank_name:result.bank_name,
+        })
+      }
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      // TODO Toast提示异常
+      // 关闭Loading动画
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
+    })
+  }
+
+  recharge() {
+    global.NetReqModel.tel_phone = '13502151376'
+    global.NetReqModel.tx_amount = this.tx_amount
+    global.NetReqModel.jyd_pubData.user_id = '4'
+    global.NetReqModel.jyd_pubData.token_id = 'e9534ea85bec915e'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('RechargeBankPage',{
+      url:'/directRecharge',
+      jsonObj:global.NetReqModel,
+      title:'充值'
+    });
   }
 
   renderSubTitleLine(subTitle, topDistance) {
@@ -88,8 +141,7 @@ export default class RechargeShortcut extends Component {
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
               onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-              value = {this.state.tel_pwdOld}
-              secureTextEntry={!this.state.isEyeOpen}
+              value = {`${this.state.bank_name}(${this.state.card_no})`}
               />
           </View>
           <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -110,19 +162,26 @@ export default class RechargeShortcut extends Component {
               placeholder={'请输入充值金额,不得少于100元'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              onChangeText = {(p) => {this.setState({tel_pwdNewRe:p})}}
-              value = {this.state.tel_pwdNewRe}
+              onChangeText = {(p) => {this.tx_amount = p}}
+              value = {this.tx_amount}
               />
           </View>
           <View style={{marginTop:scaleSize(42),width:scaleSize(999),flexDirection:'row',justifyContent:'flex-end'}}>
-              <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'查看银行限额'}</Text>
+              <TouchableOpacity
+                onPress={()=>{this.goto('RechargeLimitPage',{
+                  url:'',
+                  JsonObj:global.NetReqModel
+                })}}
+              >
+                <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'查看银行限额'}</Text>
+              </TouchableOpacity>
           </View>
         </View>
         <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
         <TouchableHighlight 
           style={{marginTop:scaleSize(45)}}
           underlayColor='rgba(0,0,0,0)'
-          onPress={this.resetpwd}>
+          onPress={()=>{this.recharge()}}>
           <ImageBackground 
             source={ImageStores.sy_17} 
             resizeMode={'stretch'} 
@@ -138,7 +197,8 @@ export default class RechargeShortcut extends Component {
     return (
       <View style={{flex:1}}>
         {this.renderMainView()}    
-        {this.renderRemark()}    
+        {this.renderRemark()}  
+        {this.state.isLoading?(<LoadingIcon />):null}  
       </View>
     )
   }

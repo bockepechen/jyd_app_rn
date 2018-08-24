@@ -23,10 +23,9 @@ export default class RechargePage extends PureComponent {
   constructor(props) {
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.scrollableTabTitle = ['官方公告','站内信']
+    this.scrollableTabTitle = ['快捷充值','银行转账']
     this.state = {
         isLoading : false,
-        tabKey : '.$officialPost',
     }
   }
 
