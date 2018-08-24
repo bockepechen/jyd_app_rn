@@ -40,14 +40,13 @@ export default class ProductCardCjz extends Component {
   };
 
   goto(url,JsonObj){
-    this.props.navigation.navigate(url,{
+    this.props.navigationParam.navigate(url,{
       data:JsonObj ? JsonObj : {}
     });
   }
 
   jqgx(){
     global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
-    JSON.stringify(global.NetReqModel)
     this.goto('CjzItemPage',{
         url:"/productObligatory/queryProductObligatory",
         jsonObj:global.NetReqModel,
@@ -59,7 +58,7 @@ export default class ProductCardCjz extends Component {
     global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '01'
-    JSON.stringify(global.NetReqModel)
+    console.log(JSON.stringify(global.NetReqModel))
     this.goto('CjzItemPage',{
         url:"/esign/showLcCompact",
         jsonObj:global.NetReqModel,

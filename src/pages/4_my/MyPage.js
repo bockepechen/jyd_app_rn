@@ -84,7 +84,7 @@ export default class MyPage extends Component {
 
   goto(url,JsonObj){
     this.props.navigation.navigate(url,{
-
+      data:JsonObj ? JsonObj : {}
     });
   }
 

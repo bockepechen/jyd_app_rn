@@ -39,6 +39,7 @@ import FeedbackPage from '../4_my/FeedbackPage';
 import PersonInfoPage from '../4_my/PersonInfoPage';
 import CjzItemPage from '../4_my/CjzItemPage';
 import RechargePage from '../4_my/RechargePage';
+import AssetRecordPage from '../4_my/AssetRecordPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -159,6 +160,9 @@ const AppStackNavigator = createStackNavigator(
     },
     RechargePage:{
       screen:RechargePage
+    },
+    AssetRecordPage:{
+      screen:AssetRecordPage
     },
   },{
     navigationOptions:{

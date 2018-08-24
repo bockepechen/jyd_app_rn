@@ -112,10 +112,10 @@ export default class TabJeyx extends Component {
           height:scaleSize(2),
         }}>
 
-        <TabSubCjz key={'cjz'} tabLabel={'出借中'} {...this.props}/>
-        <TabSubMjz key={'mjz'} tabLabel={'募集中'} {...this.props}/>
-        <TabSubZcz key={'zcz'} tabLabel={'转出中'} {...this.props}/>
-        <TabSubYzc key={'yzc'} tabLabel={'已转出'} {...this.props}/>
+        <TabSubCjz key={'cjz'} tabLabel={'出借中'} navigationParam={this.props.navigation}/>
+        <TabSubMjz key={'mjz'} tabLabel={'募集中'} navigationParam={this.props.navigation}/>
+        <TabSubZcz key={'zcz'} tabLabel={'转出中'} navigationParam={this.props.navigation}/>
+        <TabSubYzc key={'yzc'} tabLabel={'已转出'} navigationParam={this.props.navigation}/>
       </ScrollableTabView>
     )
   }
