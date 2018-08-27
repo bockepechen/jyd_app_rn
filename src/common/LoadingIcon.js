@@ -9,8 +9,17 @@ import {
 import {GlobalStyles} from '../../res/styles/GlobalStyles';
 import {scaleSize} from '../utils/FitViewUtils';
 import {ImageStores} from '../../res/styles/ImageStores';
+import PropTypes from 'prop-types';
 
 export default class LoadingIcon extends Component {
+  static propTypes = {
+    isModal: PropTypes.bool, // 加载动画是否使用遮罩全屏
+  }
+
+  static defaultProps = {
+    isModal: false,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +32,31 @@ export default class LoadingIcon extends Component {
         duration: 1500, //从0到1的时间
         easing: Easing.inOut(Easing.linear), //线性变化，匀速旋转
     });
+  }
+
+  componentWillMount() {
+    this.modalViewStyle = this.props.isModal?{
+      position:'absolute', 
+      width:GlobalStyles.WINDOW_WIDTH, 
+      height:GlobalStyles.WINDOW_HEIGHT, 
+      alignItems:'center',
+      justifyContent:'center',
+    }:{
+      position:'absolute', 
+      top:(GlobalStyles.WINDOW_HEIGHT-scaleSize(150))/2,
+      left:(GlobalStyles.WINDOW_WIDTH-scaleSize(150))/2,
+      width:scaleSize(150), 
+      height:scaleSize(150), 
+      alignItems:'center',
+      justifyContent:'center',
+    }
+    this.loadingViewStyle = this.props.isModal?{
+      top:(GlobalStyles.WINDOW_HEIGHT-scaleSize(150))/2,
+      left:(GlobalStyles.WINDOW_WIDTH-scaleSize(150))/2,
+    }:{
+      top:0,
+      left:0,
+    }
   }
 
   componentDidMount() {
@@ -82,24 +116,14 @@ export default class LoadingIcon extends Component {
 
   render() {
     return (
-      <View style={{
-        position:'absolute', 
-        width:scaleSize(150), 
-        height:scaleSize(150), 
-        top:(GlobalStyles.WINDOW_HEIGHT-scaleSize(150))/2,
-        left:(GlobalStyles.WINDOW_WIDTH-scaleSize(150))/2,
-        alignItems:'center',
-        justifyContent:'center'
-      }}>
+      <View style={this.modalViewStyle}>
         <Animated.Image 
           source={ImageStores.ld_1} 
           resizeMode={'stretch'} 
-          style={{
+          style={[{
             width:scaleSize(150), 
             height:scaleSize(150), 
-            position:'absolute', 
-            top:0, 
-            left:0,
+            position:'absolute',
             tintColor:'	rgba(232,21,46,0.8)',
             transform:[
               {rotateZ: this.state.rotateValue.interpolate({
@@ -107,7 +131,7 @@ export default class LoadingIcon extends Component {
                 outputRange: ['-0deg', '-360deg'],
               })},
             ]
-          }}/>
+          },{...this.loadingViewStyle}]}/>
         <Image source={ImageStores.ld_2} resizeMode={'stretch'} style={{width:scaleSize(66), height:scaleSize(66), tintColor:'	rgba(232,21,46,0.8)'}}/>
       </View>
     )

@@ -19,6 +19,6 @@ export var GlobalStyles = {
   CONNECTION_TYPE: {type:'unknown', effectiveType:'unknown'},
   rootContainer: {
     flex:1,
-    backgroundColor:'#F0F0F0',
+    backgroundColor:'#F2F2F2',
   }
 }
