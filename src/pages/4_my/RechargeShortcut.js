@@ -75,10 +75,11 @@ export default class RechargeShortcut extends Component {
   }
 
   recharge() {
-    global.NetReqModel.tel_phone = '13502151376'
-    global.NetReqModel.tx_amount = this.tx_amount
-    global.NetReqModel.jyd_pubData.user_id = '4'
-    global.NetReqModel.jyd_pubData.token_id = 'e9534ea85bec915e'
+    global.NetReqModel.tel_phone = '15822753827'
+    // global.NetReqModel.tx_amount = this.tx_amount
+    global.NetReqModel.tx_amount = 100
+    global.NetReqModel.jyd_pubData.user_id = '91'
+    global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
     console.log(JSON.stringify(global.NetReqModel))
     this.goto('RechargeBankPage',{
       url:'/directRecharge',

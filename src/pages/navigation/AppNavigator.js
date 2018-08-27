@@ -42,6 +42,7 @@ import RechargePage from '../4_my/RechargePage';
 import AssetRecordPage from '../4_my/AssetRecordPage';
 import RechargeBankPage from '../4_my/RechargeBankPage';
 import RechargeLimitPage from '../4_my/RechargeLimitPage';
+import AccountOpeningPage from '../4_my/AccountOpeningPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -171,6 +172,9 @@ const AppStackNavigator = createStackNavigator(
     },
     RechargeLimitPage:{
       screen:RechargeLimitPage
+    },
+    AccountOpeningPage:{
+      screen:AccountOpeningPage
     },
   },{
     navigationOptions:{

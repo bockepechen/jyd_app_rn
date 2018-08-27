@@ -385,7 +385,7 @@ export default class MyPage extends Component {
                 <TouchableHighlight 
                   style={{flexDirection:'row',justifyContent:'center'}}
                   underlayColor='rgba(0,0,0,0)'
-                  onPress={()=>{console.log('立即开通')}}>
+                  onPress={()=>{this.goto('AccountOpeningPage')}}>
                   <ImageBackground 
                     source={ImageStores.sy_15} 
                     resizeMode={'stretch'} 
