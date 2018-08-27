@@ -79,7 +79,7 @@ export default class TabPage extends Component {
     return (
       <TabNavigator.Item
         selected={this.state.selectedTab === selectedTab}
-        tabStyle={{ alignItems: 'center', justifyContent: 'center' }}
+        tabStyle={{ alignItems: 'center', justifyContent: 'flex-start', marginTop:scaleSize(21)}}
         titleStyle={{ fontSize: scaleSize(38), color: '#c3c3c3' }}
         selectedTitleStyle={{ fontSize: scaleSize(38), color: '#ff3a49' }}
         title={title}
@@ -98,10 +98,10 @@ export default class TabPage extends Component {
     let safeRootView =
       <SafeAreaViewPlus
         topInset={true}
-        bottomInset={false}
+        bottomInset={true}
         bottomColor='rgba(255,255,255,0.9)'>
         <TabNavigator
-          tabBarStyle={{ backgroundColor: 'rgba(255,255,255,0.9)', height: GlobalStyles.BOTTOM_TAB_NAV_HEIGHT }}
+          tabBarStyle={{ backgroundColor: 'rgba(255,255,255,0.9)', height: GlobalStyles.BOTTOM_TAB_NAV_HEIGHT}}
           sceneStyle={{ paddingBottom: 0 }}
         >
           {this.renderTabNavigator(HomePage, 'Home', '首页', ImageStores.sy_11, ImageStores.sy_6)}

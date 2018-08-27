@@ -10,7 +10,7 @@ export var GlobalStyles = {
   STATUSBAR_HEIGHT: Platform.OS==='ios'?(DeviceInfo.isIPhoneX_deprecated?44:20):0,
   NAVBAR_HEIGHT: scaleSize(150),
   PARALLAX_HEADER_HEIGHT:Platform.OS==='ios'?20+40:40,
-  BOTTOM_TAB_NAV_HEIGHT:scaleSize(186),
+  BOTTOM_TAB_NAV_HEIGHT:scaleSize(186)+(DeviceInfo.isIPhoneX_deprecated?34:0),
   WINDOW_WIDTH:Dimensions.get('window').width,
   WINDOW_HEIGHT:Dimensions.get('window').height,
   PIXEL_RATIO: PixelRatio.get(),
