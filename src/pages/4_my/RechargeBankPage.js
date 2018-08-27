@@ -40,12 +40,12 @@ export default class RechargeBankPage extends Component {
     console.log(navState)
     if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
-      // this.props.navigation.goBack();
-      // return false
+      this.props.navigation.goBack();
+      return false
     }else if(navState.url == 'action://jydapp'){
-      console.log('bbbbbbbbb');
-      // this.props.navigation.goBack();
-      // return false
+      console.log('bbbbbb');
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return false
     }
     else if(navState.url == 'action:jiayidai'){
       console.log('333');

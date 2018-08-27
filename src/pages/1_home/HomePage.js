@@ -29,7 +29,6 @@ let refreshRate = 60;
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.refreshing = false;
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
     global.NetReqModel.tel_phone =  "15822753827";
@@ -80,6 +79,35 @@ export default class HomePage extends Component {
 
   componentWillUnmount() {
     this.AndroidBackHandler.removePressBackListener();
+  }
+
+  async getInfoData() {
+    let url = await '/firstPage';
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      for(var i = 0 ; i < result.appsellinfos.length ; i++){
+        result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
+        result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
+      }
+      global.InitNetData = {
+          httpRes : result,
+      }
+      this.setState({
+        isLoading:false,
+        detail_url:global.InitNetData.httpRes && global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
+        sell_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
+        aboutUs_url:global.InitNetData.httpRes && global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
+        bank_url:global.InitNetData.httpRes && global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
+        cooperationOrg_url:global.InitNetData.httpRes && global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
+        risk_url:global.InitNetData.httpRes && global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
+        safety_url:global.InitNetData.httpRes && global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
+        sign_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+    })
   }
 
   keyExtractor = (data, index) => {return String(index);}
@@ -261,9 +289,10 @@ export default class HomePage extends Component {
         ref="pullToRefresh"
         onScroll = {
           (e) => {
-            if(!this.refreshing && e.nativeEvent.contentOffset.y+refreshRate < 0){
-              this.refreshing = true;
-              this.getInfoData();
+            if(!this.state.isLoading && e.nativeEvent.contentOffset.y+refreshRate < 0){
+              this.setState({isLoading:true},()=>{
+                this.getInfoData();
+              })
             }
           }
         }
