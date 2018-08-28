@@ -25,7 +25,9 @@ export default class ProductCardMain extends Component {
   };
 
   _onPressBtn = () => {
-    this.props.onPress(this.props.id,this.props.data,'btn');
+    if(this.props.data.buyStatus == '0'){
+      this.props.onPress(this.props.id,this.props.data,'btn');
+    }
   };
 
   render() {

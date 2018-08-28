@@ -30,11 +30,7 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'我的银行卡',
-            callback:()=>{this.goto('BindCardNewPage',{
-              url:'/bindCard',
-              jsonObj:global.NetReqModel,
-              title:'绑定银行卡'
-            })}
+            callback:()=>{this.goto('BankCardListPage')}
         },
         {
             title:'手机号码',

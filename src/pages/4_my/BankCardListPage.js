@@ -45,7 +45,7 @@ export default class BankCardListPage extends Component{
 
     goto(url,JsonObj){
         this.props.navigation.navigate(url,{
-
+          data:JsonObj ? JsonObj : {}
         });
     }
 
@@ -95,7 +95,17 @@ export default class BankCardListPage extends Component{
                     resizeMode={'stretch'}
                     style={{width:scaleSize(1173), height:scaleSize(498), flexDirection:'row'}}>
                     <TouchableOpacity 
-                        onPress={()=>{this.goto('BindCardPage')}}
+                        onPress={()=>{
+                            global.NetReqModel.user_ip = '123';
+                            global.NetReqModel.tel_phone =  "15822753827";
+                            global.NetReqModel.jyd_pubData.user_id =  "204";
+                            global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+                            this.goto('BindCardNewPage',{
+                                url:'/bindCard',
+                                jsonObj:global.NetReqModel,
+                                title:'绑定银行卡'
+                            })
+                        }}
                         style={{flex:1,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                         <Image 
                             source={ImageStores.me_34}

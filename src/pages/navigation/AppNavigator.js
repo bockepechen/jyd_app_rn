@@ -49,6 +49,7 @@ import RechargeResultPage from '../4_my/RechargeResultPage';
 import AccountSetPwdPage from '../4_my/AccountSetPwdPage';
 import SmsCodePage from '../4_my/SmsCodePage';
 import AccountAgreementPage from '../4_my/AccountAgreementPage';
+import AccountAgreementSignPage from '../4_my/AccountAgreementSignPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -199,6 +200,9 @@ const AppStackNavigator = createStackNavigator(
     },
     BindCardNewPage:{
       screen:BindCardNewPage
+    },
+    AccountAgreementSignPage:{
+      screen:AccountAgreementSignPage
     },
   },{
     navigationOptions:{

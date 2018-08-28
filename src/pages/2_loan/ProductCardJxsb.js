@@ -23,7 +23,9 @@ export default class ProductCardJxsb extends Component {
   };
   
   _onPressBtn = () => {
-    this.props.onPressItem(this.props.id,this.paraData,'btn');
+    if(this.paraData.buyStatus == '0'){
+      this.props.onPressItem(this.props.id,this.paraData,'btn');
+    }
   };
 
   render() {
