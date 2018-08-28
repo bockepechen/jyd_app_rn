@@ -91,7 +91,7 @@ export default class MyPage extends Component {
 
   async checkUserStatus(next_url){
     // this.goto(next_url)
-    this.goto('AccountAgreementPage');
+    // this.goto('AccountAgreementPage');
     // global.NetReqModel.tel_phone = await "15822854761";
     // global.NetReqModel.jyd_pubData.user_id = await "82";
     // global.NetReqModel.jyd_pubData.token_id = await "0001222";
@@ -140,6 +140,7 @@ export default class MyPage extends Component {
           this.goto('AccountSetPwdPage',{
             url:'/transPwd/setPassword',
             jsonObj:global.NetReqModel,
+            title:'设置交易密码'
           });
         }
         else if(!global.NetReqModel.sign_status || global.NetReqModel.sign_status == '0'){
@@ -343,7 +344,14 @@ export default class MyPage extends Component {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={()=>{this.goto('')}}
+                onPress={()=>{
+                  global.NetReqModel.page_number = '1'
+                  this.goto('MyGoldPage',{
+                    url:'/integral',
+                    jsonObj:global.NetReqModel,
+                    title:'我的嘉金币'
+                  })}
+                }
                 style={{flex:1, borderWidth:0, flexDirection:'row'}}
               >
                 <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>

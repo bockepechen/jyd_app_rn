@@ -107,6 +107,9 @@ export default class HomePage extends Component {
     })
     .catch((e) => {
       console.log(e);
+      if(this.state.isLoading){
+        this.setState({isLoading:false})
+      }
     })
   }
 
@@ -260,16 +263,16 @@ export default class HomePage extends Component {
         paddingLeft:scaleSize(60),
         paddingRight:scaleSize(60),
       }}>
-        <TouchableHighlight
+        {/* <TouchableHighlight
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1,flexDirection:'row', justifyContent:'flex-start'}}>
           <Image 
             source={ImageStores.bar2}
             resizeMode={'stretch'}
             style={{width:scaleSize(75), height:scaleSize(75)}} />
-        </TouchableHighlight>
+        </TouchableHighlight> */}
         <Text style={{fontSize:scaleSize(56), color:'#ffffff'}}>{'嘉e贷'}</Text>
-        <TouchableHighlight 
+        {/* <TouchableHighlight 
           onPress={()=>this.goto('SettingPage')}
           underlayColor='rgba(0,0,0,0)'
           style={{flex:1, flexDirection:'row', justifyContent:'flex-end'}}>
@@ -277,7 +280,7 @@ export default class HomePage extends Component {
             source={ImageStores.bar1}
             resizeMode={'stretch'}
             style={{width:scaleSize(75), height:scaleSize(75)}} />
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
     );
     return config;

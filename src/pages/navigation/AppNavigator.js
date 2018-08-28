@@ -51,6 +51,7 @@ import AccountSetPwdPage from '../4_my/AccountSetPwdPage';
 import SmsCodePage from '../4_my/SmsCodePage';
 import AccountAgreementPage from '../4_my/AccountAgreementPage';
 import AccountAgreementSignPage from '../4_my/AccountAgreementSignPage';
+import MyGoldPage from '../4_my/MyGoldPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -207,6 +208,9 @@ const AppStackNavigator = createStackNavigator(
     },
     QualificationItemPage:{
       screen:QualificationItemPage
+    },
+    MyGoldPage:{
+      screen:MyGoldPage
     },
   },{
     navigationOptions:{

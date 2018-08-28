@@ -47,7 +47,11 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'修改交易密码',
-            callback:()=>{this.goto('ResetTradepwdPage')}
+            callback:()=>{this.goto('ResetTradepwdPage',{
+              url:'/transPwd/setAndResetPassword',
+              jsonObj:global.NetReqModel,
+              title:'修改交易密码'
+            })}
         },
     ]
     this.state = {

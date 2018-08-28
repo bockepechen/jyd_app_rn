@@ -14,7 +14,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 
-export default class ResetTradepwdPage extends Component {
+export default class MyGoldPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -22,10 +22,7 @@ export default class ResetTradepwdPage extends Component {
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
-    this.wv_url = ''
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.wv_url = this.navData.url
   }
   
   componentDidMount() {
@@ -44,6 +41,7 @@ export default class ResetTradepwdPage extends Component {
   
   _onNavigationStateChange = (navState) => {
     console.log(navState)
+    let u = navState.url;
     if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
       this.props.navigation.goBack();
@@ -59,9 +57,16 @@ export default class ResetTradepwdPage extends Component {
     else if(navState.url == 'action:jiayidai'){
       console.log('333');
       this.props.navigation.goBack();
-    }else{
+    }
+    else if(u.indexOf("tel:")  >= 0 ){
+      console.log('aaaaaa');
+      this.refs.webview.stopLoading()
+      return false;
+    }
+    else{
 
     }
+    console.log('bbbbbbb');
     this.backButtonEnabled =  navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
@@ -73,7 +78,7 @@ export default class ResetTradepwdPage extends Component {
 
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
@@ -99,7 +104,7 @@ export default class ResetTradepwdPage extends Component {
           ref={"webview"}
           scrollEnabled={true}
           // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

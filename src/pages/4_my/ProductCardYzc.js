@@ -69,6 +69,18 @@ export default class ProductCardCjz extends Component {
     return array[0]
   }
   
+  ckxy(){
+    global.NetReqModel.business_id = this.paraData.id
+    global.NetReqModel.compact_id = '01'
+    global.NetReqModel.type_id = '01'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('CjzItemPage',{
+        url:"/esign/showLcCompact",
+        jsonObj:global.NetReqModel,
+        title:'服务协议'
+    })
+  }
+  
   renderItem(item){
     return (
         <View style={{marginTop:scaleSize(40)}}>
@@ -91,7 +103,7 @@ export default class ProductCardCjz extends Component {
                 </View>
             </View>
             <TouchableOpacity
-                onPress={()=>{}}
+                onPress={()=>{this.ckxy()}}
                 style={{justifyContent:'center',alignItems:'center',marginBottom:scaleSize(30),marginTop:scaleSize(54)}}
             >
                 <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'查看服务协议'}</Text>

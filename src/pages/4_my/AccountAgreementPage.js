@@ -31,6 +31,9 @@ export default class AccountAgreementPage extends Component{
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.state = {
             isLoading: false,
+            jx_status : '0',
+            xy_status : '0',
+            sqs_status : '0',
             readtzxy:false,
             readzzxy:false,
             readjfxy:false,
@@ -41,10 +44,39 @@ export default class AccountAgreementPage extends Component{
 
     componentDidMount() {
         this.AndroidBackHandler.addPressBackListener();
+        this.getInfoData()
     }
 
     componentWillUnmount() {
         this.AndroidBackHandler.removePressBackListener();
+    }
+
+    async getInfoData() {
+      this.setState({isLoading:true})
+      let url = await '/signStatus';
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        console.log(result);
+        if(result.return_code = '0000'){
+          this.setState({
+            isLoading:false,
+            jx_status : result.jx_status,
+            xy_status : result.xy_status,
+            sqs_status : result.sqs_status,
+            readtzxy : result.jx_status == '1' ? true : false,
+            readzzxy : result.jx_status == '1' ? true : false,
+            readjfxy : result.jx_status == '1' ? true : false,
+            readsqxy : result.xy_status == '1' ? true : false,
+            readcjsqs : result.sqs_status == '1' ? true : false,
+          })
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        if(this.state.isLoading){
+          this.setState({isLoading:false})
+        }
+      })
     }
 
     switchVisible = () => {
@@ -93,6 +125,7 @@ export default class AccountAgreementPage extends Component{
               <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管投资协议》'}</Text>
               <CheckBox
                   style={{flexDirection:'row',marginLeft:scaleSize(201)}}
+                  disabled = {this.state.jx_status == '1' ? true : false}
                   onClick={()=>{
                     this.setState({
                       readtzxy:!this.state.readtzxy
@@ -108,6 +141,7 @@ export default class AccountAgreementPage extends Component{
               <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管债转协议》'}</Text>
               <CheckBox
                   style={{flexDirection:'row',marginLeft:scaleSize(201)}}
+                  disabled = {this.state.jx_status == '1' ? true : false}
                   onClick={()=>{
                     this.setState({
                       readzzxy:!this.state.readzzxy
@@ -123,6 +157,7 @@ export default class AccountAgreementPage extends Component{
               <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管缴费协议》'}</Text>
               <CheckBox
                   style={{flexDirection:'row',marginLeft:scaleSize(201)}}
+                  disabled = {this.state.jx_status == '1' ? true : false}
                   onClick={()=>{
                     this.setState({
                       readjfxy:!this.state.readjfxy
@@ -138,7 +173,10 @@ export default class AccountAgreementPage extends Component{
           <View style={{marginTop:scaleSize(87),flexDirection:'row',justifyContent:'center'}}>
               <TouchableHighlight
                 onPress={()=>{
-                  if(this.state.readtzxy && this.state.readzzxy && this.state.readjfxy){
+                  if(this.state.jx_status == '1'){
+                    return false
+                  }
+                  else if(this.state.readtzxy && this.state.readzzxy && this.state.readjfxy){
                     this.goto('AccountAgreementSignPage',{
                       url:'/termsAuth',
                       jsonObj:global.NetReqModel,
@@ -150,11 +188,11 @@ export default class AccountAgreementPage extends Component{
                 }}
               >
                 <ImageBackground 
-                  source={ImageStores.me_5}
+                  source={this.state.jx_status == '1' ? ImageStores.me_11 : ImageStores.me_5}
                   resizeMode={'stretch'}
                   style={{height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
                 >
-                  <Text style={{color:'#fff',fontSize:scaleSize(36)}}>{'立即签订'}</Text>
+                  <Text style={{color:this.state.jx_status == '1' ? '#ff3a49' : '#fff',fontSize:scaleSize(36)}}>{`${this.state.jx_status == '1' ? '已签订' : '立即签订' }`}</Text>
                 </ImageBackground>
               </TouchableHighlight>
           </View>
@@ -179,6 +217,7 @@ export default class AccountAgreementPage extends Component{
               <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(27),color:'#3b92f0'}}>{'《电子签章用户授权协议》'}</Text>
               <CheckBox
                   style={{marginTop:scaleSize(27)}}
+                  disabled = {this.state.xy_status == '1' ? true : false}
                   onClick={()=>{
                     this.setState({
                       readsqxy:!this.state.readsqxy
@@ -191,13 +230,21 @@ export default class AccountAgreementPage extends Component{
               />
             </View>
             <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center'}}>
-              <ImageBackground
-                source={ImageStores.me_11}
-                resizeMode={'stretch'}
-                style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+              <TouchableHighlight
+                onPress={()=>{
+                  if(this.state.xy_status == '1'){
+                    return false;
+                  }
+                }}
               >
-                <Text style={{color:'#ff3a49',fontSize:scaleSize(36)}}>{'已签订'}</Text>
-              </ImageBackground>
+                <ImageBackground
+                  source={this.state.xy_status == '1' ? ImageStores.me_11 : ImageStores.me_5}
+                  resizeMode={'stretch'}
+                  style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+                >
+                  <Text style={{color:this.state.xy_status == '1' ? '#ff3a49' : '#fff',fontSize:scaleSize(36)}}>{`${this.state.xy_status == '1' ? '已签订' : '立即签订' }`}</Text>
+                </ImageBackground>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
@@ -218,6 +265,7 @@ export default class AccountAgreementPage extends Component{
                       readcjsqs:!this.state.readcjsqs
                     })
                   }}
+                  disabled = {this.state.sqs_status == '1' ? true : false}
                   isChecked={this.state.readcjsqs}
                   checkedImage={<Image source={ImageStores.me_17} resizeMode={'stretch'} style={{width:scaleSize(42), height:scaleSize(42)}}/>}
                   unCheckedImage={<Image source={ImageStores.me_18} resizeMode={'stretch'} style={{width:scaleSize(42), height:scaleSize(42)}}/>}
@@ -225,13 +273,21 @@ export default class AccountAgreementPage extends Component{
               />
             </View>
             <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center'}}>
-              <ImageBackground
-                source={ImageStores.me_5}
-                resizeMode={'stretch'}
-                style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+              <TouchableHighlight
+                onPress={()=>{
+                  if(this.state.sqs_status == '1'){
+                    return false;
+                  }
+                }}
               >
-                <Text style={{color:'#fff',fontSize:scaleSize(36)}}>{'已签订'}</Text>
-              </ImageBackground>
+                <ImageBackground
+                  source={this.state.sqs_status == '1' ? ImageStores.me_11 : ImageStores.me_5}
+                  resizeMode={'stretch'}
+                  style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+                >
+                  <Text style={{color:this.state.sqs_status == '1' ? '#ff3a49' : '#fff',fontSize:scaleSize(36)}}>{`${this.state.sqs_status == '1' ? '已签订' : '立即签订' }`}</Text>
+                </ImageBackground>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
@@ -280,7 +336,7 @@ export default class AccountAgreementPage extends Component{
                       {this.renderInputView()}
                     </ImageBackground>
                 </View>
-                {this.state.isLoading?(<LoadingIcon />):null}
+                {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
                 {ViewUtils.renderToast()}
                 </View>
             </TouchableWithoutFeedback>

@@ -55,7 +55,7 @@ export default class ProductCardCjz extends Component {
   }
 
   ckht(){
-    global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
+    global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '01'
     console.log(JSON.stringify(global.NetReqModel))

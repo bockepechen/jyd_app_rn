@@ -108,6 +108,9 @@ export default class Utils {
     }
 
     static formatMoney(p,n){
+        if(p == ''){
+            return ''
+        }
         var p_float = parseFloat(p);
         var res = p_float.toFixed(n)
         return res;
