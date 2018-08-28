@@ -152,7 +152,7 @@ export default class DiscoverPage extends Component {
         >
           <View style={{marginLeft:scaleSize(42), width:scaleSize(333), height:scaleSize(150)}}>
             <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'邀请好友'}</Text>
-            <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'点击邀请好友赚佣金'}</Text>
+            <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(36), color:'#656565'}}>{'邀请好友 赚取佣金'}</Text>
           </View>
         </TouchableOpacity>
         <Image

@@ -29,11 +29,13 @@ import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
 import BindCardPage from '../4_my/BindCardPage';
+import BindCardNewPage from '../4_my/BindCardNewPage';
 import AuthPhoneNumPage from '../4_my/AuthPhoneNumPage';
 import AuthPhoneNumNewPage from '../4_my/AuthPhoneNumNewPage';
 import AssetPage from '../4_my/AssetPage';
 import AddressPage from '../4_my/AddressPage';
 import ResetpwdPage from '../4_my/ResetpwdPage';
+import ResetTradepwdPage from '../4_my/ResetTradepwdPage';
 import MyLoanPage from '../4_my/MyLoanPage';
 import FeedbackPage from '../4_my/FeedbackPage';
 import PersonInfoPage from '../4_my/PersonInfoPage';
@@ -43,6 +45,10 @@ import AssetRecordPage from '../4_my/AssetRecordPage';
 import RechargeBankPage from '../4_my/RechargeBankPage';
 import RechargeLimitPage from '../4_my/RechargeLimitPage';
 import AccountOpeningPage from '../4_my/AccountOpeningPage';
+import RechargeResultPage from '../4_my/RechargeResultPage';
+import AccountSetPwdPage from '../4_my/AccountSetPwdPage';
+import SmsCodePage from '../4_my/SmsCodePage';
+import AccountAgreementPage from '../4_my/AccountAgreementPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -175,6 +181,24 @@ const AppStackNavigator = createStackNavigator(
     },
     AccountOpeningPage:{
       screen:AccountOpeningPage
+    },
+    RechargeResultPage:{
+      screen:RechargeResultPage
+    },
+    AccountSetPwdPage:{
+      screen:AccountSetPwdPage
+    },
+    SmsCodePage:{
+      screen:SmsCodePage
+    },
+    ResetTradepwdPage:{
+      screen:ResetTradepwdPage
+    },
+    AccountAgreementPage:{
+      screen:AccountAgreementPage
+    },
+    BindCardNewPage:{
+      screen:BindCardNewPage
     },
   },{
     navigationOptions:{

@@ -44,6 +44,7 @@ export default class RechargeBankPage extends Component {
   
   _onNavigationStateChange = (navState) => {
     console.log(navState)
+    let u = navState.url;
     if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
       this.props.navigation.goBack();
@@ -59,9 +60,16 @@ export default class RechargeBankPage extends Component {
     else if(navState.url == 'action:jiayidai'){
       console.log('333');
       this.props.navigation.goBack();
-    }else{
+    }
+    else if(u.indexOf("tel:")  >= 0 ){
+      console.log('aaaaaa');
+      this.refs.webview.stopLoading()
+      return false;
+    }
+    else{
 
     }
+    console.log('bbbbbbb');
     this.backButtonEnabled =  navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url

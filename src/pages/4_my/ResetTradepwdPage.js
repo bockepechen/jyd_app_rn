@@ -21,9 +21,8 @@ import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { getLastUpdateTime } from 'react-native-device-info';
 
-export default class AccountOpeningPage extends Component{
+export default class ResetTradepwdPage extends Component{
     constructor(props){
         super(props)
         this.dataResponsitory = new DataResponsitory();
@@ -115,7 +114,7 @@ export default class AccountOpeningPage extends Component{
             <View
                 style={{
                     flex:1,
-                    // position:'absolute', 
+                    position:'absolute', 
                     top:scaleSize(1150),
                     width:GlobalStyles.WINDOW_WIDTH, 
                     alignItems:'center',
@@ -130,90 +129,85 @@ export default class AccountOpeningPage extends Component{
         )
     }
 
-    renderStepImg(){
-      return (
-        <View style={{width:GlobalStyles.WINDOW_WIDTH,marginTop:scaleSize(102)}}>
-          <View style={{width:GlobalStyles.WINDOW_WIDTH,justifyContent:'center',alignItems:'center'}}>
-            <Image 
-              source={ImageStores.me_12}
-              resizeMode={'stretch'}
-              style={{width:scaleSize(774), height:scaleSize(144)}}
-            />
-          </View>
-          <View style={{marginTop:scaleSize(33),flexDirection:'row'}}>
-            <Text style={{marginLeft:scaleSize(195),color:'#fff',fontWeight:'bold',fontSize:scaleSize(36)}}>{'开通存管账号'}</Text>
-            <Text style={{marginLeft:scaleSize(102),color:'#fff',fontWeight:'bold',fontSize:scaleSize(36)}}>{'设置交易密码'}</Text>
-            <Text style={{marginLeft:scaleSize(120),color:'#fff',fontWeight:'bold',fontSize:scaleSize(36)}}>{'签订协议'}</Text>
-          </View>
-        </View>
-      )
-    }
-
     renderInputView() {
         let kbType = Platform.OS==='ios'?'number-pad':'numeric';
         return (
           <View 
             style={{
-              marginTop:scaleSize(93),
+              position:'absolute', 
+              top:scaleSize(117)+15, 
               width:GlobalStyles.WINDOW_WIDTH, 
               alignItems:'center',
             }}>
-            <View style={{width:scaleSize(1134), height:scaleSize(699), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+            <View style={{width:scaleSize(1134), height:scaleSize(550), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
+              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
-                  placeholder={'真实姓名'}
+                  placeholder={'当前密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
                   value = {this.state.tel_pwdOld}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                  </TouchableHighlight>
               </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
-                  placeholder={'身份证号'}
+                  placeholder={'新密码需为6-20位字母与数字的组合'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
+                  onChangeText = {(p) => {this.setState({tel_pwdNew:p})}}
+                  value = {this.state.tel_pwdNew}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                  </TouchableHighlight>
               </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
+              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
+                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0}}
+                  maxLength={20}
                   clearButtonMode={'while-editing'}
-                  placeholder={'选择银行'}
+                  placeholder={'请再次输入新密码'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
+                  onChangeText = {(p) => {this.setState({tel_pwdNewRe:p})}}
+                  value = {this.state.tel_pwdNewRe}
+                  secureTextEntry={!this.state.isEyeOpen}
                   />
-              </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
-                <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  clearButtonMode={'while-editing'}
-                  placeholder={'手机号'}
-                  placeholderTextColor='#c3c3c3'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
-                  />
+                  <TouchableHighlight 
+                    style={{marginRight:scaleSize(12)}}
+                    underlayColor='rgba(0,0,0,0)'
+                    onPress={this.switchVisible}>
+                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                </TouchableHighlight>
               </View>
             </View>
             <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
             <TouchableHighlight 
-              style={{marginTop:scaleSize(42)}}
+              style={{marginTop:scaleSize(56)}}
               underlayColor='rgba(0,0,0,0)'
               onPress={this.resetpwd}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 
                 style={{width:scaleSize(558), height:scaleSize(168), alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontWeight:'bold' ,fontSize:scaleSize(36),color:'#FFFFFF'}}>{'开通江西银行存管账号'}</Text>
+                <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'确认'}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>
@@ -225,7 +219,7 @@ export default class AccountOpeningPage extends Component{
             <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
                 <View style={GlobalStyles.rootContainer}>
                     <NavigationBar 
-                        title={'银行存管账号'}
+                        title={'修改交易密码'}
                         titleColor='#FFFFFF'
                         titleSize={scaleSize(56)}
                         navColor='#E8152E'
@@ -234,14 +228,12 @@ export default class AccountOpeningPage extends Component{
                         leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
                     />
                     <View>
-                    <ImageBackground
-                        source={ImageStores.me_1}
+                    <Image
+                        source={ImageStores.dl_6}
                         resizeMode={'stretch'}
-                        style={{width:scaleSize(1242), height:scaleSize(837)}}>
-                      {this.renderStepImg()}
-                      {this.renderInputView()}
-                      {this.renderRemark()}
-                    </ImageBackground>
+                        style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(456)}}/>
+                        {this.renderInputView()}
+                        {/* {this.renderRemark()} */}
                 </View>
                 {this.state.isLoading?(<LoadingIcon />):null}
                 {ViewUtils.renderToast()}

@@ -27,6 +27,10 @@ export default class BindCardPage extends Component{
         super(props)
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
+        this.name = '';
+        this.sfzno = '';
+        this.cardno = '';
+        this.tel = ''
         this.state = {
             isRotate:true,
             isLoading: false,
@@ -54,26 +58,67 @@ export default class BindCardPage extends Component{
         this.props.navigation.goBack();
     }
 
-    reSendAuthCode = async () => {
-        // 重置倒计时，开启倒计时
-        this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
-          this.authCode_countDown();
-        });
-    }
-
-    authCode_countDown() {
-        this.timer = setInterval(() => {
-          console.log(this.state.validTime);
-          if (this.state.validTime === 0) {
-            clearInterval(this.timer);
-            console.log('倒数结束');
+    async goNext() {
+        Keyboard.dismiss();
+        if(!this.name || this.name == '') {
+            this.refs.toast.show('姓名不能为空');
+            return false;
+        }
+        else if(!this.sfzno || this.sfzno == ''){
+            this.refs.toast.show('姓名不能为空');
+            return false
+        }
+        else if(!this.cardno || this.cardno == ''){
+            this.refs.toast.show('银行卡不能为空');
+            return false
+        }
+        else if(!Utils.checkoutTel(this.tel)) {
+          this.refs.toast.show('请输入正确手机号');
+        }  else {
+          // 启动Loading动画
+          this.setState({isLoading:true});
+          // 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
+          let adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
+          // 跳转下页面参数设置
+          let navigation_params = {
+            pageTitle:'绑定银行卡',
+            nextPage:'SetPwdPage',
+            getSmsCodeUrl:'',
+            tel: this.tel,
+            cryptTel: `${this.telNum.substring(0,3)} **** ${this.tel.substring(7)}`,
+            authcodeCD: adaptAuthCodeCD.authcodeCD
+          };
+          // 没有发送过验证码或者验证码过期，调用网络接口重新发送
+          if (adaptAuthCodeCD.ifSendAuthCode) {
+            // 设置远程接口访问参数 (同步执行)
+            global.NetReqModel.tel_phone = await this.tel;
+            global.NetReqModel.refer_code = await this.referCode;
+            let url = await '/signIn/register';
+            this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+             .then((result) => {
+               // 返回数据，关闭Loading动画
+               this.setState({isLoading:false}, () => {
+                 if (result.return_code === '0000') {
+                  this.props.navigation.navigate('SmsCodePage', navigation_params);
+                 } else {
+                  this.refs.toast.show(result.return_msg);
+                 }
+               })
+             })
+             .catch((e) => {
+               this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+               // 关闭Loading动画
+               if(this.state.isLoading) {
+                 this.setState({isLoading:false});
+               }
+             })
           } else {
-            this.setState({
-              validTime: this.state.validTime - 1
-            })
+            this.setState({isLoading:false},() => {
+              this.props.navigation.navigate('SmsCodePage', navigation_params);
+            });
           }
-        }, 1000);
-    }
+        }
+      }
 
     renderSubTitleLine(subTitle, topDistance) {
         return (
@@ -121,28 +166,27 @@ export default class BindCardPage extends Component{
               width:GlobalStyles.WINDOW_WIDTH, 
               alignItems:'center',
             }}>
-            <View style={{width:scaleSize(1134), height:scaleSize(834), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
+            <View style={{width:scaleSize(1134), height:scaleSize(734), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
               <View style={{marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
                 <TextInput 
                   style={{marginTop:scaleSize(0), marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  maxLength={20}
                   clearButtonMode={'while-editing'}
                   placeholder={'真实姓名'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  defaultValue={global.NetReqModel.tel_phone}
-                  onChangeText={(t) => {this.telNum=t}}
+                  value={this.name}
+                  onChangeText={(t) => {this.name=t}}
                   />
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
                   style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  maxLength={20}
                   clearButtonMode={'while-editing'}
                   placeholder={'身份证号'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.pwd = p}}
+                  onChangeText = {(p) => {this.sfzno = p}}
+                  value={this.sfzno}
                   />
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -181,35 +225,12 @@ export default class BindCardPage extends Component{
                   onChangeText = {(p) => {this.pwd = p}}
                   />
               </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
-                <TextInput 
-                  style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  maxLength={20}
-                  clearButtonMode={'while-editing'}
-                  placeholder={'短信验证'}
-                  placeholderTextColor='#c3c3c3'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  secureTextEntry={!this.state.isEyeOpen}
-                  onChangeText = {(p) => {this.pwd = p}}
-                  />
-                  <TouchableHighlight 
-                    style={{marginRight:scaleSize(12)}}
-                    underlayColor='rgba(0,0,0,0)'
-                    onPress={this.reSendAuthCode}>
-                    <ImageBackground 
-                        source={ImageStores.me_5}
-                        resizeMode={'stretch'} style={{justifyContent:'center',alignItems:'center',width:scaleSize(249), height:scaleSize(84),marginTop:scaleSize(-50)}}
-                    >
-                        <Text style={{fontSize:scaleSize(36),color:'#fff'}}>{this.state.validTime == 0 ? '获取短信码' : ` ${this.state.validTime}秒 `}</Text>
-                    </ImageBackground>
-                  </TouchableHighlight>
-              </View>
             </View>
             <Image source={ImageStores.dl_1} resizeMode={'stretch'} style={{width:scaleSize(1134), height:scaleSize(66)}}/>
             <TouchableHighlight 
               style={{marginTop:scaleSize(56)}}
               underlayColor='rgba(0,0,0,0)'
-              onPress={this.login}>
+              onPress={this.nextPage}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 

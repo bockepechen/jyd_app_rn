@@ -88,6 +88,72 @@ export default class MyPage extends Component {
     });
   }
 
+  async checkUserStatus(next_url){
+    // this.goto(next_url)
+    this.goto('AccountAgreementPage');
+    // global.NetReqModel.tel_phone = await "15822854761";
+    // global.NetReqModel.jyd_pubData.user_id = await "82";
+    // global.NetReqModel.jyd_pubData.token_id = await "0001222";
+    // this.goto('AccountSetPwdPage',{
+    //   url:'/transPwd/setPassword',
+    //   jsonObj:global.NetReqModel,
+    // });
+    // global.NetReqModel.user_ip = '123';
+    //       global.NetReqModel.tel_phone =  "15822753827";
+    //       global.NetReqModel.jyd_pubData.user_id =  "204";
+    //       global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+    //       this.goto('BindCardNewPage',{
+    //         url:'/bindCard',
+    //         jsonObj:global.NetReqModel,
+    //         title:'绑定银行卡'
+    //       });
+    return false;
+    let url = await '/common';
+    global.NetReqModel.tel_phone = await "13752133744";
+    global.NetReqModel.jyd_pubData.user_id = await "85";
+    global.NetReqModel.jyd_pubData.token_id = await "111111";
+    console.log(JSON.stringify(global.NetReqModel));
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      if(result.return_code == '0000'){
+        global.NetReqModel.account_id = result.jx_data.account_id;
+        global.NetReqModel.bank_no = result.jx_data.bank_no;
+        global.NetReqModel.sign_status = result.jx_data.sign_status;
+        global.NetReqModel.tradepwd_status = result.jx_data.tradepwd_status;
+        if(!global.NetReqModel.account_id || global.NetReqModel.account_id == ''){
+          this.goto('AccountOpeningPage')
+        }
+        else if(!global.NetReqModel.bank_no || global.NetReqModel.bank_no == ''){
+          global.NetReqModel.user_ip = '123';
+          global.NetReqModel.tel_phone =  "15822753827";
+          global.NetReqModel.jyd_pubData.user_id =  "204";
+          global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+          this.goto('BindCardNewPage',{
+            url:'/bindCard',
+            jsonObj:global.NetReqModel,
+            title:'绑定银行卡'
+          });
+        }
+        else if(!global.NetReqModel.tradepwd_status || global.NetReqModel.tradepwd_status == '0'){
+          this.goto('AccountSetPwdPage',{
+            url:'/transPwd/setPassword',
+            jsonObj:global.NetReqModel,
+          });
+        }
+        else if(!global.NetReqModel.sign_status || global.NetReqModel.sign_status == '0'){
+          this.goto('AccountAgreementPage');
+        }
+        else{
+          this.goto(next_url)
+        }
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+  }
+
   loadData = () => {
     this.setState({isRefresh:true});
     setTimeout(() => {
@@ -138,14 +204,14 @@ export default class MyPage extends Component {
         </View>
         <View style={{marginTop:scaleSize(81), marginLeft:scaleSize(21), height:scaleSize(84), flexDirection:'row'}}>
           <TouchableHighlight
-            onPress={()=>{this.goto('RechargePage')}}
+            onPress={()=>{this.checkUserStatus('RechargePage')}}
             underlayColor='rgba(0,0,0,0)'>
             <ImageBackground source={ImageStores.me_5} resizeMode={'stretch'} style={{width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
               <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ffffff'}}>{'充值'}</Text>
             </ImageBackground>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={()=>{}}
+            onPress={()=>{this.checkUserStatus('RechargePage')}}
             underlayColor='rgba(0,0,0,0)'>
             <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{marginLeft:scaleSize(27), width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
               <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ff3a49'}}>{'提现'}</Text>
@@ -309,7 +375,10 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_51,
         title:'我的二维码',
-        callback:()=>{this.props.navigation.navigate('RegisterPage')},
+        callback:()=>{this.goto('RechargeResultPage',{
+          title:'充值成功',
+          type:'1'
+        })},
       },
     ]
     data.map((item, index) => {
