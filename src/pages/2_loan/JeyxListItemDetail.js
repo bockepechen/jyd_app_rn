@@ -22,9 +22,9 @@ export default class JeyxListItemDetail extends Component {
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.ifbackhome = false
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.backButtonEnabled = ''
+    this.forwardButtonEnabled = ''
+    this.wv_url = this.navData.url
   }
   
   componentDidMount() {
@@ -40,13 +40,11 @@ export default class JeyxListItemDetail extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.setState({
-      backButtonEnabled: navState.canGoBack,
-      forwardButtonEnabled: navState.canGoForward,
-      wv_url: navState.url,
-      status: navState.title,
-      loading: navState.loading,
-    });
+    this.backButtonEnabled = navState.canGoBack
+    this.forwardButtonEnabled = navState.canGoForward
+    this.wv_url = navState.url
+    this.status = navState.title
+    this.loading = navState.loading;
   }
 
   sendMessage() {
@@ -56,7 +54,7 @@ export default class JeyxListItemDetail extends Component {
 
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
@@ -89,8 +87,8 @@ export default class JeyxListItemDetail extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={false}
-          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          scrollEnabled={true}
+          source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}

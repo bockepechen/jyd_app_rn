@@ -10,6 +10,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardJxsb extends Component {
@@ -43,7 +44,7 @@ export default class ProductCardJxsb extends Component {
             <View style={{marginTop:isIOS?scaleSize(78):scaleSize(72), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
               <View style={{width:scaleSize(282), flexDirection:'row', justifyContent:'flex-end', alignItems:'flex-end'}}>
                 <View style={{height:scaleSize(78)}}>
-                  <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{this.paraData.YearRate}</Text>
+                  <Text style={{fontSize:scaleSize(78), fontWeight:'200', color:'#998675'}}>{Utils.formatMoney(this.paraData.YearRate,2)}</Text>
                 </View>
                 <View style={{height:scaleSize(48)}}>
                   <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -58,7 +59,7 @@ export default class ProductCardJxsb extends Component {
             <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{`借款期限 ${this.paraData.BorrowMonth}期`}</Text>
             {
               this.paraData.isRestMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${this.paraData.restmoneyamount}元`}</Text>):
+                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${Utils.formatMoney(this.paraData.restmoneyamount,2)}元`}</Text>):
                 null
             }
             <TouchableHighlight

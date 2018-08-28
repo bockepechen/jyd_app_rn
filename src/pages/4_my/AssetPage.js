@@ -141,15 +141,15 @@ export default class AssetPage extends Component{
             >
                 <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start',marginTop:scaleSize(90), marginLeft:scaleSize(156)}}>
                     <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'可用余额(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{this.state.availBal}</Text>
+                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.availBal,2)}</Text>
                     <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(63)}}>{'冻结金额(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{this.state.freezeAmount}</Text>
+                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.freezeAmount,2)}</Text>
                 </View>
                 <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start',marginTop:scaleSize(90),}}>
                     <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'代收本金(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{this.state.waitContractAmount}</Text>
+                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.waitContractAmount,2)}</Text>
                     <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(63)}}>{'待收回报(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{this.state.waitRepay}</Text>
+                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.waitRepay,2)}</Text>
                 </View>
             </ImageBackground>
         )
@@ -163,17 +163,17 @@ export default class AssetPage extends Component{
                 >
                     <View key={0} style={{flex:1,height:scaleSize(135),flex:1,flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{marginLeft:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{'累计出借金额'}</Text>
-                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${this.state.sumContractAmount}元`}</Text>
+                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${Utils.formatMoney(this.state.sumContractAmount,2)}元`}</Text>
                     </View>
                     <View style={{backgroundColor:'#f2f2f2', width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(3)}}/>
                     <View key={1} style={{flex:1,height:scaleSize(135),flex:1,flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{marginLeft:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{'累计已收利息'}</Text>
-                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${this.state.sumArrivaledInterest}元`}</Text>
+                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${Utils.formatMoney(this.state.sumArrivaledInterest,2)}元`}</Text>
                     </View>
                     <View style={{backgroundColor:'#f2f2f2', width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(3)}}/>
                     <View key={2} style={{flex:1,height:scaleSize(135),flex:1,flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={{marginLeft:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{'累计获得出借奖励'}</Text>
-                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${this.state.sumOffsetAmount}元`}</Text>
+                        <Text style={{marginRight:scaleSize(108),color:'#989898',marginTop:scaleSize(48),fontSize:scaleSize(42)}}>{`${Utils.formatMoney(this.state.sumOffsetAmount,2)}元`}</Text>
                     </View>
                 </ScrollView>
             </View>

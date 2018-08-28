@@ -9,6 +9,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardMain extends Component {
@@ -34,9 +35,9 @@ export default class ProductCardMain extends Component {
     let top1 = 
         <Text style={{marginTop:isIOS?scaleSize(63):scaleSize(51), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
     let top2 = 
-      <View style={{marginTop:isIOS?scaleSize(63):scaleSize(51), width:GlobalStyles.WINDOW_WIDTH, flexDirection:'row', alignItems:'flex-end'}}>
+      <View style={{marginTop:isIOS?scaleSize(63):scaleSize(51), width:GlobalStyles.WINDOW_WIDTH, flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:scaleSize(148), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
-        <Text style={{marginLeft:scaleSize(477), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+this.props.data.surplusmoney}元</Text>
+        <Text style={{marginRight:scaleSize(120), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+Utils.formatMoney(this.props.data.surplusmoney,2)}元</Text>
       </View>
 
     return (
@@ -53,7 +54,7 @@ export default class ProductCardMain extends Component {
             <Text style={{marginTop:scaleSize(81), fontWeight:'bold', fontSize:scaleSize(36), color:'#989898'}}>{'年化利率'}</Text>
             <View style={{marginTop:isIOS?scaleSize(30):scaleSize(24), width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(90), flexDirection:'row', alignItems:'flex-end', justifyContent:'center'}}>
               <View style={{ height:scaleSize(72)}}>
-                <Text style={{fontSize:scaleSize(72), fontWeight:'200', color:'#998675'}}>{this.props.data.expectedyearyield}</Text>
+                <Text style={{fontSize:scaleSize(72), fontWeight:'200', color:'#998675'}}>{Utils.formatMoney(this.props.data.expectedyearyield,2)}</Text>
               </View>
               <View style={{ height:scaleSize(42)}}>
                 <Text style={{fontSize:scaleSize(42), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -62,7 +63,7 @@ export default class ProductCardMain extends Component {
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{' + '}</Text>
               </View>
               <View style={{ height:scaleSize(90)}}>
-                <Text style={{fontSize:scaleSize(90), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.improveyearrate}</Text>
+                <Text style={{fontSize:scaleSize(90), fontWeight:'200', color:'#ff3a49'}}>{Utils.formatMoney(this.props.data.improveyearrate,2)}</Text>
               </View>
               <View style={{ height:scaleSize(54)}}>
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#ff3a49'}}>{'%'}</Text>

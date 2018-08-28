@@ -105,5 +105,11 @@ export default class Utils {
             t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
         }   
         return t.split("").reverse().join("") + r;   
-    } 
+    }
+
+    static formatMoney(p,n){
+        var p_float = parseFloat(p);
+        var res = p_float.toFixed(n)
+        return res;
+    }
 }

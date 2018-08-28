@@ -477,7 +477,7 @@ export default class HomePage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
-        {this.state.isLoading?(<LoadingIcon />):null}
+        {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
       </View>
     )
   }

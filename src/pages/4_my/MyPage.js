@@ -21,6 +21,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import Utils from '../../utils/Utils';
 
+let refreshRate = 60;
 export default class MyPage extends Component {
   constructor(props) {
     super(props);
@@ -271,6 +272,14 @@ export default class MyPage extends Component {
     let parallaxConfig = this.getParallaxRenderConfig(params);
     return (
       <ParallaxScrollView
+        ref="pullToRefresh"
+        onScroll = {
+          (e) => {
+            if(!this.state.isLoading && e.nativeEvent.contentOffset.y+refreshRate < 0){
+              this.getInfoData();
+            }
+          }
+        }
         showsVerticalScrollIndicator={false}
         backgroundColor='#E8152E'
         contentBackgroundColor="#F0F0F0"
@@ -531,7 +540,7 @@ export default class MyPage extends Component {
       <View style={GlobalStyles.rootContainer}>
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
-        {this.state.isLoading?(<LoadingIcon />):null}
+        {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
       </View>
     )
   }

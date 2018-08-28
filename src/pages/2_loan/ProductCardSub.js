@@ -9,6 +9,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardSub extends Component {
@@ -42,7 +43,7 @@ export default class ProductCardSub extends Component {
             <Text style={{fontSize:scaleSize(42), fontWeight:'bold', color:'#656565'}}>{this.props.data.sellname}</Text>
             <View style={{marginTop:isIOS?scaleSize(54):scaleSize(48), height:scaleSize(66), flexDirection:'row', alignItems:'flex-end'}}>
               <View style={{height:scaleSize(54)}}>
-                <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{this.props.data.expectedyearyield}</Text>
+                <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{Utils.formatMoney(this.props.data.expectedyearyield,2)}</Text>
               </View>
               <View style={{height:scaleSize(32)}}>
                 <Text style={{fontSize:scaleSize(32), fontWeight:'200', color:'#998675'}}>{'%'}</Text>
@@ -51,7 +52,7 @@ export default class ProductCardSub extends Component {
                 <Text style={{fontSize:scaleSize(54), fontWeight:'200', color:'#998675'}}>{'+'}</Text>
               </View>
               <View style={{height:scaleSize(66)}}>
-                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{this.props.data.improveyearrate}</Text>
+                <Text style={{fontSize:scaleSize(66), fontWeight:'200', color:'#ff3a49'}}>{Utils.formatMoney(this.props.data.improveyearrate,2)}</Text>
               </View>
               <View style={{height:scaleSize(32)}}>
                 <Text style={{fontSize:scaleSize(32), fontWeight:'200', color:'#ff3a49'}}>{'%'}</Text>
@@ -70,7 +71,7 @@ export default class ProductCardSub extends Component {
             <Text style={{fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
             {
               this.props.data.SurplusMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+this.props.data.surplusmoney}元</Text>)
+                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+Utils.formatMoney(this.props.data.surplusmoney,2)}元</Text>)
                 :null
             }
             <TouchableHighlight

@@ -48,6 +48,7 @@ export default class TabPage extends Component {
     global.NetReqModel.jyd_pubData.source_type = '0001';
     global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
     DeviceInfo.getIPAddress().then(ip => {
+      global.NetReqModel.jyd_pubData.ip = ip;
       console.log(`当前手机IP：${ip}`);
     })
   }
