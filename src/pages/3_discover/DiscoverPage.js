@@ -240,7 +240,16 @@ export default class DiscoverPage extends Component {
       {
         img: ImageStores.fx_56,
         title: '企业资质',
-        callback: () => {this.goto('QualificationPage')}
+        callback: () => {this.goto('QualificationPage',{
+          organization_url:this.state.organization_url,
+          permit_url:this.state.permit_url,
+          team_url:this.state.team_url,
+          companyAffair_url:this.state.companyAffair_url,
+          branch_url:this.state.branch_url,
+          papers_url:this.state.papers_url,
+          audit_url:this.state.audit_url,
+          otherInfo_url:this.state.otherInfo_url,
+        })}
       },
       {
         img: ImageStores.fx_57,

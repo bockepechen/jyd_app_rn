@@ -13,7 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 
-export default class AccountPage extends Component {
+export default class QualificationItemPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -63,6 +63,12 @@ export default class AccountPage extends Component {
     }else{
 
     }
+  }
+
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
   }
 
   render() {

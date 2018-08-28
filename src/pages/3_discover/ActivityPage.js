@@ -13,7 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 
-export default class MallPage extends Component {
+export default class ActivityPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;

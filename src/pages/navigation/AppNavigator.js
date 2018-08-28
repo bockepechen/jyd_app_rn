@@ -17,6 +17,7 @@ import MsgListItemDetail from '../1_home/MsgListItemDetail';
 import SignInPage from '../1_home/SignInPage';
 import HomeItemDetail from '../1_home/HomeItemDetail';
 import QualificationPage from '../3_discover/QualificationPage';
+import QualificationItemPage from '../3_discover/QualificationItemPage';
 import InvitingFriendsPage from '../3_discover/InvitingFriendsPage';
 import InvitingRecordPage from '../3_discover/InvitingRecordPage';
 import MallPage from '../3_discover/MallPage';
@@ -203,6 +204,9 @@ const AppStackNavigator = createStackNavigator(
     },
     AccountAgreementSignPage:{
       screen:AccountAgreementSignPage
+    },
+    QualificationItemPage:{
+      screen:QualificationItemPage
     },
   },{
     navigationOptions:{

@@ -21,46 +21,79 @@ export default class QualificationPage extends Component {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.navData = this.props.navigation.state.params.data;
     this.listItem = [
         {
             img: ImageStores.fx_45,
             title:'组织信息',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.organization_url,
+                title:'组织信息',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_46,
             title:'证照信息',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.permit_url,
+                title:'证照信息',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_47,
             title:'管理团队',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.team_url,
+                title:'管理团队',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_48,
             title:'企业大事记',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.companyAffair_url,
+                title:'企业大事记',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_49,
             title:'分支机构',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.branch_url,
+                title:'分支机构',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_50,
             title:'备案登记',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.papers_url,
+                title:'备案登记',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_51,
             title:'审核信息',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.audit_url,
+                title:'审核信息',
+                jsonObj:global.NetReqModel,
+            })}
         },
         {
             img: ImageStores.fx_52,
             title:'其他信息',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.goto('QualificationItemPage',{
+                url:this.navData.otherInfo_url,
+                title:'其他信息',
+                jsonObj:global.NetReqModel,
+            })}
         },     
     ]
     this.state = {
@@ -81,27 +114,11 @@ export default class QualificationPage extends Component {
     this.props.navigation.goBack();
   }
 
-
-  _onPressItem = (id,item) => {
-    // updater functions are preferred for transactional updates
-    this.props.navigation.navigate('MsgListItemDetail',{
-      data:{
-        url:this.state.itemUrl,
-        // url:"http://y5wtkk.natappfree.cc/product1412/html/messageDetail.html",
-        title:'消息中心',
-        id:item.an_id,
-        jsonObj:global.NetReqModel
-      },
-      ...this.props
-    })
-    this.setState((state) => {
-      // copy the map rather than modifying state.
-      this.readedList.push(id);
-      const selected = new Map(state.selected);
-      selected.set(id, !selected.get(id)); // toggle
-      return {selected};
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
     });
-  };
+  }
 
   _renderItem(){
     var itemArray = []
