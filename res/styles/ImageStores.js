@@ -141,4 +141,7 @@ export var ImageStores = {
   yh_16:require('../imgs/yh_16.png'),
   yh_17:require('../imgs/yh_17.png'),
   yh_18:require('../imgs/yh_18.png'),
+  hy_1:require('../imgs/hy_1.jpg'),
+  hy_2:require('../imgs/hy_2.jpg'),
+  hy_3:require('../imgs/hy_3.jpg'),
 }

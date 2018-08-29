@@ -13,11 +13,8 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import InitialDao from '../../dao/InitialDao';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
-
-let p1_uri = 'http://c12.eoemarket.net/app0/703/703939/screen/3490585.png'
-let p2_uri = 'http://8.pic.pc6.com/thumb/up/2016-8/20168241155552193192400850570_600_566.jpg'
-let p3_uri = 'http://pic.downyi.com/upload/2017-12/2017121885958764860.jpg'
-let p4_uri = 'http://img.zcool.cn/community/016f3f580da69fa84a0e282bd958cc.png'
+import {ImageStores} from '../../../res/styles/ImageStores';
+import {scaleSize} from '../../utils/FitViewUtils';
 
 export default class Welcome extends Component {
   constructor(props) {
@@ -126,16 +123,19 @@ export default class Welcome extends Component {
           <Swiper
             horizontal={true}
             onIndexChanged={this.onSwipe}
+            activeDotColor='#998874'
+            dotColor='#c7b298'
+            paginationStyle={{bottom:scaleSize(24),marginBottom:scaleSize(222)}}
             loop={false}>
-            <Image source={{uri:p1_uri}} style={styles.banner_image} />
-            <Image source={{uri:p2_uri}} style={styles.banner_image} />
-            <Image source={{uri:p3_uri}} style={styles.banner_image} />
+            <Image source={ImageStores.hy_1} style={styles.banner_image} />
+            <Image source={ImageStores.hy_2} style={styles.banner_image} />
+            <Image source={ImageStores.hy_3} style={styles.banner_image} />
           </Swiper>
           {this.state.ifShowJumpBtn?jumpBtn:null}
         </View>
       let UnFirstView = 
         <View style={GlobalStyles.rootContainer}>
-          <Image source={{uri:p4_uri}} style={styles.banner_image} />
+          <Image source={ImageStores.hy_3} style={styles.banner_image} />
         </View>
        let loadingView = 
           <View></View>
