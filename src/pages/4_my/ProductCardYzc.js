@@ -69,6 +69,12 @@ export default class ProductCardCjz extends Component {
     return array[0]
   }
   
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+  
   ckxy(){
     global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'

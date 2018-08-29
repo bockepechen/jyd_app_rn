@@ -26,6 +26,12 @@ export default class ProductCardMjz extends Component {
     }
   }
 
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+  
   _onPress = () => {
     let index = this.props.id
     let select = index;

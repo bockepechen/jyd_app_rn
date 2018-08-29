@@ -65,6 +65,12 @@ export default class ProductCardYjs extends Component {
     array = str.split(' ')
     return array[0]
   }
+
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
   
   render() {
     return (

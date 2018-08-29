@@ -62,7 +62,37 @@ export default class ProductCardCyz extends Component {
     array = str.split(' ')
     return array[0]
   }
+
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
   
+  ckht(){
+    global.NetReqModel.business_id = this.paraData.id
+    global.NetReqModel.compact_id = '01'
+    global.NetReqModel.type_id = '02'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('CjzItemPage',{
+        url:"/esign/showLcCompact",
+        jsonObj:global.NetReqModel,
+        title:'查看合同'
+    })
+  }
+
+  jkxy(){
+    global.NetReqModel.business_id = this.paraData.relationid
+    global.NetReqModel.compact_id = '02'
+    global.NetReqModel.type_id = '02'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('CjzItemPage',{
+        url:"/esign/showLcCompact",
+        jsonObj:global.NetReqModel,
+        title:'借款协议'
+    })
+  }
+
   render() {
     return (
         <View>
@@ -128,14 +158,14 @@ export default class ProductCardCyz extends Component {
                 </View>
                 <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(110)}}>
                     <TouchableOpacity
-                        onPress={()=>{}}
+                        onPress={()=>{this.jkxy()}}
                         activeOpacity={0.6}
                         style={{height:scaleSize(84),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
                     >
                         <Text style={{color:'#fff',fontSize:scaleSize(42)}}>{'借款协议'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={()=>{}}
+                        onPress={()=>{this.ckht()}}
                         activeOpacity={0.6}
                         style={{height:scaleSize(84),marginLeft:scaleSize(24),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
                     >

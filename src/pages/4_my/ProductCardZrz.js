@@ -64,6 +64,24 @@ export default class ProductCardZrz extends Component {
     return array[0]
   }
   
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+
+  ckht(){
+    global.NetReqModel.business_id = this.paraData.id
+    global.NetReqModel.compact_id = '01'
+    global.NetReqModel.type_id = '02'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('CjzItemPage',{
+        url:"/esign/showLcCompact",
+        jsonObj:global.NetReqModel,
+        title:'查看协议'
+    })
+  }
+
   render() {
     return (
         <View>
@@ -129,7 +147,7 @@ export default class ProductCardZrz extends Component {
                 </View>
                 <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(110)}}>
                     <TouchableOpacity
-                        onPress={()=>{}}
+                        onPress={()=>{this.ckht()}}
                         activeOpacity={0.6}
                         style={{height:scaleSize(84),width:scaleSize(243),justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
                     >

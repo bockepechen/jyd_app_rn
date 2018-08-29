@@ -68,6 +68,12 @@ export default class ProductCardZcz extends Component {
     array = str.split(' ')
     return array[0]
   }
+
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
   
   ckxy(){
     global.NetReqModel.business_id = this.paraData.id

@@ -62,6 +62,12 @@ export default class ProductCardTbz extends Component {
     array = str.split(' ')
     return array[0]
   }
+
+  goto(url,JsonObj){
+    this.props.navigationParam.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
   
   render() {
     return (

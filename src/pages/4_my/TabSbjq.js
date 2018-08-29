@@ -112,10 +112,10 @@ export default class TabSbjq extends Component {
           height:scaleSize(2),
         }}>
 
-        <TabSubCyz key={'cyz'} tabLabel={'持有中'} />
-        <TabSubTbz key={'tbz'} tabLabel={'投标中'} />
-        <TabSubZrz key={'zrz'} tabLabel={'转让中'} />
-        <TabSubYjs key={'yjs'} tabLabel={'已结束'} />
+        <TabSubCyz key={'cyz'} tabLabel={'持有中'} navigationParam={this.props.navigation}/>
+        <TabSubTbz key={'tbz'} tabLabel={'投标中'} navigationParam={this.props.navigation}/>
+        <TabSubZrz key={'zrz'} tabLabel={'转让中'} navigationParam={this.props.navigation}/>
+        <TabSubYjs key={'yjs'} tabLabel={'已结束'} navigationParam={this.props.navigation}/>
       </ScrollableTabView>
     )
   }

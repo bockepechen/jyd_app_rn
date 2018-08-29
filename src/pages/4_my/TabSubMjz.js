@@ -41,7 +41,7 @@ export default class TabSubMjz extends Component {
   async getInfoData() {
     global.NetReqModel.tel_phone = await "18312345678";
     global.NetReqModel.Type = await "0";
-    global.NetReqModel.PageNum = this.state.next_page;
+    global.NetReqModel.page_number = this.state.next_page;
     global.NetReqModel.jyd_pubData.user_id = await "39";
     global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
     let url = await '/lendCenter/investRecords';
