@@ -18,6 +18,7 @@ export default class MallPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    console.log(this.navData.jsonObj);
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {

@@ -33,6 +33,13 @@ export default class TabPage extends Component {
       console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
       console.log(connectionInfo);
       GlobalStyles.CONNECTION_TYPE = connectionInfo;
+      global.NetReqModel.jyd_pubData.network_type = connectionInfo.type;
+      global.NetReqModel.jyd_pubData.source_type = '0001';
+      global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
+      DeviceInfo.getIPAddress().then(ip => {
+        global.NetReqModel.jyd_pubData.ip = ip;
+        console.log(`当前手机IP：${ip}`);
+      })
     });
     NetInfo.addEventListener(
       'connectionChange',
@@ -42,6 +49,18 @@ export default class TabPage extends Component {
   }
 
   handleFirstConnectivityChange(connectionInfo) {
+    console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+    GlobalStyles.CONNECTION_TYPE = connectionInfo;
+    global.NetReqModel.jyd_pubData.network_type = connectionInfo.type;
+    global.NetReqModel.jyd_pubData.source_type = '0001';
+    global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
+    DeviceInfo.getIPAddress().then(ip => {
+      global.NetReqModel.jyd_pubData.ip = ip;
+      console.log(`当前手机IP：${ip}`);
+    })
+  }
+
+  initPubData(){
     console.log('First change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
     GlobalStyles.CONNECTION_TYPE = connectionInfo;
     global.NetReqModel.jyd_pubData.network_type = connectionInfo.type;

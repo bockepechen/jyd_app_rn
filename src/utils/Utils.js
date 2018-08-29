@@ -108,7 +108,7 @@ export default class Utils {
     }
 
     static formatMoney(p,n){
-        if(p == ''){
+        if(!p || p == ''){
             return ''
         }
         var p_float = parseFloat(p);

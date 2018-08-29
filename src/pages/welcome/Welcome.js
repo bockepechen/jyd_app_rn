@@ -28,7 +28,7 @@ export default class Welcome extends Component {
     this.state = {
       countDownTime: 3,
       ifShowJumpBtn: false,
-      ifFirstOpen: true
+      ifFirstOpen: 'loading'
     }
   }
 
@@ -137,9 +137,16 @@ export default class Welcome extends Component {
         <View style={GlobalStyles.rootContainer}>
           <Image source={{uri:p4_uri}} style={styles.banner_image} />
         </View>
-    return (
-      this.state.ifFirstOpen?FirstView:UnFirstView
-    )
+       let loadingView = 
+          <View></View>
+    switch(this.state.ifFirstOpen){
+      case true:
+        return FirstView
+      case false:
+        return UnFirstView
+      case 'loading':
+        return loadingView
+    }
   }
 }
 
