@@ -82,16 +82,16 @@ export default class TabSbjq extends Component {
       >
         <View style={{marginTop:scaleSize(132),alignItems:'center'}}>
           <Text style={{fontSize:scaleSize(36),color:'#c7b299'}}>{'待收本金(元)'}</Text>
-          <Text style={{marginTop:scaleSize(45),height:scaleSize(90), fontSize:scaleSize(90),color:'#998675'}}>{this.state.waitContractAmount}</Text>
+          <Text style={{marginTop:scaleSize(45),height:scaleSize(90), fontSize:scaleSize(90),color:'#998675'}}>{Utils.formatMoney(this.state.waitContractAmount,2)}</Text>
         </View>
         <View style={{flexDirection:'row',marginTop: isAndroid ? scaleSize(155) : scaleSize(174)}}>
           <View style={{alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'待收回报(元)'}</Text>
-            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{this.state.waitRepay}</Text>
+            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{Utils.formatMoney(this.state.waitRepay,2)}</Text>
           </View>
           <View style={{alignItems:'center',marginLeft:scaleSize(250)}}>
             <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'累计已收回报(元)'}</Text>
-            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{this.state.arrivalRepay}</Text>
+            <Text style={{fontSize:scaleSize(58),color:'#998675',marginTop:scaleSize(12)}}>{Utils.formatMoney(this.state.arrivalRepay,2)}</Text>
           </View>
         </View>
       </ImageBackground>

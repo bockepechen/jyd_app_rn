@@ -12,6 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardTbz extends Component {

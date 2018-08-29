@@ -12,6 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardCyz extends Component {
@@ -137,7 +138,7 @@ export default class ProductCardCyz extends Component {
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借金额:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.contractamount} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.contractamount,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'年化利率:'}</Text>
@@ -145,7 +146,7 @@ export default class ProductCardCyz extends Component {
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'预期利息:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.expectprofit} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.expectprofit,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借奖励:'}</Text>

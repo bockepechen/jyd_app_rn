@@ -12,6 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardCjz extends Component {
@@ -165,11 +166,11 @@ export default class ProductCardCjz extends Component {
                     </View>
                     <View style={{marginTop:scaleSize(30),flexDirection:'row',justifyContent:'center'}}>
                         <View style={{}}>
-                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{this.paraData.contractamount}</Text>
+                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{Utils.formatMoney(this.paraData.contractamount,2)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借金额(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{this.paraData.expectprofit}</Text>
+                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{Utils.formatMoney(this.paraData.expectprofit,2)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预计利息(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>

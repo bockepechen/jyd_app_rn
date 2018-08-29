@@ -12,6 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardYjs extends Component {
@@ -116,7 +117,7 @@ export default class ProductCardYjs extends Component {
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借金额:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.contractamount} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.contractamount,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'年化利率:'}</Text>
@@ -124,15 +125,15 @@ export default class ProductCardYjs extends Component {
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'已收利息:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.arrivledinterest} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.arrivledinterest,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'已收出借奖励:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.offsetamount} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.offsetamount,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'账户管理费:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.accountfee} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.accountfee,2)} 元`}</Text>
                     </View>
                 </View>
             </ImageBackground>

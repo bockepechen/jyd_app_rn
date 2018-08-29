@@ -181,12 +181,12 @@ export default class MyPage extends Component {
       <View style={{marginLeft:scaleSize(81), marginRight:scaleSize(81), height:scaleSize(210), flexDirection:'row', justifyContent:'space-evenly'}}>
         <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
           <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'总资产(元)'}</Text>
-          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? this.state.totalAmount :'******'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? Utils.formatMoney(this.state.totalAmount,2) :'******'}</Text>
         </View>
         <View style={{backgroundColor:'white', width:1, height:scaleSize(210)}}/>
         <View style={{flex:1, flexDirection:'column', alignItems:'center'}}>
           <Text style={{marginTop:scaleSize(21), fontSize:scaleSize(48), color:'#ffffff'}}>{'累计回报(元)'}</Text>
-          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? this.state.sumRepay :'******'}</Text>
+          <Text style={{marginTop:scaleSize(54), fontSize:scaleSize(60), fontWeight:'bold', color:'#ffffff'}}>{this.state.isEye? Utils.formatMoney(this.state.sumRepay,2) :'******'}</Text>
         </View>
       </View>
       <ImageBackground 

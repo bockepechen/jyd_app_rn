@@ -125,7 +125,7 @@ export default class AssetPage extends Component{
                 <View
                     style={{width:scaleSize(696),height:scaleSize(696),borderRadius:scaleSize(350),justifyContent:'center',alignItems:'center',borderColor:'#ff3a49',borderWidth:scaleSize(24)}}
                 >
-                    <Text style={{color:'#ff3a49',fontSize:scaleSize(64)}}>{this.state.totalAmount}</Text>
+                    <Text style={{color:'#ff3a49',fontSize:scaleSize(64)}}>{Utils.formatMoney(this.state.totalAmount,2)}</Text>
                     <Text style={{marginTop:scaleSize(24),color:'#998675',fontSize:scaleSize(48),fontWeight:'bold'}}>总资产(元)</Text>
                 </View>
             </View>

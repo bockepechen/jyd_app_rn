@@ -12,6 +12,7 @@ import {
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
+import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardZrz extends Component {
@@ -134,11 +135,11 @@ export default class ProductCardZrz extends Component {
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'应收利息:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.receivable} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.receivable)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'出借奖励:'}</Text>
-                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${this.paraData.offsetamount} 元`}</Text>
+                        <Text style={{fontSize:scaleSize(36),color:'#989898',marginRight:scaleSize(165)}}>{`${Utils.formatMoney(this.paraData.offsetamount,2)} 元`}</Text>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                         <Text style={{fontSize:scaleSize(36),color:'#989898',marginLeft:scaleSize(165)}}>{'账户管理费:'}</Text>
