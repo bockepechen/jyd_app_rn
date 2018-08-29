@@ -122,10 +122,10 @@ export default class TabJxsb extends Component {
       // global.NetReqModel.sellInfoId = item.id;
       global.NetReqModel.borrow_id = item.BorrowId;
       global.NetReqModel.rest_money = parseFloat(item.OriginalAmount) - parseFloat(item.CollectedAmount);
-      this.props.navigation.navigate('JeyxListItemDetail',{
+      this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
           url:'/balanceQuery/queryBalanceApp',
-          title:'嘉e精选',
+          title:'立即出借',
           jsonObj:global.NetReqModel
         },
         ...this.props
