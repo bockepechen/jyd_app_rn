@@ -20,6 +20,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import { StackActions } from 'react-navigation';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import LoadingIcon from '../../common/LoadingIcon';
 
 export default class WithdrawPage extends Component{
     constructor(props){
@@ -27,19 +28,21 @@ export default class WithdrawPage extends Component{
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.navData = this.props.navigation.state.params.data;
-        this.apply_money = '10'
-      this.bank_cnapsNo = '6228480028089562323'
+        this.btnFlag = false;
         this.state = {
+          isLoading:false,
           imgLeft:ImageStores.yh_0,
           imgRight:ImageStores.yh_0,
           nameLeft:'银行名称',
           nameRight:'银行名称',
-          money:1000
+          keyong:'',
+          bank_no:''
         }
     }
 
     componentDidMount() {
         this.AndroidBackHandler.addPressBackListener();
+        this.getInfoData()
     }
 
     componentWillUnmount() {
@@ -56,13 +59,48 @@ export default class WithdrawPage extends Component{
       });
     }
 
+    async getInfoData() {
+      this.setState({
+        isLoading:true
+      });
+      let url = await '/withdraw/preWithdraw';
+      global.NetReqModel.tel_phone = await "15822753827";
+      global.NetReqModel.jyd_pubData.user_id = await "91";
+      global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
+      console.log(JSON.stringify(global.NetReqModel));
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        console.log(result);
+        if(result.return_code == '0000'){
+          this.btnFlag = true
+          this.setState({
+              isLoading:false,
+              keyong : result.keyong,
+              bank_no : result.bank_no,
+              imgRight:result.bank_icon,
+              nameRight:result.bank_name
+          })
+        }else{
+          this.refs.toast.show(result.return_msg);
+        }
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        // TODO Toast提示异常
+        // 关闭Loading动画
+        if(this.state.isLoading) {
+          this.setState({isLoading:false});
+        }
+      })
+    }
+
     withdraw() {
       
-      global.NetReqModel.tel_phone = '15822753827'
       global.NetReqModel.apply_money = this.apply_money
-      global.NetReqModel.bank_cnapsNo = this.bank_cnapsNo
-      global.NetReqModel.jyd_pubData.user_id = '91'
-      global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
+      global.NetReqModel.bank_cnapsNo = this.state.bank_no
       console.log(JSON.stringify(global.NetReqModel))
       this.goto('WithdrawBankPage',{
         url:'/withdraw',
@@ -146,7 +184,7 @@ export default class WithdrawPage extends Component{
                 </View>
                 <View style={{marginLeft:scaleSize(44),width:scaleSize(400),height:scaleSize(86),backgroundColor:'#fff',justifyContent:'center',alignItems:'center'}}>
                   <Image 
-                    source={this.state.imgLeft}
+                    source={this.btnFlag ? {uri: this.state.imgRight} : this.state.imgRight}
                     resizeMode={'stretch'}
                     style={{width:scaleSize(332),height:scaleSize(72)}}
                   />
@@ -157,13 +195,13 @@ export default class WithdrawPage extends Component{
                   <Text style={{color:'#fff',fontSize:scaleSize(36)}}>{this.state.nameLeft}</Text>
                 </View>
                 <View style={{marginLeft:scaleSize(166),width:scaleSize(400),alignItems:'center'}}>
-                  <Text style={{color:'#fff',fontSize:scaleSize(36)}}>{this.state.nameLeft}</Text>
+                  <Text style={{color:'#fff',fontSize:scaleSize(36)}}>{this.state.nameRight}</Text>
                 </View>
               </View>
             </View>
             <View style={{marginTop:scaleSize(72),width:scaleSize(1134), height:scaleSize(600), backgroundColor:'#ffffff', borderRadius:10, alignItems:'center'}}>
               <View style={{marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
-                <Text style={{marginLeft:scaleSize(18),color:'#996875',fontSize:scaleSize(48)}}>{`可用余额：${Utils.formatMoney(this.state.money,2)}`}</Text>
+                <Text style={{marginLeft:scaleSize(18),color:'#996875',fontSize:scaleSize(48)}}>{`可用余额：${Utils.formatMoney(this.state.keyong,2)}`}</Text>
               </View>
               <View style={{marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
                 <TextInput 
@@ -180,12 +218,13 @@ export default class WithdrawPage extends Component{
               <View style={{marginTop:scaleSize(81), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3'}}>
                 <TextInput 
                   style={{marginTop:scaleSize(0), marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
+                  editable={false}
                   clearButtonMode={'while-editing'}
                   placeholder={'请填写银行行号'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText={(t) => {this.bank_cnapsNo=t}}
-                  value={this.bank_cnapsNo}
+                  onChangeText={(t) => {this.setState({bank_no:t})}}
+                  value={this.state.bank_no}
                   />
               </View>
             </View>
@@ -194,6 +233,9 @@ export default class WithdrawPage extends Component{
               style={{marginTop:scaleSize(42)}}
               underlayColor='rgba(0,0,0,0)'
               onPress={()=>{
+                if(!this.btnFlag){
+                  return false
+                }
                 this.withdraw()
               }}>
               <ImageBackground 
@@ -229,6 +271,8 @@ export default class WithdrawPage extends Component{
                         {this.renderRemark()} 
                       </ImageBackground>
                     </View>
+                    {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
+                    {ViewUtils.renderToast()}
                 </View>
             </TouchableWithoutFeedback>
         )
