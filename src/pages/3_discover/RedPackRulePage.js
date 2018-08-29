@@ -80,6 +80,8 @@ export default class RedPackRulePage extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           source={{uri:this.state.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}

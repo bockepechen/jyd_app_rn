@@ -87,6 +87,8 @@ export default class JeyxListItemDetail extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={true}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           // source={{uri:this.state.wv_url}}
           source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           // source={require('./wv.html')}

@@ -124,7 +124,7 @@ export default class TabJxsb extends Component {
       global.NetReqModel.rest_money = parseFloat(item.OriginalAmount) - parseFloat(item.CollectedAmount);
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
-          url:'/balanceQuery/queryBalance',
+          url:'/balanceQuery/queryBalanceApp',
           title:'嘉e精选',
           jsonObj:global.NetReqModel
         },

@@ -83,6 +83,8 @@ export default class MallPage extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={false}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}

@@ -79,6 +79,8 @@ export default class ActivityPage extends Component {
         />
         <WebView 
           ref={"webview"}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           // scrollEnabled={false}
           source={{uri:this.state.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}

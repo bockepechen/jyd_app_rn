@@ -93,6 +93,8 @@ export default class AccountSetPwdPage extends Component{
             <View style={{width:scaleSize(1134), height:scaleSize(1300), backgroundColor:'#ffffff', borderRadius:10}}>
               <WebView 
                 ref={"webview"}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
                 scrollEnabled={true}
                 source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
                 onNavigationStateChange={this._onNavigationStateChange}

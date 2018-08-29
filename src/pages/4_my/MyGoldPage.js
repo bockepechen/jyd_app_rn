@@ -103,6 +103,8 @@ export default class MyGoldPage extends Component {
         <WebView 
           ref={"webview"}
           scrollEnabled={true}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
           // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
