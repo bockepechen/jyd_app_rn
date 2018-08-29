@@ -59,12 +59,23 @@ export default class Welcome extends Component {
   async init() {
     let initialData = await this.initialDao.getInitailData('AppOpen');
     if (initialData) {
-      this.setState({
-        ifFirstOpen: initialData.ifFirstOpen
-      });
+      if(initialData.ifFirstOpen == 'first' || initialData.ifFirstOpen == 'unfirst'){
+        await this.initialDao.saveInitialData('AppOpen', {ifFirstOpen: 'unfirst'});
+        this.setState({
+          ifFirstOpen: 'unfirst'
+        });
+      }else{
+        await this.initialDao.saveInitialData('AppOpen', {ifFirstOpen: 'first'});
+        this.setState({
+          ifFirstOpen: 'first'
+        });
+      }
       this.countDown();
     } else {
-      await this.initialDao.saveInitialData('AppOpen', {ifFirstOpen: false});
+      this.setState({
+        ifFirstOpen:'first'
+      })
+      await this.initialDao.saveInitialData('AppOpen', {ifFirstOpen: 'first'});
     }
   }
 
@@ -140,9 +151,9 @@ export default class Welcome extends Component {
        let loadingView = 
           <View></View>
     switch(this.state.ifFirstOpen){
-      case true:
+      case 'first':
         return FirstView
-      case false:
+      case 'unfirst':
         return UnFirstView
       case 'loading':
         return loadingView

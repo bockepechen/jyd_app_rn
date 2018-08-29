@@ -52,6 +52,8 @@ import SmsCodePage from '../4_my/SmsCodePage';
 import AccountAgreementPage from '../4_my/AccountAgreementPage';
 import AccountAgreementSignPage from '../4_my/AccountAgreementSignPage';
 import MyGoldPage from '../4_my/MyGoldPage';
+import WithdrawPage from '../4_my/WithdrawPage';
+import WithdrawBankPage from '../4_my/WithdrawBankPage';
 
 
 const AppStackNavigator = createStackNavigator(
@@ -211,6 +213,12 @@ const AppStackNavigator = createStackNavigator(
     },
     MyGoldPage:{
       screen:MyGoldPage
+    },
+    WithdrawPage:{
+      screen:WithdrawPage
+    },
+    WithdrawBankPage:{
+      screen:WithdrawBankPage
     },
   },{
     navigationOptions:{

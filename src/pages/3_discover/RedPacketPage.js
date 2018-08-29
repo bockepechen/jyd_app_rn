@@ -113,8 +113,8 @@ export default class RedPacketPage extends Component {
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result)
+      this.setState({isLoading:false})
       if(result.return_code == '0000'){
-        this.setState({isLoading:false})
         this.myModal(true,this.renderModal())
         let templist = this.state.list;
         templist[index].status = '2'
@@ -123,10 +123,15 @@ export default class RedPacketPage extends Component {
             httpRes : result,
             list : templist,
           })
+      }else{
+        this.refs.toast.show('领取失败');
       }
     })
     .catch((e) => {
       console.log(e);
+      if(this.state.isLoading){
+        this.setState({isLoading:false})
+      }
     })
   }
 
@@ -306,7 +311,8 @@ renderMainView(){
           />
           {this.renderMainView()}
           <ModalView ref='modalView'/>
-          {this.state.isLoading?(<LoadingIcon />):null}
+          {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
+          {ViewUtils.renderToast()}
       </View>
     )
   }

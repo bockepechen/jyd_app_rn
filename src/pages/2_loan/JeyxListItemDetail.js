@@ -40,6 +40,13 @@ export default class JeyxListItemDetail extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
+    console.log(navState)
+    if(navState.url == 'action://jydapp'){
+      console.log('aaaaaaa');
+      this.ifbackhome = true
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return false
+    }
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
@@ -48,8 +55,6 @@ export default class JeyxListItemDetail extends Component {
   }
 
   sendMessage() {
-    // this.refs.webview.postMessage(this.navData.id);
-    this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
   }
 
 
@@ -61,16 +66,6 @@ export default class JeyxListItemDetail extends Component {
     }
   }
   handleMessage(e) {
-    let obj = eval('('+e.nativeEvent.data+')');
-    if(obj.key == '1'){
-      this.sendMessage();
-    }
-    else if(obj.key == '2'){
-      this.ifbackhome = true
-      this.props.navigation.dispatch(StackActions.popToTop());
-    }else{
-
-    }
   }
 
   render() {

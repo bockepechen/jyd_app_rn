@@ -62,6 +62,7 @@ export default class InvitingFriendsPage extends Component{
     }
 
     record(){
+        global.NetReqModel.page_number = 1
         this.goto('InvitingRecordPage',{
             url:'/invest',
             jsonObj:global.NetReqModel,

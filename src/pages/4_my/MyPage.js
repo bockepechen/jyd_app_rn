@@ -90,7 +90,6 @@ export default class MyPage extends Component {
   }
 
   async checkUserStatus(next_url){
-    // this.goto(next_url)
     // this.goto('AccountAgreementPage');
     // global.NetReqModel.tel_phone = await "15822854761";
     // global.NetReqModel.jyd_pubData.user_id = await "82";
@@ -108,6 +107,7 @@ export default class MyPage extends Component {
     //         jsonObj:global.NetReqModel,
     //         title:'绑定银行卡'
     //       });
+    this.goto(next_url)
     return false;
     let url = await '/common';
     global.NetReqModel.tel_phone = await "13752133744";
@@ -213,7 +213,7 @@ export default class MyPage extends Component {
             </ImageBackground>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={()=>{this.checkUserStatus('RechargePage')}}
+            onPress={()=>{this.checkUserStatus('WithdrawPage')}}
             underlayColor='rgba(0,0,0,0)'>
             <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{marginLeft:scaleSize(27), width:scaleSize(216), height:scaleSize(84), alignItems:'center', justifyContent:'center'}}>
               <Text style={{fontSize:scaleSize(48), fontWeight:'200', color:'#ff3a49'}}>{'提现'}</Text>

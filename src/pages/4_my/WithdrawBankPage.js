@@ -5,26 +5,27 @@ import {
   WebView,
   Platform,
   StyleSheet,
-  DeviceEventEmitter,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { StackActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
+import { StackActions } from 'react-navigation';
 
-export default class JeyxListItemDetail extends Component {
+export default class WithdrawBankPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.ifbackhome = false
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
-    this.wv_url = this.navData.url
+    this.wv_url = ''
+    this.state = {
+      wv_url:this.navData.url,
+    }
   }
   
   componentDidMount() {
@@ -32,38 +33,54 @@ export default class JeyxListItemDetail extends Component {
   }
 
   componentWillUnmount() {
-    DeviceEventEmitter.emit('reFreshEmitter', {});
-    if(this.ifbackhome)
-      DeviceEventEmitter.emit('navreset', {tab:'Home'});
     this.AndroidBackHandler.removePressBackListener();
   }
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+  
   _onNavigationStateChange = (navState) => {
     console.log(navState)
-    if(navState.url == 'action://jydapp'){
+    if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
-      this.ifbackhome = true
-      this.props.navigation.dispatch(StackActions.popToTop());
+      this.props.navigation.goBack();
+      return false
+    }else if(navState.url == 'action://jydapp'){
+      console.log('bbbbbb');
+      this.goto('RechargeResultPage',{
+        title:'提现成功',
+        type:'1'
+      })
       return false
     }
-    this.backButtonEnabled = navState.canGoBack
+    else if(navState.url == 'action:jiayidai'){
+      console.log('333');
+      this.props.navigation.goBack();
+    }else{
+
+    }
+    this.backButtonEnabled =  navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
-    this.status = navState.title
-    this.loading = navState.loading;
   }
 
   sendMessage() {
+    
   }
 
+
   goBack = () => {
-    if (this.backButtonEnabled) {
+    if (this.state.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
     }
   }
   handleMessage(e) {
+    
   }
 
   render() {
@@ -80,12 +97,10 @@ export default class JeyxListItemDetail extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          // source={{uri:this.state.wv_url}}
-          source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          // source={require('./wv.html')}
+          scrollEnabled={true}
+          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

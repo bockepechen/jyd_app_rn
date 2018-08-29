@@ -329,7 +329,7 @@ export default class DiscoverPage extends Component {
         {this.renderBonusView()}
         {this.renderGridView()}
         {ViewUtils.renderToast()}
-        {this.state.isLoading?(<LoadingIcon />):null}
+        {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
       </View>
     );
   }
