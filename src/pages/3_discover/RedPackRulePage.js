@@ -18,9 +18,11 @@ export default class RedPackRulePage extends Component {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.backButtonEnabled = ''
+    this.forwardButtonEnabled = ''
+    this.wv_url = this.navData.url
+    this.status = ''
+    this.loading = ''
   }
   
   componentDidMount() {
@@ -32,13 +34,11 @@ export default class RedPackRulePage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.setState({
-      backButtonEnabled: navState.canGoBack,
-      forwardButtonEnabled: navState.canGoForward,
-      wv_url: navState.url,
-      status: navState.title,
-      loading: navState.loading,
-    });
+    this.backButtonEnabled = navState.canGoBack
+    this.forwardButtonEnabled = navState.canGoForward
+    this.wv_url = navState.url
+    this.status = navState.title
+    this.loading =  navState.loading
   }
 
   sendMessage() {
@@ -47,7 +47,7 @@ export default class RedPackRulePage extends Component {
 
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
@@ -82,7 +82,7 @@ export default class RedPackRulePage extends Component {
           scrollEnabled={false}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          source={{uri:this.state.wv_url}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

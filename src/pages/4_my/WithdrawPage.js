@@ -98,7 +98,15 @@ export default class WithdrawPage extends Component{
     }
 
     withdraw() {
-      
+      if(!this.apply_money){
+        this.refs.toast.show('最低提现10元');
+        return false 
+      }
+      let money = parseFloat(this.apply_money)
+      if(money < 10){
+        this.refs.toast.show('最低提现10元');
+        return false 
+      }
       global.NetReqModel.apply_money = this.apply_money
       global.NetReqModel.bank_cnapsNo = this.state.bank_no
       console.log(JSON.stringify(global.NetReqModel))

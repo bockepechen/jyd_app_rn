@@ -82,7 +82,7 @@ export default class RechargeShortcut extends Component {
     global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
     console.log(JSON.stringify(global.NetReqModel))
     this.goto('RechargeBankPage',{
-      url:'/directRecharge',
+      url:'/directRecharge/test',
       jsonObj:global.NetReqModel,
       title:'充值'
     });
