@@ -56,12 +56,9 @@ export default class TabSbjq extends Component {
         })
       }
       // 返回数据，关闭Loading动画
-      this.setState(
-        {
-          isLoading:false,
-        }
-        , () => {
-      })
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
     })
     .catch((e) => {
       console.log(e);

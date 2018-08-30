@@ -55,13 +55,9 @@ export default class TabJeyx extends Component {
           arrivalRepay:parseFloat(result.arrivalRepay).toFixed(2)
         })
       }
-      // 返回数据，关闭Loading动画
-      this.setState(
-        {
-          isLoading:false,
-        }
-        , () => {
-      })
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
     })
     .catch((e) => {
       console.log(e);

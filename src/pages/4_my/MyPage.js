@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
@@ -16,10 +15,11 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AppStatusBar from '../../common/AppStatusBar';
-import ModalView from '../../common/ModalView';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import Utils from '../../utils/Utils';
+import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 let refreshRate = 60;
 export default class MyPage extends Component {
@@ -69,12 +69,16 @@ export default class MyPage extends Component {
             fundAccountInfo:result.fundAccountInfo
         })
       }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
       if(this.state.isLoading) {
         this.setState({isLoading:false});
       }
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
       // TODO Toast提示异常
       // 关闭Loading动画
       if(this.state.isLoading) {
@@ -150,9 +154,13 @@ export default class MyPage extends Component {
           this.goto(next_url)
         }
       }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
     })
   }
 
@@ -550,6 +558,7 @@ export default class MyPage extends Component {
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
         {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
+        {ViewUtils.renderToast()}
       </View>
     )
   }

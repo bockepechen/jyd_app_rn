@@ -11,7 +11,8 @@ import MsgListStationMessage from './MsgListStationMessage';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
+import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabStationMessage extends Component {
@@ -62,6 +63,9 @@ export default class TabStationMessage extends Component {
                 , () => {
             })
           }
+          else if(result.return_code == '8888'){
+            this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+          }
           else{
             this.setState({
                 httpRes : result,
@@ -73,6 +77,7 @@ export default class TabStationMessage extends Component {
         })
         .catch((e) => {
           console.log(e);
+          this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         })
     }
     
@@ -98,9 +103,13 @@ export default class TabStationMessage extends Component {
                     list : templist
                 })
             }
+            else if(result.return_code == '8888'){
+                this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+            }
         })
         .catch((e) => {
         console.log(e);
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         })
     }
 
@@ -116,6 +125,7 @@ export default class TabStationMessage extends Component {
         })
         .catch((e) => {
           console.log(e);
+          this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         })
     }
 
@@ -222,6 +232,7 @@ export default class TabStationMessage extends Component {
                     />
                 }
             />
+            {ViewUtils.renderToast(180)}
             </View>
         )
     }

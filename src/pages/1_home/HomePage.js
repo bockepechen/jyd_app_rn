@@ -23,6 +23,8 @@ import ProductCardSub from '../2_loan/ProductCardSub';
 import LoadingIcon from '../../common/LoadingIcon';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
+import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 let isAndroid = Platform.OS==='android'?true:false;
 let refreshRate = 60;
@@ -86,27 +88,33 @@ export default class HomePage extends Component {
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
       console.log(result);
-      for(var i = 0 ; i < result.appsellinfos.length ; i++){
-        result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
-        result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
+      if(result.return_code == '0000'){
+        for(var i = 0 ; i < result.appsellinfos.length ; i++){
+          result.appsellinfos[i].expectedyearyield = Utils.fmoney(result.appsellinfos[i].expectedyearyield*100,2)
+          result.appsellinfos[i].expectedyield = Utils.fmoney(result.appsellinfos[i].expectedyield*100,2)
+        }
+        global.InitNetData = {
+            httpRes : result,
+        }
+        this.setState({
+          isLoading:false,
+          detail_url:global.InitNetData.httpRes && global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
+          sell_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
+          aboutUs_url:global.InitNetData.httpRes && global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
+          bank_url:global.InitNetData.httpRes && global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
+          cooperationOrg_url:global.InitNetData.httpRes && global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
+          risk_url:global.InitNetData.httpRes && global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
+          safety_url:global.InitNetData.httpRes && global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
+          sign_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
+        })
       }
-      global.InitNetData = {
-          httpRes : result,
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
       }
-      this.setState({
-        isLoading:false,
-        detail_url:global.InitNetData.httpRes && global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
-        sell_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
-        aboutUs_url:global.InitNetData.httpRes && global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url :'',
-        bank_url:global.InitNetData.httpRes && global.InitNetData.httpRes.bank_url ? global.InitNetData.httpRes.bank_url : '',
-        cooperationOrg_url:global.InitNetData.httpRes && global.InitNetData.httpRes.cooperationOrg_url ? global.InitNetData.httpRes.cooperationOrg_url : '',
-        risk_url:global.InitNetData.httpRes && global.InitNetData.httpRes.risk_url ? global.InitNetData.httpRes.risk_url : '',
-        safety_url:global.InitNetData.httpRes && global.InitNetData.httpRes.safety_url ? global.InitNetData.httpRes.safety_url : '',
-        sign_url:global.InitNetData.httpRes && global.InitNetData.httpRes.sign_url ? global.InitNetData.httpRes.sign_url : '',
-      })
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
       if(this.state.isLoading){
         this.setState({isLoading:false})
       }
@@ -481,6 +489,7 @@ export default class HomePage extends Component {
         {StatusBarView}
         {this.renderParallaxView({}, this.renderScrollView())}
         {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
+        {ViewUtils.renderToast()}
       </View>
     )
   }

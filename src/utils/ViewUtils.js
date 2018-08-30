@@ -54,11 +54,11 @@ export default class ViewUtils {
     )
   }
 
-  static renderToast() {
+  static renderToast(p) {
     return (
       <Toast
         opacity={0.6}
-        positionValue={130}
+        positionValue={p ? p : 130}
         ref='toast'/>
     )
   }

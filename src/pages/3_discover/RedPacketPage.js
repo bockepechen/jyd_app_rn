@@ -6,7 +6,6 @@ import {
   RefreshControl,
   Platform,
   ActivityIndicator,
-  TouchableWithoutFeedback,
   TouchableHighlight,
   ImageBackground,
   TouchableOpacity
@@ -15,6 +14,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import RedPacketItem from './RedPacketItem';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
@@ -89,7 +89,11 @@ export default class RedPacketPage extends Component {
           , () => {
             // this.loadFlag = false
         })
-      }else{
+      }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      else{
         this.setState({
           httpRes : result,
           list : totalList,
@@ -100,6 +104,7 @@ export default class RedPacketPage extends Component {
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
     })
   }
 
@@ -123,12 +128,17 @@ export default class RedPacketPage extends Component {
             httpRes : result,
             list : templist,
           })
-      }else{
+      }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      else{
         this.refs.toast.show('领取失败');
       }
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
       if(this.state.isLoading){
         this.setState({isLoading:false})
       }

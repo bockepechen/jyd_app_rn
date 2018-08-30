@@ -8,10 +8,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
-import {ImageStores} from '../../../res/styles/ImageStores';
-import ViewUtils from '../../utils/ViewUtils';
 import ProductCardJxsb from './ProductCardJxsb';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabJxsb extends Component {
@@ -64,7 +64,11 @@ export default class TabJxsb extends Component {
           , () => {
             // this.loadFlag = false
         })
-      }else{
+      }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      else{
         this.setState({
           httpRes : result,
           list : totalList,
@@ -75,6 +79,7 @@ export default class TabJxsb extends Component {
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
     })
   }
 
@@ -166,6 +171,7 @@ export default class TabJxsb extends Component {
 
   render() {
     return (
+      <View style={{flex:1}}>
       <FlatList
         style={{paddingTop:scaleSize(63)}}
         data={this.state.list}
@@ -184,6 +190,8 @@ export default class TabJxsb extends Component {
         onEndReachedThreshold={0.01}
         // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
       />
+      {ViewUtils.renderToast(220)}
+      </View>
     )
   }
 }

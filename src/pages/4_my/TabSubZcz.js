@@ -4,15 +4,14 @@ import {
   View,
   Platform,
   FlatList,
-  TouchableOpacity,
-  LayoutAnimation,
   ActivityIndicator,
   RefreshControl
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import ProductCardZcz from './ProductCardZcz';
+import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabSubZcz extends Component {
@@ -61,7 +60,11 @@ export default class TabSubZcz extends Component {
           }
           , () => {
         })
-      }else{
+      }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      else{
         this.setState({
           httpRes : result,
           list : totalList,
@@ -73,6 +76,7 @@ export default class TabSubZcz extends Component {
     .catch((e) => {
       console.log(e);
       // TODO Toast提示异常
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
     })
   }
 
@@ -161,7 +165,8 @@ _onEndReached = ()=>{
   render() {
     return (
       <View style={{flex:1,marginTop:scaleSize(45)}}>
-        {this.renderMainView()}    
+        {this.renderMainView()}  
+        {ViewUtils.renderToast(500)}   
       </View>
     )
   }

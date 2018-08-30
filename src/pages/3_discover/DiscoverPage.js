@@ -14,6 +14,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import ViewUtils from '../../utils/ViewUtils';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import LoadingIcon from '../../common/LoadingIcon';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 
@@ -60,33 +61,42 @@ export default class DiscoverPage extends Component {
     .then((result) => {
       console.log(result);
       // 返回数据，关闭Loading动画
-      this.setState(
-        {
-          isLoading:false,
-          httpRes : result,
-          account_url:result.account_url,
-          activity_url:result.activity_url,
-          audit_url:result.audit_url,
-          branch_url:result.branch_url,
-          companyAffair_url:result.companyAffair_url,
-          invite_url:result.invite_url,
-          operationReport_url:result.operationReport_url,
-          organization_url:result.organization_url,
-          otherInfo_url:result.otherInfo_url,
-          papers_url:result.papers_url,
-          permit_url:result.permit_url,
-          shopping_url:result.shopping_url,
-          team_url:result.team_url,
-          helpCenter_url :result.helpCenter_url
-        }
-        , () => {
-          if(this.refreshing){
-            this.refreshing = false;
+      if(result.return_code == '0000'){
+        this.setState(
+          {
+            isLoading:false,
+            httpRes : result,
+            account_url:result.account_url,
+            activity_url:result.activity_url,
+            audit_url:result.audit_url,
+            branch_url:result.branch_url,
+            companyAffair_url:result.companyAffair_url,
+            invite_url:result.invite_url,
+            operationReport_url:result.operationReport_url,
+            organization_url:result.organization_url,
+            otherInfo_url:result.otherInfo_url,
+            papers_url:result.papers_url,
+            permit_url:result.permit_url,
+            shopping_url:result.shopping_url,
+            team_url:result.team_url,
+            helpCenter_url :result.helpCenter_url
           }
-      })
+          , () => {
+            if(this.refreshing){
+              this.refreshing = false;
+            }
+        })
+      }
+      else if(result.return_code == '8888'){
+        this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      if(this.state.isLoading) {
+        this.setState({isLoading:false});
+      }
     })
     .catch((e) => {
       console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
       // TODO Toast提示异常
       // 关闭Loading动画
       if(this.state.isLoading) {
