@@ -4,14 +4,11 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  LayoutAnimation,
-  UIManager,
   Image,
   ImageBackground,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
@@ -71,11 +68,15 @@ export default class ProductCardCyz extends Component {
   }
   
   ckht(){
-    global.NetReqModel.business_id = this.paraData.id
+    global.NetReqModel.tel_phone = '17188125146'
+    global.NetReqModel.business_id = 'INV20180206000000004596'
+    global.NetReqModel.jyd_pubData.user_id = "121";
+    global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
+    // global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '02'
     console.log(JSON.stringify(global.NetReqModel))
-    this.goto('CjzItemPage',{
+    this.goto('WvItemPage',{
         url:"/esign/showLcCompact",
         jsonObj:global.NetReqModel,
         title:'查看合同'
@@ -83,14 +84,29 @@ export default class ProductCardCyz extends Component {
   }
 
   jkxy(){
-    global.NetReqModel.business_id = this.paraData.relationid
+    global.NetReqModel.tel_phone = '17188125146'
+    global.NetReqModel.business_id = '20180522111057010419'
+    global.NetReqModel.jyd_pubData.user_id = "121";
+    global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
+    // global.NetReqModel.business_id = this.paraData.relationid
     global.NetReqModel.compact_id = '02'
     global.NetReqModel.type_id = '02'
     console.log(JSON.stringify(global.NetReqModel))
-    this.goto('CjzItemPage',{
+    this.goto('WvItemPage',{
         url:"/esign/showLcCompact",
         jsonObj:global.NetReqModel,
         title:'借款协议'
+    })
+  }
+
+  hkjh(){
+    global.NetReqModel.borrow_id = this.paraData.borrowid
+    global.NetReqModel.page_number = '1'
+    console.log(JSON.stringify(global.NetReqModel))
+    this.goto('WvItemPage',{
+        url:"/productMore/queryReturnPlan",
+        jsonObj:global.NetReqModel,
+        title:'回款计划'
     })
   }
 
@@ -173,7 +189,7 @@ export default class ProductCardCyz extends Component {
                         <Text style={{color:'#fff',fontSize:scaleSize(42)}}>{'查看合同'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={()=>{}}
+                        onPress={()=>{this.hkjh()}}
                         activeOpacity={0.6}
                         style={{height:scaleSize(84),marginLeft:scaleSize(24),width:scaleSize(243),backgroundColor:'#c7b299',justifyContent:'center',alignItems:'center',borderRadius:scaleSize(15)}}
                     >

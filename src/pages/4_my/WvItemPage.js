@@ -14,7 +14,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 
-export default class CjzItemPage extends Component {
+export default class WvItemPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -73,7 +73,7 @@ export default class CjzItemPage extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={false}
+          scrollEnabled={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}

@@ -3,7 +3,6 @@ import {
   Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
   TextInput,
   ImageBackground,
@@ -33,7 +32,7 @@ export default class WithdrawPage extends Component{
           isLoading:false,
           imgLeft:ImageStores.yh_0,
           imgRight:ImageStores.yh_0,
-          nameLeft:'银行名称',
+          nameLeft:'江西银行存管账户',
           nameRight:'银行名称',
           keyong:'',
           bank_no:''
@@ -78,7 +77,8 @@ export default class WithdrawPage extends Component{
               keyong : result.keyong,
               bank_no : result.bank_no,
               imgRight:result.bank_icon,
-              nameRight:result.bank_name
+              nameRight:result.bank_name,
+              imgLeft:result.jxbank_icon
           })
         }else{
           this.refs.toast.show(result.return_msg);
@@ -170,7 +170,7 @@ export default class WithdrawPage extends Component{
               <View style={{flexDirection:'row',justifyContent:'center'}}>
                 <View style={{width:scaleSize(400),height:scaleSize(86),backgroundColor:'#fff',justifyContent:'center',alignItems:'center'}}>
                   <Image 
-                    source={this.state.imgLeft}
+                    source={this.btnFlag ? {uri: this.state.imgLeft} : this.state.imgLeft}
                     resizeMode={'stretch'}
                     style={{width:scaleSize(332),height:scaleSize(72)}}
                   />

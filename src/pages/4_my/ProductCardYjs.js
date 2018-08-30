@@ -4,17 +4,13 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  LayoutAnimation,
-  UIManager,
   Image,
   ImageBackground,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import Utils from '../../utils/Utils';
 
-const isIOS = Platform.OS==='ios'?true:false;
 export default class ProductCardYjs extends Component {
   constructor(props) {
     super(props);

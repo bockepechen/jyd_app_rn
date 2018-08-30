@@ -4,14 +4,11 @@ import {
   View,
   TouchableOpacity,
   Platform,
-  LayoutAnimation,
-  UIManager,
   Image,
   ImageBackground,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import Utils from '../../utils/Utils';
 
 const isIOS = Platform.OS==='ios'?true:false;
@@ -72,11 +69,15 @@ export default class ProductCardZrz extends Component {
   }
 
   ckht(){
-    global.NetReqModel.business_id = this.paraData.id
+    global.NetReqModel.tel_phone = '17188125146'
+    global.NetReqModel.business_id = 'INV20180206000000004596'
+    global.NetReqModel.jyd_pubData.user_id = "121";
+    global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
+    // global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '02'
     console.log(JSON.stringify(global.NetReqModel))
-    this.goto('CjzItemPage',{
+    this.goto('WvItemPage',{
         url:"/esign/showLcCompact",
         jsonObj:global.NetReqModel,
         title:'查看协议'

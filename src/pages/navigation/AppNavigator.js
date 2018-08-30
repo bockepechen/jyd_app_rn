@@ -40,7 +40,7 @@ import ResetTradepwdPage from '../4_my/ResetTradepwdPage';
 import MyLoanPage from '../4_my/MyLoanPage';
 import FeedbackPage from '../4_my/FeedbackPage';
 import PersonInfoPage from '../4_my/PersonInfoPage';
-import CjzItemPage from '../4_my/CjzItemPage';
+import WvItemPage from '../4_my/WvItemPage';
 import RechargePage from '../4_my/RechargePage';
 import AssetRecordPage from '../4_my/AssetRecordPage';
 import RechargeBankPage from '../4_my/RechargeBankPage';
@@ -169,8 +169,8 @@ const AppStackNavigator = createStackNavigator(
     RedPackRulePage:{
       screen:RedPackRulePage
     },
-    CjzItemPage:{
-      screen:CjzItemPage
+    WvItemPage:{
+      screen:WvItemPage
     },
     RechargePage:{
       screen:RechargePage

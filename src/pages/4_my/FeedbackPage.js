@@ -3,11 +3,9 @@ import {
   Platform,
   Text,
   View,
-  ScrollView,
   TouchableOpacity,
   TouchableHighlight,
   ImageBackground,
-  Image,
   TextInput,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
