@@ -392,9 +392,10 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_51,
         title:'我的二维码',
-        callback:()=>{this.goto('RechargeResultPage',{
-          title:'充值成功',
-          type:'1'
+        callback:()=>{this.goto('QcodePage',{
+          url:'/qrCode',
+          title:'我的二维码',
+          jsonObj:global.NetReqModel
         })},
       },
     ]

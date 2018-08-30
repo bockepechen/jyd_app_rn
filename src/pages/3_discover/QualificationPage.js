@@ -176,7 +176,7 @@ export default class QualificationPage extends Component {
     return (
         <View style={GlobalStyles.rootContainer}>
             <NavigationBar 
-                title='消息中心'
+                title='企业资质'
                 titleColor='#FFFFFF'
                 titleSize={scaleSize(56)}
                 navColor='#E8152E'

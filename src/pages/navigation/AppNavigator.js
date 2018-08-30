@@ -54,7 +54,7 @@ import AccountAgreementSignPage from '../4_my/AccountAgreementSignPage';
 import MyGoldPage from '../4_my/MyGoldPage';
 import WithdrawPage from '../4_my/WithdrawPage';
 import WithdrawBankPage from '../4_my/WithdrawBankPage';
-
+import QcodePage from '../4_my/QcodePage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -219,6 +219,9 @@ const AppStackNavigator = createStackNavigator(
     },
     WithdrawBankPage:{
       screen:WithdrawBankPage
+    },
+    QcodePage:{
+      screen:QcodePage
     },
   },{
     navigationOptions:{
