@@ -19,7 +19,9 @@ export default class MallPage extends Component {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     console.log(this.navData.jsonObj);
-    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
+    let baseP = btoa(JSON.stringify(this.navData.jsonObj))
+    console.log(baseP);
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
@@ -37,6 +39,7 @@ export default class MallPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
+    console.log(navState)
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
@@ -85,7 +88,7 @@ export default class MallPage extends Component {
           scrollEnabled={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {
