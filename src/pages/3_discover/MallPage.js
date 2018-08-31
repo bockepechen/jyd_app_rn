@@ -13,13 +13,15 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
+import BufferUtils from '../../utils/BufferUtils'
 
 export default class MallPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     console.log(this.navData.jsonObj);
-    let baseP = btoa(JSON.stringify(this.navData.jsonObj))
+    // let baseP = Base64.btoa(JSON.stringify(this.navData.jsonObj))
+    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
     console.log(baseP);
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
