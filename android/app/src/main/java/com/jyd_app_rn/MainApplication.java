@@ -16,6 +16,7 @@ import java.util.List;
 
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+import cn.reactnative.httpcache.HttpCachePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
+              new HttpCachePackage(),
           new MainReactPackage(),
             new RNDeviceInfo(),
             new SvgPackage(),

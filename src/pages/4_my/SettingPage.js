@@ -16,6 +16,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import * as CacheManager from 'react-native-http-cache'
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class SettingPage extends Component {
@@ -34,19 +35,20 @@ export default class SettingPage extends Component {
         },
         {
             title:'清理缓存',
-            callback:()=>{console.log('组织信息')}
+            callback:()=>{this.clearCacheSize()}
         },
     ]
     this.state = {
       httpRes:{},
       list:[],
       cacheSize:0,
-      version:'0.0.0'
+      version:'0.0.0',
     }
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
+    this.getCacheSize()
   }
 
   componentWillUnmount() {
@@ -59,6 +61,22 @@ export default class SettingPage extends Component {
     });
   }
 
+  // 获得缓存大小
+  async getCacheSize() {
+    const data = await CacheManager.getCacheSize();
+    const size = data / (1024 * 1024);
+    this.setState({ cacheSize: size.toFixed(2) + 'M'});
+  }
+
+  // 清除缓存
+  async clearCacheSize() {
+    await CacheManager.clearCache();
+    // this.getCacheSize();
+    // 这里貌似清除不能全部清除为0，这里直接写死0即可。
+    this.setState({cacheSize: '0M'});
+    this.refs.toast.show('清除缓存成功');
+  }
+
   navGoback = () => {
     this.props.navigation.goBack();
   }
@@ -68,7 +86,7 @@ export default class SettingPage extends Component {
         return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.version}</Text>
       }
       else if(index == 2){
-        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.cacheSize} M</Text>
+        return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.cacheSize}</Text>
       }else{
           return null
       }
@@ -145,6 +163,7 @@ export default class SettingPage extends Component {
                 leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
             />
             {this.renderMainView()}
+            {ViewUtils.renderToast()}
         </View>
     )
   }
