@@ -18,6 +18,7 @@ export default class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
+    console.log(JSON.stringify(this.navData.jsonObj))
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.state = {
@@ -88,7 +89,7 @@ export default class SignInPage extends Component {
           javaScriptEnabled={true}
           domStorageEnabled={true}
           // source={{uri:this.state.wv_url}}
-          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.state.wv_url,method: 'POST', body: "aaaabbbbbbbcccccccccc"}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

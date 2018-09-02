@@ -26,7 +26,7 @@ export default class SettingPage extends Component {
     this.listItem = [
         {
             title:'当前版本',
-            callback:()=>{console.log('')}
+            callback:()=>{this.goto('UpdateIPPage')}
         },
         {
             title:'意见反馈',

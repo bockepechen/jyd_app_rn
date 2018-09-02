@@ -20,7 +20,6 @@ export default class MallPage extends Component {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     console.log(this.navData.jsonObj);
-    // let baseP = Base64.btoa(JSON.stringify(this.navData.jsonObj))
     let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
     console.log(baseP);
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP

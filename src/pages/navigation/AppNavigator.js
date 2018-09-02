@@ -55,6 +55,7 @@ import MyGoldPage from '../4_my/MyGoldPage';
 import WithdrawPage from '../4_my/WithdrawPage';
 import WithdrawBankPage from '../4_my/WithdrawBankPage';
 import QcodePage from '../4_my/QcodePage';
+import UpdateIPPage from '../4_my/UpdateIPPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -222,6 +223,9 @@ const AppStackNavigator = createStackNavigator(
     },
     QcodePage:{
       screen:QcodePage
+    },
+    UpdateIPPage:{
+      screen:UpdateIPPage
     },
   },{
     navigationOptions:{
