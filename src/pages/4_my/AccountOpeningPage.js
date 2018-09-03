@@ -46,50 +46,24 @@ export default class AccountOpeningPage extends Component{
         this.AndroidBackHandler.removePressBackListener();
     }
 
-    switchVisible = () => {
-        this.setState({
-            isEyeOpen: !this.state.isEyeOpen
-        })
+    goto(url,JsonObj){
+      this.props.navigation.navigate(url,{
+        data:JsonObj ? JsonObj : {}
+      });
     }
 
-    resetpwd = async () => {
-        if(this.state.tel_pwdOld == '' || this.state.tel_pwdNew == '' || this.state.tel_pwdNewRe == '')
-        {
-          this.refs.toast.show('输入内容不能为空');
-          return false;
-        }
-        if(this.state.tel_pwdNew != this.state.tel_pwdNewRe){
-          this.refs.toast.show('新密码前后输入的不一致');
-          return false;
-        }
-        this.setState({isLoading:true});
-        // 设置远程接口访问参数 (同步执行)
-        // global.NetReqModel.tel_phone = await 'global.NetReqModel.tel_phone';
-        global.NetReqModel.tel_phone = await '15822854761';
-        global.NetReqModel.tel_pwdOld = this.state.tel_pwdOld
-        global.NetReqModel.tel_pwdNew = this.state.tel_pwdNew
-        console.log(JSON.stringify(global.NetReqModel))
-        let url = await '/password/changePassword';
-        this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
-         .then((result) => {
-           console.log(result)
-           // 返回数据，关闭Loading动画
-           this.setState({isLoading:false}, () => {
-             if (result.return_code === '0000') {
-              this.refs.toast.show('修改成功');
-             } else {
-              this.refs.toast.show(result.return_msg);
-             }
-           })
-         })
-         .catch((e) => {
-           console.log(e);
-           this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-           // 关闭Loading动画
-           if(this.state.isLoading) {
-             this.setState({isLoading:false});
-           }
-         })    
+    accountOpen(){
+      global.NetReqModel.tel_phone = '15822854761'
+      global.NetReqModel.jyd_pubData.user_id  = '198'
+      global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
+      global.NetReqModel.name = this.name
+      global.NetReqModel.card_no = this.card_no
+      console.log(global.NetReqModel)
+      this.goto('AccountOpeningWvPage',{
+        url:'/openAccount',
+        title:'银行存管账号',
+        jsonObj:global.NetReqModel
+    })
     }
 
     navGoback = () => {
@@ -166,8 +140,8 @@ export default class AccountOpeningPage extends Component{
                   placeholder={'真实姓名'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
+                  onChangeText = {(p) => {this.name = p}}
+                  value = {this.name}
                   />
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -177,30 +151,19 @@ export default class AccountOpeningPage extends Component{
                   placeholder={'身份证号'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
+                  onChangeText = {(p) => {this.card_no = p}}
+                  value = {this.card_no}
                   />
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
                 <TextInput 
-                  style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-                  clearButtonMode={'while-editing'}
-                  placeholder={'选择银行'}
-                  placeholderTextColor='#c3c3c3'
-                  underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
-                  />
-              </View>
-              <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(90), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
-                <TextInput 
+                  editable={false}
                   style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
                   clearButtonMode={'while-editing'}
                   placeholder={'手机号'}
                   placeholderTextColor='#c3c3c3'
                   underlineColorAndroid='rgba(0,0,0,0)'
-                  onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
-                  value = {this.state.tel_pwdOld}
+                  value = {global.NetReqModel.tel_phone}
                   />
               </View>
             </View>
@@ -208,7 +171,7 @@ export default class AccountOpeningPage extends Component{
             <TouchableHighlight 
               style={{marginTop:scaleSize(42)}}
               underlayColor='rgba(0,0,0,0)'
-              onPress={this.resetpwd}>
+              onPress={()=>{this.accountOpen()}}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 

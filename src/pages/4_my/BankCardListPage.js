@@ -5,7 +5,8 @@ import {
     ScrollView,
     ImageBackground,
     TouchableOpacity,
-    Image
+    Image,
+    TouchableHighlight
 } from 'react-native'
 import NavigationBar from '../../common/NavigationBar';
 import {scaleSize} from '../../utils/FitViewUtils';
@@ -48,9 +49,9 @@ export default class BankCardListPage extends Component{
             isLoading:true
         });
         let url = await '/accountSafety/cardInfo';
-        global.NetReqModel.tel_phone =  "18222379856";
-        global.NetReqModel.jyd_pubData.user_id =  "2";
-        global.NetReqModel.jyd_pubData.token_id =  "111111";
+        global.NetReqModel.tel_phone =  "13821192629";
+        global.NetReqModel.jyd_pubData.user_id =  "204";
+        global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
         console.log(JSON.stringify(global.NetReqModel));
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
@@ -81,6 +82,14 @@ export default class BankCardListPage extends Component{
         })
     }
 
+    unbind(){
+        this.goto('UnBindCardPage',{
+            url:'/unbind',
+            title:'解绑银行卡',
+            jsonObj:global.NetReqModel
+        })
+    }
+
     goto(url,JsonObj){
         this.props.navigation.navigate(url,{
           data:JsonObj ? JsonObj : {}
@@ -97,13 +106,17 @@ export default class BankCardListPage extends Component{
                     <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start'}}>
                         <View style={{flexDirection:'row',marginTop:scaleSize(63),justifyContent:'space-between'}}>
                             <Text style={{marginLeft:scaleSize(75),color:'#fff',fontSize:scaleSize(48)}}>{this.state.bank_name}</Text>
-                            <ImageBackground 
-                                source={ImageStores.sy_16}
-                                resizeMode={'stretch'}
-                                style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginRight:scaleSize(69),width:scaleSize(99),height:scaleSize(48)}}
+                            <TouchableHighlight
+                                onPress={()=>{this.unbind()}}
                             >
-                                <Text style={{color:'#ff3a49',fontSize:scaleSize(32)}}>{'解绑'}</Text>
-                            </ImageBackground>
+                                <ImageBackground 
+                                    source={ImageStores.sy_16}
+                                    resizeMode={'stretch'}
+                                    style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginRight:scaleSize(69),width:scaleSize(99),height:scaleSize(48)}}
+                                >
+                                    <Text style={{color:'#ff3a49',fontSize:scaleSize(32)}}>{'解绑'}</Text>
+                                </ImageBackground>
+                            </TouchableHighlight>
                         </View>
                         <View style={{flexDirection:'row',marginTop:scaleSize(62),justifyContent:'center'}}>
                             <Text style={{fontSize:scaleSize(84),color:'#fff'}}>
@@ -130,10 +143,7 @@ export default class BankCardListPage extends Component{
                     style={{width:scaleSize(1173), height:scaleSize(498), flexDirection:'row'}}>
                     <TouchableOpacity 
                         onPress={()=>{
-                            global.NetReqModel.user_ip = '123';
-                            global.NetReqModel.tel_phone =  "15822753827";
-                            global.NetReqModel.jyd_pubData.user_id =  "204";
-                            global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+                            global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip;
                             this.goto('BindCardNewPage',{
                                 url:'/bindCard',
                                 jsonObj:global.NetReqModel,
