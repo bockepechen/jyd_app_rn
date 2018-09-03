@@ -25,7 +25,9 @@ export default class AccountSetPwdPage extends Component{
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.navData = this.props.navigation.state.params.data;
-        this.wv_url = AppConfig.REQUEST_HOST+this.navData.url;
+        let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+        this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
+        this.wv_url = this.navData.url;
         console.log(this.wv_url);
         this.state = {
             isRotate:true,
@@ -96,7 +98,7 @@ export default class AccountSetPwdPage extends Component{
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 scrollEnabled={true}
-                source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+                source={{uri:this.wv_url}}
                 onNavigationStateChange={this._onNavigationStateChange}
                 startInLoadingState={true}
                 onMessage={(e) => {

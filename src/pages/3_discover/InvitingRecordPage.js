@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -18,7 +16,8 @@ export default class InvitingRecordPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
+    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
@@ -84,7 +83,7 @@ export default class InvitingRecordPage extends Component {
           scrollEnabled={false}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          source={{uri:this.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

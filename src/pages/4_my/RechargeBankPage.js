@@ -18,14 +18,13 @@ export default class RechargeBankPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
+    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
-    this.wv_url = ''
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.wv_url = this.navData.url;
+   
   }
   
   componentDidMount() {
@@ -73,7 +72,7 @@ export default class RechargeBankPage extends Component {
 
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
@@ -100,8 +99,7 @@ export default class RechargeBankPage extends Component {
           javaScriptEnabled={true}
           domStorageEnabled={true}
           scrollEnabled={true}
-          // source={{uri:'http://10.2.0.155:8099/JYD_RN_Serv/userMail/readAnnouncement',method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
-          source={{uri:this.state.wv_url,method: 'POST', body: JSON.stringify(this.navData.jsonObj)}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {

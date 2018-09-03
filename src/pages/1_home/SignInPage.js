@@ -18,12 +18,14 @@ export default class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    console.log(JSON.stringify(this.navData.jsonObj))
-    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url
+    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+    this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.backButtonEnabled = ''
+    this.forwardButtonEnabled = ''
+    this.wv_url = this.navData.url
+    this.status = ''
+    this.loading =  ''
   }
   
   componentDidMount() {
@@ -35,13 +37,11 @@ export default class SignInPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.setState({
-      backButtonEnabled: navState.canGoBack,
-      forwardButtonEnabled: navState.canGoForward,
-      wv_url: navState.url,
-      status: navState.title,
-      loading: navState.loading,
-    });
+    this.backButtonEnabled = navState.canGoBack
+      this.forwardButtonEnabled = navState.canGoForward
+      this.wv_url = navState.url
+      this.status = navState.title
+      this.loading =  navState.loading
   }
 
   sendMessage() {
@@ -52,23 +52,13 @@ export default class SignInPage extends Component {
 
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
     }
   }
   handleMessage(e) {
-    // console.log('aaaaaaa');
-    // let obj = eval('('+e.nativeEvent.data+')');
-    // if(obj.key == '1'){
-    //   this.sendMessage();
-    // }
-    // else if(obj.key == '2'){
-    //   this.props.navigation.dispatch(StackActions.popToTop());
-    // }else{
-
-    // }
   }
 
   render() {
@@ -88,8 +78,7 @@ export default class SignInPage extends Component {
           scrollEnabled={false}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          // source={{uri:this.state.wv_url}}
-          source={{uri:this.state.wv_url,method: 'POST', body: "aaaabbbbbbbcccccccccc"}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
           onMessage={(e) => {
