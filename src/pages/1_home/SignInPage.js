@@ -13,6 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
+import BufferUtils from '../../utils/BufferUtils'
 
 export default class SignInPage extends Component {
   constructor(props) {

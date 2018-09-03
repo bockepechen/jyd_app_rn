@@ -18,6 +18,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import BufferUtils from '../../utils/BufferUtils'
 
 export default class AccountSetPwdPage extends Component{
     constructor(props){

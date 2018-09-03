@@ -13,6 +13,7 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
+import BufferUtils from '../../utils/BufferUtils'
 
 export default class RechargeBankPage extends Component {
   constructor(props) {
