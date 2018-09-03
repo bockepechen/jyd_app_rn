@@ -15,6 +15,8 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import {scaleSize} from '../../utils/FitViewUtils';
+import { AppConfig } from '../../config/AppConfig';
+import {AsyncStorage} from 'react-native'
 
 export default class Welcome extends Component {
   constructor(props) {
@@ -31,11 +33,26 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     SplashScreen.hide();
+    this.getIp('appId')
     this.getInfoData()
   }
 
   componentWillMount() {
     this.init();
+  }
+
+  async getIp(key) {
+    return await AsyncStorage.getItem(key, (error, result) => {
+      if (!error) {
+        console.log('update ip');
+          console.log(result);
+          if(result!=null){
+            AppConfig.REQUEST_HOST = result
+          }
+      } else {
+        console.log('update ip error !!!!!!!')
+      }
+    })
   }
 
   async getInfoData() {

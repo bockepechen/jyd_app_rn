@@ -66,6 +66,12 @@ export default class TabJxsb extends Component {
         })
       }
       else if(result.return_code == '8888'){
+        this.setState({
+          httpRes : result,
+          list : totalList,
+          next_page : '',
+          refreshing : false
+        })
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
       }
       else{

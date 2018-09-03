@@ -11,6 +11,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {AppConfig} from '../../config/AppConfig';
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
+import {AsyncStorage} from 'react-native'
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class UpdateIPPage extends Component {
@@ -25,6 +26,14 @@ export default class UpdateIPPage extends Component {
 
   updateip(){
     AppConfig.REQUEST_HOST = this.ip
+    AsyncStorage.setItem('appId', this.ip, (error) => {
+      if (error) {
+        return false;
+      } else {
+        this.refs.toast.show('设置成功');
+        return true;
+      }
+    })
   }
 
   navGoback = () => {
@@ -33,9 +42,9 @@ export default class UpdateIPPage extends Component {
 
   render() {
     return (
-      <View style={{flex:1,marginTop:scaleSize(51)}}>
+      <View style={{flex:1}}>
       <NavigationBar 
-                    title='银行卡'
+                    title='改ip'
                     titleColor='#FFFFFF'
                     titleSize={scaleSize(56)}
                     navColor='#E8152E'
@@ -44,9 +53,11 @@ export default class UpdateIPPage extends Component {
                     leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
                 />
         <TextInput 
-            style={{marginTop:100,backgroundColor:'#fff'}}
+            // style={{marginTop:scaleSize(0), marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
+            // clearButtonMode={'while-editing'}
+            // underlineColorAndroid='rgba(0,0,0,0)'
+            defaultValue={this.ip}
             onChangeText={(t) => {this.ip=t}}
-            value={this.ip}
         />
         <TouchableOpacity 
          style={{marginTop:100,}}
@@ -56,6 +67,7 @@ export default class UpdateIPPage extends Component {
         >
             <Text>确定</Text>
         </TouchableOpacity>
+        {ViewUtils.renderToast()}
       </View>
     )
   }
