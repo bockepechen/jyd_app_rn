@@ -24,10 +24,7 @@ export default class ResetTradepwdPage extends Component {
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
-    this.wv_url = ''
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.wv_url = this.navData.url
   }
   
   componentDidMount() {

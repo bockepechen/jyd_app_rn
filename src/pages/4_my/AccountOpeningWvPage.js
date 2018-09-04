@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -15,12 +13,14 @@ import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils'
 
-export default class BindCardNewPage extends Component {
+export default class AccountOpeningWvPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+    let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
+    let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
+    console.log(this.navData.url)
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
@@ -53,7 +53,7 @@ export default class BindCardNewPage extends Component {
     }else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');
       this.goto('RechargeResultPage',{
-        title:'绑定成功',
+        title:'开户成功',
         type:'1'
       })
       return false

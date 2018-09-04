@@ -46,6 +46,7 @@ import AssetRecordPage from '../4_my/AssetRecordPage';
 import RechargeBankPage from '../4_my/RechargeBankPage';
 import RechargeLimitPage from '../4_my/RechargeLimitPage';
 import AccountOpeningPage from '../4_my/AccountOpeningPage';
+import AccountOpeningWvPage from '../4_my/AccountOpeningWvPage';
 import RechargeResultPage from '../4_my/RechargeResultPage';
 import AccountSetPwdPage from '../4_my/AccountSetPwdPage';
 import SmsCodePage from '../4_my/SmsCodePage';
@@ -56,6 +57,7 @@ import WithdrawPage from '../4_my/WithdrawPage';
 import WithdrawBankPage from '../4_my/WithdrawBankPage';
 import QcodePage from '../4_my/QcodePage';
 import UpdateIPPage from '../4_my/UpdateIPPage';
+import UnBindCardPage from '../4_my/UnBindCardPage';
 
 const AppStackNavigator = createStackNavigator(
   {
@@ -226,6 +228,12 @@ const AppStackNavigator = createStackNavigator(
     },
     UpdateIPPage:{
       screen:UpdateIPPage
+    },
+    UnBindCardPage:{
+      screen:UnBindCardPage
+    },
+    AccountOpeningWvPage:{
+      screen:AccountOpeningWvPage
     },
   },{
     navigationOptions:{

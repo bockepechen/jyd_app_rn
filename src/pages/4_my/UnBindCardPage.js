@@ -15,7 +15,7 @@ import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils'
 
-export default class BindCardNewPage extends Component {
+export default class UnBindCardPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
@@ -53,7 +53,7 @@ export default class BindCardNewPage extends Component {
     }else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');
       this.goto('RechargeResultPage',{
-        title:'绑定成功',
+        title:'解绑成功',
         type:'1'
       })
       return false
