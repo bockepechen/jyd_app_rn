@@ -26,7 +26,8 @@ export default class AccountSetPwdPage extends Component{
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.navData = this.props.navigation.state.params.data;
-        let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+        let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
+        let baseP = new BufferUtils(encodeStr).toString('base64');
         this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
         this.wv_url = this.navData.url;
         console.log(this.wv_url);

@@ -3,7 +3,6 @@ import {
   Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
   TextInput,
   ImageBackground,
@@ -17,11 +16,8 @@ import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
-import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { getLastUpdateTime } from 'react-native-device-info';
 
 export default class AccountOpeningPage extends Component{
     constructor(props){

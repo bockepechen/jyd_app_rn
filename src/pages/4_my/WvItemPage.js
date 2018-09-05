@@ -19,12 +19,13 @@ export default class WvItemPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    let baseP = new BufferUtils(JSON.stringify(this.navData.jsonObj)).toString('base64');
+    let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
+    let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.state = {
-      wv_url:this.navData.url,
-    }
+    this.backButtonEnabled = ''
+    this.forwardButtonEnabled = ''
+    this.wv_url = this.navData.url;
   }
   
   componentDidMount() {
