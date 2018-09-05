@@ -76,9 +76,6 @@ export default class TabOfficialPost extends Component {
   }
 
   async readAll() {
-    // global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.tel_phone = await "13502151376";
-    global.NetReqModel.jyd_pubData.user_id = await "4";
     let url = await '/userMail/readAnnouncements';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
