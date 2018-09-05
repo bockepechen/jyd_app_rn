@@ -3,9 +3,7 @@ import {
   Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  TextInput,
   ImageBackground,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -17,12 +15,10 @@ import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
-import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { getLastUpdateTime } from 'react-native-device-info';
 import CheckBox from 'react-native-check-box'
+import { StackActions } from 'react-navigation';
 
 export default class AccountAgreementPage extends Component{
     constructor(props){
@@ -52,6 +48,9 @@ export default class AccountAgreementPage extends Component{
     }
 
     async getInfoData() {
+      global.NetReqModel.tel_phone = '15822854761'
+      global.NetReqModel.jyd_pubData.user_id  = '198'
+      global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
       this.setState({isLoading:true})
       let url = await '/signStatus';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
@@ -86,7 +85,7 @@ export default class AccountAgreementPage extends Component{
     }
 
     navGoback = () => {
-        this.props.navigation.goBack();
+      this.props.navigation.dispatch(StackActions.popToTop());
     }
 
     goto(url,JsonObj){

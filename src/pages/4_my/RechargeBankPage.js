@@ -47,7 +47,14 @@ export default class RechargeBankPage extends Component {
     console.log(navState)
     if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
-      this.props.navigation.goBack();
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'AccountSecurityPage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
       return false
     }else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');

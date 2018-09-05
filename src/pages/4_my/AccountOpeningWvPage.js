@@ -52,10 +52,7 @@ export default class AccountOpeningWvPage extends Component {
       return false
     }else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');
-      this.goto('RechargeResultPage',{
-        title:'开户成功',
-        type:'1'
-      })
+      this.goto('AccountAgreementPage');
       return false
     }
     else if(navState.url == 'action:jiayidai'){

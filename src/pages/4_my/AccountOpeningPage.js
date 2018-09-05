@@ -25,13 +25,9 @@ export default class AccountOpeningPage extends Component{
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.state = {
-            isRotate:true,
             isLoading: false,
-            isEyeOpen: false,
-            tel_pwdOld:'',
-            tel_pwdNew:'',
-            tel_pwdNewRe:'',
         }
+        global.NetReqModel.tel_phone = '15822854761'
     }
 
     componentDidMount() {
@@ -52,6 +48,13 @@ export default class AccountOpeningPage extends Component{
       global.NetReqModel.tel_phone = '15822854761'
       global.NetReqModel.jyd_pubData.user_id  = '198'
       global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
+      if(!this.name || this.name == '' ){
+        this.refs.toast.show('请输入姓名');
+        return false;
+      }
+      if(!this.card_no || this.card_no == '' ){
+        this.refs.toast.show('请输入身份证号');
+      }
       global.NetReqModel.name = this.name
       global.NetReqModel.card_no = this.card_no
       console.log(global.NetReqModel)

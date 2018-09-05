@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -12,7 +10,6 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
-import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils'
 
 export default class WvItemPage extends Component {

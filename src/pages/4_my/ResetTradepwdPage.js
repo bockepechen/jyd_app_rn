@@ -51,7 +51,7 @@ export default class ResetTradepwdPage extends Component {
     }else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');
       this.goto('RechargeResultPage',{
-        title:'充值成功',
+        title:'设置成功',
         type:'1'
       })
       return false

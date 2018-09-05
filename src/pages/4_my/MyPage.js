@@ -94,7 +94,7 @@ export default class MyPage extends Component {
   }
 
   async checkUserStatus(next_url){
-    // this.goto('AccountAgreementPage');
+    this.goto('AccountAgreementPage');
     // global.NetReqModel.tel_phone = await "15822854761";
     // global.NetReqModel.jyd_pubData.user_id = await "82";
     // global.NetReqModel.jyd_pubData.token_id = await "0001222";
@@ -111,7 +111,7 @@ export default class MyPage extends Component {
     //         jsonObj:global.NetReqModel,
     //         title:'绑定银行卡'
     //       });
-    this.goto(next_url)
+    // this.goto(next_url)
     return false;
     let url = await '/common';
     global.NetReqModel.tel_phone = await "13752133744";
