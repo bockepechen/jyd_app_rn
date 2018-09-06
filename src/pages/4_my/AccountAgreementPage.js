@@ -36,6 +36,9 @@ export default class AccountAgreementPage extends Component{
             readsqxy:false,
             readcjsqs:false
         }
+        global.NetReqModel.tel_phone = '15822854761'
+        global.NetReqModel.jyd_pubData.user_id  = '198'
+        global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
     }
 
     componentDidMount() {
@@ -48,9 +51,6 @@ export default class AccountAgreementPage extends Component{
     }
 
     async getInfoData() {
-      global.NetReqModel.tel_phone = '15822854761'
-      global.NetReqModel.jyd_pubData.user_id  = '198'
-      global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
       this.setState({isLoading:true})
       let url = await '/signStatus';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
@@ -92,6 +92,71 @@ export default class AccountAgreementPage extends Component{
       this.props.navigation.navigate(url,{
         data:JsonObj ? JsonObj : {}
       });
+    }
+
+    checkyqb(compact_id,titlename){
+      console.log('aaaaa');
+      global.NetReqModel.compact_id = compact_id
+      this.goto('AccountAgreementSignPage',{
+        url:'/signCompact/previewCompactTemp',
+        jsonObj:global.NetReqModel,
+        title:titlename
+      })
+    }
+
+    checkyqbDone(compact_id,titlename){
+      global.NetReqModel.compact_id = compact_id
+      this.goto('AccountAgreementSignPage',{
+        url:'/esign/showSqs',
+        jsonObj:global.NetReqModel,
+        title:titlename
+      })
+    }
+
+    async signyqb(compact_id,titlename){
+      this.telNum = global.NetReqModel.tel_phone
+      global.NetReqModel.compact_id = compact_id
+      Keyboard.dismiss();
+      this.setState({isLoading:true});
+        // 试图从本地缓存中取出短信验证码读秒信息，并根据当前时间校正
+        let adaptAuthCodeCD = await this.dataResponsitory.adaptAuthCodeCD();
+        // 跳转下页面参数设置
+        let navigation_params = {
+          pageTitle:titlename,
+          nextPage:'',
+          nextApi:'/signCompact/eSignCompact',
+          tel: this.telNum,
+          cryptTel: `${this.telNum.substring(0,3)} **** ${this.telNum.substring(7)}`,
+          authcodeCD: adaptAuthCodeCD.authcodeCD,
+          compact_id:compact_id
+        };
+        if  (adaptAuthCodeCD.ifSendAuthCode) {
+          // 设置远程接口访问参数 (同步执行)
+          let url = await '/signCompact/sendMobileCode';
+          this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+           .then((result) => {
+             // 返回数据，关闭Loading动画
+             this.setState({isLoading:false}, () => {
+               if (result.return_code === '0000') {
+                 this.props.navigation.navigate('SmsCodePage', navigation_params);
+               } else {
+                this.refs.toast.show(result.return_msg);
+               }
+             })
+           })
+           .catch((e) => {
+             console.log(e);
+             this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+             // 关闭Loading动画
+             if(this.state.isLoading) {
+               this.setState({isLoading:false});
+             }
+           })
+        } else {
+          this.setState({isLoading:false},() => {
+            this.props.navigation.navigate('SmsCodePage', navigation_params);
+          });
+        }
     }
 
     renderStepImg(){
@@ -213,7 +278,15 @@ export default class AccountAgreementPage extends Component{
           <View style={{marginTop:scaleSize(57),flexDirection:'row',justifyContent:'space-between',width:scaleSize(1008)}}>
             <View style={{marginLeft:scaleSize(48),flexDirection:'column',alignItems:'flex-start'}}>
               <Text style={{fontSize:scaleSize(42),marginTop:scaleSize(27),fontWeight:'bold',color:'#998675'}}>{'电子签章用户授权协议'}</Text>
-              <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(27),color:'#3b92f0'}}>{'《电子签章用户授权协议》'}</Text>
+              <Text 
+                onPress={()=>{
+                  if(this.state.xy_status == '1'){
+                    this.checkyqbDone('02','电子签章用户授权协议')
+                  }else{
+                    this.checkyqb('02','电子签章用户授权协议')
+                  }
+                }}  
+                style={{fontSize:scaleSize(36),marginTop:scaleSize(27),color:'#3b92f0'}}>{'《电子签章用户授权协议》'}</Text>
               <CheckBox
                   style={{marginTop:scaleSize(27)}}
                   disabled = {this.state.xy_status == '1' ? true : false}
@@ -234,12 +307,19 @@ export default class AccountAgreementPage extends Component{
                   if(this.state.xy_status == '1'){
                     return false;
                   }
+                  else if(this.state.readsqxy){
+                    this.signyqb('02','电子签章用户授权协议');
+                  }
+                  else{
+                    this.refs.toast.show('请阅读协议后再签订');
+                  }
                 }}
+                style={{marginTop:scaleSize(-20)}}
               >
                 <ImageBackground
                   source={this.state.xy_status == '1' ? ImageStores.me_11 : ImageStores.me_5}
                   resizeMode={'stretch'}
-                  style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+                  style={{height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
                 >
                   <Text style={{color:this.state.xy_status == '1' ? '#ff3a49' : '#fff',fontSize:scaleSize(36)}}>{`${this.state.xy_status == '1' ? '已签订' : '立即签订' }`}</Text>
                 </ImageBackground>
@@ -256,7 +336,15 @@ export default class AccountAgreementPage extends Component{
           <View style={{marginTop:scaleSize(57),flexDirection:'row',justifyContent:'space-between',width:scaleSize(1008)}}>
             <View style={{marginLeft:scaleSize(48),flexDirection:'column',alignItems:'flex-start'}}>
               <Text style={{fontSize:scaleSize(42),marginTop:scaleSize(27),fontWeight:'bold',color:'#998675'}}>{'出借授权书'}</Text>
-              <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(27),color:'#3b92f0'}}>{'《出借授权书》'}</Text>
+              <Text 
+                onPress={()=>{
+                  if(this.state.sqs_status == '1'){
+                    this.checkyqbDone('01','出借授权书')
+                  }else{
+                    this.checkyqb('01','出借授权书')
+                  }
+                }}  
+                style={{fontSize:scaleSize(36),marginTop:scaleSize(27),color:'#3b92f0'}}>{'《出借授权书》'}</Text>
               <CheckBox
                   style={{marginTop:scaleSize(27)}}
                   onClick={()=>{
@@ -271,18 +359,25 @@ export default class AccountAgreementPage extends Component{
                   rightTextView={<Text style={{marginLeft:scaleSize(18),fontSize:scaleSize(36),color:'#c3c3c3'}}>{'已阅读'}</Text>}
               />
             </View>
-            <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center'}}>
+            <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
               <TouchableHighlight
                 onPress={()=>{
                   if(this.state.sqs_status == '1'){
                     return false;
                   }
+                  else if(this.state.readcjsqs){
+                    this.signyqb('01','出借授权书');
+                  }
+                  else{
+                    this.refs.toast.show('请阅读协议后再签订');
+                  }
                 }}
+                style={{marginTop:scaleSize(-20)}}
               >
                 <ImageBackground
                   source={this.state.sqs_status == '1' ? ImageStores.me_11 : ImageStores.me_5}
                   resizeMode={'stretch'}
-                  style={{marginTop:scaleSize(-20),height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
+                  style={{height:scaleSize(84),width:scaleSize(216),justifyContent:'center',alignItems:'center'}}
                 >
                   <Text style={{color:this.state.sqs_status == '1' ? '#ff3a49' : '#fff',fontSize:scaleSize(36)}}>{`${this.state.sqs_status == '1' ? '已签订' : '立即签订' }`}</Text>
                 </ImageBackground>

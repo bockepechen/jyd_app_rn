@@ -74,14 +74,16 @@ export default class SmsCodePage extends Component {
     // 启动Loading动画
     this.setState({isLoading:true});
     global.NetReqModel.tel_code = await t;
-    let url = await '/signIn/securityCode';
+    let url = await this.navData.nextApi;
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         // 返回数据，关闭Loading动画
         this.setState({isLoading:false}, () => {
           if (result.return_code === '0000') {
             clearInterval(this.timer);
-            this.props.navigation.navigate(this.navData.nextPage);
+            this.refs.toast.show('签订成功');
+            this.props.navigation.goBack();
+            // this.props.navigation.navigate(this.navData.nextPage);
           } else {
             this.refs.toast.show(result.return_msg);
           }
