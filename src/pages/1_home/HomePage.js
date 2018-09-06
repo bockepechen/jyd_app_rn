@@ -33,9 +33,9 @@ export default class HomePage extends Component {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
-    global.NetReqModel.tel_phone =  "15822753827";
-    global.NetReqModel.jyd_pubData.user_id =  "91";
-    global.NetReqModel.jyd_pubData.token_id =  "123235h5e3111";
+    // global.NetReqModel.tel_phone =  "15822753827";
+    // global.NetReqModel.jyd_pubData.user_id =  "91";
+    // global.NetReqModel.jyd_pubData.token_id =  "123235h5e3111";
     this.state = {
       // sourceData: ['银行存管','风险控制','安全保障','合作机构','关于我们'],
       sourceData: [

@@ -41,9 +41,9 @@ export default class TabStationMessage extends Component {
 
     async getInfoData() {
         global.NetReqModel.page_number = await this.state.next_page;
-        global.NetReqModel.tel_phone = '15822753827'
-        global.NetReqModel.jyd_pubData.user_id = '91'
-        global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
+        // global.NetReqModel.tel_phone = '15822753827'
+        // global.NetReqModel.jyd_pubData.user_id = '91'
+        // global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
         let url = await '/userMail/usermail';
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
