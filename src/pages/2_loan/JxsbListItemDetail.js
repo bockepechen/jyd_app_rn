@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
   DeviceEventEmitter,
 } from 'react-native';
@@ -12,7 +10,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { StackActions } from 'react-navigation';
+import { StackActions,NavigationActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
 import BufferUtils from '../../utils/BufferUtils'
 
@@ -38,13 +36,24 @@ export default class JeyxListItemDetail extends Component {
 
   componentWillUnmount() {
     DeviceEventEmitter.emit('reFreshEmitter', {});
-    if(this.ifbackhome)
-      DeviceEventEmitter.emit('navreset', {tab:'Home'});
+    // if(this.ifbackhome)
+    //   DeviceEventEmitter.emit('navreset', {tab:'Home'});
     this.AndroidBackHandler.removePressBackListener();
   }
 
   _onNavigationStateChange = (navState) => {
     console.log(navState)
+    if(navState.url.indexOf('action://9987') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'LoginPage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
     if(navState.url == 'action://jydapp'){
       console.log('aaaaaaa');
       this.ifbackhome = true

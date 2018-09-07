@@ -13,6 +13,7 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import ViewUtils from '../../utils/ViewUtils';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import { StackActions,NavigationActions } from 'react-navigation';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabOfficialPost extends Component {
@@ -59,6 +60,17 @@ export default class TabOfficialPost extends Component {
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+      }
+      else if(result.return_code == '9987'){
+        this.refs.toast.show(result.return_msg);
+        const resetAction = StackActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'TabPage'}),
+            NavigationActions.navigate({ routeName: 'LoginPage'}),
+          ],
+        });
+        this.props.navigation.dispatch(resetAction);
       }
       else{
         this.setState({

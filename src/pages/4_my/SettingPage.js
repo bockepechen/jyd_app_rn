@@ -81,6 +81,25 @@ export default class SettingPage extends Component {
     this.props.navigation.goBack();
   }
 
+  logout(){
+    this.dataResponsitory.saveLocalStorage(
+      Storage_Key.LS_REG_USERINFO,
+      {
+        user_id: '',
+        user_name: '',
+        token_id: '',
+        tel_phone : ''
+      },
+      () => {
+        global.NetReqModel.jyd_pubData.user_id = '';
+        global.NetReqModel.jyd_pubData.user_name = '';
+        global.NetReqModel.jyd_pubData.token_id = '';
+        this.refs.toast.show('退出成功');
+        this.props.navigation.navigate('LoginPage')
+      }
+     )
+  }
+
   _renderItemDetail(index){
       if(index == 0){
         return <Text style={{marginTop:scaleSize(48),color:'#989898',marginRight:scaleSize(24)}}>{this.state.version}</Text>
@@ -138,7 +157,7 @@ export default class SettingPage extends Component {
       <TouchableHighlight 
           style={{flexDirection:'row',marginBottom:scaleSize(500),justifyContent:'center'}}
           underlayColor='rgba(0,0,0,0)'
-          onPress={()=>{this.props.navigation.navigate('LoginPage')}}>
+          onPress={()=>{this.logout()}}>
           <ImageBackground 
             source={ImageStores.sy_17} 
             resizeMode={'stretch'} 

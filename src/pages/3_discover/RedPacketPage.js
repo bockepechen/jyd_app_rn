@@ -21,6 +21,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import NavigationBar from '../../common/NavigationBar';
 import LoadingIcon from '../../common/LoadingIcon';
 import ModalView from '../../common/ModalView';
+import { StackActions,NavigationActions } from 'react-navigation';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class RedPacketPage extends Component {
@@ -64,10 +65,10 @@ export default class RedPacketPage extends Component {
 
   async getInfoData() {
     global.NetReqModel.page_number = await this.state.next_page;
-    global.NetReqModel.tel_phone = await "15903262695";
-    global.NetReqModel.jyd_pubData.user_id = await "39";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.token_id = await '89a5ad1adba2f96b';
+    // global.NetReqModel.tel_phone = await "15903262695";
+    // global.NetReqModel.jyd_pubData.user_id = await "39";
+    // global.NetReqModel.jyd_pubData.source_type = await "0001";
+    // global.NetReqModel.jyd_pubData.token_id = await '89a5ad1adba2f96b';
     // global.NetReqModel.tel_phone = await "15822753827";
     // global.NetReqModel.jyd_pubData.user_id = await "91";
     let url = await '/redEnvelope';
@@ -89,6 +90,17 @@ export default class RedPacketPage extends Component {
           , () => {
             // this.loadFlag = false
         })
+      }
+      else if(result.return_code == '9987'){
+        this.refs.toast.show(result.return_msg);
+        const resetAction = StackActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'TabPage'}),
+            NavigationActions.navigate({ routeName: 'LoginPage'}),
+          ],
+        });
+        this.props.navigation.dispatch(resetAction);
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);

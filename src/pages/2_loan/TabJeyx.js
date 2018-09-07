@@ -7,12 +7,16 @@ import {
   RefreshControl,
   ActivityIndicator,
   DeviceEventEmitter,
+  TouchableHighlight,
+  ImageBackground,
 } from 'react-native';
 import {scaleSize} from '../../utils/FitViewUtils';
+import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import ListItemJeyx from './ListItemJeyx';
 import ViewUtils from '../../utils/ViewUtils';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import { StackActions,NavigationActions } from 'react-navigation';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabJeyx extends Component {
@@ -48,9 +52,9 @@ export default class TabJeyx extends Component {
 
   async getInfoData() {
     global.NetReqModel.page_number = await this.state.next_page;
-    global.NetReqModel.tel_phone = await "18330128418";
-    global.NetReqModel.jyd_pubData.user_id = await "39";
-    global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
+    // global.NetReqModel.tel_phone = await "18330128418";
+    // global.NetReqModel.jyd_pubData.user_id = await "39";
+    // global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
     let url = await '/productList/queryInvestList';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -98,7 +102,67 @@ export default class TabJeyx extends Component {
       this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
     })
   }
+
+  async riskValidate(product_id,item) {
+    let url = await '/riskValidate';
+    global.NetReqModel.product_id = product_id;
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      this.setState({isLoading:false},()=>{
+        if(result.return_code == '0000'){
+          global.NetReqModel.sell_id = item.id;
+          this.props.navigation.navigate('JeyxListItemDetail',{
+            data:{
+              url:'/personProLend',
+              title:'嘉e精选',
+              jsonObj:global.NetReqModel
+            },
+            ...this.props
+          });
+        }
+        else if(result.return_code == '9983'){
+          this.refs.toast.show(result.return_msg);
+        }
+        else if(result.return_code == '9965'){
+          this.showModalView(true,this.renderModal())
+          this.refs.toast.show(result.return_msg);
+        }
+        else if(result.return_code == '9964'){
+          this.showModalView(true,this.renderModal())
+          this.refs.toast.show(result.return_msg);
+        }
+        else if(result.return_code == '9987'){
+          this.refs.toast.show(result.return_msg);
+          const resetAction = StackActions.reset({
+            index: 1,
+            actions: [
+              NavigationActions.navigate({ routeName: 'TabPage'}),
+              NavigationActions.navigate({ routeName: 'LoginPage'}),
+            ],
+          });
+          this.props.navigation.dispatch(resetAction);
+        }
+        else if(result.return_code == '8888'){
+          this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+          return res;
+        }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+      if(this.state.isLoading){
+        this.setState({isLoading:false})
+      }
+      return res;
+    })
+  }
   
+  showModalView(visible,renderView) {
+    DeviceEventEmitter.emit('callModal',visible,renderView);
+  }
+
   _onRefresh() {
     this.setState({
         next_page : '1',
@@ -125,17 +189,64 @@ export default class TabJeyx extends Component {
         ...this.props
       });
     }else{
-      global.NetReqModel.sell_id = item.id;
-      this.props.navigation.navigate('JeyxListItemDetail',{
-        data:{
-          url:'/personProLend',
-          title:'嘉e精选',
-          jsonObj:global.NetReqModel
-        },
-        ...this.props
-      });
+      console.log(item)
+      let res = this.riskValidate(item.productId,item)
     }
   };
+
+  renderModal(){
+    return (
+      <View
+          style={{flex:1,}}
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
+            <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',height:scaleSize(531),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
+              <View style={{alignItems:'center',marginTop:scaleSize(69)}}>
+                <Text style={{fontSize:scaleSize(42),color:'#998675',fontWeight:'bold'}}>{'进入风险评测'}</Text>
+              </View>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(54)}}>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{this.showModalView(false)}}>
+                  <ImageBackground 
+                    source={ImageStores.cp_2} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'稍后再说'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+                <TouchableHighlight 
+                  style={{flexDirection:'row',justifyContent:'center'}}
+                  underlayColor='rgba(0,0,0,0)'
+                  onPress={()=>{
+                    this.props.navigation.navigate('JeyxListItemDetail',{
+                      data:{
+                        url:'/risk/preRisk',
+                        title:'风险评测',
+                        jsonObj:global.NetReqModel
+                      },
+                      ...this.props
+                    });
+                  }}>
+                  <ImageBackground 
+                    source={ImageStores.sy_15} 
+                    resizeMode={'stretch'} 
+                    style={{width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                    <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'立即评测'}</Text>
+                  </ImageBackground>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </View  >
+    )
+  }
 
   _keyExtractor = (item, index) => item.id;
 
@@ -203,7 +314,7 @@ export default class TabJeyx extends Component {
           />
         }
       />
-      {ViewUtils.renderToast(220)}
+      {ViewUtils.renderToast(230)}
       </View>
     )
   }

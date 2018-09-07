@@ -33,12 +33,31 @@ export default class Welcome extends Component {
 
   componentDidMount() {
     SplashScreen.hide();
+    this.initUserinfo()
     this.getIp('appId')
     this.getInfoData()
   }
 
   componentWillMount() {
     this.init();
+  }
+
+  async initUserinfo(){
+    await AsyncStorage.getItem(Storage_Key.LS_REG_USERINFO, (error, result) => {
+      if (!error) {
+          console.log('init userinfo')
+          result = JSON.parse(result)
+          console.log(result);
+          if(result!=null){
+            global.NetReqModel.jyd_pubData.user_id = result.user_id;
+            global.NetReqModel.jyd_pubData.user_name = result.user_name;
+            global.NetReqModel.jyd_pubData.token_id = result.token_id
+            global.NetReqModel.tel_phone = result.tel_phone
+          }
+      } else {
+        console.log('init userinfo error !!!!!!!')
+      }
+    })
   }
 
   async getIp(key) {

@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   Image,
-  TextInput,
   ImageBackground,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -17,9 +16,7 @@ import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
-import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import ActionSheetShare from '../../common/ActionSheetShare';
 import ShareUtil from '../../utils/ShareUtil';

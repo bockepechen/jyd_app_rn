@@ -24,12 +24,14 @@ import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import { StackActions,NavigationActions } from 'react-navigation';
 
 export default class LoginPage extends Component {
   constructor(props){
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.telNum = global.NetReqModel.tel_phone;
     this.state = {
       logo_initPos: new Animated.Value(0),
       input_initPos: new Animated.Value(0),
@@ -105,10 +107,12 @@ export default class LoginPage extends Component {
               {
                 user_id: result.user_data.user_id,
                 user_name: result.user_data.user_name,
-                token_id: global.NetReqModel.jyd_pubData.token_id
+                token_id: global.NetReqModel.jyd_pubData.token_id,
+                tel_phone : this.telNum
               },
               () => {
                 this.refs.toast.show('登录成功');
+                this.props.navigation.dispatch(StackActions.popToTop());
               }
              )
             } else {
@@ -202,7 +206,7 @@ export default class LoginPage extends Component {
               placeholder={'手机号码'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              defaultValue={global.NetReqModel.tel_phone}
+              defaultValue={this.telNum}
               onChangeText={(t) => {this.telNum=t}}
               />
           </View>

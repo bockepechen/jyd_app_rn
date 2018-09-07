@@ -80,11 +80,11 @@ export default class TabPage extends Component {
   }
 
   componentDidMount() {
-    DeviceEventEmitter.addListener('navreset',(dic)=>{
-        this.setState({
-          selectedTab: dic.tab,
-        })
-    });
+    // DeviceEventEmitter.addListener('navreset',(dic)=>{
+    //     this.setState({
+    //       selectedTab: dic.tab,
+    //     })
+    // });
     DeviceEventEmitter.addListener('callModal', (isShow, modalContentView) => {
       if (isShow) {
         this.refs.modalView.show(modalContentView);
