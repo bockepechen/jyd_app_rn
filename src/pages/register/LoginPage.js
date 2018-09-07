@@ -102,13 +102,23 @@ export default class LoginPage extends Component {
            if (result.return_code === '0000') {
              global.NetReqModel.jyd_pubData.user_id = result.user_data.user_id;
              global.NetReqModel.jyd_pubData.user_name = result.user_data.user_name;
+             global.NetReqModel.red_envelop_total = result.user_data.red_envelop_total;
+             global.NetReqModel.account_id = result.jx_data.account_id;
+             global.NetReqModel.bank_no = result.jx_data.bank_no;
+             global.NetReqModel.sign_status = result.jx_data.sign_status;
+             global.NetReqModel.tradepwd_status = result.jx_data.tradepwd_status;
              this.dataResponsitory.saveLocalStorage(
               Storage_Key.LS_REG_USERINFO,
               {
                 user_id: result.user_data.user_id,
                 user_name: result.user_data.user_name,
-                token_id: global.NetReqModel.jyd_pubData.token_id,
-                tel_phone : this.telNum
+                token_id: result.user_data.token_id,
+                tel_phone : this.telNum,
+                red_envelop_total : result.user_data.red_envelop_total,
+                account_id : result.jx_data.account_id,
+                bank_no : result.jx_data.bank_no,
+                sign_status : result.jx_data.sign_status,
+                tradepwd_status : result.jx_data.tradepwd_status,
               },
               () => {
                 this.refs.toast.show('登录成功');

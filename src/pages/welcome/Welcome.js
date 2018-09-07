@@ -53,6 +53,11 @@ export default class Welcome extends Component {
             global.NetReqModel.jyd_pubData.user_name = result.user_name;
             global.NetReqModel.jyd_pubData.token_id = result.token_id
             global.NetReqModel.tel_phone = result.tel_phone
+            global.NetReqModel.red_envelop_total = result.red_envelop_total;
+            global.NetReqModel.account_id = result.account_id;
+            global.NetReqModel.bank_no = result.bank_no;
+            global.NetReqModel.sign_status = result.sign_status;
+            global.NetReqModel.tradepwd_status = result.tradepwd_status;
           }
       } else {
         console.log('init userinfo error !!!!!!!')

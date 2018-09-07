@@ -88,12 +88,22 @@ export default class SettingPage extends Component {
         user_id: '',
         user_name: '',
         token_id: '',
-        tel_phone : ''
+        tel_phone : '',
+        red_envelop_total : '',
+        account_id : '',
+        bank_no : '',
+        sign_status : '',
+        tradepwd_status : '',
       },
       () => {
         global.NetReqModel.jyd_pubData.user_id = '';
         global.NetReqModel.jyd_pubData.user_name = '';
         global.NetReqModel.jyd_pubData.token_id = '';
+        global.NetReqModel.red_envelop_total = '';
+        global.NetReqModel.account_id = '';
+        global.NetReqModel.bank_no = '';
+        global.NetReqModel.sign_status = '';
+        global.NetReqModel.tradepwd_status = '';
         this.refs.toast.show('退出成功');
         this.props.navigation.navigate('LoginPage')
       }

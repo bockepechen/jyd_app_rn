@@ -199,7 +199,7 @@ export default class DiscoverPage extends Component {
             </View>
             <View style={{marginLeft:scaleSize(186), marginTop:scaleSize(21), height:scaleSize(69), flexDirection:'row', alignItems:'flex-end'}}>
               <Text style={{fontSize:scaleSize(40), color:'#ffffff'}}>{'￥'}</Text>
-              <Text style={{fontSize:scaleSize(69), color:'#ffffff'}}>{'1000000'}</Text>
+              <Text style={{fontSize:scaleSize(69), color:'#ffffff'}}>{global.NetReqModel.red_envelop_total && global.NetReqModel.red_envelop_total != '' ? global.NetReqModel.red_envelop_total : '0.00'}</Text>
             </View>
           </ImageBackground>
         </TouchableOpacity>
