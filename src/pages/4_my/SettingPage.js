@@ -31,7 +31,12 @@ export default class SettingPage extends Component {
         },
         {
             title:'意见反馈',
-            callback:()=>{this.goto('FeedbackPage')}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('FeedbackPage')
+            }
         },
         {
             title:'清理缓存',
@@ -59,6 +64,15 @@ export default class SettingPage extends Component {
     this.props.navigation.navigate(url,{
       data:JsonObj ? JsonObj : {}
     });
+  }
+
+  checkLogin(){
+    if(!global.NetReqModel.jyd_pubData.token_id || global.NetReqModel.jyd_pubData.token_id == ''){
+      this.goto('LoginPage')
+      return false
+    }else{
+      return true
+    }
   }
 
   // 获得缓存大小

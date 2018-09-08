@@ -12,7 +12,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
-import { StackActions } from 'react-navigation';
+import { StackActions,NavigationActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils'
 
 export default class MyGoldPage extends Component {
@@ -52,7 +52,19 @@ export default class MyGoldPage extends Component {
       console.log('aaaaaaa');
       this.props.navigation.goBack();
       return false
-    }else if(navState.url == 'action://jydapp'){
+    }
+    if(navState.url.indexOf('action://RechargePage') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'RechargePage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    else if(navState.url == 'action://jydapp'){
       console.log('bbbbbb');
       this.goto('RechargeResultPage',{
         title:'充值成功',

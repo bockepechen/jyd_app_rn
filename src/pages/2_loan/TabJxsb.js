@@ -44,6 +44,12 @@ export default class TabJxsb extends Component {
     })
   }
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+
   async getInfoData() {
     global.NetReqModel.page_number = await this.state.next_page;
     // global.NetReqModel.tel_phone = await "18330128418";
@@ -126,14 +132,7 @@ export default class TabJxsb extends Component {
         }
         else if(result.return_code == '9987'){
           this.refs.toast.show(result.return_msg);
-          const resetAction = StackActions.reset({
-            index: 1,
-            actions: [
-              NavigationActions.navigate({ routeName: 'TabPage'}),
-              NavigationActions.navigate({ routeName: 'LoginPage'}),
-            ],
-          });
-          this.props.navigation.dispatch(resetAction);
+          this.goto('LoginPage')
         }
         else if(result.return_code == '8888'){
           this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -240,6 +239,7 @@ export default class TabJxsb extends Component {
   _onPressItem = (id,item,type) => {
     if(type == 'item'){
       global.NetReqModel.BorrowId = item.BorrowId;
+      global.NetReqModel.productId = item.productId;
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
           url:'/productDetails/queryStandardpowderDetail',

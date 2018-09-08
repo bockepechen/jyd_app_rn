@@ -26,11 +26,21 @@ export default class AccountSecurityPage extends Component {
     this.listItem = [
         {
             title:'用户信息',
-            callback:()=>{this.goto('PersonInfoPage')}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('PersonInfoPage')
+            }
         },
         {
             title:'我的银行卡',
-            callback:()=>{this.goto('BankCardListPage')}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('BankCardListPage')
+            }
         },
         {
             title:'手机号码',
@@ -39,26 +49,41 @@ export default class AccountSecurityPage extends Component {
         },
         {
             title:'联系地址',
-            callback:()=>{this.goto('AddressPage')}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('AddressPage')
+            }
         },
         {
             title:'修改登录密码',
-            callback:()=>{this.goto('ResetpwdPage')}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('ResetpwdPage')
+            }
         },
         {
             title:'修改交易密码',
-            callback:()=>{this.goto('ResetTradepwdPage',{
-              url:'/transPwd/setAndResetPassword',
-              jsonObj:global.NetReqModel,
-              title:'修改交易密码'
-            })}
+            callback:()=>{
+              if(!this.checkLogin()){
+                return false
+              }
+              this.goto('ResetTradepwdPage',{
+                url:'/transPwd/setAndResetPassword',
+                jsonObj:global.NetReqModel,
+                title:'修改交易密码'
+              })
+          }
         },
     ]
     this.state = {
       httpRes:{},
       list:[],
-      tel:'138****1234',
-      cardInfo:'工商银行(2341)',
+      tel:`${global.NetReqModel.tel_phone.substring(0,3)} **** ${global.NetReqModel.tel_phone.substring(7)}`,
+      cardInfo:`${global.NetReqModel.bank_no && global.NetReqModel.bank_no != '' ? '卡后四位('+global.NetReqModel.bank_no.substring(global.NetReqModel.bank_no.length-4)+')' : ''}`,
       isLoading: false,
     }
   }
@@ -79,6 +104,15 @@ export default class AccountSecurityPage extends Component {
 
   navGoback = () => {
     this.props.navigation.goBack();
+  }
+
+  checkLogin(){
+    if(!global.NetReqModel.jyd_pubData.token_id || global.NetReqModel.jyd_pubData.token_id == ''){
+      this.goto('LoginPage')
+      return false
+    }else{
+      return true
+    }
   }
 
   updateTel = async () => {

@@ -19,6 +19,7 @@ import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
+import { StackActions,NavigationActions } from 'react-navigation';
 
 export default class AssetPage extends Component{
     constructor(props){
@@ -70,6 +71,17 @@ export default class AssetPage extends Component{
                 availBal:result.availBal,
                 waitContractAmount:result.waitContractAmount
             })
+          }
+          else if(result.return_code == '9987'){
+            this.refs.toast.show(result.return_msg);
+            const resetAction = StackActions.reset({
+              index: 1,
+              actions: [
+                NavigationActions.navigate({ routeName: 'TabPage'}),
+                NavigationActions.navigate({ routeName: 'LoginPage'}),
+              ],
+            });
+            this.props.navigation.dispatch(resetAction);
           }
           if(this.state.isLoading) {
             this.setState({isLoading:false});

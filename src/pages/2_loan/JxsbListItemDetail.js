@@ -54,6 +54,17 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
+    if(navState.url.indexOf('action://RechargePage') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'RechargePage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
     if(navState.url == 'action://jydapp'){
       console.log('aaaaaaa');
       this.ifbackhome = true

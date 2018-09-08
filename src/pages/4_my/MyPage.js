@@ -47,14 +47,23 @@ export default class MyPage extends Component {
     this.getInfoData()
   }
 
+  checkLogin(){
+    if(!global.NetReqModel.jyd_pubData.token_id || global.NetReqModel.jyd_pubData.token_id == ''){
+      this.goto('LoginPage')
+      return false
+    }else{
+      return true
+    }
+  }
+
   async getInfoData() {
     this.setState({
       isLoading:true
     });
     let url = await '/personCenter';
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
-    global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
+    // global.NetReqModel.tel_phone = await "15822753827";
+    // global.NetReqModel.jyd_pubData.user_id = await "91";
+    // global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
     console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -94,29 +103,13 @@ export default class MyPage extends Component {
   }
 
   async checkUserStatus(next_url){
-    this.goto('AccountAgreementPage');
-    // global.NetReqModel.tel_phone = await "15822854761";
-    // global.NetReqModel.jyd_pubData.user_id = await "82";
-    // global.NetReqModel.jyd_pubData.token_id = await "0001222";
-    // this.goto('AccountSetPwdPage',{
-    //   url:'/transPwd/setPassword',
-    //   jsonObj:global.NetReqModel,
-    // });
-    // global.NetReqModel.user_ip = '123';
-    //       global.NetReqModel.tel_phone =  "15822753827";
-    //       global.NetReqModel.jyd_pubData.user_id =  "204";
-    //       global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
-    //       this.goto('BindCardNewPage',{
-    //         url:'/bindCard',
-    //         jsonObj:global.NetReqModel,
-    //         title:'绑定银行卡'
-    //       });
-    // this.goto(next_url)
-    return false;
+    if(!this.checkLogin()){
+      return false
+    }
     let url = await '/common';
-    global.NetReqModel.tel_phone = await "13752133744";
-    global.NetReqModel.jyd_pubData.user_id = await "85";
-    global.NetReqModel.jyd_pubData.token_id = await "111111";
+    // global.NetReqModel.tel_phone = await "13752133744";
+    // global.NetReqModel.jyd_pubData.user_id = await "85";
+    // global.NetReqModel.jyd_pubData.token_id = await "111111";
     console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
@@ -127,13 +120,13 @@ export default class MyPage extends Component {
         global.NetReqModel.sign_status = result.jx_data.sign_status;
         global.NetReqModel.tradepwd_status = result.jx_data.tradepwd_status;
         if(!global.NetReqModel.account_id || global.NetReqModel.account_id == ''){
-          this.goto('AccountOpeningPage')
+          this.showModalView(true,this.renderModal())
         }
         else if(!global.NetReqModel.bank_no || global.NetReqModel.bank_no == ''){
-          global.NetReqModel.user_ip = '123';
-          global.NetReqModel.tel_phone =  "15822753827";
-          global.NetReqModel.jyd_pubData.user_id =  "204";
-          global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+          global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+          // global.NetReqModel.tel_phone =  "15822753827";
+          // global.NetReqModel.jyd_pubData.user_id =  "204";
+          // global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
           this.goto('BindCardNewPage',{
             url:'/bindCard',
             jsonObj:global.NetReqModel,
@@ -161,6 +154,53 @@ export default class MyPage extends Component {
     .catch((e) => {
       console.log(e);
       this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+    })
+  }
+
+  async riskValidate() {
+    let url = await '/riskValidate';
+    global.NetReqModel.product_id = "";
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      this.setState({isLoading:false},()=>{
+        if(result.return_code == '0000'){
+          this.refs.toast.show(result.return_msg);
+          this.props.navigation.navigate('JeyxListItemDetail',{
+            data:{
+              url:'/risk/haveRisk',
+              title:'风险评测',
+              jsonObj:global.NetReqModel
+            },
+            ...this.props
+          });
+        }
+        else if(result.return_code == '9987'){
+          this.refs.toast.show(result.return_msg);
+          this.goto('LoginPage')
+        }
+        else if(result.return_code == '8888'){
+          this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+          return res;
+        }else{
+          this.props.navigation.navigate('JeyxListItemDetail',{
+            data:{
+              url:'/risk/preRisk',
+              title:'风险评测',
+              jsonObj:global.NetReqModel
+            },
+            ...this.props
+          });
+        }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+      if(this.state.isLoading){
+        this.setState({isLoading:false})
+      }
+      return res;
     })
   }
 
@@ -257,13 +297,21 @@ export default class MyPage extends Component {
         alignItems:'center',
         justifyContent:'space-between',
       }}>
-        <TouchableHighlight onPress={()=>this.goto('AccountSecurityPage')} underlayColor='rgba(0,0,0,0)'>
+        <TouchableHighlight 
+          onPress={()=>{
+            if(global.NetReqModel.jyd_pubData.token_id == ''){
+              this.goto('LoginPage')
+            }else{
+              this.goto('AccountSecurityPage')
+            }
+          }} 
+          underlayColor='rgba(0,0,0,0)'>
           <View style={{flexDirection:'row', alignItems:'center'}}>
             <Image 
               source={ImageStores.me_10} 
               resizeMode={'stretch'} 
               style={{width:scaleSize(96), height:scaleSize(96)}}/>
-            <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{`用户${global.NetReqModel.tel_phone}`}</Text>
+            <Text style={{marginLeft:scaleSize(39), fontSize:scaleSize(48), color:'#ffffff'}}>{`${global.NetReqModel.jyd_pubData.token_id == '' ? '登录' : '用户'+global.NetReqModel.tel_phone}`}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={()=>this.goto('SettingPage')} underlayColor='rgba(0,0,0,0)'>
@@ -322,7 +370,12 @@ export default class MyPage extends Component {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={()=>{this.goto('MyLoanPage')}}
+                onPress={()=>{
+                  if(!this.checkLogin()){
+                    return false
+                  }
+                  this.goto('MyLoanPage')
+                }}
                 style={{flex:1, borderWidth:0, flexDirection:'row'}}
               >
                 <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
@@ -338,7 +391,12 @@ export default class MyPage extends Component {
             </View>
             <View style={{flex:1, borderWidth:0, flexDirection:'row', justifyContent:'space-evenly'}}>
               <TouchableOpacity
-                onPress={()=>{this.goto('RedPacketPage')}}
+                onPress={()=>{
+                  if(!this.checkLogin()){
+                    return false
+                  }
+                  this.goto('RedPacketPage')
+                }}
                 style={{flex:1, borderWidth:0, flexDirection:'row'}}
               >
                 <View style={{flex:1, borderWidth:0, flexDirection:'row'}}>
@@ -385,12 +443,17 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_48,
         title:'回款日历',
-        callback:() => this.Calendar4Payback('kkkkkkk'),
+        callback:() => {
+          if(!this.checkLogin()){
+            return false
+          }
+          this.Calendar4Payback('kkkkkkk')
+        },
       },
       {
         img:ImageStores.me_49,
         title:'风险评测',
-        callback:()=>{this.showModalView(true,this.renderModal())},
+        callback:()=>{this.riskValidate()},
       },
       {
         img:ImageStores.me_50,
