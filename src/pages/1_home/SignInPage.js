@@ -52,6 +52,63 @@ export default class SignInPage extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
+    if(navState.url.indexOf('action://9986') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'AccountOpeningPage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    if(navState.url.indexOf('action://9970') > -1){
+      global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'BindCardNewPage',params: {
+            data:{
+              url:'/bindCard',
+            jsonObj:global.NetReqModel,
+            title:'绑定银行卡'
+            }
+          }}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    if(navState.url.indexOf('action://9985') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'AccountSetPwdPage',params: {
+            data:{
+              url:'/bindCard',
+            jsonObj:global.NetReqModel,
+            title:'绑定银行卡'
+            }
+          }}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    if(navState.url.indexOf('action://9984') > -1){
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'TabPage'}),
+          NavigationActions.navigate({ routeName: 'AccountAgreementPage'}),
+        ],
+      });
+      this.props.navigation.dispatch(resetAction);
+      return false
+    }
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url

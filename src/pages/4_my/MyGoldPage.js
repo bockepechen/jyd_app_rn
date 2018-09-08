@@ -48,20 +48,20 @@ export default class MyGoldPage extends Component {
   _onNavigationStateChange = (navState) => {
     console.log(navState)
     let u = navState.url;
-    if(navState.url == 'action://jydapp.forgetPassword'){
-      console.log('aaaaaaa');
-      this.props.navigation.goBack();
-      return false
-    }
-    if(navState.url.indexOf('action://RechargePage') > -1){
+    if(navState.url.indexOf('action://9987') > -1){
       const resetAction = StackActions.reset({
         index: 1,
         actions: [
           NavigationActions.navigate({ routeName: 'TabPage'}),
-          NavigationActions.navigate({ routeName: 'RechargePage'}),
+          NavigationActions.navigate({ routeName: 'LoginPage'}),
         ],
       });
       this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    if(navState.url == 'action://jydapp.forgetPassword'){
+      console.log('aaaaaaa');
+      this.props.navigation.goBack();
       return false
     }
     else if(navState.url == 'action://jydapp'){
