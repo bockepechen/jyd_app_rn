@@ -172,7 +172,8 @@ export default class RechargeShortcut extends Component {
               <TouchableOpacity
                 onPress={()=>{this.goto('RechargeLimitPage',{
                   url:'accountRecharge/limitTable',
-                  JsonObj:global.NetReqModel
+                  jsonObj:global.NetReqModel,
+                  title:'查看银行限额'
                 })}}
               >
                 <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'查看银行限额'}</Text>
