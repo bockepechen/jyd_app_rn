@@ -171,7 +171,7 @@ export default class RechargeShortcut extends Component {
           <View style={{marginTop:scaleSize(42),width:scaleSize(999),flexDirection:'row',justifyContent:'flex-end'}}>
               <TouchableOpacity
                 onPress={()=>{this.goto('RechargeLimitPage',{
-                  url:'',
+                  url:'accountRecharge/limitTable',
                   JsonObj:global.NetReqModel
                 })}}
               >
