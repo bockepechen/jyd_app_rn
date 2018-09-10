@@ -17,6 +17,7 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import * as CacheManager from 'react-native-http-cache'
+import { StackActions,NavigationActions } from 'react-navigation';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class SettingPage extends Component {
@@ -119,7 +120,13 @@ export default class SettingPage extends Component {
         global.NetReqModel.sign_status = '';
         global.NetReqModel.tradepwd_status = '';
         this.refs.toast.show('退出成功');
-        this.props.navigation.navigate('LoginPage')
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'TabPage'}),
+          ],
+        });
+        this.props.navigation.dispatch(resetAction);
       }
      )
   }

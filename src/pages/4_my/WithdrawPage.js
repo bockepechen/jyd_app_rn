@@ -63,9 +63,9 @@ export default class WithdrawPage extends Component{
         isLoading:true
       });
       let url = await '/withdraw/preWithdraw';
-      global.NetReqModel.tel_phone = await "15822753827";
-      global.NetReqModel.jyd_pubData.user_id = await "91";
-      global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
+      // global.NetReqModel.tel_phone = await "15822753827";
+      // global.NetReqModel.jyd_pubData.user_id = await "91";
+      // global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
       console.log(JSON.stringify(global.NetReqModel));
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {

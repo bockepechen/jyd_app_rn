@@ -38,12 +38,12 @@ export default class TabSbjq extends Component {
     this.setState({
       isLoading:true
     });
-    global.NetReqModel.tel_phone = await "15822753827";
-    global.NetReqModel.jyd_pubData.user_id = await "91";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-    global.NetReqModel.jyd_pubData.network_type = await "wifi";
-    global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+    // global.NetReqModel.tel_phone = await "15822753827";
+    // global.NetReqModel.jyd_pubData.user_id = await "91";
+    // global.NetReqModel.jyd_pubData.source_type = await "0001";
+    // global.NetReqModel.jyd_pubData.system_id = await "Android 7";
+    // global.NetReqModel.jyd_pubData.network_type = await "wifi";
+    // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/lendCenter/calculateStandardpowder';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {

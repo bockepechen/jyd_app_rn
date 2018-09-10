@@ -92,15 +92,7 @@ export default class RedPacketPage extends Component {
         })
       }
       else if(result.return_code == '9987'){
-        this.refs.toast.show(result.return_msg);
-        const resetAction = StackActions.reset({
-          index: 1,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabPage'}),
-            NavigationActions.navigate({ routeName: 'LoginPage'}),
-          ],
-        });
-        this.props.navigation.dispatch(resetAction);
+        this.goto('LoginPage');
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);

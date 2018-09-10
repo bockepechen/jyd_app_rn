@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  Platform,
+  WebView,
 } from 'react-native';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 
@@ -20,9 +20,18 @@ export default class RechargeTransfer extends Component {
 
   renderMainView() {
     return(
-      <View>
-          <Text>aaa</Text>
-      </View>
+      <WebView 
+        ref={"webview"}
+        scrollEnabled={true}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        source={{uri:global.NetReqModel.bank_transfer_url}}
+        // onNavigationStateChange={this._onNavigationStateChange}
+        startInLoadingState={true}
+        // onMessage={(e) => {
+        //   this.handleMessage(e)
+        // }}
+      />
     )
   }
 

@@ -38,11 +38,11 @@ export default class TabSubCjz extends Component {
   }
 
   async getInfoData() {
-    global.NetReqModel.tel_phone = await "18330128418";
+    // global.NetReqModel.tel_phone = await "18330128418";
     global.NetReqModel.Type = await "1";
     global.NetReqModel.page_number = this.state.next_page;
-    global.NetReqModel.jyd_pubData.user_id = await "39";
-    global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
+    // global.NetReqModel.jyd_pubData.user_id = await "39";
+    // global.NetReqModel.jyd_pubData.token_id = await "89a5ad1adba2f96b";
     let url = await '/lendCenter/investRecords';
     console.log(JSON.stringify(global.NetReqModel))
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)

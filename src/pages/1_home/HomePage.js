@@ -427,6 +427,48 @@ export default class HomePage extends Component {
     });
   }
 
+  async gotoCheck(url,JsonObj){
+    let urlroute = await '/route';
+    this.dataResponsitory.fetchNetResponsitory(urlroute, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      if(result.return_code == '0000'){
+        this.props.navigation.navigate(url,{
+          data:JsonObj ? JsonObj : {}
+        });
+      }
+      else if(result.return_code == '9987'){
+        this.goto('LoginPage')
+      }
+      else if(result.return_code == '9986'){
+        this.goto('AccountOpeningPage')
+      }
+      else if(result.return_code == '9984'){
+        this.goto('AccountAgreementPage')
+      }
+      else if(result.return_code == '9970'){
+        this.goto('BindCardNewPage',{
+          url:'/bindCard',
+            jsonObj:global.NetReqModel,
+            title:'绑定银行卡'
+        })
+      }
+      else if(result.return_code == '9985'){
+        this.goto('AccountSetPwdPage',{
+          url:'/bindCard',
+          jsonObj:global.NetReqModel,
+          title:'设置密码'
+        })
+      }
+      else{
+        
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    })
+  }
+
   renderTopNavIconViews() {
     let topNavIconViews = [];
     let IconDatas = [
@@ -434,8 +476,7 @@ export default class HomePage extends Component {
         iconImg:ImageStores.sy_22,
         iconName:'每日签到',
         callback:() => {
-          console.log(global.NetReqModel);
-          this.goto('SignInPage',{
+          this.gotoCheck('SignInPage',{
             url:'/checkIn',
             jsonObj:global.NetReqModel,
             title:'每日签到'

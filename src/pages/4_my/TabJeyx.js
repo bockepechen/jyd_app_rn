@@ -38,11 +38,11 @@ export default class TabJeyx extends Component {
     this.setState({
       isLoading:true
     });
-    global.NetReqModel.tel_phone = await "18330128418";
-    global.NetReqModel.jyd_pubData.user_id = await "39";
-    global.NetReqModel.jyd_pubData.source_type = await "0001";
-    global.NetReqModel.jyd_pubData.system_id = await "Android 7";
-    global.NetReqModel.jyd_pubData.network_type = await "wifi";
+    // global.NetReqModel.tel_phone = await "18330128418";
+    // global.NetReqModel.jyd_pubData.user_id = await "39";
+    // global.NetReqModel.jyd_pubData.source_type = await "0001";
+    // global.NetReqModel.jyd_pubData.system_id = await "Android 7";
+    // global.NetReqModel.jyd_pubData.network_type = await "wifi";
     global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/lendCenter/calculateInvest';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
