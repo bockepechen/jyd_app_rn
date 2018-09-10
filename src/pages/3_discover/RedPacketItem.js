@@ -44,7 +44,7 @@ export default class RedPacketItem extends Component {
               style={{marginTop:scaleSize(50),marginLeft:scaleSize(60),fontSize:scaleSize(42),color:this.paraData.status == '1' ? '#c7b299' : '#c3c3c3',fontWeight:'bold'}}>
               {'现金红包'}
             </Text>
-            <View style={{marginTop:scaleSize(50),flexDirection:'row',height:scaleSize(104)}}>
+            <View style={{marginTop:scaleSize(38),flexDirection:'row',height:scaleSize(115)}}>
               <Text 
                 style={{marginTop:scaleSize(62),marginLeft:scaleSize(99),fontSize:scaleSize(42),color:this.paraData.status == '1' ? '#ff3a49' : '#989898',fontWeight:'bold'}}>
                 {`¥ `}
@@ -55,7 +55,7 @@ export default class RedPacketItem extends Component {
               </Text>
             </View>
             <Text 
-              style={{marginTop:scaleSize(21),marginLeft:scaleSize(99),fontSize:scaleSize(28),color:this.paraData.status == '1' ? '#998675' : '#c3c3c3'}}>
+              style={{marginTop:scaleSize(19),marginLeft:scaleSize(99),fontSize:scaleSize(28),color:this.paraData.status == '1' ? '#998675' : '#c3c3c3'}}>
               {`奖励来源:${this.paraData.award_from}`}
             </Text>
             <Text 

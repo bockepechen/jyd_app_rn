@@ -160,6 +160,27 @@ export default class HomePage extends Component {
           this.refs.toast.show(result.return_msg);
           this.goto('LoginPage')
         }
+        else if(result.return_code == '9986'){
+          this.goto('AccountOpeningPage')
+        }
+        else if(result.return_code == '9984'){
+          this.goto('AccountAgreementPage')
+        }
+        else if(result.return_code == '9970'){
+          global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+          this.goto('BindCardNewPage',{
+            url:'/bindCard',
+              jsonObj:global.NetReqModel,
+              title:'绑定银行卡'
+          })
+        }
+        else if(result.return_code == '9985'){
+          this.goto('AccountSetPwdPage',{
+            url:'/transPwd/setPassword',
+            jsonObj:global.NetReqModel,
+            title:'设置交易密码'
+          })
+        }
         else if(result.return_code == '8888'){
           this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
           return -1;
@@ -447,6 +468,7 @@ export default class HomePage extends Component {
         this.goto('AccountAgreementPage')
       }
       else if(result.return_code == '9970'){
+        global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
         this.goto('BindCardNewPage',{
           url:'/bindCard',
             jsonObj:global.NetReqModel,
@@ -455,13 +477,10 @@ export default class HomePage extends Component {
       }
       else if(result.return_code == '9985'){
         this.goto('AccountSetPwdPage',{
-          url:'/bindCard',
+          url:'/transPwd/setPassword',
           jsonObj:global.NetReqModel,
-          title:'设置密码'
+          title:'设置交易密码'
         })
-      }
-      else{
-        
       }
     })
     .catch((e) => {

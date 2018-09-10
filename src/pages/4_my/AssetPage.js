@@ -146,15 +146,15 @@ export default class AssetPage extends Component{
             >
                 <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start',marginTop:scaleSize(90), marginLeft:scaleSize(156)}}>
                     <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'可用余额(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.availBal,2)}</Text>
+                    <Text style={{fontSize:scaleSize(70),color:'#998675',marginTop:scaleSize(15),height:scaleSize(75)}}>{Utils.formatMoney(this.state.availBal,2)}</Text>
                     <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(63)}}>{'冻结金额(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.freezeAmount,2)}</Text>
+                    <Text style={{fontSize:scaleSize(70),color:'#998675',marginTop:scaleSize(15),height:scaleSize(75)}}>{Utils.formatMoney(this.state.freezeAmount,2)}</Text>
                 </View>
                 <View style={{flex:1,flexDirection:'column',justifyContent:'flex-start',marginTop:scaleSize(90),}}>
                     <Text style={{fontSize:scaleSize(36),color:'#989898'}}>{'代收本金(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.waitContractAmount,2)}</Text>
+                    <Text style={{fontSize:scaleSize(70),color:'#998675',marginTop:scaleSize(15),height:scaleSize(75)}}>{Utils.formatMoney(this.state.waitContractAmount,2)}</Text>
                     <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(63)}}>{'待收回报(元)'}</Text>
-                    <Text style={{fontSize:scaleSize(72),color:'#998675',marginTop:scaleSize(15),height:scaleSize(72)}}>{Utils.formatMoney(this.state.waitRepay,2)}</Text>
+                    <Text style={{fontSize:scaleSize(70),color:'#998675',marginTop:scaleSize(15),height:scaleSize(75)}}>{Utils.formatMoney(this.state.waitRepay,2)}</Text>
                 </View>
             </ImageBackground>
         )

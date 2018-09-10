@@ -12,17 +12,22 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import ViewUtils from '../../utils/ViewUtils';
 import TabJeyx from './TabJeyx';
 import TabSbjq from './TabSbjq';
+import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
 export default class MyLoanPage extends PureComponent {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.scrollableTabTitle = ['嘉e优选','精选散标']
   }
 
-  componentWillMount() {
-    // let url = AppConfig.REQUEST_HOST+'/rd/getListData';
-    let url = AppConfig.REQUEST_HOST_PRO+'/AuthorityM_Serv/logout/test';
+  componentDidMount() {
+    this.AndroidBackHandler.addPressBackListener();
+  }
+
+  componentWillUnmount() {
+    this.AndroidBackHandler.removePressBackListener();
   }
 
   navGoback = () => {

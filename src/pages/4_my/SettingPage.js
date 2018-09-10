@@ -18,6 +18,7 @@ import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import * as CacheManager from 'react-native-http-cache'
 import { StackActions,NavigationActions } from 'react-navigation';
+import {AsyncStorage} from 'react-native'
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class SettingPage extends Component {
@@ -88,7 +89,28 @@ export default class SettingPage extends Component {
     await CacheManager.clearCache();
     // this.getCacheSize();
     // 这里貌似清除不能全部清除为0，这里直接写死0即可。
-    this.setState({cacheSize: '0M'});
+    this.setState({cacheSize: '0M'},()=>{
+      AsyncStorage.getItem(Storage_Key.LS_REG_USERINFO, (error, result) => {
+        if (!error) {
+            console.log('init userinfo')
+            result = JSON.parse(result)
+            console.log(result);
+            if(result!=null){
+              global.NetReqModel.jyd_pubData.user_id = result.user_id;
+              global.NetReqModel.jyd_pubData.user_name = result.user_name;
+              global.NetReqModel.jyd_pubData.token_id = result.token_id
+              global.NetReqModel.tel_phone = result.tel_phone
+              global.NetReqModel.red_envelop_total = result.red_envelop_total;
+              global.NetReqModel.account_id = result.account_id;
+              global.NetReqModel.bank_no = result.bank_no;
+              global.NetReqModel.sign_status = result.sign_status;
+              global.NetReqModel.tradepwd_status = result.tradepwd_status;
+            }
+        } else {
+          console.log('init userinfo error !!!!!!!')
+        }
+      })
+    });
     this.refs.toast.show('清除缓存成功');
   }
 

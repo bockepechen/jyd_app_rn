@@ -170,15 +170,15 @@ export default class ProductCardCjz extends Component {
                     </View>
                     <View style={{marginTop:scaleSize(30),flexDirection:'row',justifyContent:'center'}}>
                         <View style={{}}>
-                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{Utils.formatMoney(this.paraData.contractamount,2)}</Text>
+                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(51)}}>{Utils.formatMoney(this.paraData.contractamount,2)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借金额(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:scaleSize(49)}}>{Utils.formatMoney(this.paraData.expectprofit,2)}</Text>
+                            <Text style={{fontSize:scaleSize(48),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(51)}}>{Utils.formatMoney(this.paraData.expectprofit,2)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预计利息(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:scaleSize(48),color:'#ff3a49',height:scaleSize(49)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improverate)}</Text>
+                            <Text style={{fontSize:scaleSize(48),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(51)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improverate)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借奖励(元)'}</Text>
                         </View>
                     </View>
