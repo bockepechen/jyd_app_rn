@@ -43,7 +43,7 @@ export default class TabJeyx extends Component {
     // global.NetReqModel.jyd_pubData.source_type = await "0001";
     // global.NetReqModel.jyd_pubData.system_id = await "Android 7";
     // global.NetReqModel.jyd_pubData.network_type = await "wifi";
-    global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+    // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
     let url = await '/lendCenter/calculateInvest';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {

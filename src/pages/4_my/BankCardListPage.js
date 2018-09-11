@@ -49,9 +49,9 @@ export default class BankCardListPage extends Component{
             isLoading:true
         });
         let url = await '/accountSafety/cardInfo';
-        global.NetReqModel.tel_phone =  "13821192629";
-        global.NetReqModel.jyd_pubData.user_id =  "204";
-        global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
+        // global.NetReqModel.tel_phone =  "13821192629";
+        // global.NetReqModel.jyd_pubData.user_id =  "204";
+        // global.NetReqModel.jyd_pubData.token_id =  "123235h5e3";
         console.log(JSON.stringify(global.NetReqModel));
         this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {

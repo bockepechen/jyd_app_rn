@@ -69,11 +69,11 @@ export default class ProductCardZrz extends Component {
   }
 
   ckht(){
-    global.NetReqModel.tel_phone = '17188125146'
-    global.NetReqModel.business_id = 'INV20180206000000004596'
-    global.NetReqModel.jyd_pubData.user_id = "121";
-    global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
-    // global.NetReqModel.business_id = this.paraData.id
+    // global.NetReqModel.tel_phone = '17188125146'
+    // global.NetReqModel.business_id = 'INV20180206000000004596'
+    // global.NetReqModel.jyd_pubData.user_id = "121";
+    // global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
+    global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '02'
     console.log(JSON.stringify(global.NetReqModel))

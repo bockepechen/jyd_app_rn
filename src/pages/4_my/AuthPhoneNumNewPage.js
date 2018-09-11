@@ -59,7 +59,7 @@ export default class AuthPhoneNumNewPage extends Component{
         if  (adaptAuthCodeCD.ifSendAuthCode) {
           // 设置远程接口访问参数 (同步执行)
           global.NetReqModel.tel_phone = await global.NetReqModel.tel_phone;
-          global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
+          // global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
           let url = await '/password/forgetPwd';
           this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
            .then((result) => {

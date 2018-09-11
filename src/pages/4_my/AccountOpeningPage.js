@@ -27,7 +27,7 @@ export default class AccountOpeningPage extends Component{
         this.state = {
             isLoading: false,
         }
-        global.NetReqModel.tel_phone = '15822854761'
+        // global.NetReqModel.tel_phone = '15822854761'
     }
 
     componentDidMount() {
@@ -45,9 +45,9 @@ export default class AccountOpeningPage extends Component{
     }
 
     accountOpen(){
-      global.NetReqModel.tel_phone = '15822854761'
-      global.NetReqModel.jyd_pubData.user_id  = '198'
-      global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
+      // global.NetReqModel.tel_phone = '15822854761'
+      // global.NetReqModel.jyd_pubData.user_id  = '198'
+      // global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
       if(!this.name || this.name == '' ){
         this.refs.toast.show('请输入姓名');
         return false;
