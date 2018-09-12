@@ -38,22 +38,20 @@ export default class InvitingRecordPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-      if(navState.url.indexOf('action://9987') > -1){
-        const resetAction = StackActions.reset({
-          index: 1,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabPage'}),
-            NavigationActions.navigate({ routeName: 'LoginPage'}),
-          ],
-        });
-        this.props.navigation.dispatch(resetAction);
-        return false
-      }
+      
       this.backButtonEnabled = navState.canGoBack
       this.forwardButtonEnabled = navState.canGoForward
       this.wv_url = navState.url
       this.status = navState.title
       this.loading =  navState.loading
+  }
+
+  _onShouldStartLoadWithRequest = (e) => {
+    if(e.url.indexOf('action://9987') > -1){
+        this.props.navigation.navigate('LoginPage')
+        return false
+    }
+    return true
   }
 
   sendMessage() {
@@ -99,6 +97,7 @@ export default class InvitingRecordPage extends Component {
           domStorageEnabled={true}
           source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
+          onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest}
           startInLoadingState={true}
           onMessage={(e) => {
             this.handleMessage(e)
