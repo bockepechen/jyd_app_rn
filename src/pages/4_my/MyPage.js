@@ -586,7 +586,14 @@ export default class MyPage extends Component {
                   style={{flexDirection:'row',justifyContent:'center'}}
                   underlayColor='rgba(0,0,0,0)'
                   onPress={()=>{
-                    Linking.openURL(`tel:${`400-8780-777`}`)
+                    let url = 'tel:400-8780-777'
+                    Linking.canOpenURL(url).then(supported => {
+                      if (!supported) {
+                        console.log('Can\'t handle url: ' + url);
+                      } else {
+                        return Linking.openURL(url);
+                      }
+                    }).catch(err => console.error('An error occurred', err));
                   }}>
                   <ImageBackground 
                     source={ImageStores.me_36} 

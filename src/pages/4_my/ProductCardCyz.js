@@ -68,10 +68,6 @@ export default class ProductCardCyz extends Component {
   }
   
   ckht(){
-    // global.NetReqModel.tel_phone = '17188125146'
-    // global.NetReqModel.business_id = 'INV20180206000000004596'
-    // global.NetReqModel.jyd_pubData.user_id = "121";
-    // global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
     global.NetReqModel.business_id = this.paraData.id
     global.NetReqModel.compact_id = '01'
     global.NetReqModel.type_id = '02'
@@ -84,10 +80,6 @@ export default class ProductCardCyz extends Component {
   }
 
   jkxy(){
-    // global.NetReqModel.tel_phone = '17188125146'
-    // global.NetReqModel.business_id = '20180522111057010419'
-    // global.NetReqModel.jyd_pubData.user_id = "121";
-    // global.NetReqModel.jyd_pubData.token_id = "89a5ad1adba2f96b";
     global.NetReqModel.business_id = this.paraData.relationid
     global.NetReqModel.compact_id = '02'
     global.NetReqModel.type_id = '02'
@@ -129,7 +121,14 @@ export default class ProductCardCyz extends Component {
                     </View>
                     <TouchableOpacity 
                         style={{flexDirection:'row',marginRight:scaleSize(108)}}
-                        onPress={()=>{}}
+                        onPress={()=>{
+                            global.NetReqModel.sellInfoId = this.paraData.sellid;
+                            this.goto('WvItemPage',{
+                                url:"/productDetails/querySellinDetail",
+                                jsonObj:global.NetReqModel,
+                                title:'产品详情'
+                            })
+                        }}
                         activeOpacity={0.6}
                     >
                         <Text style={{marginRight:scaleSize(12),width:scaleSize(144),height:scaleSize(51),fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>

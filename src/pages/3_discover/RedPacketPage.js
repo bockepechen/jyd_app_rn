@@ -92,7 +92,7 @@ export default class RedPacketPage extends Component {
         })
       }
       else if(result.return_code == '9987'){
-        this.goto('LoginPage');
+        this.goto('LoginPage',{fromPage:'home'});
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);

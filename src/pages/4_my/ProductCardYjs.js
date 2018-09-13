@@ -88,7 +88,14 @@ export default class ProductCardYjs extends Component {
                     </View>
                     <TouchableOpacity 
                         style={{flexDirection:'row',marginRight:scaleSize(108)}}
-                        onPress={()=>{}}
+                        onPress={()=>{
+                            global.NetReqModel.sellInfoId = this.paraData.sellid;
+                            this.goto('WvItemPage',{
+                                url:"/productDetails/querySellinDetail",
+                                jsonObj:global.NetReqModel,
+                                title:'产品详情'
+                            })
+                        }}
                         activeOpacity={0.6}
                     >
                         <Text style={{marginRight:scaleSize(12),width:scaleSize(144),height:scaleSize(51),fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>
