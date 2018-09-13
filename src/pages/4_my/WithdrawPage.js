@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -259,7 +260,7 @@ export default class WithdrawPage extends Component{
 
     render(){
         return (
-            <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
+            <ScrollView>
                 <View style={GlobalStyles.rootContainer}>
                     <NavigationBar 
                         title={'提现'}
@@ -282,7 +283,7 @@ export default class WithdrawPage extends Component{
                     {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
                     {ViewUtils.renderToast()}
                 </View>
-            </TouchableWithoutFeedback>
+            </ScrollView>
         )
     }
 }

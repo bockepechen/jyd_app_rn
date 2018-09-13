@@ -29,6 +29,7 @@ import { StackActions,NavigationActions } from 'react-navigation';
 export default class LoginPage extends Component {
   constructor(props){
     super(props);
+    this.navData = this.props.navigation.state.params;
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.telNum = global.NetReqModel.tel_phone;
@@ -63,13 +64,19 @@ export default class LoginPage extends Component {
   }
 
   navGoback = () => {
-    if(this.state.isLoading) {
-      // 关闭Loading动画
-      this.setState({isLoading:false}, () => {
+    console.log(this.navData)
+    if(this.navData && this.navData.data && this.navData.data.fromPage == 'home'){
+      this.props.navigation.dispatch(StackActions.popToTop());
+    }
+    else{
+      if(this.state.isLoading) {
+        // 关闭Loading动画
+        this.setState({isLoading:false}, () => {
+          this.props.navigation.goBack();
+        })
+      } else {
         this.props.navigation.goBack();
-      })
-    } else {
-      this.props.navigation.goBack();
+      }
     }
   }
 

@@ -568,7 +568,7 @@ export default class MyPage extends Component {
           <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.3)'}}>
             <View style={{flexDirection:'column',justifyContent:'center',height:scaleSize(360),width:scaleSize(915),borderRadius:scaleSize(30),backgroundColor:'#fff'}} >
               <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(50)}}>
-                <Text style={{color:'#998675',fontSize:scaleSize(60)}}>{'15822854761'}</Text>
+                <Text style={{color:'#998675',fontSize:scaleSize(42)}}>{'400-8780-777(服务时间:9:00-18:00)'}</Text>
               </View>
               <View style={{flexDirection:'row',justifyContent:'center',marginTop:scaleSize(39)}}>
                 <TouchableHighlight 
@@ -586,7 +586,7 @@ export default class MyPage extends Component {
                   style={{flexDirection:'row',justifyContent:'center'}}
                   underlayColor='rgba(0,0,0,0)'
                   onPress={()=>{
-                    Linking.openURL(`tel:${`15822854761`}`)
+                    Linking.openURL(`tel:${`400-8780-777`}`)
                   }}>
                   <ImageBackground 
                     source={ImageStores.me_36} 

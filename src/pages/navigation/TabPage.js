@@ -106,11 +106,12 @@ export default class TabPage extends Component {
         renderIcon={() => <Image style={styles.tabIcon} source={renderIcon} />}
         renderSelectedIcon={() => <Image style={styles.tabIcon} source={renderSelectedIcon} />}
         onPress={() => {
-          this.setState({ selectedTab: selectedTab },()=>{
-            if(global.NetReqModel.jyd_pubData.token_id == '' && selectedTab =='My'){
-              this.props.navigation.navigate('LoginPage')
-            }
-          });
+          if(global.NetReqModel.jyd_pubData.token_id == '' && selectedTab =='My'){
+            this.props.navigation.navigate('LoginPage')
+          }
+          else{
+            this.setState({ selectedTab: selectedTab })
+          }
         }}
         badgeText={badgeText ? badgeText : ''} >
         <Component {...this.props} />

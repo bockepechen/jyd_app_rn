@@ -116,8 +116,9 @@ export default class RechargeShortcut extends Component {
         >
             {this.renderSubTitleLine('温馨提示')}
             <View style={{marginTop:scaleSize(66),marginLeft:scaleSize(110),marginRight:scaleSize(110)}}>
-                <Text style={{fontSize:scaleSize(36), color:'#989898'}}>1、修改当前认证手机号码时,您的银行存管手机号码将会同步修改</Text>
-                <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(18),color:'#989898'}}>2、如有问题,请联系客服400-8780-777</Text>
+                <Text style={{fontSize:scaleSize(36), color:'#989898'}}>1、充值手续费：充值不收取任何手续费</Text>
+                <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(18),color:'#989898'}}>2、如充值过程中出现异常，请联系嘉e贷客服400-8780-777或直接与江西银行客服联系400-78-96266</Text>
+                <Text style={{fontSize:scaleSize(36),marginTop:scaleSize(18),color:'#989898'}}>3、使用中国邮政储蓄银行卡的用户，交易时间为1:00-20:30</Text>
             </View>
         </View>
     )
@@ -160,7 +161,8 @@ export default class RechargeShortcut extends Component {
           <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:scaleSize(2), borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
             <TextInput 
               style={{flex:1,color:'#996875' ,marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(36), paddingTop:0, paddingBottom:0}}
-              clearButtonMode={'while-editing'}
+              maxLength={10}
+              keyboardType={kbType}
               placeholder={'请输入充值金额,不得少于100元'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'

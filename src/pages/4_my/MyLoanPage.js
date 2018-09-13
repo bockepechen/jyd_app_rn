@@ -19,7 +19,7 @@ export default class MyLoanPage extends PureComponent {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.scrollableTabTitle = ['嘉e优选','精选散标']
+    this.scrollableTabTitle = ['嘉e优选','散标债权']
   }
 
   componentDidMount() {
@@ -48,7 +48,7 @@ export default class MyLoanPage extends PureComponent {
         }}>
 
         <TabJeyx key={'jeyx'} tabLabel={'嘉e优选'} {...this.props}/>
-        <TabSbjq key={'sbjq'} tabLabel={'散标债券'} {...this.props}/>
+        <TabSbjq key={'sbjq'} tabLabel={'散标债权'} {...this.props}/>
       </ScrollableTabView>
     )
   }
