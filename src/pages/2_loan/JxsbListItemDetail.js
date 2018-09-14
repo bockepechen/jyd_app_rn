@@ -65,7 +65,7 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
-    if(navState.url == 'action://jydapp'){
+    if(navState.url.indexOf('action://jydapp') > -1){
       console.log('aaaaaaa');
       this.ifbackhome = true
       this.props.navigation.dispatch(StackActions.popToTop());
@@ -76,6 +76,16 @@ export default class JeyxListItemDetail extends Component {
     this.wv_url = navState.url
     this.status = navState.title
     this.loading = navState.loading;
+  }
+
+  _onShouldStartLoadWithRequest = (e) => {
+    console.log('========================= 精选散标Webview控件 ==============================');
+    console.log(e.url);
+    // if (e.url.indexOf('9987') > -1) {
+    //   this.props.navigation.navigate('RegisterPage');
+    //   return false;
+    // }
+    return true;
   }
 
   sendMessage() {
@@ -112,6 +122,7 @@ export default class JeyxListItemDetail extends Component {
           source={{uri:this.wv_url}}
           // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
+          onShouldStartLoadWithRequest = {this._onShouldStartLoadWithRequest}
           startInLoadingState={true}
           onMessage={(e) => {
             this.handleMessage(e)

@@ -68,7 +68,7 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
-    if(navState.url == 'action://jydapp'){
+    if(navState.url.indexOf('action://jydapp') > -1){
       console.log('aaaaaaa');
       this.ifbackhome = true
       this.props.navigation.dispatch(StackActions.popToTop());

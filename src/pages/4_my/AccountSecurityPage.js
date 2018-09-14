@@ -42,11 +42,11 @@ export default class AccountSecurityPage extends Component {
               this.goto('BankCardListPage')
             }
         },
-        {
-            title:'手机号码',
-            // callback:()=>{this.goto('AuthPhoneNumPage')}
-            callback:this.updateTel
-        },
+        // {
+        //     title:'手机号码',
+        //     // callback:()=>{this.goto('AuthPhoneNumPage')}
+        //     callback:this.updateTel
+        // },
         {
             title:'联系地址',
             callback:()=>{
@@ -78,6 +78,12 @@ export default class AccountSecurityPage extends Component {
               })
           }
         },
+        {
+            title:'银行账户存管签约情况',
+            callback:()=>{
+              this.riskValidate()
+          }
+        },
     ]
     this.state = {
       httpRes:{},
@@ -100,6 +106,60 @@ export default class AccountSecurityPage extends Component {
     this.props.navigation.navigate(url,{
       data:JsonObj ? JsonObj : {}
     });
+  }
+
+  async riskValidate() {
+    let url = await '/riskValidate';
+    global.NetReqModel.product_id = "";
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+    .then((result) => {
+      console.log(result);
+      this.setState({isLoading:false},()=>{
+        if(result.return_code == '0000'){
+          this.goto('AccountAgreementPage')
+        }
+        else if(result.return_code == '9983'){
+          this.refs.toast.show(result.return_msg);
+        }
+        else if(result.return_code == '9987'){
+          this.refs.toast.show(result.return_msg);
+          this.goto('LoginPage')
+        }
+        else if(result.return_code == '9986'){
+          this.goto('AccountOpeningPage')
+        }
+        else if(result.return_code == '9984'){
+          this.goto('AccountAgreementPage')
+        }
+        else if(result.return_code == '9970'){
+          global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+          this.goto('BindCardNewPage',{
+            url:'/bindCard',
+              jsonObj:global.NetReqModel,
+              title:'绑定银行卡'
+          })
+        }
+        else if(result.return_code == '9985'){
+          this.goto('AccountSetPwdPage',{
+            url:'/transPwd/setPassword',
+            jsonObj:global.NetReqModel,
+            title:'设置交易密码'
+          })
+        }
+        else if(result.return_code == '8888'){
+          this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
+          return -1;
+        }
+      })
+    })
+    .catch((e) => {
+      console.log(e);
+      this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+      return -1;
+      if(this.state.isLoading){
+        this.setState({isLoading:false})
+      }
+    })
   }
 
   navGoback = () => {
