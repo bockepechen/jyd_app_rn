@@ -43,7 +43,7 @@ export default class JeyxListItemDetail extends Component {
 
   _onNavigationStateChange = (navState) => {
     console.log(navState)
-    if(navState.url.indexOf('action://9987') > -1){
+    if(navState.url.indexOf('9987') > -1){
       const resetAction = StackActions.reset({
         index: 1,
         actions: [
@@ -81,10 +81,10 @@ export default class JeyxListItemDetail extends Component {
   _onShouldStartLoadWithRequest = (e) => {
     console.log('========================= 精选散标Webview控件 ==============================');
     console.log(e.url);
-    // if (e.url.indexOf('9987') > -1) {
-    //   this.props.navigation.navigate('RegisterPage');
-    //   return false;
-    // }
+    if (e.url.indexOf('9987') > -1) {
+      this.props.navigation.navigate('RegisterPage');
+      return false;
+    }
     return true;
   }
 

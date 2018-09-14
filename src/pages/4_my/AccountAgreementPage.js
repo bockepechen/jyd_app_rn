@@ -30,6 +30,7 @@ export default class AccountAgreementPage extends Component{
             jx_status : '0',
             xy_status : '0',
             sqs_status : '0',
+            jxBank_compactUrl : '',
             readtzxy:false,
             readzzxy:false,
             readjfxy:false,
@@ -62,6 +63,7 @@ export default class AccountAgreementPage extends Component{
             jx_status : result.jx_status,
             xy_status : result.xy_status,
             sqs_status : result.sqs_status,
+            jxBank_compactUrl : result.jxBank_compactUrl,
             readtzxy : result.jx_status == '1' ? true : false,
             readzzxy : result.jx_status == '1' ? true : false,
             readjfxy : result.jx_status == '1' ? true : false,
@@ -108,6 +110,14 @@ export default class AccountAgreementPage extends Component{
       global.NetReqModel.compact_id = compact_id
       this.goto('AccountAgreementSignPage',{
         url:'/esign/showSqs',
+        jsonObj:global.NetReqModel,
+        title:titlename
+      })
+    }
+
+    showXy(titlename){
+      this.goto('QualificationItemPage',{
+        url:this.state.jxBank_compactUrl,
         jsonObj:global.NetReqModel,
         title:titlename
       })
@@ -182,7 +192,7 @@ export default class AccountAgreementPage extends Component{
       return (
         <View>
           <View style={{marginTop:scaleSize(87),marginLeft:scaleSize(111)}}>
-              <Text style={{fontSize:scaleSize(42),fontWeight:'bold',color:'#998675'}}>{'江西银行存管投资协议'}</Text>
+              <Text onPress={()=>{this.showXy('江西银行存管投资协议')}} style={{fontSize:scaleSize(42),fontWeight:'bold',color:'#998675'}}>{'江西银行存管投资协议'}</Text>
           </View>
           <View style={{marginTop:scaleSize(87),marginLeft:scaleSize(111)}}>
             <View style={{flexDirection:'row'}}>
@@ -202,7 +212,7 @@ export default class AccountAgreementPage extends Component{
               />
             </View>
             <View style={{flexDirection:'row',marginTop:scaleSize(42)}}>
-              <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管债转协议》'}</Text>
+              <Text onPress={()=>{this.showXy('江西银行存管投资协议')}}  style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管债转协议》'}</Text>
               <CheckBox
                   style={{flexDirection:'row',marginLeft:scaleSize(201)}}
                   disabled = {this.state.jx_status == '1' ? true : false}
@@ -218,7 +228,7 @@ export default class AccountAgreementPage extends Component{
               />
             </View>
             <View style={{flexDirection:'row',marginTop:scaleSize(42)}}>
-              <Text style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管缴费协议》'}</Text>
+              <Text onPress={()=>{this.showXy('江西银行存管投资协议')}} style={{fontSize:scaleSize(36),color:'#3b92f0'}}>{'《江西银行资金存管缴费协议》'}</Text>
               <CheckBox
                   style={{flexDirection:'row',marginLeft:scaleSize(201)}}
                   disabled = {this.state.jx_status == '1' ? true : false}

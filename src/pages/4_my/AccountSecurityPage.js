@@ -66,7 +66,7 @@ export default class AccountSecurityPage extends Component {
             }
         },
         {
-            title:'修改交易密码',
+            title:'重置交易密码',
             callback:()=>{
               if(!this.checkLogin()){
                 return false
@@ -74,7 +74,7 @@ export default class AccountSecurityPage extends Component {
               this.goto('ResetTradepwdPage',{
                 url:'/transPwd/setAndResetPassword',
                 jsonObj:global.NetReqModel,
-                title:'修改交易密码'
+                title:'重置交易密码'
               })
           }
         },
