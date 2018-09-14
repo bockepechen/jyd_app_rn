@@ -122,7 +122,7 @@ export default class JeyxListItemDetail extends Component {
           source={{uri:this.wv_url}}
           // source={require('./wv.html')}
           onNavigationStateChange={this._onNavigationStateChange}
-          onShouldStartLoadWithRequest = {this._onShouldStartLoadWithRequest}
+          // onShouldStartLoadWithRequest = {this._onShouldStartLoadWithRequest}
           startInLoadingState={true}
           onMessage={(e) => {
             this.handleMessage(e)

@@ -453,7 +453,16 @@ export default class MyPage extends Component {
       {
         img:ImageStores.me_49,
         title:'风险评测',
-        callback:()=>{this.riskValidate()},
+        callback:()=>{
+          this.props.navigation.navigate('JeyxListItemDetail',{
+            data:{
+              url:'/risk/haveRisk',
+              title:'风险评测',
+              jsonObj:global.NetReqModel
+            },
+            ...this.props
+          });
+        },
       },
       {
         img:ImageStores.me_50,
