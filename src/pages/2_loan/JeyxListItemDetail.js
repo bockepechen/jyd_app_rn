@@ -78,7 +78,7 @@ export default class JeyxListItemDetail extends Component {
         title:'设置交易密码'
       })
     }
-    if(navState.url.indexOf('action://RechargePage') > -1){
+    if(navState.url.indexOf('RechargePage') > -1){
       const resetAction = StackActions.reset({
         index: 1,
         actions: [
@@ -87,6 +87,11 @@ export default class JeyxListItemDetail extends Component {
         ],
       });
       this.props.navigation.dispatch(resetAction);
+      return false
+    }
+    if(navState.url.indexOf('homePage') > -1){
+      this.ifbackhome = true
+      this.props.navigation.dispatch(StackActions.popToTop());
       return false
     }
     if(navState.url.indexOf('action://jydapp') > -1){
