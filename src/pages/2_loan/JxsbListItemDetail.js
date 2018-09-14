@@ -54,6 +54,27 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
+    else if(navState.url.indexOf('9986') > -1){
+      this.goto('AccountOpeningPage')
+    }
+    else if(navState.url.indexOf('9984') > -1){
+      this.goto('AccountAgreementPage')
+    }
+    else if(navState.url.indexOf('9970') > -1){
+      global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+      this.goto('BindCardNewPage',{
+        url:'/bindCard',
+          jsonObj:global.NetReqModel,
+          title:'绑定银行卡'
+      })
+    }
+    else if(navState.url.indexOf('9985') > -1){
+      this.goto('AccountSetPwdPage',{
+        url:'/transPwd/setPassword',
+        jsonObj:global.NetReqModel,
+        title:'设置交易密码'
+      })
+    }
     if(navState.url.indexOf('action://RechargePage') > -1){
       const resetAction = StackActions.reset({
         index: 1,
