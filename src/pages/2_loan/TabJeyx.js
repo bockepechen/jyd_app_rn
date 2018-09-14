@@ -130,14 +130,6 @@ export default class TabJeyx extends Component {
         else if(result.return_code == '9983'){
           this.refs.toast.show(result.return_msg);
         }
-        else if(result.return_code == '9965'){
-          this.showModalView(true,this.renderModal())
-          this.refs.toast.show(result.return_msg);
-        }
-        else if(result.return_code == '9964'){
-          this.showModalView(true,this.renderModal())
-          this.refs.toast.show(result.return_msg);
-        }
         else if(result.return_code == '9987'){
           this.refs.toast.show(result.return_msg);
           this.goto('LoginPage')
@@ -162,6 +154,14 @@ export default class TabJeyx extends Component {
             jsonObj:global.NetReqModel,
             title:'设置交易密码'
           })
+        }
+        else if(result.return_code == '9965'){
+          this.showModalView(true,this.renderModal())
+          this.refs.toast.show(result.return_msg);
+        }
+        else if(result.return_code == '9964'){
+          this.showModalView(true,this.renderModal())
+          this.refs.toast.show(result.return_msg);
         }
         else if(result.return_code == '8888'){
           this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);

@@ -41,6 +41,12 @@ export default class JeyxListItemDetail extends Component {
     this.AndroidBackHandler.removePressBackListener();
   }
 
+  goto(url,JsonObj){
+    this.props.navigation.navigate(url,{
+      data:JsonObj ? JsonObj : {}
+    });
+  }
+
   _onNavigationStateChange = (navState) => {
     console.log(navState)
     if(navState.url.indexOf('9987') > -1){
