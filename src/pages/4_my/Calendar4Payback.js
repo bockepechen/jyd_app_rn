@@ -54,9 +54,10 @@ export default class Calendar4Payback extends Component {
       isLoading:true,
       refundList: null
     });
-    global.NetReqModel.tel_phone = '15222463813';
+    // global.NetReqModel.tel_phone = '15222463813';
     global.NetReqModel.current_month = month;
-    global.NetReqModel.jyd_pubData.user_id = '215';
+    // global.NetReqModel.jyd_pubData.user_id = '215';
+    console.log(global.NetReqModel);
     let url = await '/refundCalendar';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
