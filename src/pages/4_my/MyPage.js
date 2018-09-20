@@ -184,7 +184,7 @@ export default class MyPage extends Component {
       }}>
         <TouchableHighlight
           onPress={() => {
-            if (this.commonBlocker.checkLogin()) {
+            if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
               this.goto('AccountSecurityPage');
             }
           }}
@@ -240,7 +240,7 @@ export default class MyPage extends Component {
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.commonBlocker.checkLogin()) {
+                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
                     this.goto('AssetPage');
                   }
                 }}
@@ -258,7 +258,7 @@ export default class MyPage extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.commonBlocker.checkLogin()) {
+                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
                     this.goto('MyLoanPage');
                   }
                 }}
@@ -278,7 +278,7 @@ export default class MyPage extends Component {
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.commonBlocker.checkLogin()) {
+                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
                     this.goto('RedPacketPage');
                   }
                 }}
@@ -296,7 +296,7 @@ export default class MyPage extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.commonBlocker.checkLogin()) {
+                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
                     global.NetReqModel.page_number = '1'
                     this.goto('MyGoldPage', {
                       url: '/integral',
@@ -331,7 +331,7 @@ export default class MyPage extends Component {
         img: ImageStores.me_48,
         title: '回款日历',
         callback: () => {
-          if (this.commonBlocker.checkLogin()) {
+          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
             this.props.navigation.navigate('Calendar4Payback');
           }
         },
@@ -340,7 +340,7 @@ export default class MyPage extends Component {
         img: ImageStores.me_49,
         title: '风险评测',
         callback: () => {
-          if (this.commonBlocker.checkLogin()) {
+          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
             this.props.navigation.navigate('JeyxListItemDetail', {
               data: {
                 url: '/risk/haveRisk',
@@ -361,7 +361,7 @@ export default class MyPage extends Component {
         img: ImageStores.me_51,
         title: '我的二维码',
         callback: () => {
-          if (this.commonBlocker.checkLogin()) {
+          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
             this.goto('QcodePage', {
               url: '/qrCode',
               title: '我的二维码',

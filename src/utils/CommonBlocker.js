@@ -11,7 +11,7 @@ import {
 import { scaleSize } from '../utils/FitViewUtils';
 import { ImageStores } from '../../res/styles/ImageStores';
 import DataResponsitory from '../dao/DataResponsitory';
-import {ExceptionMsg} from '../dao/ExceptionMsg';
+import { ExceptionMsg } from '../dao/ExceptionMsg';
 
 export default class CommonBlocker {
   constructor(component) {
@@ -34,6 +34,29 @@ export default class CommonBlocker {
   }
 
   /**
+   * 校验是否登录失效
+   */
+  checkExpireLogin() {
+    this.dataResponsitory.fetchNetResponsitory('/checkDeviceToken', global.NetReqModel)
+      .then((result) => {
+        if (result.return_code == '0000') {
+          return true;
+        } else if (result.return_code === '9991') {
+          this.handleDifferentPhone();
+          return false;
+        } else if (result.return_code == '8888') {
+          this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
+          return false;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+        return false;
+      })
+  }
+
+  /**
    * 处理设备不一致，重新登录
    */
   handleDifferentPhone() {
@@ -41,9 +64,11 @@ export default class CommonBlocker {
       '通知',
       '您的登录已失效，请重新登录',
       [
-        { text: '重新登录', 
-          onPress: () => { this.props.navigation.navigate('LoginPage') }, 
-          style: 'cancel' },
+        {
+          text: '重新登录',
+          onPress: () => { this.props.navigation.navigate('LoginPage') },
+          style: 'cancel'
+        },
       ],
       { cancelable: false }
     )
@@ -140,6 +165,7 @@ export default class CommonBlocker {
             }
           } else if (result.return_code === '9991') {
             this.handleDifferentPhone(); // 校验设备不一致
+            return false;
           } else if (result.return_code == '8888') {
             this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
             return false;
