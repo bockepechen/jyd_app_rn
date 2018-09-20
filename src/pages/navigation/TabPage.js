@@ -37,7 +37,7 @@ export default class TabPage extends Component {
       global.NetReqModel.jyd_pubData.source_type = '0001';
       global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
       DeviceInfo.getIPAddress().then(ip => {
-        global.NetReqModel.jyd_pubData.ip = ip;
+        global.NetReqModel.user_ip = ip;
         console.log(`当前手机IP：${ip}`);
       })
     });
@@ -55,7 +55,7 @@ export default class TabPage extends Component {
     global.NetReqModel.jyd_pubData.source_type = '0001';
     global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
     DeviceInfo.getIPAddress().then(ip => {
-      global.NetReqModel.jyd_pubData.ip = ip;
+      global.NetReqModel.user_ip = ip;
       console.log(`当前手机IP：${ip}`);
     })
   }
@@ -67,7 +67,7 @@ export default class TabPage extends Component {
     global.NetReqModel.jyd_pubData.source_type = '0001';
     global.NetReqModel.jyd_pubData.system_id = `${DeviceInfo.getBrand()} ${Platform.OS} ${DeviceInfo.getSystemVersion()}`;
     DeviceInfo.getIPAddress().then(ip => {
-      global.NetReqModel.jyd_pubData.ip = ip;
+      global.NetReqModel.user_ip = ip;
       console.log(`当前手机IP：${ip}`);
     })
   }
@@ -80,16 +80,11 @@ export default class TabPage extends Component {
   }
 
   componentDidMount() {
-    // DeviceEventEmitter.addListener('navreset',(dic)=>{
-    //     this.setState({
-    //       selectedTab: dic.tab,
-    //     })
-    // });
-    DeviceEventEmitter.addListener('callModal', (isShow, modalContentView) => {
+    DeviceEventEmitter.addListener('callModal', (isShow, modalContentView,ref_modalView) => {
       if (isShow) {
-        this.refs.modalView.show(modalContentView);
+        ref_modalView.show(modalContentView);
       } else {
-        this.refs.modalView.close();
+        ref_modalView.close();
       }
     });
     SplashScreen.hide();
@@ -114,7 +109,7 @@ export default class TabPage extends Component {
           }
         }}
         badgeText={badgeText ? badgeText : ''} >
-        <Component {...this.props} />
+        <Component ref_modalView = {this.refs.modalView} {...this.props} />
       </TabNavigator.Item>
     )
   }
@@ -135,6 +130,7 @@ export default class TabPage extends Component {
           {this.renderTabNavigator(MyPage, 'My', '我的', ImageStores.sy_10, ImageStores.sy_7)}
         </TabNavigator>
         <ModalView ref='modalView'/>
+        
       </SafeAreaViewPlus>
 
     return safeRootView;

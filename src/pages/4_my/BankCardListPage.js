@@ -143,7 +143,7 @@ export default class BankCardListPage extends Component{
                     style={{width:scaleSize(1173), height:scaleSize(498), flexDirection:'row'}}>
                     <TouchableOpacity 
                         onPress={()=>{
-                            global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip;
+                            // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip;
                             this.goto('BindCardNewPage',{
                                 url:'/bindCard',
                                 jsonObj:global.NetReqModel,

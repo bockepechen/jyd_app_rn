@@ -35,11 +35,7 @@ export default class HomePage extends Component {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
-    // global.NetReqModel.tel_phone =  "15822753827";
-    // global.NetReqModel.jyd_pubData.user_id =  "91";
-    // global.NetReqModel.jyd_pubData.token_id =  "123235h5e3111";
     this.state = {
-      // sourceData: ['银行存管','风险控制','安全保障','合作机构','关于我们'],
       sourceData: [
         {
           title:'银行存管',
@@ -159,7 +155,7 @@ export default class HomePage extends Component {
           this.goto('AccountAgreementPage')
         }
         else if(result.return_code == '9970'){
-          global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+          // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
           this.goto('BindCardNewPage',{
             url:'/bindCard',
               jsonObj:global.NetReqModel,
@@ -468,7 +464,7 @@ export default class HomePage extends Component {
         this.goto('AccountAgreementPage')
       }
       else if(result.return_code == '9970'){
-        global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+        // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
         this.goto('BindCardNewPage',{
           url:'/bindCard',
             jsonObj:global.NetReqModel,
@@ -510,7 +506,10 @@ export default class HomePage extends Component {
       {
         iconImg:ImageStores.sy_24,
         iconName:'我的奖励',
-        callback:() => {this.goto('RedPacketPage')}
+        // callback:() => {this.goto('RedPacketPage')}
+        callback:() => {
+          DeviceEventEmitter.emit('callModal',true,()=>{return(<View/>)});
+        }
       },
       {
         iconImg:ImageStores.sy_25,

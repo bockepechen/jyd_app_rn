@@ -141,7 +141,7 @@ export default class TabJeyx extends Component {
           this.goto('AccountAgreementPage')
         }
         else if(result.return_code == '9970'){
-          global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+          // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
           this.goto('BindCardNewPage',{
             url:'/bindCard',
               jsonObj:global.NetReqModel,

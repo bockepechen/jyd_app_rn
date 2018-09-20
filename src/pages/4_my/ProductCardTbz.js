@@ -78,17 +78,17 @@ export default class ProductCardTbz extends Component {
                 resizeMode={'stretch'} 
                 style={{height:scaleSize(909),width:scaleSize(1242)}}
             >
-                <View style={{marginTop:scaleSize(66),flexDirection:'row',justifyContent:'space-between'}}>
-                    <View style={{flexDirection:'row',marginLeft:scaleSize(108)}}>
+                <View style={{marginTop:scaleSize(66),flexDirection:'row',alignItems:'center'}}>
+                    <View style={{flexDirection:'row', alignItems:'center', marginLeft:scaleSize(108)}}>
                         <Image
                             source={this.paraData.borrowtypeid == '1' ? ImageStores.me_28 : ImageStores.me_29}
                             resizeMode={'stretch'} 
-                            style={{marginTop:scaleSize(-7),height:scaleSize(48),width:scaleSize(48),marginRight:scaleSize(27)}}
+                            style={{height:scaleSize(48),width:scaleSize(48)}}
                         />
-                        <Text style={{height:scaleSize(42),fontSize:scaleSize(36),color:'#656565',fontWeight:'bold'}}>{this.paraData.sellname}</Text>
+                        <Text style={{marginLeft:scaleSize(27), width:scaleSize(327), fontSize:scaleSize(42),color:'#656565',fontWeight:'bold'}}>{`${this.paraData.sellname}`}</Text>
                     </View>
                     <TouchableOpacity 
-                        style={{flexDirection:'row',marginRight:scaleSize(108)}}
+                        style={{marginLeft:scaleSize(429),flexDirection:'row', alignItems:'center'}}
                         onPress={()=>{
                             global.NetReqModel.sellInfoId = this.paraData.sellid;
                             this.goto('WvItemPage',{
@@ -99,11 +99,13 @@ export default class ProductCardTbz extends Component {
                         }}
                         activeOpacity={0.6}
                     >
-                        <Text style={{marginRight:scaleSize(12),width:scaleSize(144),height:scaleSize(51),fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>
+                        <View style={{height:scaleSize(36), alignItems:'center', justifyContent:'center'}}>
+                        <Text style={{fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>
+                        </View>
                         <Image
                             source={ImageStores.me_6}
                             resizeMode={'stretch'} 
-                            style={{marginTop:scaleSize(-7),tintColor:'#998675',height:scaleSize(45),width:scaleSize(27)}}
+                            style={{marginLeft:scaleSize(12),tintColor:'#998675',height:scaleSize(45),width:scaleSize(27)}}
                         />
                     </TouchableOpacity>
                 </View>

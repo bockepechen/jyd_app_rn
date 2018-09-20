@@ -13,7 +13,8 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
-import BufferUtils from '../../utils/BufferUtils'
+import BufferUtils from '../../utils/BufferUtils';
+import {PublicCode} from '../../dao/PublicCode';
 
 export default class RechargeBankPage extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ export default class RechargeBankPage extends Component {
   }
   
   _onNavigationStateChange = (navState) => {
-    console.log(navState)
+    console.log(navState);
     if(navState.url == 'action://jydapp.forgetPassword'){
       console.log('aaaaaaa');
       const resetAction = StackActions.reset({
@@ -57,8 +58,8 @@ export default class RechargeBankPage extends Component {
       });
       this.props.navigation.dispatch(resetAction);
       return false
-    }else if(navState.url == 'action://jydapp'){
-      console.log('bbbbbb');
+    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
+      console.log('@@@@@@@@@@@@@@ 充值 [RechargeBankPage] 江西银行成功回调');
       this.goto('RechargeResultPage',{
         title:'充值成功',
         type:'1'
@@ -112,9 +113,6 @@ export default class RechargeBankPage extends Component {
           source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
-          onMessage={(e) => {
-            this.handleMessage(e)
-          }}
         />
       </View>
     )

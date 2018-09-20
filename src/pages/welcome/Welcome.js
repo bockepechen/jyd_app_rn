@@ -68,8 +68,6 @@ export default class Welcome extends Component {
   async getIp(key) {
     return await AsyncStorage.getItem(key, (error, result) => {
       if (!error) {
-        console.log('update ip');
-          console.log(result);
           if(result!=null){
             AppConfig.REQUEST_HOST = result
           }

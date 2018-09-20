@@ -13,7 +13,8 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
-import BufferUtils from '../../utils/BufferUtils'
+import BufferUtils from '../../utils/BufferUtils';
+import {PublicCode} from '../../dao/PublicCode';
 
 export default class UnBindCardPage extends Component {
   constructor(props) {
@@ -52,8 +53,8 @@ export default class UnBindCardPage extends Component {
       console.log('aaaaaaa');
       this.props.navigation.goBack();
       return false
-    }else if(navState.url == 'action://jydapp'){
-      console.log('bbbbbb');
+    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
+      console.log('@@@@@@@@@@@@@@ 解绑卡 [UnBindCardPage] 江西银行成功回调');
       this.goto('RechargeResultPage',{
         title:'解绑成功',
         type:'1'

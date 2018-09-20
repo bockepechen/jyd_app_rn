@@ -13,7 +13,8 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions,NavigationActions } from 'react-navigation';
-import BufferUtils from '../../utils/BufferUtils'
+import BufferUtils from '../../utils/BufferUtils';
+import {PublicCode} from '../../dao/PublicCode';
 
 export default class MyGoldPage extends Component {
   constructor(props) {
@@ -64,8 +65,8 @@ export default class MyGoldPage extends Component {
       this.props.navigation.goBack();
       return false
     }
-    else if(navState.url == 'action://jydapp'){
-      console.log('bbbbbb');
+    else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
+      console.log('@@@@@@@@@@@@@@ 我的嘉金币 [MyGoldPage] 江西银行成功回调');
       this.goto('RechargeResultPage',{
         title:'充值成功',
         type:'1'

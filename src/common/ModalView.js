@@ -87,7 +87,7 @@ export default class ModalView extends Component {
 const styles = StyleSheet.create({
   modal_container: {
     width:GlobalStyles.WINDOW_WIDTH, 
-    height:GlobalStyles.WINDOW_HEIGHT, 
+    height:GlobalStyles.WINDOW_HEIGHT+20, 
     position:'absolute', 
     top:0,
   }

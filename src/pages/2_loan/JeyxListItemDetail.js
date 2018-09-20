@@ -14,7 +14,8 @@ import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions,NavigationActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
-import BufferUtils from '../../utils/BufferUtils'
+import BufferUtils from '../../utils/BufferUtils';
+import {PublicCode} from '../../dao/PublicCode';
 
 export default class JeyxListItemDetail extends Component {
   constructor(props) {
@@ -70,7 +71,7 @@ export default class JeyxListItemDetail extends Component {
       this.goto('AccountAgreementPage')
     }
     else if(navState.url.indexOf('9970') > -1){
-      global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
+      // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
       this.goto('BindCardNewPage',{
         url:'/bindCard',
           jsonObj:global.NetReqModel,
@@ -100,8 +101,8 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(StackActions.popToTop());
       return false
     }
-    if(navState.url.indexOf('action://jydapp') > -1){
-      console.log('aaaaaaa');
+    if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
+      console.log('@@@@@@@@@@@@@@ 嘉e优选 [JeyxListItemDetail] 江西银行成功回调');
       this.ifbackhome = true
       this.props.navigation.dispatch(StackActions.popToTop());
       return false
