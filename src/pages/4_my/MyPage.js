@@ -139,14 +139,14 @@ export default class MyPage extends Component {
           </View>
           <View style={{ marginTop: scaleSize(81), marginLeft: scaleSize(21), height: scaleSize(84), flexDirection: 'row' }}>
             <TouchableHighlight
-              onPress={() => { this.commonBlocker.checkGroup('RechargePage') }}
+              onPress={async () => { await this.commonBlocker.checkGroup('RechargePage') }}
               underlayColor='rgba(0,0,0,0)'>
               <ImageBackground source={ImageStores.me_5} resizeMode={'stretch'} style={{ width: scaleSize(216), height: scaleSize(84), alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: scaleSize(48), fontWeight: '200', color: '#ffffff' }}>{'充值'}</Text>
               </ImageBackground>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={() => { this.commonBlocker.checkGroup('WithdrawPage') }}
+              onPress={async () => { await this.commonBlocker.checkGroup('WithdrawPage') }}
               underlayColor='rgba(0,0,0,0)'>
               <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{ marginLeft: scaleSize(27), width: scaleSize(216), height: scaleSize(84), alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: scaleSize(48), fontWeight: '200', color: '#ff3a49' }}>{'提现'}</Text>
@@ -183,8 +183,8 @@ export default class MyPage extends Component {
         justifyContent: 'space-between',
       }}>
         <TouchableHighlight
-          onPress={() => {
-            if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+          onPress={async () => {
+            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
               this.goto('AccountSecurityPage');
             }
           }}
@@ -239,8 +239,8 @@ export default class MyPage extends Component {
           <View style={{ flex: 1, borderWidth: 0, flexDirection: 'column', justifyContent: 'space-evenly' }}>
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
-                onPress={() => {
-                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+                onPress={async () => {
+                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
                     this.goto('AssetPage');
                   }
                 }}
@@ -257,8 +257,8 @@ export default class MyPage extends Component {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {
-                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+                onPress={async () => {
+                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
                     this.goto('MyLoanPage');
                   }
                 }}
@@ -277,8 +277,8 @@ export default class MyPage extends Component {
             </View>
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
-                onPress={() => {
-                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+                onPress={async () => {
+                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
                     this.goto('RedPacketPage');
                   }
                 }}
@@ -295,8 +295,8 @@ export default class MyPage extends Component {
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => {
-                  if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+                onPress={async () => {
+                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
                     global.NetReqModel.page_number = '1'
                     this.goto('MyGoldPage', {
                       url: '/integral',
@@ -330,8 +330,8 @@ export default class MyPage extends Component {
       {
         img: ImageStores.me_48,
         title: '回款日历',
-        callback: () => {
-          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
             this.props.navigation.navigate('Calendar4Payback');
           }
         },
@@ -339,8 +339,8 @@ export default class MyPage extends Component {
       {
         img: ImageStores.me_49,
         title: '风险评测',
-        callback: () => {
-          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
             this.props.navigation.navigate('JeyxListItemDetail', {
               data: {
                 url: '/risk/haveRisk',
@@ -360,8 +360,8 @@ export default class MyPage extends Component {
       {
         img: ImageStores.me_51,
         title: '我的二维码',
-        callback: () => {
-          if (this.commonBlocker.checkLogin() && this.commonBlocker.checkExpireLogin()) {
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
             this.goto('QcodePage', {
               url: '/qrCode',
               title: '我的二维码',

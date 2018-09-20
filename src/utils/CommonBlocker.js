@@ -37,23 +37,25 @@ export default class CommonBlocker {
    * 校验是否登录失效
    */
   checkExpireLogin() {
-    this.dataResponsitory.fetchNetResponsitory('/checkDeviceToken', global.NetReqModel)
-      .then((result) => {
-        if (result.return_code == '0000') {
-          return true;
-        } else if (result.return_code === '9991') {
-          this.handleDifferentPhone();
-          return false;
-        } else if (result.return_code == '8888') {
-          this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
-          return false;
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-        return false;
-      })
+    return new Promise((resolve) => {
+      this.dataResponsitory.fetchNetResponsitory('/checkDeviceToken', global.NetReqModel)
+        .then((result) => {
+          if (result.return_code == '0000') {
+            resolve(true);
+          } else if (result.return_code === '9991') {
+            this.handleDifferentPhone();
+            resolve(false);
+          } else if (result.return_code == '8888') {
+            this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
+            resolve(false);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+          resolve(false);
+        })
+    })
   }
 
   /**
@@ -145,38 +147,40 @@ export default class CommonBlocker {
    * @param {*} targetPage 
    */
   checkGroup(targetPage) {
-    if (!this.checkLogin()) {
-      return false;
-    } else {
-      this.dataResponsitory.fetchNetResponsitory('/common', global.NetReqModel)
-        .then((result) => {
-          if (result.return_code == '0000') {
-            if (!this.checkJXAccountOpen(result.jx_data.account_id)) {
-              return false; // 校验是否开户
-            } else if (!this.checkJXCardBind(result.jx_data.bank_no)) {
-              return false; // 校验是否绑卡
-            } else if (!this.checkJXPWDSet(result.jx_data.tradepwd_status)) {
-              return false; // 校验是否设置交易密码
-            } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status)) {
-              return false; // 校验是否签约
-            } else {
-              this.goto(targetPage);
-              return true;
+    return new Promise((resolve) => {
+      if (!this.checkLogin()) {
+        resolve(false);
+      } else {
+        this.dataResponsitory.fetchNetResponsitory('/common', global.NetReqModel)
+          .then((result) => {
+            if (result.return_code == '0000') {
+              if (!this.checkJXAccountOpen(result.jx_data.account_id)) {
+                resolve(false); // 校验是否开户
+              } else if (!this.checkJXCardBind(result.jx_data.bank_no)) {
+                resolve(false); // 校验是否绑卡
+              } else if (!this.checkJXPWDSet(result.jx_data.tradepwd_status)) {
+                resolve(false); // 校验是否设置交易密码
+              } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status)) {
+                resolve(false); // 校验是否签约
+              } else {
+                this.goto(targetPage);
+                resolve(true);
+              }
+            } else if (result.return_code === '9991') {
+              this.handleDifferentPhone(); // 校验设备不一致
+              resolve(false);
+            } else if (result.return_code == '8888') {
+              this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
+              resolve(false);
             }
-          } else if (result.return_code === '9991') {
-            this.handleDifferentPhone(); // 校验设备不一致
-            return false;
-          } else if (result.return_code == '8888') {
-            this.component.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT); // 请求超时
-            return false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-          return false;
-        })
-    }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+            resolve(false);
+          })
+      }
+    })
   }
 
   /**
