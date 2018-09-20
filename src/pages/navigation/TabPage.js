@@ -87,6 +87,11 @@ export default class TabPage extends Component {
         ref_modalView.close();
       }
     });
+    DeviceEventEmitter.addListener('navreset',(dic)=>{
+        this.setState({
+          selectedTab: dic.tab,
+        })
+    });
     SplashScreen.hide();
   }
 

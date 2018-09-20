@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
+  DeviceEventEmitter,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -12,6 +11,7 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
+import {PublicCode} from '../../dao/PublicCode';
 
 export default class ActivityPage extends Component {
   constructor(props) {
@@ -32,6 +32,15 @@ export default class ActivityPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
+    console.log(navState)
+    if(navState.url.indexOf(PublicCode.LOCAL_SERV_ACTIVITYAREA_PRODUCT) > -1){
+      DeviceEventEmitter.emit('navreset', {tab:'Loan'});
+      this.props.navigation.navigate('TabPage');
+      return false
+    }else if(navState.url.indexOf(PublicCode.LOCAL_SERV_ACTIVITYAREA_SHARE) > -1){
+      this.props.navigation.navigate('InvitingFriendsPage');
+      return false
+    }
     this.setState({
       backButtonEnabled: navState.canGoBack,
       forwardButtonEnabled: navState.canGoForward,
