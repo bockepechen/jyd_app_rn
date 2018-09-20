@@ -5,7 +5,8 @@ import {
   View,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import SplashScreen from 'react-native-splash-screen';
@@ -142,7 +143,7 @@ export default class Welcome extends Component {
   }
 
   render() {
-    let jumpBtn = 
+    let jumpBtnBak = 
       <TouchableOpacity
         onPress={()=>{
           this.props.navigation.navigate('App');
@@ -168,6 +169,22 @@ export default class Welcome extends Component {
           </Text>
         </View>
       </TouchableOpacity>
+    let jumpBtn = <TouchableOpacity
+      style={{position:"absolute",top:scaleSize(150),right:scaleSize(150)}}
+      onPress={()=>{
+        this.props.navigation.navigate('App');
+      }}  
+    >
+      <View>
+        <ImageBackground
+          source={ImageStores.hhy_1}
+          resizeMode={'stretch'}
+          style={{justifyContent:'center',alignItems:'center',width:scaleSize(195), height:scaleSize(66)}}
+        >
+          <Text style={{fontSize:scaleSize(32),color:'#c7b299'}}>{`${this.state.countDownTime == 0 ? '' : '0'+this.state.countDownTime+'秒'} 跳过`}</Text>
+        </ImageBackground>
+      </View>
+    </TouchableOpacity>
       let FirstView = 
         <View style={GlobalStyles.rootContainer}>
           <Swiper
@@ -181,11 +198,13 @@ export default class Welcome extends Component {
             <Image source={ImageStores.hy_2} style={styles.banner_image} />
             <Image source={ImageStores.hy_3} style={styles.banner_image} />
           </Swiper>
-          {this.state.ifShowJumpBtn?jumpBtn:null}
+          {/* {this.state.ifShowJumpBtn?jumpBtn:null} */}
+          {jumpBtn}
         </View>
       let UnFirstView = 
         <View style={GlobalStyles.rootContainer}>
           <Image source={ImageStores.hy_3} style={styles.banner_image} />
+          {jumpBtn}
         </View>
        let loadingView = 
           <View></View>
