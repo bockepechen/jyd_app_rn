@@ -82,7 +82,7 @@ export default class CommonBlocker {
    */
   checkJXAccountOpen(accountId) {
     if (!accountId || accountId === '') {
-      this._openModal(this._renderHintView('立即开通', 'AccountOpeningPage'));
+      this._openModal(this._renderJXHintView('立即开通', 'AccountOpeningPage'));
       return false;
     } else {
       return true;
