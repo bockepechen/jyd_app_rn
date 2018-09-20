@@ -91,15 +91,44 @@ export default class AccountSecurityPage extends Component {
       tel:`${global.NetReqModel.tel_phone.substring(0,3)} **** ${global.NetReqModel.tel_phone.substring(7)}`,
       cardInfo:`${global.NetReqModel.bank_no && global.NetReqModel.bank_no != '' ? '卡后四位('+global.NetReqModel.bank_no.substring(global.NetReqModel.bank_no.length-4)+')' : ''}`,
       isLoading: false,
+      card:'',
+      tel_phone:''
     }
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
+    this.getInfoData();
   }
 
   componentWillUnmount() {
     this.AndroidBackHandler.removePressBackListener();
+  }
+
+  async getInfoData() {
+    this.setState({
+      isLoading: true
+    });
+    let url = await '/accountSafety';
+    console.log(JSON.stringify(global.NetReqModel));
+    this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+      .then((result) => {
+        console.log(result);
+        this.setState({
+          card:result.card,
+          tel_phone:result.tel_phone,
+          isLoading: false
+        })
+      })
+      .catch((e) => {
+        console.log(e);
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
+        // TODO Toast提示异常
+        // 关闭Loading动画
+        if (this.state.isLoading) {
+          this.setState({ isLoading: false });
+        }
+      })
   }
   
   goto(url,JsonObj){
@@ -290,7 +319,7 @@ export default class AccountSecurityPage extends Component {
                 leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
             />
             {this.renderMainView()}
-            {this.state.isLoading?(<LoadingIcon />):null}
+            {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
             {ViewUtils.renderToast()}
         </View>
     )
