@@ -18,10 +18,7 @@ export default class HomeItemDetail extends Component {
     super(props);
     this.navData = this.props.navigation.state.params.data;
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.state = {
-      wv_url:this.navData.url,
-    }
-    console.log(this.props.navigation.state.params)
+    this.wv_url = this.navData.url ;
   }
   
   componentDidMount() {
@@ -33,38 +30,18 @@ export default class HomeItemDetail extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.setState({
-      backButtonEnabled: navState.canGoBack,
-      forwardButtonEnabled: navState.canGoForward,
-      wv_url: navState.url,
-      status: navState.title,
-      loading: navState.loading,
-    });
+    this.backButtonEnabled = navState.canGoBack
+    this.forwardButtonEnabled = navState.canGoForward
+    this.wv_url = navState.url
+    this.status = navState.title
+    this.loading =  navState.loading
   }
-
-  sendMessage() {
-    // this.refs.webview.postMessage(this.navData.id);
-    console.log(this.navData.jsonObj)
-    this.refs.webview.postMessage(JSON.stringify(this.navData.jsonObj));
-  }
-
 
   goBack = () => {
-    if (this.state.backButtonEnabled) {
+    if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
       this.props.navigation.goBack();
-    }
-  }
-  handleMessage(e) {
-    let obj = eval('('+e.nativeEvent.data+')');
-    if(obj.key == '1'){
-      this.sendMessage();
-    }
-    else if(obj.key == '2'){
-      this.props.navigation.dispatch(StackActions.popToTop());
-    }else{
-
     }
   }
 
@@ -85,12 +62,9 @@ export default class HomeItemDetail extends Component {
           // scrollEnabled={false}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          source={{uri:this.state.wv_url}}
+          source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
-          onMessage={(e) => {
-            this.handleMessage(e)
-          }}
         />
       </View>
     )
