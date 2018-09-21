@@ -13,10 +13,12 @@ import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import { ImageStores } from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import CommonBlocker from '../../utils/CommonBlocker';
+import ModalView from '../../common/ModalView';
 
 export default class AccountSecurityPage extends Component {
   constructor(props) {
     super(props);
+    this.ref_modalView = this.props.navigation.state.params.data.ref_modalView;
     this.commonBlocker = new CommonBlocker(this);
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.listItem = [
@@ -31,9 +33,13 @@ export default class AccountSecurityPage extends Component {
       {
         title: '我的银行卡',
         callback: async () => {
-          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-            this.goto('BankCardListPage')
-          }
+          await this.commonBlocker.checkGroup({
+            page: 'BankCardListPage'
+          }, {
+              skipCheckJXCardBind: true,
+              skipCheckJXPWDSet: true,
+              skipCheckJXSign: true
+            })
         }
       },
       {
@@ -177,6 +183,7 @@ export default class AccountSecurityPage extends Component {
         />
         {this.renderMainView()}
         {ViewUtils.renderToast()}
+        <ModalView ref='modalView'/>
       </View>
     )
   }

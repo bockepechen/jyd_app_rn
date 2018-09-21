@@ -265,14 +265,22 @@ export default class CommonBlocker {
    * @param {*} contentView 
    */
   _openModal(contentView) {
-    DeviceEventEmitter.emit('callModal', true, contentView, this.props.ref_modalView);
+    if (this.props.ref_modalView !== undefined) {
+      DeviceEventEmitter.emit('callModal', true, contentView, this.props.ref_modalView);
+    } else {
+      this.component.refs.modalView.show(contentView);
+    }
   }
 
   /**
    * 私有方法 通过TabPage页面的事件监听，关闭Modal公用组件
    */
   _closeModal() {
-    DeviceEventEmitter.emit('callModal', false, null, this.props.ref_modalView)
+    if (this.props.ref_modalView !== undefined) {
+      DeviceEventEmitter.emit('callModal', false, null, this.props.ref_modalView)
+    } else {
+      this.component.refs.modalView.close();
+    }
   }
 
 }
