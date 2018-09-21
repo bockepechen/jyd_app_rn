@@ -53,7 +53,7 @@ export default class JeyxListItemDetail extends Component {
 
   _onNavigationStateChange = (navState) => {
     console.log(navState)
-    if(navState.url.indexOf('9987') > -1){
+    if(navState.url.indexOf(PublicCode.LOCAL_SERV_UN_LOGIN) > -1){
       const resetAction = StackActions.reset({
         index: 1,
         actions: [
@@ -64,13 +64,13 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
-    else if(navState.url.indexOf('9986') > -1){
+    else if(navState.url.indexOf(PublicCode.LOCAL_SERV_UN_OPENACCOUNT) > -1){
       this.goto('AccountOpeningPage')
     }
-    else if(navState.url.indexOf('9984') > -1){
+    else if(navState.url.indexOf(PublicCode.LOCAL_SERV_UN_SIGN) > -1){
       this.goto('AccountAgreementPage')
     }
-    else if(navState.url.indexOf('9970') > -1){
+    else if(navState.url.indexOf(PublicCode.LOCAL_SERV_UN_BINDCARD) > -1){
       // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
       this.goto('BindCardNewPage',{
         url:'/bindCard',
@@ -78,14 +78,14 @@ export default class JeyxListItemDetail extends Component {
           title:'绑定银行卡'
       })
     }
-    else if(navState.url.indexOf('9985') > -1){
+    else if(navState.url.indexOf(PublicCode.LOCAL_SERV_UN_SETPWD) > -1){
       this.goto('AccountSetPwdPage',{
         url:'/transPwd/setPassword',
         jsonObj:global.NetReqModel,
         title:'设置交易密码'
       })
     }
-    if(navState.url.indexOf('RechargePage') > -1){
+    if(navState.url.indexOf(PublicCode.LOCAL_SERV_PURCHASE_RECHARGE) > -1){
       const resetAction = StackActions.reset({
         index: 1,
         actions: [
@@ -96,7 +96,7 @@ export default class JeyxListItemDetail extends Component {
       this.props.navigation.dispatch(resetAction);
       return false
     }
-    if(navState.url.indexOf('homePage') > -1){
+    if(navState.url.indexOf(PublicCode.LOCAL_SERV_PURCHASE_SUCCESS) > -1){
       this.ifbackhome = true
       this.props.navigation.dispatch(StackActions.popToTop());
       return false

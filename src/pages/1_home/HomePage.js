@@ -335,12 +335,24 @@ export default class HomePage extends Component {
           onPress={() => {
             if (!this.state.httpRes && !this.state.httpRes.AppMainHeadBanners)
               return false
-            this.props.navigation.navigate('HomeItemDetail', {
-              data: {
-                url: this.state.httpRes.AppMainHeadBanners[index].Url,
-                title: this.state.httpRes.AppMainHeadBanners[index].Title,
-              }
-            })
+            if(index == 0){
+              DeviceEventEmitter.emit('navreset', {tab:'Loan'});
+              return false;
+            }
+            if(index == 1){
+              this.goto('InvitingFriendsPage')
+              return false
+            }
+            else if(index == 3){
+              return false
+            }else{
+              this.props.navigation.navigate('HomeItemDetail', {
+                data: {
+                  url: this.state.httpRes.AppMainHeadBanners[index].Url,
+                  title: this.state.httpRes.AppMainHeadBanners[index].Title,
+                }
+              })
+            }
           }
           }
         >
@@ -575,12 +587,13 @@ export default class HomePage extends Component {
             onPress={() => {
               if (!this.state.httpRes.AppSubHeadBanners)
                 return false
-              this.props.navigation.navigate('HomeItemDetail', {
-                data: {
-                  url: this.state.httpRes.AppSubHeadBanners[0].Url,
-                  title: this.state.httpRes.AppSubHeadBanners[0].Title,
-                }
-              })
+              // this.props.navigation.navigate('HomeItemDetail', {
+              //   data: {
+              //     url: this.state.httpRes.AppSubHeadBanners[0].Url,
+              //     title: this.state.httpRes.AppSubHeadBanners[0].Title,
+              //   }
+              // })
+              DeviceEventEmitter.emit('navreset', {tab:'Loan'});
             }}
           >
             <Image
