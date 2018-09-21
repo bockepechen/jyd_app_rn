@@ -10,7 +10,9 @@ import {View,
     Dimensions, 
     Text, 
     Image,
-    BackHandler
+    BackHandler,
+    DeviceInfo,
+    StatusBar
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {ImageStores} from '../../res/styles/ImageStores';
@@ -20,7 +22,7 @@ import {scaleSize} from '../utils/FitViewUtils';
 const width = GlobalStyles.WINDOW_WIDTH;
 const height = GlobalStyles.WINDOW_HEIGHT
 const [left, top] = [0, 0];
-var unknowHeight = Platform.OS === 'android'? scaleSize(100) : 0;
+let isAndroid = Platform.OS==='android'?true:false;
 export default class ActionSheetShare extends Component {
     static propTypes = {
         shareWxToOneCallback:PropTypes.func,
@@ -52,8 +54,11 @@ export default class ActionSheetShare extends Component {
         this.itemsPartHeight = scaleSize(350);
         this.cancelPartHeight = scaleSize(120);
         this.seperatePartHeight=scaleSize(3);
+        this.statusbar = isAndroid ? StatusBar.currentHeight : scaleSize(0);
+        console.log('===========');
+        // console.log(StatusBar.currentHeight)
         // total content height
-        this.totalHeight = this.itemsPartHeight + this.cancelPartHeight + this.seperatePartHeight+unknowHeight;
+        this.totalHeight = this.itemsPartHeight + this.cancelPartHeight + this.seperatePartHeight+this.statusbar;
         this.contentWidth = width;
     }
     componentWillUnmount() {
@@ -191,7 +196,9 @@ export default class ActionSheetShare extends Component {
         else{
             return (
             <TouchableWithoutFeedback onPress={()=>this._fade()}>
+           
                 <View style={[styles.container]}>
+                    <StatusBar  />
                     <Animated.View style={[styles.maskViewStyle,{opacity: this.state.maskOpacity}]}></Animated.View>
                     <Animated.View style={[{
                         width: width,
@@ -202,11 +209,11 @@ export default class ActionSheetShare extends Component {
                         transform: [{
                             translateY: this.state.offset.interpolate({
                                 inputRange: [0, 1],
-                                outputRange: [height, (height - this.totalHeight)]
+                                outputRange: [height ,height-this.totalHeight]
                             }),
                         }]
                     }]}>
-                        <View style={{backgroundColor:'#fff'}}>
+                        <View style={{backgroundColor:'#f2f2f2'}}>
                             {this._renderItem()}
                             {this._renderCancelItem()}
                         </View>
