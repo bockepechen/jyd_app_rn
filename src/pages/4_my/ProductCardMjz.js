@@ -127,7 +127,7 @@ export default class ProductCardMjz extends Component {
                     </View>
                     <View style={{marginTop:scaleSize(30),flexDirection:'row',justifyContent:'center'}}>
                         <View style={{}}>
-                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{Utils.formatMoney(this.paraData.contractamount,2)}</Text>
+                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{Utils.formatMoney(this.paraData.contractexpectamount,2)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借金额(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>

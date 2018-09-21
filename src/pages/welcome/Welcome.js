@@ -90,6 +90,11 @@ export default class Welcome extends Component {
       global.InitNetData = {
           httpRes : result,
       }
+      this.setState({
+        ifShowJumpBtn : true
+      },()=>{
+        this.countDown();
+      })
     })
     .catch((e) => {
       console.log(e);
@@ -110,7 +115,6 @@ export default class Welcome extends Component {
           ifFirstOpen: 'first'
         });
       }
-      this.countDown();
     } else {
       this.setState({
         ifFirstOpen:'first'
@@ -120,10 +124,10 @@ export default class Welcome extends Component {
   }
 
   onSwipe = (index) => {
-    if(index === 2) {
-      this.setState({ifShowJumpBtn:true});
-      this.countDown();
-    }
+    // if(index === 2) {
+    //   this.setState({ifShowJumpBtn:true});
+    //   this.countDown();
+    // }
   }
 
   countDown() {
@@ -198,13 +202,12 @@ export default class Welcome extends Component {
             <Image source={ImageStores.hy_2} style={styles.banner_image} />
             <Image source={ImageStores.hy_3} style={styles.banner_image} />
           </Swiper>
-          {/* {this.state.ifShowJumpBtn?jumpBtn:null} */}
-          {jumpBtn}
+          {this.state.ifShowJumpBtn?jumpBtn:null}
         </View>
       let UnFirstView = 
         <View style={GlobalStyles.rootContainer}>
           <Image source={ImageStores.hy_3} style={styles.banner_image} />
-          {jumpBtn}
+          {this.state.ifShowJumpBtn?jumpBtn:null}
         </View>
        let loadingView = 
           <View></View>
