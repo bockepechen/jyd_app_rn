@@ -17,6 +17,7 @@ import { ImageStores } from '../../../res/styles/ImageStores';
 import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -31,6 +32,7 @@ export default class Calendar4Payback extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.commonBlocker = new CommonBlocker(this);
     this.renderDayDatas = {};
     this.state = {
       flag: true,
@@ -54,14 +56,10 @@ export default class Calendar4Payback extends Component {
       isLoading:true,
       refundList: null
     });
-    // global.NetReqModel.tel_phone = '15222463813';
     global.NetReqModel.current_month = month;
-    // global.NetReqModel.jyd_pubData.user_id = '215';
-    console.log(global.NetReqModel);
     let url = await '/refundCalendar';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
-        console.log(result);
         this.setState({
           isLoading:false
         }, () => {
@@ -105,9 +103,7 @@ export default class Calendar4Payback extends Component {
       })
   }
 
-  onDayPress = (day) => {
-    // console.log('================ 初始化数据 ================');
-    // console.log(this.renderDayDatas);
+  onDayPress(day) {
     // 赋值一个新对象，使深比较不同，触发页面重新渲染
     let addSelectedDay = JSON.parse(JSON.stringify(this.renderDayDatas));
     // 添加选择日期对象
@@ -127,14 +123,10 @@ export default class Calendar4Payback extends Component {
         }
       }
     }
-    // console.log('================ 添加选择日期后的数据 ================');
-    // console.log(addSelectedDay);
-    // console.log(`渲染数据对比：${addSelectedDay === this.state.calendarData}`);
     let refundList = this.resp_data.load_record_list[day.dateString];
     if (refundList === undefined) {
       refundList = [];
     }
-    console.log(refundList);
     this.setState({
       selected: day.dateString,
       calendarData: addSelectedDay,
@@ -150,8 +142,16 @@ export default class Calendar4Payback extends Component {
     return (
       <Calendar
         style={styles.calendar}
-        onDayPress={this.onDayPress}
-        onMonthChange={this.onMonthChange}
+        onDayPress={async (day) => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.onDayPress(day);
+          }
+        }}
+        onMonthChange={async (month) => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.onMonthChange(month);
+          }
+        }}
         theme={{
           // 日历天数字号
           textDayFontSize: 14,

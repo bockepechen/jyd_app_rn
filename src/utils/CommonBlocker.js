@@ -79,8 +79,10 @@ export default class CommonBlocker {
   /**
    * 校验是否开通江西银行电子账户，如果没开通则跳转开通页面
    * @param {*} accountId 
+   * @param {*} skipCheck 
    */
-  checkJXAccountOpen(accountId) {
+  checkJXAccountOpen(accountId, skipCheck) {
+    if (skipCheck) { return true; }
     if (!accountId || accountId === '') {
       this._openModal(this._renderJXHintView('立即开通', 'AccountOpeningPage'));
       return false;
@@ -92,8 +94,10 @@ export default class CommonBlocker {
   /**
    * 校验是否绑定银行卡，如果没绑定则跳转绑定银行卡页面
    * @param {*} bankNo 
+   * @param {*} skipCheck 
    */
-  checkJXCardBind(bankNo) {
+  checkJXCardBind(bankNo, skipCheck) {
+    if (skipCheck) { return true; }
     if (!bankNo || bankNo === '') {
       this.props.navigation.navigate('BindCardNewPage', {
         data: {
@@ -111,8 +115,10 @@ export default class CommonBlocker {
   /**
    * 校验是否设置交易密码，如果没设置跳转到设置交易密码页面
    * @param {*} tradePWDStatus 
+   * @param {*} skipCheck 
    */
-  checkJXPWDSet(tradePWDStatus) {
+  checkJXPWDSet(tradePWDStatus, skipCheck) {
+    if (skipCheck) { return true; }
     if (!tradePWDStatus || tradePWDStatus === '0') {
       this.props.navigation.navigate('AccountSetPwdPage', {
         data: {
@@ -132,8 +138,10 @@ export default class CommonBlocker {
    * @param {*} jxSign  江西银行多合一签约状态
    * @param {*} xySign  e签宝《电子签章用户授权协议》签约状态
    * @param {*} sqsSign e签宝《出借授权书》签约状态
+   * @param {*} skipCheck 
    */
-  checkJXSign(jxSign, xySign, sqsSign) {
+  checkJXSign(jxSign, xySign, sqsSign, skipCheck) {
+    if (skipCheck) { return true; }
     if (jxSign === '1' && xySign === '1' && sqsSign === '1') {
       return true;
     } else {
@@ -144,9 +152,22 @@ export default class CommonBlocker {
 
   /**
    * 用户状态组合校验
-   * @param {*} targetPage 
+   * @param {*} navTarget 校验成功后，跳转参数{page:'', params:{data:{...}}}
+   * @param {*} switchConf 各种校验是否开启的开关配置
    */
-  checkGroup(targetPage) {
+  checkGroup(navTarget, switchConf) {
+    var skipCheckJXAccountOpen = false; // 跳过校验江西银行开户
+    var skipCheckJXCardBind = false;    // 跳过校验江西银行绑卡
+    var skipCheckJXPWDSet = false;      // 跳过校验江西银行设置交易密码
+    var skipCheckJXSign = false;        // 跳过校验江西银行签约
+    
+    // 处理配置参数赋值
+    if (switchConf) {
+      skipCheckJXAccountOpen = switchConf.skipCheckJXAccountOpen?switchConf.skipCheckJXAccountOpen:false;
+      skipCheckJXCardBind = switchConf.skipCheckJXCardBind?switchConf.skipCheckJXCardBind:false;
+      skipCheckJXPWDSet = switchConf.skipCheckJXPWDSet?switchConf.skipCheckJXPWDSet:false;
+      skipCheckJXSign = switchConf.skipCheckJXSign?switchConf.skipCheckJXSign:false;
+    }
     return new Promise((resolve) => {
       if (!this.checkLogin()) {
         resolve(false);
@@ -154,16 +175,16 @@ export default class CommonBlocker {
         this.dataResponsitory.fetchNetResponsitory('/common', global.NetReqModel)
           .then((result) => {
             if (result.return_code == '0000') {
-              if (!this.checkJXAccountOpen(result.jx_data.account_id)) {
+              if (!this.checkJXAccountOpen(result.jx_data.account_id, skipCheckJXAccountOpen)) {
                 resolve(false); // 校验是否开户
-              } else if (!this.checkJXCardBind(result.jx_data.bank_no)) {
+              } else if (!this.checkJXCardBind(result.jx_data.bank_no, skipCheckJXCardBind)) {
                 resolve(false); // 校验是否绑卡
-              } else if (!this.checkJXPWDSet(result.jx_data.tradepwd_status)) {
+              } else if (!this.checkJXPWDSet(result.jx_data.tradepwd_status, skipCheckJXPWDSet)) {
                 resolve(false); // 校验是否设置交易密码
-              } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status)) {
+              } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status, skipCheckJXSign)) {
                 resolve(false); // 校验是否签约
               } else {
-                this.component.goto(targetPage);
+                this.props.navigation.navigate(navTarget.page, navTarget.params);
                 resolve(true);
               }
             } else if (result.return_code === '9991') {

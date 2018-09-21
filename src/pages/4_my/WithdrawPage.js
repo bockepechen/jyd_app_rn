@@ -27,7 +27,6 @@ export default class WithdrawPage extends Component {
     super(props)
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.navData = this.props.navigation.state.params.data;
     this.btnFlag = false;
     this.state = {
       isLoading: false,

@@ -16,18 +16,19 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import ViewUtils from '../../utils/ViewUtils';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import RedPacketItem from './RedPacketItem';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import DataResponsitory from '../../dao/DataResponsitory';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import NavigationBar from '../../common/NavigationBar';
 import LoadingIcon from '../../common/LoadingIcon';
 import ModalView from '../../common/ModalView';
-import { StackActions,NavigationActions } from 'react-navigation';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class RedPacketPage extends Component {
   constructor(props){
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.commonBlocker = new CommonBlocker(this);
     this.dataResponsitory = new DataResponsitory();
     this.state = {
       selected: new Map(),
@@ -65,17 +66,9 @@ export default class RedPacketPage extends Component {
 
   async getInfoData() {
     global.NetReqModel.page_number = await this.state.next_page;
-    // global.NetReqModel.tel_phone = await "15903262695";
-    // global.NetReqModel.jyd_pubData.user_id = await "39";
-    // global.NetReqModel.jyd_pubData.source_type = await "0001";
-    // global.NetReqModel.jyd_pubData.token_id = await '89a5ad1adba2f96b';
-    // global.NetReqModel.tel_phone = await "15822753827";
-    // global.NetReqModel.jyd_pubData.user_id = await "91";
     let url = await '/redEnvelope';
-    console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
-      console.log(result)
       var totalList = [];
       if(result.return_code == '0000'){
         totalList = (this.state.next_page === "1") ? [] : this.state.list;
@@ -86,13 +79,7 @@ export default class RedPacketPage extends Component {
             list : totalList,
             next_page : result.next_page,
             refreshing : false
-          }
-          , () => {
-            // this.loadFlag = false
-        })
-      }
-      else if(result.return_code == '9987'){
-        this.goto('LoginPage',{fromPage:'home'});
+          })
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -118,10 +105,8 @@ export default class RedPacketPage extends Component {
     })
     global.NetReqModel.red_id = itemId;
     let url = await '/redEnvelope/openRedEnvelope';
-    console.log(JSON.stringify(global.NetReqModel))
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
-      console.log(result)
       this.setState({isLoading:false})
       if(result.return_code == '0000'){
         this.myModal(true,this.renderModal())
@@ -132,27 +117,6 @@ export default class RedPacketPage extends Component {
             httpRes : result,
             list : templist,
           })
-      }
-      else if(result.return_code == '9986'){
-        this.goto('AccountOpeningPage')
-      }
-      else if(result.return_code == '9984'){
-        this.goto('AccountAgreementPage')
-      }
-      else if(result.return_code == '9970'){
-        // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
-        this.goto('BindCardNewPage',{
-          url:'/bindCard',
-            jsonObj:global.NetReqModel,
-            title:'绑定银行卡'
-        })
-      }
-      else if(result.return_code == '9985'){
-        this.goto('AccountSetPwdPage',{
-          url:'/transPwd/setPassword',
-          jsonObj:global.NetReqModel,
-          title:'设置交易密码'
-        })
       }
       else if(result.return_code == '8888'){
         this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -225,13 +189,10 @@ export default class RedPacketPage extends Component {
     )
   }
 
-  _onPressItem = (id,item,type) => {
-    // let templist = this.state.list;
-    // templist[id].status = '2'
-    // this.setState({
-    //   list:templist
-    // })
-    this.openRedPacket(id,item.id)
+  _onPressItem = async (id,item,type) => {
+    if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+      this.openRedPacket(id,item.id)
+    }
   };
 
   _onEndReached = ()=>{
@@ -283,7 +244,7 @@ renderModal(){
             </View>
           </View>
         </View>
-      </View  >
+      </View>
   )
 }
 

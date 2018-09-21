@@ -64,14 +64,10 @@ export default class RedPacketItem extends Component {
             </Text>
           </View>
           <View style={{marginRight:scaleSize(90),justifyContent:'center'}}>
-            <TouchableOpacity
-              onPress={()=>{}}
-            >
-              <Text 
-                style={{fontSize:scaleSize(60),color:this.paraData.status == '1' ? '#c7b299' : '#e6e6e6',fontWeight:'bold', width:scaleSize(60)}}>
-                {this.paraData.status == '1' ? '打开红包' : '已打开'}
-              </Text>
-            </TouchableOpacity>
+            <Text 
+              style={{fontSize:scaleSize(60),color:this.paraData.status == '1' ? '#c7b299' : '#e6e6e6',fontWeight:'bold', width:scaleSize(60)}}>
+              {this.paraData.status == '1' ? '打开红包' : '已打开'}
+            </Text>
           </View>
         </ImageBackground>
       </TouchableHighlight>

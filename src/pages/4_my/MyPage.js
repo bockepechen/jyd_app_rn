@@ -139,14 +139,14 @@ export default class MyPage extends Component {
           </View>
           <View style={{ marginTop: scaleSize(81), marginLeft: scaleSize(21), height: scaleSize(84), flexDirection: 'row' }}>
             <TouchableHighlight
-              onPress={async () => { await this.commonBlocker.checkGroup('RechargePage') }}
+              onPress={async () => { await this.commonBlocker.checkGroup({page:'RechargePage'}) }}
               underlayColor='rgba(0,0,0,0)'>
               <ImageBackground source={ImageStores.me_5} resizeMode={'stretch'} style={{ width: scaleSize(216), height: scaleSize(84), alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: scaleSize(48), fontWeight: '200', color: '#ffffff' }}>{'充值'}</Text>
               </ImageBackground>
             </TouchableHighlight>
             <TouchableHighlight
-              onPress={async () => { await this.commonBlocker.checkGroup('WithdrawPage') }}
+              onPress={async () => { await this.commonBlocker.checkGroup({page:'WithdrawPage'}) }}
               underlayColor='rgba(0,0,0,0)'>
               <ImageBackground source={ImageStores.me_11} resizeMode={'stretch'} style={{ marginLeft: scaleSize(27), width: scaleSize(216), height: scaleSize(84), alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: scaleSize(48), fontWeight: '200', color: '#ff3a49' }}>{'提现'}</Text>
@@ -278,9 +278,7 @@ export default class MyPage extends Component {
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
                 onPress={async () => {
-                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-                    this.goto('RedPacketPage');
-                  }
+                  await this.commonBlocker.checkGroup({page:'RedPacketPage'});
                 }}
                 style={{ flex: 1, borderWidth: 0, flexDirection: 'row' }}
               >
