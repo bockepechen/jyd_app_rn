@@ -163,7 +163,7 @@ export default class CommonBlocker {
               } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status)) {
                 resolve(false); // 校验是否签约
               } else {
-                this.goto(targetPage);
+                this.component.goto(targetPage);
                 resolve(true);
               }
             } else if (result.return_code === '9991') {
