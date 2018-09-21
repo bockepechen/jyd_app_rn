@@ -62,7 +62,8 @@ export default class FeedbackPage extends Component {
                 multiline = {true}
                 maxLength = {200}
                 numberOfLines = {10}
-                style={{textAlignVertical: 'top'}}
+                style={{textAlignVertical: 'top',paddingBottom:0}}
+                underlineColorAndroid='rgba(0,0,0,0)'
                 onChangeText={(text) => {this.changeAdvice(text)}}
                 value={this.state.advice}
             />

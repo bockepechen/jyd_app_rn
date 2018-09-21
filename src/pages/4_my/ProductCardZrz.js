@@ -104,9 +104,9 @@ export default class ProductCardZrz extends Component {
                     <TouchableOpacity 
                         style={{flexDirection:'row',marginRight:scaleSize(108)}}
                         onPress={()=>{
-                            global.NetReqModel.sellInfoId = this.paraData.sellid;
+                            global.NetReqModel.BorrowId = this.paraData.borrowid;
                             this.goto('WvItemPage',{
-                                url:"/productDetails/querySellinDetail",
+                                url:"/productDetails/queryStandardpowderDetail",
                                 jsonObj:global.NetReqModel,
                                 title:'产品详情'
                             })

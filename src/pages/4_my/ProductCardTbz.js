@@ -90,9 +90,9 @@ export default class ProductCardTbz extends Component {
                     <TouchableOpacity 
                         style={{marginLeft:scaleSize(429),flexDirection:'row', alignItems:'center'}}
                         onPress={()=>{
-                            global.NetReqModel.sellInfoId = this.paraData.sellid;
+                            global.NetReqModel.BorrowId = this.paraData.borrowid;
                             this.goto('WvItemPage',{
-                                url:"/productDetails/querySellinDetail",
+                                url:"/productDetails/queryStandardpowderDetail",
                                 jsonObj:global.NetReqModel,
                                 title:'产品详情'
                             })
@@ -100,7 +100,7 @@ export default class ProductCardTbz extends Component {
                         activeOpacity={0.6}
                     >
                         <View style={{height:scaleSize(36), alignItems:'center', justifyContent:'center'}}>
-                        <Text style={{fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>
+                            <Text style={{fontSize:scaleSize(36),color:'#998675',fontWeight:'bold'}}>{'查看详情'}</Text>
                         </View>
                         <Image
                             source={ImageStores.me_6}
