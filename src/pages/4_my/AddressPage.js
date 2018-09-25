@@ -85,6 +85,8 @@ export default class AddressPage extends Component {
           this.setState({
             isLoading: false,
           }, this.props.navigation.goBack())
+        }else{
+          this.refs.toast.show(result.return_msg);
         }
         if (this.state.isLoading) {
           this.setState({ isLoading: false });
@@ -202,7 +204,7 @@ export default class AddressPage extends Component {
               style={{ width: GlobalStyles.WINDOW_WIDTH, height: scaleSize(456) }} />
             {this.renderInputView()}
           </View>
-          {this.state.isLoading ? (<LoadingIcon />) : null}
+          {this.state.isLoading ? (<LoadingIcon isModal={true}/>) : null}
           {ViewUtils.renderToast()}
         </View>
       </TouchableWithoutFeedback>

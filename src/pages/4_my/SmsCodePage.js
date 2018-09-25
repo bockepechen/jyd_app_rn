@@ -103,7 +103,7 @@ export default class SmsCodePage extends Component {
     this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
       this.authCode_countDown();
     });
-    let url = await '/sendMessage/registerCode';
+    let url = await '/signCompact/eSignCompact';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         // 返回数据，关闭Loading动画
