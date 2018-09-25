@@ -25,6 +25,10 @@ export default class AccountAgreementPage extends Component{
         super(props)
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
+        this.navData = {};
+        if (this.props.navigation.state.params !== undefined) {
+          this.navData = this.props.navigation.state.params.data;
+        }
         this.state = {
             isLoading: false,
             jx_status : '0',
@@ -37,9 +41,6 @@ export default class AccountAgreementPage extends Component{
             readsqxy:false,
             readcjsqs:false
         }
-        // global.NetReqModel.tel_phone = '15822854761'
-        // global.NetReqModel.jyd_pubData.user_id  = '198'
-        // global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
     }
 
     componentDidMount() {
@@ -87,7 +88,11 @@ export default class AccountAgreementPage extends Component{
     }
 
     navGoback = () => {
-      this.props.navigation.dispatch(StackActions.popToTop());
+      if (this.navData.ifPop) {
+        this.props.navigation.dispatch(StackActions.popToTop());
+      } else {
+        this.props.navigation.goBack();
+      }
     }
 
     goto(url,JsonObj){
