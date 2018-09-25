@@ -64,6 +64,7 @@ export default class SmsCodePage extends Component {
         timeStamp: Date.now()
       }, 
       () => {
+        this.props.navigation.state.params.onGoBack();
         this.props.navigation.goBack();
       }
     );

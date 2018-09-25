@@ -87,6 +87,7 @@ export default class AccountAgreementSignPage extends Component {
     if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
+      this.props.navigation.state.params.onGoBack();
       this.props.navigation.goBack();
     }
   }

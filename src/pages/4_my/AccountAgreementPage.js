@@ -14,7 +14,7 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import DataResponsitory from '../../dao/DataResponsitory';
+import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import CheckBox from 'react-native-check-box'
@@ -25,10 +25,6 @@ export default class AccountAgreementPage extends Component{
         super(props)
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
-        this.navData = {};
-        if (this.props.navigation.state.params !== undefined) {
-          this.navData = this.props.navigation.state.params.data;
-        }
         this.state = {
             isLoading: false,
             jx_status : '0',
@@ -41,6 +37,9 @@ export default class AccountAgreementPage extends Component{
             readsqxy:false,
             readcjsqs:false
         }
+        // global.NetReqModel.tel_phone = '15822854761'
+        // global.NetReqModel.jyd_pubData.user_id  = '198'
+        // global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
     }
 
     componentDidMount() {
@@ -88,16 +87,13 @@ export default class AccountAgreementPage extends Component{
     }
 
     navGoback = () => {
-      if (this.navData.ifPop) {
-        this.props.navigation.dispatch(StackActions.popToTop());
-      } else {
-        this.props.navigation.goBack();
-      }
+      this.props.navigation.dispatch(StackActions.popToTop());
     }
 
     goto(url,JsonObj){
       this.props.navigation.navigate(url,{
-        data:JsonObj ? JsonObj : {}
+        data:JsonObj ? JsonObj : {},
+        onGoBack: () => this.getInfoData(),
       });
     }
 
@@ -251,6 +247,7 @@ export default class AccountAgreementPage extends Component{
           </View>
           <View style={{marginTop:scaleSize(87),flexDirection:'row',justifyContent:'center'}}>
               <TouchableHighlight
+                underlayColor='rgba(0,0,0,0)'
                 onPress={()=>{
                   if(this.state.jx_status == '1'){
                     return false
@@ -318,6 +315,7 @@ export default class AccountAgreementPage extends Component{
             </View>
             <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center'}}>
               <TouchableHighlight
+                underlayColor='rgba(0,0,0,0)'
                 onPress={()=>{
                   if(this.state.xy_status == '1'){
                     return false;
@@ -376,6 +374,7 @@ export default class AccountAgreementPage extends Component{
             </View>
             <View style={{marginRight:scaleSize(51),flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
               <TouchableHighlight
+                underlayColor='rgba(0,0,0,0)'
                 onPress={()=>{
                   if(this.state.sqs_status == '1'){
                     return false;
