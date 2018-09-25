@@ -45,15 +45,6 @@ export default class MyPage extends Component {
     this.getInfoData()
   }
 
-  checkLogin() {
-    if (!global.NetReqModel.jyd_pubData.token_id || global.NetReqModel.jyd_pubData.token_id == '') {
-      this.goto('LoginPage')
-      return false
-    } else {
-      return true
-    }
-  }
-
   async getInfoData() {
     this.setState({
       isLoading: true
@@ -240,9 +231,7 @@ export default class MyPage extends Component {
             <View style={{ flex: 1, borderWidth: 0, flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity
                 onPress={async () => {
-                  if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-                    this.goto('AssetPage');
-                  }
+                  await this.commonBlocker.checkGroup({page:'AssetPage'});
                 }}
                 style={{ flex: 1, borderWidth: 0, flexDirection: 'row' }}
               >

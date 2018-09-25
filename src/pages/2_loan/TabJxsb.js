@@ -239,7 +239,7 @@ export default class TabJxsb extends Component {
               </View>
             </View>
           </View>
-        </View  >
+        </View>
     )
   }
 

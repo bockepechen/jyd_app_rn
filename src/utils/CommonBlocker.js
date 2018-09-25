@@ -12,6 +12,8 @@ import { scaleSize } from '../utils/FitViewUtils';
 import { ImageStores } from '../../res/styles/ImageStores';
 import DataResponsitory from '../dao/DataResponsitory';
 import { ExceptionMsg } from '../dao/ExceptionMsg';
+import { PublicCode } from '../dao/PublicCode';
+import { StackActions } from 'react-navigation';
 
 export default class CommonBlocker {
   constructor(component) {
@@ -61,14 +63,20 @@ export default class CommonBlocker {
   /**
    * 处理设备不一致，重新登录
    */
-  handleDifferentPhone() {
+  handleDifferentPhone(ifPop = false) {
     Alert.alert(
       '通知',
       '您的登录已失效，请重新登录',
       [
         {
           text: '重新登录',
-          onPress: () => { this.props.navigation.navigate('LoginPage') },
+          onPress: () => {
+            this.props.navigation.navigate('LoginPage', {
+              data: {
+                ifPop: ifPop
+              }
+            })
+          },
           style: 'cancel'
         },
       ],
@@ -160,13 +168,13 @@ export default class CommonBlocker {
     var skipCheckJXCardBind = false;    // 跳过校验江西银行绑卡
     var skipCheckJXPWDSet = false;      // 跳过校验江西银行设置交易密码
     var skipCheckJXSign = false;        // 跳过校验江西银行签约
-    
+
     // 处理配置参数赋值
     if (switchConf) {
-      skipCheckJXAccountOpen = switchConf.skipCheckJXAccountOpen?switchConf.skipCheckJXAccountOpen:false;
-      skipCheckJXCardBind = switchConf.skipCheckJXCardBind?switchConf.skipCheckJXCardBind:false;
-      skipCheckJXPWDSet = switchConf.skipCheckJXPWDSet?switchConf.skipCheckJXPWDSet:false;
-      skipCheckJXSign = switchConf.skipCheckJXSign?switchConf.skipCheckJXSign:false;
+      skipCheckJXAccountOpen = switchConf.skipCheckJXAccountOpen ? switchConf.skipCheckJXAccountOpen : false;
+      skipCheckJXCardBind = switchConf.skipCheckJXCardBind ? switchConf.skipCheckJXCardBind : false;
+      skipCheckJXPWDSet = switchConf.skipCheckJXPWDSet ? switchConf.skipCheckJXPWDSet : false;
+      skipCheckJXSign = switchConf.skipCheckJXSign ? switchConf.skipCheckJXSign : false;
     }
     return new Promise((resolve) => {
       if (!this.checkLogin()) {
@@ -202,6 +210,106 @@ export default class CommonBlocker {
           })
       }
     })
+  }
+
+  /**
+   * 根据江西银行返回码，处理跳转逻辑
+   * @param {*} reqUrl 
+   */
+  handleJXreqUrl(reqUrl) {
+    if (reqUrl.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1) {
+      // 返回8000，跳转业务成功提示界面
+      this.props.navigation.navigate('RechargeResultPage', {
+        data: {
+          title: '操作成功',
+          type: '1'
+        }
+      })
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.JX_CB_FORGETPWD_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_OPENACCOUNT_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_BINDCARD_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_UNBINDCARD_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_RECHARGE_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_WITHDRAW_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_SIGNING_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_SETTRADEPWD_FAIL) > -1 ||
+      reqUrl.indexOf(PublicCode.JX_CB_RESETTRADEPWD_FAIL) > -1) {
+      // 返回业务错误码，跳转到最外层tab页
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return false;
+    } else {
+      // 其他URL，由Webview正常加载
+      return true;
+    }
+  }
+
+  /**
+   * 根据本地服务返回码，处理跳转逻辑
+   * @param {*} reqUrl 
+   */
+  handleLocalServCode(reqUrl) {
+    if (reqUrl.indexOf(PublicCode.LOCAL_SERV_UN_LOGIN) > -1) {
+      // WebView页面点击按钮，返回未登录错误码
+      this.props.navigation.navigate('LoginPage', {
+        data: {
+          ifPop: true
+        }
+      });
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_DIFFERENT_PHONE) > -1) {
+      // WebView页面点击按钮，返回设备不一致错误码
+      this.handleDifferentPhone(true);
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_UN_OPENACCOUNT) > -1) {
+      // WebView页面点击按钮，返回江西银行未开户错误码
+      this.props.navigation.navigate('AccountOpeningPage');
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_UN_BINDCARD) > -1) {
+      // WebView页面点击按钮，返回江西银行未绑卡错误码
+      this.props.navigation.navigate('BindCardNewPage', {
+        data: {
+          url: '/bindCard',
+          jsonObj: global.NetReqModel,
+          title: '绑定银行卡'
+        }
+      });
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_UN_SETPWD) > -1) {
+      // WebView页面点击按钮，返回江西银行未设置交易密码错误码
+      this.props.navigation.navigate('AccountSetPwdPage', {
+        data: {
+          url: '/transPwd/setPassword',
+          jsonObj: global.NetReqModel,
+          title: '设置交易密码',
+          ifPop: true
+        }
+      });
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_UN_SIGN) > -1) {
+      // WebView页面点击按钮，返回江西银行未签约错误码
+      this.props.navigation.navigate('AccountAgreementPage', {
+        data: {
+          ifPop: true
+        }
+      });
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_PURCHASE_RECHARGE) > -1) {
+      // WebView页面点击按钮，返回充值请求业务码
+      this.props.navigation.navigate('RechargePage', {
+        data: {
+          ifPop: true
+        }
+      });
+      return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_PURCHASE_SUCCESS) > -1) {
+      // WebView页面点击按钮，返回购买成功业务码
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return true;
+    } else {
+      // 其他URL，由Webview正常加载
+      return true;
+    }
   }
 
   /**
@@ -261,7 +369,6 @@ export default class CommonBlocker {
 
   /**
    * 私有方法 通过TabPage页面的事件监听，调用Modal公用组件
-   * @param {*} btnName 
    * @param {*} contentView 
    */
   _openModal(contentView) {

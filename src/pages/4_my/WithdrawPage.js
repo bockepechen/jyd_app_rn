@@ -63,9 +63,6 @@ export default class WithdrawPage extends Component {
       isLoading: true
     });
     let url = await '/withdraw/preWithdraw';
-    // global.NetReqModel.tel_phone = await "15822753827";
-    // global.NetReqModel.jyd_pubData.user_id = await "91";
-    // global.NetReqModel.jyd_pubData.token_id = await "123235h5e3111";
     console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
@@ -231,8 +228,6 @@ export default class WithdrawPage extends Component {
               placeholder={'请填写银行联行号'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              // onChangeText={(t) => { this.setState({ bank_no: t }) }}
-              // value={this.state.bank_no}
             />
           </View>
         </View>

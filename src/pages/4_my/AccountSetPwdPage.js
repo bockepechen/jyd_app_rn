@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Platform,
   Text,
   View,
   Image,
@@ -14,15 +13,16 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import BufferUtils from '../../utils/BufferUtils'
+import BufferUtils from '../../utils/BufferUtils';
+import { StackActions } from 'react-navigation';
 
 export default class AccountSetPwdPage extends Component{
     constructor(props){
-        super(props)
+        super(props);
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.navData = this.props.navigation.state.params.data;
@@ -55,16 +55,12 @@ export default class AccountSetPwdPage extends Component{
       this.wv_url = navState.url
     }
   
-    sendMessage() {
-      
-    }
-
-    handleMessage(e) {
-    
-    }
-
     navGoback = () => {
+      if (this.navData.ifPop) {
+        this.props.navigation.dispatch(StackActions.popToTop());
+      } else {
         this.props.navigation.goBack();
+      }
     }
 
     renderStepImg(){
@@ -87,7 +83,6 @@ export default class AccountSetPwdPage extends Component{
     }
 
     renderInputView() {
-        let kbType = Platform.OS==='ios'?'number-pad':'numeric';
         return (
           <View 
             style={{
@@ -104,9 +99,6 @@ export default class AccountSetPwdPage extends Component{
                 source={{uri:this.wv_url}}
                 onNavigationStateChange={this._onNavigationStateChange}
                 startInLoadingState={true}
-                onMessage={(e) => {
-                  this.handleMessage(e)
-                }}
               />
             </View>
           </View>

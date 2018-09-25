@@ -3,9 +3,7 @@ import {
   Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  TextInput,
   ImageBackground,
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -16,8 +14,7 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
+import DataResponsitory from '../../dao/DataResponsitory';
 import { StackActions } from 'react-navigation';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 
@@ -48,7 +45,6 @@ export default class RechargeResultPage extends Component{
     }
 
     renderInputView() {
-        let kbType = Platform.OS==='ios'?'number-pad':'numeric';
         return (
           <View 
             style={{

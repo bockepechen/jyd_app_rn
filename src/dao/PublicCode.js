@@ -10,6 +10,7 @@ export var PublicCode = {
   JX_CB_SETTRADEPWD_FAIL: '8009',    //江西银行_前台回调code --> 交易密码设置：失败
   JX_CB_RESETTRADEPWD_FAIL: '8010',  //江西银行_前台回调code --> 交易密码重置：失败
 
+  LOCAL_SERV_ALL_FAIL: '9000',              //本地服务_前台回调code --> 其他所有非业务异常
   LOCAL_SERV_UN_LOGIN: '9987',              //本地服务_前台回调code --> 用户未登录
   LOCAL_SERV_DIFFERENT_PHONE: '9991',       //本地服务_前台回调code --> 设备不一致，登录状态失效
   LOCAL_SERV_UN_OPENACCOUNT: '9986',        //本地服务_前台回调code --> 用户未开江西银行电子账户

@@ -265,7 +265,7 @@ export default class TabJeyx extends Component {
               </View>
             </View>
           </View>
-        </View  >
+        </View>
     )
   }
 

@@ -15,9 +15,10 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import { StackActions } from 'react-navigation';
 
 export default class AccountOpeningPage extends Component{
     constructor(props){
@@ -27,7 +28,6 @@ export default class AccountOpeningPage extends Component{
         this.state = {
             isLoading: false,
         }
-        // global.NetReqModel.tel_phone = '15822854761'
     }
 
     componentDidMount() {
@@ -45,9 +45,6 @@ export default class AccountOpeningPage extends Component{
     }
 
     accountOpen(){
-      // global.NetReqModel.tel_phone = '15822854761'
-      // global.NetReqModel.jyd_pubData.user_id  = '198'
-      // global.NetReqModel.jyd_pubData.token_id = 'kbZBtBHxGXKPRAXDmk2sZMNDM6Fm8MZw'
       if(!this.name || this.name == '' ){
         this.refs.toast.show('请输入姓名');
         return false;
@@ -66,7 +63,8 @@ export default class AccountOpeningPage extends Component{
     }
 
     navGoback = () => {
-        this.props.navigation.goBack();
+        // this.props.navigation.goBack();
+        this.props.navigation.dispatch(StackActions.popToTop());
     }
 
     renderSubTitleLine(subTitle, topDistance) {

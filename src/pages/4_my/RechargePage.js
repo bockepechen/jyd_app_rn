@@ -3,10 +3,6 @@ import {
   Platform,
   View,
   StyleSheet,
-  TouchableOpacity,
-  Text,
-  Image,
-  BackHandler
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
@@ -15,14 +11,16 @@ import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-v
 import RechargeShortcut from './RechargeShortcut';
 import RechargeTransfer from './RechargeTransfer';
 import ViewUtils from '../../utils/ViewUtils';
-import {ImageStores} from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import { StackActions } from 'react-navigation';
 
-let isAndroid = Platform.OS==='android'?true:false;
 export default class RechargePage extends PureComponent {
   constructor(props) {
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    if (this.props.navigation.state.params !== undefined) {
+      this.navData = this.props.navigation.state.params.data;
+    }
     this.scrollableTabTitle = ['快捷充值','银行转账']
     this.state = {
         isLoading : false,
@@ -41,7 +39,11 @@ export default class RechargePage extends PureComponent {
   }
 
   navGoback = () => {
-    this.props.navigation.goBack();
+    if (this.navData.ifPop) {
+      this.props.navigation.dispatch(StackActions.popToTop());
+    } else {
+      this.props.navigation.goBack();
+    }
   }
 
   renderScrollableTabView() {

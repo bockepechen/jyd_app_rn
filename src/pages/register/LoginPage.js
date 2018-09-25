@@ -24,7 +24,7 @@ import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { StackActions,NavigationActions } from 'react-navigation';
+import { StackActions } from 'react-navigation';
 
 export default class LoginPage extends Component {
   constructor(props){
@@ -64,14 +64,12 @@ export default class LoginPage extends Component {
   }
 
   navGoback = () => {
-    console.log(this.navData)
-    if(this.navData && this.navData.data && this.navData.data.fromPage == 'home'){
+    if (this.navData && this.navData.data && this.navData.data.ifPop) {
       this.props.navigation.dispatch(StackActions.popToTop());
-    }
-    else{
-      if(this.state.isLoading) {
+    } else {
+      if (this.state.isLoading) {
         // 关闭Loading动画
-        this.setState({isLoading:false}, () => {
+        this.setState({ isLoading: false }, () => {
           this.props.navigation.goBack();
         })
       } else {

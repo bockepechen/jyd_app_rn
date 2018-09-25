@@ -73,26 +73,18 @@ export default class BindCardNewPage extends Component {
     else{
 
     }
-    console.log('bbbbbbb');
     this.backButtonEnabled =  navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
   }
 
-  sendMessage() {
-    
-  }
-
-
   goBack = () => {
-    if (this.backButtonEnabled) {
-      this.refs.webview.goBack()
-    } else {
-      this.props.navigation.goBack();
-    }
-  }
-  handleMessage(e) {
-    
+    // if (this.backButtonEnabled) {
+    //   this.refs.webview.goBack()
+    // } else {
+    //   this.props.navigation.goBack();
+    // }
+    this.props.navigation.dispatch(StackActions.popToTop());
   }
 
   render() {
