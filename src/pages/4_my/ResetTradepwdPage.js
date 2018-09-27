@@ -33,7 +33,7 @@ export default class ResetTradepwdPage extends Component {
   }
   
   _onNavigationStateChange = (navState) => {
-    if (this.commonBlocker.handleJXreqUrl(navState.url)) {
+    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
       this.commonBlocker.handleLocalServCode(navState.url);
     }
   }

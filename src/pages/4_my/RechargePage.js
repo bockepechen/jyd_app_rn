@@ -82,7 +82,3 @@ export default class RechargePage extends PureComponent {
     )
   }
 }
-
-var styles = StyleSheet.create({
-  
-})

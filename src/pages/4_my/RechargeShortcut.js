@@ -3,30 +3,24 @@ import {
   Text,
   View,
   Platform,
-  FlatList,
   TouchableOpacity,
-  LayoutAnimation,
-  ActivityIndicator,
-  RefreshControl,
   TextInput,
   Image,
   ImageBackground,
   TouchableHighlight,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from 'react-native';
 import { scaleSize } from '../../utils/FitViewUtils';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import DataResponsitory from '../../dao/DataResponsitory';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import { ImageStores } from '../../../res/styles/ImageStores';
-import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
+import CommonBlocker from '../../utils/CommonBlocker';
 
-let isAndroid = Platform.OS === 'android' ? true : false;
 export default class RechargeShortcut extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.commonBlocker = new CommonBlocker(this);
     this.tx_amount = ''
     this.state = {
       isLoading: false,
@@ -52,7 +46,6 @@ export default class RechargeShortcut extends Component {
     let url = await '/accountSafety/cardInfo';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
-        console.log(result);
         if (result.return_code == '0000') {
           this.setState({
             isLoading: false,
@@ -75,18 +68,15 @@ export default class RechargeShortcut extends Component {
       })
   }
 
-  recharge() {
-    // global.NetReqModel.tel_phone = '15822753827'
-    global.NetReqModel.tx_amount = this.tx_amount
-    // global.NetReqModel.tx_amount = 100
-    // global.NetReqModel.jyd_pubData.user_id = '91'
-    // global.NetReqModel.jyd_pubData.token_id = '123235h5e3111'
-    console.log(JSON.stringify(global.NetReqModel))
-    this.goto('RechargeBankPage', {
-      url: '/directRecharge',
-      jsonObj: global.NetReqModel,
-      title: '充值'
-    });
+  async recharge() {
+    if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+      global.NetReqModel.tx_amount = this.tx_amount
+      this.goto('RechargeBankPage', {
+        url: '/directRecharge',
+        jsonObj: global.NetReqModel,
+        title: '充值'
+      });
+    }
   }
 
   renderSubTitleLine(subTitle, topDistance) {
@@ -171,12 +161,14 @@ export default class RechargeShortcut extends Component {
           </View>
           <View style={{ marginTop: scaleSize(42), width: scaleSize(999), flexDirection: 'row', justifyContent: 'flex-end' }}>
             <TouchableOpacity
-              onPress={() => {
-                this.goto('RechargeLimitPage', {
-                  url: '/accountRecharge/limitTable',
-                  jsonObj: global.NetReqModel,
-                  title: '查看银行限额'
-                })
+              onPress={async () => {
+                if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+                  this.goto('RechargeLimitPage', {
+                    url: '/accountRecharge/limitTable',
+                    jsonObj: global.NetReqModel,
+                    title: '查看银行限额'
+                  })
+                }
               }}
             >
               <Text style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'查看银行限额'}</Text>

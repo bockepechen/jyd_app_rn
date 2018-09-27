@@ -11,6 +11,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { AppConfig } from '../../config/AppConfig';
 import BufferUtils from '../../utils/BufferUtils';
 import CommonBlocker from '../../utils/CommonBlocker';
+import { StackActions } from 'react-navigation';
 
 export default class WithdrawBankPage extends Component {
   constructor(props) {
@@ -33,11 +34,13 @@ export default class WithdrawBankPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.commonBlocker.handleJXReturnCode(navState.url);
+    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
+      this.commonBlocker.handleLocalServCode(navState.url);
+    }
   }
 
   goBack = () => {
-    this.props.navigation.goBack();
+    this.props.navigation.dispatch(StackActions.popToTop());
   }
 
   render() {

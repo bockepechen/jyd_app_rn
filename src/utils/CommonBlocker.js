@@ -216,7 +216,7 @@ export default class CommonBlocker {
    * 根据江西银行返回码，处理跳转逻辑
    * @param {*} reqUrl 
    */
-  handleJXreqUrl(reqUrl, extraParams) {
+  handleJXReturnCode(reqUrl, extraParams) {
     if (reqUrl.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1) {
       // 返回8000，跳转业务成功提示界面
       this.props.navigation.navigate('RechargeResultPage', {

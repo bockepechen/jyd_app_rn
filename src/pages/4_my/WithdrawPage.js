@@ -16,17 +16,19 @@ import NavigationBar from '../../common/NavigationBar';
 import ViewUtils from '../../utils/ViewUtils';
 import { scaleSize } from '../../utils/FitViewUtils';
 import { ImageStores } from '../../../res/styles/ImageStores';
-import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import DataResponsitory from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import { StackActions } from 'react-navigation';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import LoadingIcon from '../../common/LoadingIcon';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class WithdrawPage extends Component {
   constructor(props) {
     super(props)
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.commonBlocker = new CommonBlocker(this);
     this.btnFlag = false;
     this.state = {
       isLoading: false,
@@ -49,7 +51,7 @@ export default class WithdrawPage extends Component {
   }
 
   navGoback = () => {
-    this.props.navigation.dispatch(StackActions.popToTop());
+    this.props.navigation.goBack();
   }
 
   goto(url, JsonObj) {
@@ -94,24 +96,25 @@ export default class WithdrawPage extends Component {
       })
   }
 
-  withdraw() {
-    if (!this.apply_money) {
-      this.refs.toast.show('最低提现10元');
-      return false
+  withdraw = async () => {
+    if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+      if (!this.apply_money) {
+        this.refs.toast.show('最低提现10元');
+        return false
+      }
+      let money = parseFloat(this.apply_money)
+      if (money < 10) {
+        this.refs.toast.show('最低提现10元');
+        return false
+      }
+      global.NetReqModel.apply_money = this.apply_money
+      global.NetReqModel.bank_cnapsNo = this.state.bank_no
+      this.goto('WithdrawBankPage', {
+        url: '/withdraw',
+        jsonObj: global.NetReqModel,
+        title: '提现'
+      });
     }
-    let money = parseFloat(this.apply_money)
-    if (money < 10) {
-      this.refs.toast.show('最低提现10元');
-      return false
-    }
-    global.NetReqModel.apply_money = this.apply_money
-    global.NetReqModel.bank_cnapsNo = this.state.bank_no
-    console.log(JSON.stringify(global.NetReqModel))
-    this.goto('WithdrawBankPage', {
-      url: '/withdraw',
-      jsonObj: global.NetReqModel,
-      title: '提现'
-    });
   }
 
   renderSubTitleLine(subTitle, topDistance) {
@@ -235,12 +238,7 @@ export default class WithdrawPage extends Component {
         <TouchableHighlight
           style={{ marginTop: scaleSize(42) }}
           underlayColor='rgba(0,0,0,0)'
-          onPress={() => {
-            if (!this.btnFlag) {
-              return false
-            }
-            this.withdraw()
-          }}>
+          onPress={this.withdraw}>
           <ImageBackground
             source={ImageStores.sy_17}
             resizeMode={'stretch'}

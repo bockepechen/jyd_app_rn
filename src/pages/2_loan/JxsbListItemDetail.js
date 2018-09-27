@@ -44,8 +44,9 @@ export default class JeyxListItemDetail extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    this.commonBlocker.handleJXreqUrl(navState.url);
-    this.commonBlocker.handleLocalServCode(navState.url);
+    if (this.commonBlocker.handleLocalServCode(navState.url)) {
+      this.commonBlocker.handleJXReturnCode(navState.url);
+    }
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url

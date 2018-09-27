@@ -49,10 +49,10 @@ export default class AccountAgreementSignPage extends Component {
   
   _onNavigationStateChange = (navState) => {
     console.log(navState.url);
-    if (this.commonBlocker.handleJXreqUrl(navState.url, {
+    if (this.commonBlocker.handleJXReturnCode(navState.url, {
       page: 'AccountAgreementPage'
     })) {
-      // this.commonBlocker.handleLocalServCode(navState.url);
+      this.commonBlocker.handleLocalServCode(navState.url);
     }
   }
 

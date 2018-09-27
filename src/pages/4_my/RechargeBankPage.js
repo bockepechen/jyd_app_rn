@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
-  StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -14,7 +11,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils';
-import {PublicCode} from '../../dao/PublicCode';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class RechargeBankPage extends Component {
   constructor(props) {
@@ -24,10 +21,8 @@ export default class RechargeBankPage extends Component {
     let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.backButtonEnabled = ''
-    this.forwardButtonEnabled = ''
+    this.commonBlocker = new CommonBlocker(this);
     this.wv_url = this.navData.url;
-   
   }
   
   componentDidMount() {
@@ -38,58 +33,14 @@ export default class RechargeBankPage extends Component {
     this.AndroidBackHandler.removePressBackListener();
   }
 
-  goto(url,JsonObj){
-    this.props.navigation.navigate(url,{
-      data:JsonObj ? JsonObj : {}
-    });
-  }
-  
   _onNavigationStateChange = (navState) => {
-    console.log(navState);
-    if(navState.url == 'action://jydapp.forgetPassword'){
-      console.log('aaaaaaa');
-      const resetAction = StackActions.reset({
-        index: 1,
-        actions: [
-          NavigationActions.navigate({ routeName: 'TabPage'}),
-          NavigationActions.navigate({ routeName: 'AccountSecurityPage'}),
-        ],
-      });
-      this.props.navigation.dispatch(resetAction);
-      return false
-    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
-      console.log('@@@@@@@@@@@@@@ 充值 [RechargeBankPage] 江西银行成功回调');
-      this.goto('RechargeResultPage',{
-        title:'充值成功',
-        type:'1'
-      })
-      return false
+    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
+      this.commonBlocker.handleLocalServCode(navState.url);
     }
-    else if(navState.url == 'action:jiayidai'){
-      console.log('333');
-      this.props.navigation.goBack();
-    }else{
-
-    }
-    this.backButtonEnabled =  navState.canGoBack
-    this.forwardButtonEnabled = navState.canGoForward
-    this.wv_url = navState.url
   }
-
-  sendMessage() {
-    
-  }
-
 
   goBack = () => {
-    if (this.backButtonEnabled) {
-      this.refs.webview.goBack()
-    } else {
-      this.props.navigation.goBack();
-    }
-  }
-  handleMessage(e) {
-    
+    this.props.navigation.dispatch(StackActions.popToTop());
   }
 
   render() {
@@ -117,7 +68,3 @@ export default class RechargeBankPage extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-
-});
