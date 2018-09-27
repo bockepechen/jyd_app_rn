@@ -34,7 +34,9 @@ export default class WithdrawBankPage extends Component {
   }
 
   _onNavigationStateChange = (navState) => {
-    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
+    if (this.commonBlocker.handleJXReturnCode(navState.url, {
+      emitType: 'refreshMyPage'
+    })) {
       this.commonBlocker.handleLocalServCode(navState.url);
     }
   }

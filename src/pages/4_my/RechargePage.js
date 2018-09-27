@@ -18,6 +18,7 @@ export default class RechargePage extends PureComponent {
   constructor(props) {
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.navData = {};
     if (this.props.navigation.state.params !== undefined) {
       this.navData = this.props.navigation.state.params.data;
     }
@@ -39,7 +40,7 @@ export default class RechargePage extends PureComponent {
   }
 
   navGoback = () => {
-    if (this.navData.ifPop) {
+    if (this.navData.ifPop !== undefined) {
       this.props.navigation.dispatch(StackActions.popToTop());
     } else {
       this.props.navigation.goBack();

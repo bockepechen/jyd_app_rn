@@ -41,6 +41,12 @@ export default class MyPage extends Component {
     }
   }
 
+  componentWillMount() {
+    DeviceEventEmitter.addListener('refreshMyPage', () => {
+      this.getInfoData();
+    })
+  }
+
   componentDidMount() {
     this.getInfoData()
   }

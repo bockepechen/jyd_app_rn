@@ -101,7 +101,6 @@ export default class LoginPage extends Component {
       let url = await '/login';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
        .then((result) => {
-         console.log(result)
          // 返回数据，关闭Loading动画
          this.setState({isLoading:false}, () => {
            if (result.return_code === '0000') {

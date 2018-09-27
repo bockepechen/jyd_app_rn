@@ -15,6 +15,7 @@ import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import { ImageStores } from '../../../res/styles/ImageStores';
 import LoadingIcon from '../../common/LoadingIcon';
 import CommonBlocker from '../../utils/CommonBlocker';
+import ViewUtils from '../../utils/ViewUtils';
 
 export default class RechargeShortcut extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export default class RechargeShortcut extends Component {
       isLoading: false,
       card_no: '',
       bank_name: '',
+      tel_phone: global.NetReqModel.tel_phone
     }
   }
 
@@ -70,6 +72,20 @@ export default class RechargeShortcut extends Component {
 
   async recharge() {
     if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+      if (!this.state.tel_phone) {
+        this.refs.toast.show('请填写银行预留手机号', 1000);
+        return false
+      }
+      if (!this.tx_amount) {
+        this.refs.toast.show('请填写充值金额', 1000);
+        return false
+      }
+      if (this.tx_amount < 100) {
+        this.refs.toast.show('充值金额不得少于100', 1000);
+        return false
+      }
+
+
       global.NetReqModel.tx_amount = this.tx_amount
       this.goto('RechargeBankPage', {
         url: '/directRecharge',
@@ -145,7 +161,12 @@ export default class RechargeShortcut extends Component {
               placeholder={'请输入银行预留手机号'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              onChangeText={(p) => { this.setState({ tel_pwdOld: p }) }}
+              value={this.state.tel_phone}
+              onChangeText={(tel_phone) => {
+                this.setState({
+                  tel_phone: tel_phone
+                })
+              }}
             />
           </View>
           <View style={{ marginTop: scaleSize(54), width: scaleSize(999), height: scaleSize(81), borderBottomWidth: GlobalStyles.PIXEL, borderBottomColor: '#c3c3c3', flexDirection: 'row', alignItems: "center", }}>
@@ -197,6 +218,7 @@ export default class RechargeShortcut extends Component {
         {this.renderMainView()}
         {this.renderRemark()}
         {this.state.isLoading ? (<LoadingIcon />) : null}
+        {ViewUtils.renderToast(200)}
       </View>
     )
   }

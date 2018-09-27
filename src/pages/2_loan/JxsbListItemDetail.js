@@ -37,12 +37,6 @@ export default class JeyxListItemDetail extends Component {
     this.AndroidBackHandler.removePressBackListener();
   }
 
-  goto(url,JsonObj){
-    this.props.navigation.navigate(url,{
-      data:JsonObj ? JsonObj : {}
-    });
-  }
-
   _onNavigationStateChange = (navState) => {
     if (this.commonBlocker.handleLocalServCode(navState.url)) {
       this.commonBlocker.handleJXReturnCode(navState.url);

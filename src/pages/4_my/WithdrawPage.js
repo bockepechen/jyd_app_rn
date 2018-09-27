@@ -7,8 +7,6 @@ import {
   TextInput,
   ImageBackground,
   TouchableHighlight,
-  TouchableWithoutFeedback,
-  Keyboard,
   ScrollView,
 } from 'react-native';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
@@ -18,7 +16,6 @@ import { scaleSize } from '../../utils/FitViewUtils';
 import { ImageStores } from '../../../res/styles/ImageStores';
 import DataResponsitory from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
-import { StackActions } from 'react-navigation';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import LoadingIcon from '../../common/LoadingIcon';
 import CommonBlocker from '../../utils/CommonBlocker';
@@ -99,7 +96,7 @@ export default class WithdrawPage extends Component {
   withdraw = async () => {
     if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
       if (!this.apply_money) {
-        this.refs.toast.show('最低提现10元');
+        this.refs.toast.show('请填写提现金额');
         return false
       }
       let money = parseFloat(this.apply_money)
@@ -107,8 +104,12 @@ export default class WithdrawPage extends Component {
         this.refs.toast.show('最低提现10元');
         return false
       }
+      if (this.apply_money >= 50000 && !this.bank_cnapsNo) {
+        this.refs.toast.show('提现金额大于50000元时，必须填写银行联行号', 2000);
+        return false
+      }
       global.NetReqModel.apply_money = this.apply_money
-      global.NetReqModel.bank_cnapsNo = this.state.bank_no
+      global.NetReqModel.bank_cnapsNo = this.bank_cnapsNo
       this.goto('WithdrawBankPage', {
         url: '/withdraw',
         jsonObj: global.NetReqModel,
@@ -226,11 +227,11 @@ export default class WithdrawPage extends Component {
           <View style={{ marginTop: scaleSize(81), width: scaleSize(999), height: scaleSize(81), borderBottomWidth: GlobalStyles.PIXEL, borderBottomColor: '#c3c3c3' }}>
             <TextInput
               style={{ marginTop: scaleSize(0), marginLeft: scaleSize(18), marginRight: scaleSize(18), fontSize: scaleSize(48), paddingTop: 0, paddingBottom: 0 }}
-              editable={false}
               clearButtonMode={'while-editing'}
               placeholder={'请填写银行联行号'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
+              onChangeText={(t) => { this.bank_cnapsNo = t }}
             />
           </View>
         </View>

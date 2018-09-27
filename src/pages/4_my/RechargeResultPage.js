@@ -42,10 +42,19 @@ export default class RechargeResultPage extends Component{
     }
 
     navGoback = () => {
+      // 跳转成功页面传递的参数
       if (this.navData.extraParams !== undefined) {
-        // 针对签约页面的处理，如果一项签约成功，还要返回到签约页面，并通过DeviceEventEmitter方式，重新刷新页面签约状态
-        DeviceEventEmitter.emit('refreshSignInfo');
-        this.props.navigation.navigate(this.navData.extraParams.page);
+        if (this.navData.extraParams.emitType !== undefined) {
+          // 如果广播类型参数不为空，则先触发广播监听
+          DeviceEventEmitter.emit(this.navData.extraParams.emitType);
+          if (this.navData.extraParams.page !== undefined) {
+            // 如果目标页面不为空，则跳转指定页面
+            this.props.navigation.navigate(this.navData.extraParams.page);
+          } else {
+            // 如果没有目标页面，则跳转最外层TabPage
+            this.props.navigation.dispatch(StackActions.popToTop());
+          }
+        }
       } else {
         this.props.navigation.dispatch(StackActions.popToTop());
       }

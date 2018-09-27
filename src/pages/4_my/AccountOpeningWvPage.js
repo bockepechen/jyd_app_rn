@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   View,
   WebView,
-  StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -12,7 +11,8 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
 import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils';
-import {PublicCode} from '../../dao/PublicCode';
+import CommonBlocker from '../../utils/CommonBlocker';
+
 
 export default class AccountOpeningWvPage extends Component {
   constructor(props) {
@@ -21,13 +21,9 @@ export default class AccountOpeningWvPage extends Component {
     let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
     let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
-    console.log(this.navData.url)
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.backButtonEnabled = ''
-    this.forwardButtonEnabled = ''
+    this.commonBlocker = new CommonBlocker(this);
     this.wv_url = this.navData.url
-    this.status = ''
-    this.loading =  ''
   }
   
   componentDidMount() {
@@ -37,57 +33,16 @@ export default class AccountOpeningWvPage extends Component {
   componentWillUnmount() {
     this.AndroidBackHandler.removePressBackListener();
   }
-
-  goto(url,JsonObj){
-    this.props.navigation.navigate(url,{
-      data:JsonObj ? JsonObj : {}
-    });
-  }
   
   _onNavigationStateChange = (navState) => {
-    console.log(navState)
-    let u = navState.url;
-    if(navState.url == 'action://jydapp.forgetPassword'){
-      console.log('aaaaaaa');
-      this.props.navigation.goBack();
-      return false
-    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
-      console.log('@@@@@@@@@@@@@@ 银行开户 [AccountOpeningWvPage] 江西银行成功回调');
-      this.goto('AccountAgreementPage');
-      return false
+    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
+      this.commonBlocker.handleLocalServCode(navState.url);
     }
-    else if(navState.url == 'action:jiayidai'){
-      console.log('333');
-      this.props.navigation.goBack();
-    }
-    else if(u.indexOf("tel:")  >= 0 ){
-      console.log('aaaaaa');
-      this.refs.webview.stopLoading()
-      return false;
-    }
-    else{
-
-    }
-    console.log('bbbbbbb');
-    this.backButtonEnabled =  navState.canGoBack
-    this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
   }
 
-  sendMessage() {
-    
-  }
-
-
   goBack = () => {
-    if (this.backButtonEnabled) {
-      this.refs.webview.goBack()
-    } else {
-      this.props.navigation.goBack();
-    }
-  }
-  handleMessage(e) {
-    
+    this.props.navigation.dispatch(StackActions.popToTop());
   }
 
   render() {
@@ -110,15 +65,8 @@ export default class AccountOpeningWvPage extends Component {
           source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
-          onMessage={(e) => {
-            this.handleMessage(e)
-          }}
         />
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-
-});
