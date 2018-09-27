@@ -84,7 +84,7 @@ export default class InvitingFriendsPage extends Component{
     shareWxToOne(){
         // 2	微信	
         // 3	朋友圈
-        ShareUtil.share('测试','','http://woodyhello.com','啦啦啦',2,(code,message) =>{
+        ShareUtil.share('测试','','https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/userCenter/share.jsp?icode='+global.NetReqModel.tel_phone,'嘉e贷',2,(code,message) =>{
           console.log('code===>'+code);  
           console.log('message===>'+message)
         });
@@ -93,7 +93,7 @@ export default class InvitingFriendsPage extends Component{
     shareWx(){
         // 2	微信	
         // 3	朋友圈
-        ShareUtil.share('测试','','http://woodyhello.com','啦啦啦',3,(code,message) =>{
+        ShareUtil.share('测试','','https://jydrnserv.jiayidai.com:8282/JYD_RN_Serv/userCenter/share.jsp?icode='+global.NetReqModel.tel_phone,'嘉e贷',3,(code,message) =>{
           console.log('code===>'+code);  
           console.log('message===>'+message)
         });
@@ -110,7 +110,7 @@ export default class InvitingFriendsPage extends Component{
               alignItems:'center',
             }}>
             <ImageBackground
-                source={ImageStores.cp_7}
+                source={ImageStores.cp_8}
                 resizeMode={'stretch'}
                 style={{width:scaleSize(1242),height:scaleSize(522),justifyContent:'center',alignItems:'center'}}
             >
@@ -122,7 +122,7 @@ export default class InvitingFriendsPage extends Component{
               underlayColor='rgba(0,0,0,0)'
               onPress={()=>this.onSharePress()}>
               <ImageBackground 
-                source={ImageStores.cp_8} 
+                source={ImageStores.cp_7} 
                 resizeMode={'stretch'} 
                 style={{width:scaleSize(1242), height:scaleSize(210), alignItems:'center', justifyContent:'center'}}>
                 <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'分享给好友'}</Text>
