@@ -15,16 +15,17 @@ import {AppConfig} from '../../config/AppConfig';
 import { StackActions,NavigationActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils';
 import {PublicCode} from '../../dao/PublicCode';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class AccountAgreementSignPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.jsonObj.myHeight = GlobalStyles.WINDOW_HEIGHT - GlobalStyles.NAVBAR_HEIGHT - GlobalStyles.STATUSBAR_HEIGHT
     let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
     let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.commonBlocker = new CommonBlocker(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
     this.wv_url = this.navData.url
@@ -47,52 +48,21 @@ export default class AccountAgreementSignPage extends Component {
   }
   
   _onNavigationStateChange = (navState) => {
-    console.log(navState)
-    if(navState.url == 'action://jydapp.forgetPassword'){
-      console.log('aaaaaaa');
-      const resetAction = StackActions.reset({
-        index: 1,
-        actions: [
-          NavigationActions.navigate({ routeName: 'TabPage'}),
-          NavigationActions.navigate({ routeName: 'AccountSecurityPage'}),
-        ],
-      });
-      this.props.navigation.dispatch(resetAction);
-      return false
-    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
-      console.log('@@@@@@@@@@@@@@ 多合一签约 [AccountAgreementSignPage] 江西银行成功回调');
-      this.goto('RechargeResultPage',{
-        title:'签约成功',
-        type:'1'
-      })
-      return false
+    console.log(navState.url);
+    if (this.commonBlocker.handleJXreqUrl(navState.url, {
+      page: 'AccountAgreementPage'
+    })) {
+      // this.commonBlocker.handleLocalServCode(navState.url);
     }
-    else if(navState.url == 'action:jiayidai'){
-      console.log('333');
-      this.props.navigation.goBack();
-    }else{
-
-    }
-    this.backButtonEnabled =  navState.canGoBack
-    this.forwardButtonEnabled = navState.canGoForward
-    this.wv_url = navState.url
   }
-
-  sendMessage() {
-    
-  }
-
 
   goBack = () => {
     if (this.backButtonEnabled) {
       this.refs.webview.goBack()
     } else {
-      this.props.navigation.state.params.onGoBack();
+      // this.props.navigation.state.params.onGoBack();
       this.props.navigation.goBack();
     }
-  }
-  handleMessage(e) {
-    
   }
 
   render() {
@@ -115,9 +85,6 @@ export default class AccountAgreementSignPage extends Component {
           source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
-          onMessage={(e) => {
-            this.handleMessage(e)
-          }}
         />
       </View>
     )

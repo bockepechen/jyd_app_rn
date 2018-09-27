@@ -21,7 +21,6 @@ export default class JeyxListItemDetail extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.jsonObj.myHeight = GlobalStyles.WINDOW_HEIGHT - GlobalStyles.NAVBAR_HEIGHT - GlobalStyles.STATUSBAR_HEIGHT
     let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
     let baseP = new BufferUtils(encodeStr).toString('base64');
     console.log(baseP);

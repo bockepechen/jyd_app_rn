@@ -216,13 +216,14 @@ export default class CommonBlocker {
    * 根据江西银行返回码，处理跳转逻辑
    * @param {*} reqUrl 
    */
-  handleJXreqUrl(reqUrl) {
+  handleJXreqUrl(reqUrl, extraParams) {
     if (reqUrl.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1) {
       // 返回8000，跳转业务成功提示界面
       this.props.navigation.navigate('RechargeResultPage', {
         data: {
           title: '操作成功',
-          type: '1'
+          type: '1',
+          extraParams: extraParams
         }
       })
       return false;
@@ -302,6 +303,10 @@ export default class CommonBlocker {
         }
       });
       return false;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_ALL_FAIL) > -1) {
+      // WebView异常页面点击按钮，返回跳转首页业务码
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return true;
     } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_PURCHASE_SUCCESS) > -1) {
       // WebView页面点击按钮，返回购买成功业务码
       this.props.navigation.dispatch(StackActions.popToTop());

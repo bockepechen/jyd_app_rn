@@ -26,7 +26,6 @@ export default class AccountSetPwdPage extends Component{
         this.dataResponsitory = new DataResponsitory();
         this.AndroidBackHandler = new AndroidBackHandler(this);
         this.navData = this.props.navigation.state.params.data;
-        this.navData.jsonObj.myHeight = GlobalStyles.WINDOW_HEIGHT - GlobalStyles.NAVBAR_HEIGHT - GlobalStyles.STATUSBAR_HEIGHT
         let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
         let baseP = new BufferUtils(encodeStr).toString('base64');
         this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP

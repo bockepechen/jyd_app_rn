@@ -29,7 +29,6 @@ import AccountPage from '../3_discover/AccountPage';
 import SettingPage from '../4_my/SettingPage';
 import AccountSecurityPage from '../4_my/AccountSecurityPage';
 import BankCardListPage from '../4_my/BankCardListPage';
-import BindCardPage from '../4_my/BindCardPage';
 import BindCardNewPage from '../4_my/BindCardNewPage';
 import AuthPhoneNumPage from '../4_my/AuthPhoneNumPage';
 import AuthPhoneNumNewPage from '../4_my/AuthPhoneNumNewPage';
@@ -108,9 +107,6 @@ const AppStackNavigator = createStackNavigator(
     },
     BankCardListPage:{
       screen:BankCardListPage
-    },
-    BindCardPage:{
-      screen:BindCardPage
     },
     AuthPhoneNumPage:{
       screen:AuthPhoneNumPage

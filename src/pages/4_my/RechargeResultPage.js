@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Keyboard,
+  DeviceEventEmitter
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -41,7 +42,13 @@ export default class RechargeResultPage extends Component{
     }
 
     navGoback = () => {
-      this.props.navigation.dispatch(StackActions.popToTop());
+      if (this.navData.extraParams !== undefined) {
+        // 针对签约页面的处理，如果一项签约成功，还要返回到签约页面，并通过DeviceEventEmitter方式，重新刷新页面签约状态
+        DeviceEventEmitter.emit('refreshSignInfo');
+        this.props.navigation.navigate(this.navData.extraParams.page);
+      } else {
+        this.props.navigation.dispatch(StackActions.popToTop());
+      }
     }
 
     renderInputView() {
@@ -63,9 +70,7 @@ export default class RechargeResultPage extends Component{
             <TouchableHighlight 
               style={{marginTop:scaleSize(42)}}
               underlayColor='rgba(0,0,0,0)'
-              onPress={()=>{
-                this.props.navigation.dispatch(StackActions.popToTop());
-              }}>
+              onPress={this.navGoback}>
               <ImageBackground 
                 source={ImageStores.sy_17} 
                 resizeMode={'stretch'} 

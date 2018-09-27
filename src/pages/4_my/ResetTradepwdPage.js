@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
-  StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
@@ -12,21 +9,18 @@ import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import {AppConfig} from '../../config/AppConfig';
-import { StackActions } from 'react-navigation';
 import BufferUtils from '../../utils/BufferUtils';
-import {PublicCode} from '../../dao/PublicCode';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class ResetTradepwdPage extends Component {
   constructor(props) {
     super(props);
     this.navData = this.props.navigation.state.params.data;
-    this.navData.jsonObj.myHeight = GlobalStyles.WINDOW_HEIGHT - GlobalStyles.NAVBAR_HEIGHT - GlobalStyles.STATUSBAR_HEIGHT
     let encodeStr = encodeURIComponent(JSON.stringify(this.navData.jsonObj))
     let baseP = new BufferUtils(encodeStr).toString('base64');
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
-    this.backButtonEnabled = ''
-    this.forwardButtonEnabled = ''
+    this.commonBlocker = new CommonBlocker(this);
     this.wv_url = this.navData.url
   }
   
@@ -37,52 +31,15 @@ export default class ResetTradepwdPage extends Component {
   componentWillUnmount() {
     this.AndroidBackHandler.removePressBackListener();
   }
-
-  goto(url,JsonObj){
-    this.props.navigation.navigate(url,{
-      data:JsonObj ? JsonObj : {}
-    });
-  }
   
   _onNavigationStateChange = (navState) => {
-    console.log(navState)
-    if(navState.url == 'action://jydapp.forgetPassword'){
-      console.log('aaaaaaa');
-      this.props.navigation.goBack();
-      return false
-    }else if(navState.url.indexOf(PublicCode.JX_CB_ALL_SUCCESS) > -1){
-      console.log('@@@@@@@@@@@@@@ 重置交易密码 [ResetTradepwdPage] 江西银行成功回调');
-      this.goto('RechargeResultPage',{
-        title:'设置成功',
-        type:'1'
-      })
-      return false
+    if (this.commonBlocker.handleJXreqUrl(navState.url)) {
+      this.commonBlocker.handleLocalServCode(navState.url);
     }
-    else if(navState.url == 'action:jiayidai'){
-      console.log('333');
-      this.props.navigation.goBack();
-    }else{
-
-    }
-    this.backButtonEnabled =  navState.canGoBack
-    this.forwardButtonEnabled = navState.canGoForward
-    this.wv_url = navState.url
   }
-
-  sendMessage() {
-    
-  }
-
 
   goBack = () => {
-    if (this.backButtonEnabled) {
-      this.refs.webview.goBack()
-    } else {
-      this.props.navigation.goBack();
-    }
-  }
-  handleMessage(e) {
-    
+    this.props.navigation.goBack();
   }
 
   render() {
@@ -105,15 +62,8 @@ export default class ResetTradepwdPage extends Component {
           source={{uri:this.wv_url}}
           onNavigationStateChange={this._onNavigationStateChange}
           startInLoadingState={true}
-          onMessage={(e) => {
-            this.handleMessage(e)
-          }}
         />
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-
-});

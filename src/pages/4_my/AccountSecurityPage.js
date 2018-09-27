@@ -18,7 +18,6 @@ import ModalView from '../../common/ModalView';
 export default class AccountSecurityPage extends Component {
   constructor(props) {
     super(props);
-    this.ref_modalView = this.props.navigation.state.params.data.ref_modalView;
     this.commonBlocker = new CommonBlocker(this);
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.listItem = [

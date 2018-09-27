@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Keyboard,
+  DeviceEventEmitter
 } from 'react-native';
 import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -64,7 +65,6 @@ export default class SmsCodePage extends Component {
         timeStamp: Date.now()
       }, 
       () => {
-        this.props.navigation.state.params.onGoBack();
         this.props.navigation.goBack();
       }
     );
@@ -83,8 +83,9 @@ export default class SmsCodePage extends Component {
           if (result.return_code === '0000') {
             clearInterval(this.timer);
             this.refs.toast.show('签订成功');
-            this.props.navigation.goBack();
-            // this.props.navigation.navigate(this.navData.nextPage);
+            // 针对签约页面的处理，如果一项签约成功，还要返回到签约页面，并通过DeviceEventEmitter方式，重新刷新页面签约状态
+            DeviceEventEmitter.emit('refreshSignInfo');
+            this.props.navigation.navigate(this.navData.nextPage);
           } else {
             this.refs.toast.show(result.return_msg);
           }
@@ -104,7 +105,7 @@ export default class SmsCodePage extends Component {
     this.setState({validTime: AppConfig.AUTHCODE_CD}, () => {
       this.authCode_countDown();
     });
-    let url = await '/signCompact/eSignCompact';
+    let url = await '/signCompact/sendMobileCode';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         // 返回数据，关闭Loading动画
