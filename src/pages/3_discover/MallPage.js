@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -14,6 +12,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions,NavigationActions } from 'react-navigation';
 import {AppConfig} from '../../config/AppConfig';
 import BufferUtils from '../../utils/BufferUtils'
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class MallPage extends Component {
   constructor(props) {
@@ -25,6 +24,7 @@ export default class MallPage extends Component {
     console.log(baseP);
     this.navData.url = AppConfig.REQUEST_HOST+this.navData.url + '?p='+baseP
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.commonBlocker = new CommonBlocker(this);
     this.backButtonEnabled = ''
     this.forwardButtonEnabled = ''
     this.wv_url = this.navData.url
@@ -42,17 +42,20 @@ export default class MallPage extends Component {
 
   _onNavigationStateChange = (navState) => {
     console.log(navState)
-    if(navState.url.indexOf('action://9987') > -1){
-      const resetAction = StackActions.reset({
-        index: 1,
-        actions: [
-          NavigationActions.navigate({ routeName: 'TabPage'}),
-          NavigationActions.navigate({ routeName: 'LoginPage'}),
-        ],
-      });
-      this.props.navigation.dispatch(resetAction);
-      return false
+    if (this.commonBlocker.handleLocalServCode(navState.url)) {
+      this.commonBlocker.handleJXReturnCode(navState.url);
     }
+    // if(navState.url.indexOf('action://9987') > -1){
+    //   const resetAction = StackActions.reset({
+    //     index: 1,
+    //     actions: [
+    //       NavigationActions.navigate({ routeName: 'TabPage'}),
+    //       NavigationActions.navigate({ routeName: 'LoginPage'}),
+    //     ],
+    //   });
+    //   this.props.navigation.dispatch(resetAction);
+    //   return false
+    // }
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url

@@ -17,12 +17,14 @@ import ViewUtils from '../../utils/ViewUtils';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import LoadingIcon from '../../common/LoadingIcon';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 export default class DiscoverPage extends Component {
   constructor(props) {
     super(props);
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.dataResponsitory = new DataResponsitory();
+    this.commonBlocker = new CommonBlocker(this);
     this.state={
       isLoading: false,
       httpRes:{},
@@ -159,7 +161,11 @@ export default class DiscoverPage extends Component {
           style={{marginLeft:scaleSize(102), width:scaleSize(150), height:scaleSize(150)}}/>
         <TouchableOpacity 
           style={{height:scaleSize(160)}}
-          onPress={()=>{this.goto('InvitingFriendsPage')}}
+          onPress={async () => {
+            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+              this.goto('InvitingFriendsPage');
+            }
+          }}
         >
           <View style={{marginLeft:scaleSize(42), width:scaleSize(333), height:scaleSize(150)}}>
             <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'邀请好友'}</Text>
@@ -172,7 +178,11 @@ export default class DiscoverPage extends Component {
           style={{marginLeft:scaleSize(36), width:scaleSize(150), height:scaleSize(150)}}/>
         <TouchableOpacity 
           style={{height:scaleSize(160)}}
-          onPress={()=>{this.goto('RedPacketPage')}}
+          onPress={async () => {
+            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+              this.goto('RedPacketPage');
+            }
+          }}
         >
           <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
             <Text style={{marginTop:scaleSize(18), fontSize:scaleSize(54), fontWeight:'bold', color:'#998675'}}>{'现金红包'}</Text>
@@ -187,8 +197,10 @@ export default class DiscoverPage extends Component {
     return (
       <View style={{marginTop:scaleSize(39), alignItems:'center', justifyContent:'center'}}>
         <TouchableOpacity
-          onPress={()=>{
-            this.goto('RedPacketPage')
+          onPress={async () => {
+            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+              this.goto('RedPacketPage');
+            }
           }}
         >
           <ImageBackground
