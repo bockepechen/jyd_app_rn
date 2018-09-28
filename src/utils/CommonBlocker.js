@@ -192,7 +192,10 @@ export default class CommonBlocker {
               } else if (!this.checkJXSign(result.jx_data.sign_status, result.jx_data.xy_status, result.jx_data.sqs_status, skipCheckJXSign)) {
                 resolve(false); // 校验是否签约
               } else {
-                this.props.navigation.navigate(navTarget.page, navTarget.params);
+                // 如果第一个参数不设置或者为空，则在改方法外控制跳转页面
+                if (navTarget) {
+                  this.props.navigation.navigate(navTarget.page, navTarget.params);
+                }
                 resolve(true);
               }
             } else if (result.return_code === '9991') {
