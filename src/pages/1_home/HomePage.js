@@ -145,38 +145,11 @@ export default class HomePage extends Component {
           else if (result.return_code == '9983') {
             this.refs.toast.show(result.return_msg);
           }
-          else if (result.return_code == '9987') {
-            this.refs.toast.show(result.return_msg);
-            this.goto('LoginPage')
-          }
-          else if (result.return_code == '9986') {
-            this.goto('AccountOpeningPage')
-          }
-          else if (result.return_code == '9984') {
-            this.goto('AccountAgreementPage')
-          }
-          else if (result.return_code == '9970') {
-            // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
-            this.goto('BindCardNewPage', {
-              url: '/bindCard',
-              jsonObj: global.NetReqModel,
-              title: '绑定银行卡'
-            })
-          }
-          else if (result.return_code == '9985') {
-            this.goto('AccountSetPwdPage', {
-              url: '/transPwd/setPassword',
-              jsonObj: global.NetReqModel,
-              title: '设置交易密码'
-            })
-          }
           else if (result.return_code == '9965') {
             this.showModalView(true, this.renderModal())
-            this.refs.toast.show(result.return_msg);
           }
           else if (result.return_code == '9964') {
             this.showModalView(true, this.renderModal())
-            this.refs.toast.show(result.return_msg);
           }
           else if (result.return_code == '8888') {
             this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -261,7 +234,7 @@ export default class HomePage extends Component {
     )
   }
 
-  _onPress = (id, item, type) => {
+  _onPress = async (id, item, type) => {
     if (type == 'item') {
       global.NetReqModel.sellInfoId = item.sellinfoid;
       global.NetReqModel.productId = item.productId;
@@ -274,7 +247,9 @@ export default class HomePage extends Component {
         ...this.props
       });
     } else {
-      this.riskValidate(item.sellinfoid)
+      if(await this.commonBlocker.checkGroup()){
+        this.riskValidate(item.sellinfoid)
+      }
     }
 
   };
