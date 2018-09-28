@@ -16,13 +16,14 @@ import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 import ListItemJeyx from './ListItemJeyx';
 import ViewUtils from '../../utils/ViewUtils';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
-import { StackActions,NavigationActions } from 'react-navigation';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 let isAndroid = Platform.OS==='android'?true:false;
 export default class TabJeyx extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
+    this.commonBlocker = new CommonBlocker(this);
     this.state = {
       selected: new Map(),
       httpRes:{},
@@ -130,38 +131,11 @@ export default class TabJeyx extends Component {
         else if(result.return_code == '9983'){
           this.refs.toast.show(result.return_msg);
         }
-        else if(result.return_code == '9987'){
-          this.refs.toast.show(result.return_msg);
-          this.goto('LoginPage')
-        }
-        else if(result.return_code == '9986'){
-          this.goto('AccountOpeningPage')
-        }
-        else if(result.return_code == '9984'){
-          this.goto('AccountAgreementPage')
-        }
-        else if(result.return_code == '9970'){
-          // global.NetReqModel.user_ip = global.NetReqModel.jyd_pubData.ip
-          this.goto('BindCardNewPage',{
-            url:'/bindCard',
-              jsonObj:global.NetReqModel,
-              title:'绑定银行卡'
-          })
-        }
-        else if(result.return_code == '9985'){
-          this.goto('AccountSetPwdPage',{
-            url:'/transPwd/setPassword',
-            jsonObj:global.NetReqModel,
-            title:'设置交易密码'
-          })
-        }
         else if(result.return_code == '9965'){
           this.showModalView(true,this.renderModal())
-          this.refs.toast.show(result.return_msg);
         }
         else if(result.return_code == '9964'){
           this.showModalView(true,this.renderModal())
-          this.refs.toast.show(result.return_msg);
         }
         else if(result.return_code == '8888'){
           this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -180,7 +154,7 @@ export default class TabJeyx extends Component {
   }
   
   showModalView(visible,renderView) {
-    DeviceEventEmitter.emit('callModal',visible,renderView);
+    DeviceEventEmitter.emit('callModal',visible,renderView, this.props.ref_modalView);
   }
 
   _onRefresh() {
@@ -196,7 +170,7 @@ export default class TabJeyx extends Component {
     this.getInfoData();
   }
 
-  _onPressItem = (id,item,type) => {
+  _onPressItem = async (id,item,type) => {
     if(type == 'item')
     {
       global.NetReqModel.sellInfoId = item.id;
@@ -210,8 +184,9 @@ export default class TabJeyx extends Component {
         ...this.props
       });
     }else{
-      console.log(item)
-      let res = this.riskValidate(item.productId,item)
+      if(await this.commonBlocker.checkGroup()){
+        this.riskValidate(item.productId,item)
+      }
     }
   };
 
