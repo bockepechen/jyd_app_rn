@@ -7,11 +7,9 @@ import {View,
     Alert,
     StyleSheet, 
     Platform,
-    Dimensions, 
     Text, 
     Image,
     BackHandler,
-    DeviceInfo,
     StatusBar
 } from 'react-native';
 import PropTypes from 'prop-types';

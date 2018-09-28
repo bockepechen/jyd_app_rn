@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   WebView,
-  Platform,
   StyleSheet,
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar';
@@ -11,7 +9,6 @@ import {GlobalStyles} from '../../../res/styles/GlobalStyles';
 import {scaleSize} from '../../utils/FitViewUtils';
 import ViewUtils from '../../utils/ViewUtils'
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import { StackActions } from 'react-navigation';
 
 export default class HomeItemDetail extends Component {
   constructor(props) {
