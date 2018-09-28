@@ -45,17 +45,6 @@ export default class MallPage extends Component {
     if (this.commonBlocker.handleLocalServCode(navState.url)) {
       this.commonBlocker.handleJXReturnCode(navState.url);
     }
-    // if(navState.url.indexOf('action://9987') > -1){
-    //   const resetAction = StackActions.reset({
-    //     index: 1,
-    //     actions: [
-    //       NavigationActions.navigate({ routeName: 'TabPage'}),
-    //       NavigationActions.navigate({ routeName: 'LoginPage'}),
-    //     ],
-    //   });
-    //   this.props.navigation.dispatch(resetAction);
-    //   return false
-    // }
     this.backButtonEnabled = navState.canGoBack
     this.forwardButtonEnabled = navState.canGoForward
     this.wv_url = navState.url
