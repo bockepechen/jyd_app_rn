@@ -7,11 +7,9 @@ import {View,
     Alert,
     StyleSheet, 
     Platform,
-    Dimensions, 
     Text, 
     Image,
     BackHandler,
-    DeviceInfo,
     StatusBar
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -153,12 +151,12 @@ export default class ActionSheetShare extends Component {
         return (
             <View style={{width:this.contentWidth,height:this.itemsPartHeight}}>
                 <View style={{justifyContent:'space-around',flexDirection: 'row', marginTop: 15}}>
-                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWxToOne())}>
+                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWx())}>
                         <Image resizeMode='contain' style={styles.image}
                                source={ImageStores.fx_59}/>
                         <Text>微信朋友圈</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWx())}>
+                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWxToOne())}>
                         <Image resizeMode='contain' style={styles.image}
                                source={ImageStores.fx_60}/>
                         <Text>微信好友</Text>

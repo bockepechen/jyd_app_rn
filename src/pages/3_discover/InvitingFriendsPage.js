@@ -110,7 +110,7 @@ export default class InvitingFriendsPage extends Component{
               alignItems:'center',
             }}>
             <ImageBackground
-                source={ImageStores.cp_8}
+                source={ImageStores.cp_7}
                 resizeMode={'stretch'}
                 style={{width:scaleSize(1242),height:scaleSize(522),justifyContent:'center',alignItems:'center'}}
             >
@@ -122,7 +122,7 @@ export default class InvitingFriendsPage extends Component{
               underlayColor='rgba(0,0,0,0)'
               onPress={()=>this.onSharePress()}>
               <ImageBackground 
-                source={ImageStores.cp_7} 
+                source={ImageStores.cp_8} 
                 resizeMode={'stretch'} 
                 style={{width:scaleSize(1242), height:scaleSize(210), alignItems:'center', justifyContent:'center'}}>
                 <Text style={{fontSize:scaleSize(50), fontWeight:'200', color:'#FFFFFF'}}>{'分享给好友'}</Text>

@@ -26,6 +26,7 @@ import DataResponsitory from '../../dao/DataResponsitory';
 import Utils from '../../utils/Utils';
 import ViewUtils from '../../utils/ViewUtils';
 import { ExceptionMsg } from '../../dao/ExceptionMsg';
+import CommonBlocker from '../../utils/CommonBlocker';
 
 let isAndroid = Platform.OS === 'android' ? true : false;
 let refreshRate = 60;
@@ -34,6 +35,7 @@ export default class HomePage extends Component {
     super(props);
     this.dataResponsitory = new DataResponsitory();
     this.AndroidBackHandler = new AndroidBackHandler(props);
+    this.commonBlocker = new CommonBlocker(this);
     this.state = {
       sourceData: [
         {
@@ -332,7 +334,7 @@ export default class HomePage extends Component {
         <TouchableHighlight
           key={index}
           underlayColor='rgba(0,0,0,0)'
-          onPress={() => {
+          onPress={async () => {
             if (!this.state.httpRes && !this.state.httpRes.AppMainHeadBanners)
               return false
             if(index == 0){
@@ -340,7 +342,9 @@ export default class HomePage extends Component {
               return false;
             }
             if(index == 1){
-              this.goto('InvitingFriendsPage')
+              if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+                this.goto('InvitingFriendsPage')
+              }
               return false
             }
             else if(index == 3){
@@ -484,28 +488,42 @@ export default class HomePage extends Component {
       {
         iconImg: ImageStores.sy_22,
         iconName: '每日签到',
-        callback: () => {
-          this.gotoCheck('SignInPage', {
-            url: '/checkIn',
-            jsonObj: global.NetReqModel,
-            title: '每日签到'
-          })
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('SignInPage', {
+              url: '/checkIn',
+              title: '每日签到',
+              jsonObj: global.NetReqModel
+            })
+          }
         }
       },
       {
         iconImg: ImageStores.sy_23,
         iconName: '邀请好友',
-        callback: () => { this.goto('InvitingFriendsPage') }
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('InvitingFriendsPage')
+          }
+        }
       },
       {
         iconImg: ImageStores.sy_24,
         iconName: '我的奖励',
-        callback: () => { this.goto('RedPacketPage') }
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('RedPacketPage')
+          }
+        }
       },
       {
         iconImg: ImageStores.sy_25,
         iconName: '消息中心',
-        callback: () => { this.goto('MessagePage') }
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('MessagePage')
+          }
+        }
       },
     ];
     IconDatas.map((item, index) => {
