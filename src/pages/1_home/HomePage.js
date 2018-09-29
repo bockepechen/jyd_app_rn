@@ -464,13 +464,18 @@ export default class HomePage extends Component {
         iconImg: ImageStores.sy_22,
         iconName: '每日签到',
         callback: async () => {
-          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-            this.goto('SignInPage', {
-              url: '/checkIn',
-              title: '每日签到',
-              jsonObj: global.NetReqModel
+          await this.commonBlocker.checkGroup({
+            page: 'SignInPage',
+            params: {
+              data: {
+                url: '/checkIn',
+                title: '每日签到',
+                jsonObj: global.NetReqModel
+              }
+            }
+          }, {
+              skipCheckJXSign: true
             })
-          }
         }
       },
       {

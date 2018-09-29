@@ -97,7 +97,6 @@ export default class LoginPage extends Component {
       global.NetReqModel.tel_phone = await this.telNum;
       global.NetReqModel.tel_pwd = await this.pwd;
       global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
-      console.log(JSON.stringify(global.NetReqModel));
       let url = await '/login';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
        .then((result) => {

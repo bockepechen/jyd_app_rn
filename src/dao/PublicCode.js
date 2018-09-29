@@ -22,4 +22,5 @@ export var PublicCode = {
   LOCAL_SERV_PURCHASE_RECHARGE:'return_code=7001',      //本地服务_前台回调code --> 理财产品购买页面点击充值
   LOCAL_SERV_ACTIVITYAREA_PRODUCT:'return_code=7002',   //本地服务_前台回调code --> 活动专区点击 "跳转产品页面" 链接
   LOCAL_SERV_ACTIVITYAREA_SHARE:'return_code=7003',     //本地服务_前台回调code --> 活动专区点击 "跳转分享页面" 链接
+  LOCAL_SERV_RISK_FINISH:'return_code=7004',            //本地服务_前台回调code --> 风险测评返回
 }

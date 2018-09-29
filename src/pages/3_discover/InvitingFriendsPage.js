@@ -20,6 +20,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import ActionSheetShare from '../../common/ActionSheetShare';
 import ShareUtil from '../../utils/ShareUtil';
+import { StackActions } from 'react-navigation';
 
 export default class InvitingFriendsPage extends Component{
     constructor(props){
@@ -45,7 +46,7 @@ export default class InvitingFriendsPage extends Component{
     }
 
     navGoback = () => {
-        this.props.navigation.goBack();
+        this.props.navigation.dispatch(StackActions.popToTop());
     }
 
     goto(url,JsonObj){

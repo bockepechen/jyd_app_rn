@@ -314,6 +314,10 @@ export default class CommonBlocker {
       // WebView页面点击按钮，返回购买成功业务码
       this.props.navigation.dispatch(StackActions.popToTop());
       return true;
+    } else if (reqUrl.indexOf(PublicCode.LOCAL_SERV_RISK_FINISH) > -1) {
+      // WebView 风险测评页面点击确定，返回结束测评业务码
+      this.props.navigation.dispatch(StackActions.popToTop());
+      return true;
     } else {
       // 其他URL，由Webview正常加载
       return true;

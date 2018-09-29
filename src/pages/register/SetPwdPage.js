@@ -19,6 +19,7 @@ import DataResponsitory, {Storage_Key} from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import {ExceptionMsg} from '../../dao/ExceptionMsg';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import {NavigationActions, StackActions} from 'react-navigation'
 
 export default class SetPwdPage extends Component {
   constructor(props){
@@ -41,7 +42,7 @@ export default class SetPwdPage extends Component {
   }
   
   navGoback = () => {
-    this.props.navigation.goBack();
+    this.props.navigation.dispatch(StackActions.popToTop());
   }
 
   switchVisible = () => {
@@ -67,10 +68,10 @@ export default class SetPwdPage extends Component {
       // 启动Loading动画
       this.setState({isLoading:true});
       global.NetReqModel.tel_pwd = await this.passWord;
+      global.NetReqModel.jyd_pubData.token_id = await Utils.randomToken();
       let url = await '/signIn/setPassword';
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
         .then((result) => {
-          console.log(result);
           // 返回数据，关闭Loading动画
           this.setState({isLoading:false}, () => {
             if (result.return_code === '0000') {
@@ -83,7 +84,15 @@ export default class SetPwdPage extends Component {
                 token_id: global.NetReqModel.jyd_pubData.token_id
               },
               () => {
-                this.refs.toast.show('注册成功');
+                this.refs.toast.show('注册成功', 1000, () => {
+                  const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [
+                      NavigationActions.navigate({ routeName: 'TabPage'}),
+                    ],
+                  });
+                  this.props.navigation.dispatch(resetAction);
+                });
               }
              )
             } else {

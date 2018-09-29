@@ -24,7 +24,7 @@ export default class TabPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'Home',
+      selectedTab: '',
     };
   }
 
@@ -92,6 +92,9 @@ export default class TabPage extends Component {
           selectedTab: dic.tab,
         })
     });
+    this.setState({
+      selectedTab:'Home'
+    })
     SplashScreen.hide();
   }
 
