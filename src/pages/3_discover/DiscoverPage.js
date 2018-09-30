@@ -117,18 +117,23 @@ export default class DiscoverPage extends Component {
   renderSwiper() {
     let swiperViews = [];
     let swiperSourceData = [
-      ImageStores.fx_2,
-      ImageStores.fx_2,
-      ImageStores.fx_2,
-      ImageStores.fx_2,
-      ImageStores.fx_2,
+      ImageStores.fx_ban
     ];
     swiperSourceData.map((item, index) => {
       swiperViews.push(
         <TouchableHighlight 
           key={index}
           underlayColor='rgba(0,0,0,0)' 
-          onPress={()=>{console.log(`press me ${index}`)}}>
+          onPress={()=>{
+            let navData = {
+              title: '银行存管',
+              url: global.InitNetData.httpRes.bank_url
+            };
+            this.props.navigation.navigate('HomeItemDetail', {
+              data: navData,
+              ...this.props
+            })
+          }}>
           <Image 
             source={item} 
             resizeMode={'stretch'} 

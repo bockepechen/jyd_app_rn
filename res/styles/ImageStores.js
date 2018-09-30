@@ -146,4 +146,5 @@ export var ImageStores = {
   hy_2:require('../imgs/hy_2.jpg'),
   hy_3:require('../imgs/hy_3.jpg'),
   hhy_1:require('../imgs/hhy_1.png'),
+  fx_ban:require('../imgs/fx_ban.png'),
 }
