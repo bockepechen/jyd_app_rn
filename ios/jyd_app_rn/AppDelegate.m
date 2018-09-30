@@ -68,7 +68,7 @@
      设置微信的appKey和appSecret
      [微信平台从U-Share 4/5升级说明]http://dev.umeng.com/social/ios/%E8%BF%9B%E9%98%B6%E6%96%87%E6%A1%A3#1_1
      */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wxa8b93872e244b7b3" appSecret:@"cdf56d09f39fdcf77cbc0a278dcf11c6" redirectURL:nil];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx3ed0fc1002c06d0f" appSecret:@"39b8320e6c8104d687ade119d70f647c" redirectURL:nil];
     /*
      * 移除相应平台的分享，如微信收藏
      */
