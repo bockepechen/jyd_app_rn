@@ -63,7 +63,7 @@ export default class ResetpwdPage extends Component{
         }
         this.setState({isLoading:true});
         // 设置远程接口访问参数 (同步执行)
-        global.NetReqModel.tel_phone = await 'global.NetReqModel.tel_phone';
+        global.NetReqModel.tel_phone = await global.NetReqModel.tel_phone;
         // global.NetReqModel.tel_phone = await '15822854761';
         global.NetReqModel.tel_pwdOld = this.state.tel_pwdOld
         global.NetReqModel.tel_pwdNew = this.state.tel_pwdNew
