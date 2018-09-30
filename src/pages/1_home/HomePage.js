@@ -473,9 +473,7 @@ export default class HomePage extends Component {
                 jsonObj: global.NetReqModel
               }
             }
-          }, {
-              skipCheckJXSign: true
-            })
+          })
         }
       },
       {
