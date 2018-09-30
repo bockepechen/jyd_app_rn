@@ -193,7 +193,7 @@ export default class SetPwdPage extends Component {
               {this.renderPWDView()}
               {this.renderCorpLogo()}
           </View>
-          {this.state.isLoading?(<LoadingIcon />):null}
+          {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
           {ViewUtils.renderToast()}
         </View>
       </TouchableWithoutFeedback>

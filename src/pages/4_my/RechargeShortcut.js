@@ -71,27 +71,42 @@ export default class RechargeShortcut extends Component {
   }
 
   async recharge() {
+    this.setState({
+      isLoading: true
+    });
     if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
       if (!this.state.tel_phone) {
         this.refs.toast.show('请填写银行预留手机号', 1000);
+        this.setState({
+          isLoading: false
+        });
         return false
       }
       if (!this.tx_amount) {
         this.refs.toast.show('请填写充值金额', 1000);
+        this.setState({
+          isLoading: false
+        });
         return false
       }
       if (this.tx_amount < 100) {
         this.refs.toast.show('充值金额不得少于100', 1000);
+        this.setState({
+          isLoading: false
+        });
         return false
       }
-
-
       global.NetReqModel.tx_amount = this.tx_amount
       this.goto('RechargeBankPage', {
         url: '/directRecharge',
         jsonObj: global.NetReqModel,
         title: '充值'
       });
+      if(this.state.isLoading){
+        this.setState({
+          isLoading: false
+        });
+      }
     }
   }
 
@@ -217,7 +232,7 @@ export default class RechargeShortcut extends Component {
       <View style={GlobalStyles.rootContainer}>
         {this.renderMainView()}
         {this.renderRemark()}
-        {this.state.isLoading ? (<LoadingIcon />) : null}
+        {this.state.isLoading ? (<LoadingIcon isModal={true}/>) : null}
         {ViewUtils.renderToast(200)}
       </View>
     )

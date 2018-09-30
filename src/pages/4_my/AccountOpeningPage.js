@@ -45,21 +45,36 @@ export default class AccountOpeningPage extends Component{
     }
 
     accountOpen(){
+      this.setState({
+        isLoading: true,
+      })
       if(!this.name || this.name == '' ){
         this.refs.toast.show('请输入姓名');
+        this.setState({
+          isLoading:false
+        })
         return false;
       }
       if(!this.card_no || this.card_no == '' ){
+        this.setState({
+          isLoading:false
+        })
         this.refs.toast.show('请输入身份证号');
+        return false
       }
       global.NetReqModel.name = this.name
       global.NetReqModel.card_no = this.card_no
       console.log(global.NetReqModel)
       this.goto('AccountOpeningWvPage',{
-        url:'/openAccount',
-        title:'银行存管账号',
-        jsonObj:global.NetReqModel
-    })
+          url:'/openAccount',
+          title:'银行存管账号',
+          jsonObj:global.NetReqModel
+      })
+      if(this.state.isLoading){
+        this.setState({
+          isLoading:false
+        })
+      }
     }
 
     navGoback = () => {
@@ -203,7 +218,7 @@ export default class AccountOpeningPage extends Component{
                       {this.renderRemark()}
                     </ImageBackground>
                 </View>
-                {this.state.isLoading?(<LoadingIcon />):null}
+                {this.state.isLoading?(<LoadingIcon isModal={true} />):null}
                 {ViewUtils.renderToast()}
                 </View>
             </TouchableWithoutFeedback>

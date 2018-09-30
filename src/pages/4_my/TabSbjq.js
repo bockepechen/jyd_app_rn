@@ -122,7 +122,7 @@ export default class TabSbjq extends Component {
       <View style={{flex:1}}>
         {this.renderFirst()}        
         {this.renderScrollableTabView()}
-        {this.state.isLoading?(<LoadingIcon />):null}
+        {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
       </View>
     )
   }

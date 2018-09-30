@@ -235,7 +235,7 @@ export default class ResetpwdPage extends Component{
                         {this.renderInputView()}
                         {/* {this.renderRemark()} */}
                 </View>
-                {this.state.isLoading?(<LoadingIcon />):null}
+                {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
                 {ViewUtils.renderToast()}
                 </View>
             </TouchableWithoutFeedback>

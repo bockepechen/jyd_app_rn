@@ -307,7 +307,7 @@ export default class LoginPage extends Component {
             {this.renderInputView()}
             {this.renderCorpLogo()}
           </View>
-          {this.state.isLoading?(<LoadingIcon />):null}
+          {this.state.isLoading?(<LoadingIcon isModal={true}/>):null}
           {ViewUtils.renderToast()}
         </View>
       </TouchableWithoutFeedback>
