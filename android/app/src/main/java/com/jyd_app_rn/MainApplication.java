@@ -69,6 +69,7 @@ public class MainApplication extends Application implements ReactApplication {
     UMConfigure.setLogEnabled(true);
   }
   {
-    PlatformConfig.setWeixin("wxa8b93872e244b7b3", "cdf56d09f39fdcf77cbc0a278dcf11c6");
+//    PlatformConfig.setWeixin("wxa8b93872e244b7b3", "cdf56d09f39fdcf77cbc0a278dcf11c6");
+    PlatformConfig.setWeixin("wx3ed0fc1002c06d0f", "39b8320e6c8104d687ade119d70f647c");
   }
 }
