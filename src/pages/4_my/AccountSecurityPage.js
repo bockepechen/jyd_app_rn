@@ -14,10 +14,13 @@ import { ImageStores } from '../../../res/styles/ImageStores';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import CommonBlocker from '../../utils/CommonBlocker';
 import ModalView from '../../common/ModalView';
+import LoadingIcon from '../../common/LoadingIcon';
+import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
 
 export default class AccountSecurityPage extends Component {
   constructor(props) {
     super(props);
+    this.dataResponsitory = new DataResponsitory();
     this.commonBlocker = new CommonBlocker(this);
     this.AndroidBackHandler = new AndroidBackHandler(this);
     this.listItem = [
@@ -87,13 +90,15 @@ export default class AccountSecurityPage extends Component {
       },
     ]
     this.state = {
-      tel: `${global.NetReqModel.tel_phone.substring(0, 3)} **** ${global.NetReqModel.tel_phone.substring(7)}`,
-      cardInfo: `${global.NetReqModel.bank_no && global.NetReqModel.bank_no != '' ? '卡后四位(' + global.NetReqModel.bank_no.substring(global.NetReqModel.bank_no.length - 4) + ')' : ''}`,
+      isLoading:false,
+      tel: '',
+      cardInfo: '',
     }
   }
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
+    this.getInfoData()
   }
 
   componentWillUnmount() {
@@ -108,6 +113,35 @@ export default class AccountSecurityPage extends Component {
 
   navGoback = () => {
     this.props.navigation.goBack();
+  }
+
+  async getInfoData() {
+      this.setState({
+          isLoading: true
+      });
+      let url = await '/accountSafety';
+      console.log(JSON.stringify(global.NetReqModel));
+      this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
+          .then((result) => {
+              if (result.return_code == '0000') {
+                  this.setState({
+                      isLoading: false,
+                      tel: result.tel_phone,
+                      cardInfo: result.card,
+                  })
+              }
+              if (this.state.isLoading) {
+                  this.setState({ isLoading: false });
+              }
+          })
+          .catch((e) => {
+              console.log(e);
+              // TODO Toast提示异常
+              // 关闭Loading动画
+              if (this.state.isLoading) {
+                  this.setState({ isLoading: false });
+              }
+          })
   }
 
   _renderItemDetail(index) {
@@ -182,6 +216,7 @@ export default class AccountSecurityPage extends Component {
         />
         {this.renderMainView()}
         {ViewUtils.renderToast()}
+        {this.state.isLoading ? (<LoadingIcon />) : null}
         <ModalView ref='modalView'/>
       </View>
     )
