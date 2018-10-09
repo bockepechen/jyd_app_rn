@@ -74,7 +74,7 @@ export default class RechargeLimitPage extends Component {
         />
         <WebView 
           ref={"webview"}
-          scrollEnabled={false}
+          scrollEnabled={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           source={{uri:this.wv_url}}

@@ -8,6 +8,7 @@ import {
   Image,
   ImageBackground,
   TouchableHighlight,
+  Linking,
 } from 'react-native';
 import { scaleSize } from '../../utils/FitViewUtils';
 import DataResponsitory from '../../dao/DataResponsitory';
@@ -16,6 +17,7 @@ import { ImageStores } from '../../../res/styles/ImageStores';
 import LoadingIcon from '../../common/LoadingIcon';
 import CommonBlocker from '../../utils/CommonBlocker';
 import ViewUtils from '../../utils/ViewUtils';
+import ModalView from '../../common/ModalView';
 
 export default class RechargeShortcut extends Component {
   constructor(props) {
@@ -110,6 +112,65 @@ export default class RechargeShortcut extends Component {
     }
   }
 
+  showModalView(isShow,modalContentView, ref_modalView) {
+      if (isShow) {
+        ref_modalView.show(modalContentView);
+      } else {
+        ref_modalView.close();
+      }
+  }
+
+  renderTelModal() {
+    return (
+      <View
+        style={{ flex: 1, }}
+        visible={this.state.modalTelVisible}
+        isPressClosed={false}
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+          <View style={{ flexDirection: 'column', justifyContent: 'center', height: scaleSize(360),marginTop: scaleSize(-600), width: scaleSize(915), borderRadius: scaleSize(30), backgroundColor: '#fff' }} >
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(50) }}>
+              <Text style={{ color: '#998675', fontSize: scaleSize(60) }}>{'400-8780-777'}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(39) }}>
+              <TouchableHighlight
+                style={{ flexDirection: 'row', justifyContent: 'center' }}
+                underlayColor='rgba(0,0,0,0)'
+                onPress={() => { this.showModalView(false,null,this.refs.modalView) }}>
+                <ImageBackground
+                  source={ImageStores.me_35}
+                  resizeMode={'stretch'}
+                  style={{ width: scaleSize(336), height: scaleSize(135), alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: scaleSize(36), fontWeight: '200', color: '#656565' }}>{'取消'}</Text>
+                </ImageBackground>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={{ flexDirection: 'row', justifyContent: 'center' }}
+                underlayColor='rgba(0,0,0,0)'
+                onPress={() => {
+                  let url = 'tel:400-8780-777'
+                  Linking.canOpenURL(url).then(supported => {
+                    if (!supported) {
+                      console.log('Can\'t handle url: ' + url);
+                    } else {
+                      return Linking.openURL(url);
+                    }
+                  }).catch(err => console.error('An error occurred', err));
+                }}>
+                <ImageBackground
+                  source={ImageStores.me_36}
+                  resizeMode={'stretch'}
+                  style={{ width: scaleSize(336), height: scaleSize(135), alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: scaleSize(36), fontWeight: '200', color: '#FFFFFF' }}>{'呼叫'}</Text>
+                </ImageBackground>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   renderSubTitleLine(subTitle, topDistance) {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: scaleSize(60), marginRight: scaleSize(60) }}>
@@ -140,6 +201,16 @@ export default class RechargeShortcut extends Component {
           <Text style={{ fontSize: scaleSize(36), color: '#989898' }}>1、充值手续费：充值不收取任何手续费</Text>
           <Text style={{ fontSize: scaleSize(36), marginTop: scaleSize(18), color: '#989898' }}>2、如充值过程中出现异常，请联系嘉e贷客服400-8780-777或直接与江西银行客服联系400-78-96266</Text>
           <Text style={{ fontSize: scaleSize(36), marginTop: scaleSize(18), color: '#989898' }}>3、使用中国邮政储蓄银行卡的用户，交易时间为1:00-20:30</Text>
+        </View>
+        <View style={{marginTop: scaleSize(50),flexDirection: 'row'}}>
+          <Text style={{fontSize: scaleSize(38),color: '#989898'}}>仍然无法解决？联系</Text>
+          <Text
+            onPress={()=>{
+              this.showModalView(true, this.renderTelModal(),this.refs.modalView)
+            }} 
+            style={{fontSize: scaleSize(38),color: '#3b92f0'}}>
+            嘉e贷客服
+          </Text>
         </View>
       </View>
     )
@@ -234,6 +305,7 @@ export default class RechargeShortcut extends Component {
         {this.renderRemark()}
         {this.state.isLoading ? (<LoadingIcon isModal={true}/>) : null}
         {ViewUtils.renderToast(200)}
+        <ModalView ref='modalView'/>
       </View>
     )
   }
