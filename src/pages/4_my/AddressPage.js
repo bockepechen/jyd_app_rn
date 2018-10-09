@@ -84,7 +84,9 @@ export default class AddressPage extends Component {
         if (result.return_code == '0000') {
           this.setState({
             isLoading: false,
-          }, this.props.navigation.goBack())
+          }, ()=>{
+            this.refs.toast.show('保存成功', 1000);
+          })
         }else{
           this.refs.toast.show(result.return_msg);
         }

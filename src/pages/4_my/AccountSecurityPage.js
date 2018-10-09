@@ -79,7 +79,7 @@ export default class AccountSecurityPage extends Component {
         }
       },
       {
-        title: '银行账户存管签约情况',
+        title: '银行存管账户签约情况',
         callback: async () => {
           await this.commonBlocker.checkGroup({
             page: 'AccountAgreementPage'

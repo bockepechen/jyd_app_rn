@@ -18,6 +18,7 @@ import LoadingIcon from '../../common/LoadingIcon';
 import CommonBlocker from '../../utils/CommonBlocker';
 import ViewUtils from '../../utils/ViewUtils';
 import ModalView from '../../common/ModalView';
+import Utils from '../../utils/Utils';
 
 export default class RechargeShortcut extends Component {
   constructor(props) {
@@ -84,6 +85,13 @@ export default class RechargeShortcut extends Component {
         });
         return false
       }
+      if(!Utils.checkoutTel(this.state.tel_phone)) {
+        this.refs.toast.show('请输入正确手机号');
+        this.setState({
+          isLoading: false
+        });
+        return false
+      }
       if (!this.tx_amount) {
         this.refs.toast.show('请填写充值金额', 1000);
         this.setState({
@@ -92,7 +100,7 @@ export default class RechargeShortcut extends Component {
         return false
       }
       if (this.tx_amount < 100) {
-        this.refs.toast.show('充值金额不得少于100', 1000);
+        this.refs.toast.show('充值金额不能少于100元', 1000);
         this.setState({
           isLoading: false
         });
@@ -196,7 +204,7 @@ export default class RechargeShortcut extends Component {
           alignItems: 'center',
         }}
       >
-        {this.renderSubTitleLine('温馨提示')}
+        {this.renderSubTitleLine('充值说明')}
         <View style={{ marginTop: scaleSize(66), marginLeft: scaleSize(110), marginRight: scaleSize(110) }}>
           <Text style={{ fontSize: scaleSize(36), color: '#989898' }}>1、充值手续费：充值不收取任何手续费</Text>
           <Text style={{ fontSize: scaleSize(36), marginTop: scaleSize(18), color: '#989898' }}>2、如充值过程中出现异常，请联系嘉e贷客服400-8780-777或直接与江西银行客服联系400-78-96266</Text>
@@ -273,7 +281,7 @@ export default class RechargeShortcut extends Component {
                   this.goto('RechargeLimitPage', {
                     url: '/accountRecharge/limitTable',
                     jsonObj: global.NetReqModel,
-                    title: '查看银行限额'
+                    title: '充值限额表'
                   })
                 }
               }}
