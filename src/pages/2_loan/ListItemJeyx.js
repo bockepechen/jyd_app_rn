@@ -29,7 +29,7 @@ export default class ListItemJeyx extends PureComponent {
     _MainRender(){
         return <View>
             <View style={{flex:1,height:scaleSize(135),flexDirection:'row',justifyContent:'center'}} >
-                <Text style={{fontSize:scaleSize(48),color:'#998675',marginTop:scaleSize(48)}}>每日9:00准时开抢</Text>
+                <Text style={{fontSize:scaleSize(48),color:'#998675',marginTop:scaleSize(48)}}>每日{`${this.props.item.starttime.substring(this.props.item.starttime.indexOf(" "),this.props.item.starttime.length-3)}`}准时开抢</Text>
             </View>
             <ProductCardMain 
               data={this.props.item} 
