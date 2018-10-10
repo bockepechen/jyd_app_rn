@@ -122,7 +122,7 @@ export default class TabJeyx extends Component {
           this.props.navigation.navigate('JeyxListItemDetail',{
             data:{
               url:'/personProLend',
-              title:'嘉e精选',
+              title:item.sellname,
               jsonObj:global.NetReqModel
             },
             ...this.props
@@ -178,7 +178,7 @@ export default class TabJeyx extends Component {
       this.props.navigation.navigate('JeyxListItemDetail',{
         data:{
           url:'/productDetails/querySellinDetail',
-          title:'嘉e精选',
+          title:item.sellname,
           jsonObj:global.NetReqModel
         },
         ...this.props

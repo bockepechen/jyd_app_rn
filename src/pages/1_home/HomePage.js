@@ -124,7 +124,7 @@ export default class HomePage extends Component {
       })
   }
 
-  async riskValidate(product_id) {
+  async riskValidate(product_id,item) {
     let url = await '/riskValidate';
     global.NetReqModel.product_id = product_id;
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
@@ -136,7 +136,7 @@ export default class HomePage extends Component {
             this.props.navigation.navigate('JeyxListItemDetail', {
               data: {
                 url: '/personProLend',
-                title: '嘉e精选',
+                title: item.sellname,
                 jsonObj: global.NetReqModel
               },
               ...this.props
@@ -160,10 +160,10 @@ export default class HomePage extends Component {
       .catch((e) => {
         console.log(e);
         this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
-        return -1;
         if (this.state.isLoading) {
           this.setState({ isLoading: false })
         }
+        return -1;
       })
   }
 
@@ -241,14 +241,14 @@ export default class HomePage extends Component {
       this.props.navigation.navigate('JeyxListItemDetail', {
         data: {
           url: '/productDetails/querySellinDetail',
-          title: '嘉e精选',
+          title: item.sellname,
           jsonObj: global.NetReqModel
         },
         ...this.props
       });
     } else {
       if(await this.commonBlocker.checkGroup()){
-        this.riskValidate(item.sellinfoid)
+        this.riskValidate(item.productId,item)
       }
     }
 
