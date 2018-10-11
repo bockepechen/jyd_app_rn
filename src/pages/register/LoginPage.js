@@ -129,11 +129,15 @@ export default class LoginPage extends Component {
               }
              )
             } else {
+              // 登录失败，清除账号赋值
+              Utils.clearNetReqModel();
               this.refs.toast.show(result.return_msg);
            }
          })
        })
        .catch((e) => {
+         // 登录失败，清除账号赋值
+         Utils.clearNetReqModel();
          this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
          // 关闭Loading动画
          if(this.state.isLoading) {
