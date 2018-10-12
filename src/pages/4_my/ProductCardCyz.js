@@ -113,7 +113,7 @@ export default class ProductCardCyz extends Component {
                 <View style={{marginTop:scaleSize(66),flexDirection:'row',justifyContent:'space-between'}}>
                     <View style={{flexDirection:'row',marginLeft:scaleSize(108)}}>
                         <Image
-                            source={this.paraData.borrowtypeid == '1' ? ImageStores.me_28 : ImageStores.me_29}
+                            source={this.paraData.borrowtypeid == '1' ? ImageStores.me_29 : ImageStores.me_28}
                             resizeMode={'stretch'} 
                             style={{marginTop:scaleSize(-7),height:scaleSize(48),width:scaleSize(48),marginRight:scaleSize(27)}}
                         />

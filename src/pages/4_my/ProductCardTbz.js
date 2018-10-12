@@ -81,7 +81,7 @@ export default class ProductCardTbz extends Component {
                 <View style={{marginTop:scaleSize(66),flexDirection:'row',alignItems:'center'}}>
                     <View style={{flexDirection:'row', alignItems:'center', marginLeft:scaleSize(108)}}>
                         <Image
-                            source={this.paraData.borrowtypeid == '1' ? ImageStores.me_28 : ImageStores.me_29}
+                            source={this.paraData.borrowtypeid == '1' ? ImageStores.me_29 : ImageStores.me_28}
                             resizeMode={'stretch'} 
                             style={{height:scaleSize(48),width:scaleSize(48)}}
                         />

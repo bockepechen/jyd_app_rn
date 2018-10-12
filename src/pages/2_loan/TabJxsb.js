@@ -114,7 +114,7 @@ export default class TabJxsb extends Component {
           this.props.navigation.navigate('JxsbListItemDetail',{
             data:{
               url:'/balanceQuery/queryBalanceApp',
-              title: item.BorrowTypeId == '1' ?  '【车】' : '【信】' + item.Description,
+              title: item.BorrowTypeId == '1' ?  '【信】' : '【车】' + item.Description,
               jsonObj:global.NetReqModel
             },
             ...this.props
@@ -240,7 +240,7 @@ export default class TabJxsb extends Component {
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
           url:'/productDetails/queryStandardpowderDetail',
-          title:item.BorrowTypeId == '1' ?  '【车】' : '【信】' + item.Description,
+          title:item.BorrowTypeId == '1' ?  '【信】' : '【车】' + item.Description,
           jsonObj:global.NetReqModel
         },
         ...this.props
