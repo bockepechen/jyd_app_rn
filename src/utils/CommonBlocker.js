@@ -100,6 +100,13 @@ export default class CommonBlocker {
   }
 
   /**
+   * 校验是否开通江西银行电子账户，如果没开通则跳转开通页面
+   */
+  checkRiskOpen(routeName, weburl,data) {
+    this._openModal(this._renderRiskView(routeName, weburl,data));
+  }
+
+  /**
    * 校验是否绑定银行卡，如果没绑定则跳转绑定银行卡页面
    * @param {*} bankNo 
    * @param {*} skipCheck 
@@ -371,6 +378,66 @@ export default class CommonBlocker {
                 resizeMode={'stretch'}
                 style={{ width: scaleSize(336), height: scaleSize(138), alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: scaleSize(50), fontWeight: '200', color: '#FFFFFF' }}>{btnName}</Text>
+              </ImageBackground>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  /**
+   * 风险评测modal
+   */
+  _renderRiskView(routeName, weburl,data) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+        <View style={{ flexDirection: 'column', justifyContent: 'center', height: scaleSize(891), width: scaleSize(915), borderRadius: scaleSize(30), backgroundColor: '#fff' }} >
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'嘉e贷联手江西银行'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(45) }}>
+            <Image source={ImageStores.me_30} resizeMode={'stretch'} style={{ width: scaleSize(522), height: scaleSize(201) }} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(60) }}>
+            <Text style={{ color: '#998675', fontSize: scaleSize(42) }}>{'积极响应国家政策'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(54) }}>
+            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'银行存管系统正式上线，请先开通银行存管账户'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'开通后即可进行充值、提现、出借等操作'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(54) }}>
+            <TouchableHighlight
+              style={{ flexDirection: 'row', justifyContent: 'center' }}
+              underlayColor='rgba(0,0,0,0)'
+              onPress={() => { this._closeModal() }}>
+              <ImageBackground
+                source={ImageStores.cp_2}
+                resizeMode={'stretch'}
+                style={{ width: scaleSize(336), height: scaleSize(138), alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: scaleSize(50), fontWeight: '200', color: '#FFFFFF' }}>{'稍后再说'}</Text>
+              </ImageBackground>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={{ flexDirection: 'row', justifyContent: 'center' }}
+              underlayColor='rgba(0,0,0,0)'
+              onPress={() => {
+                this.props.navigation.navigate(routeName,{
+                  data:{
+                    url:weburl,
+                    title:'风险评测',
+                    jsonObj:data
+                  },
+                  ...this.props
+                });
+              }}>
+              <ImageBackground
+                source={ImageStores.sy_15}
+                resizeMode={'stretch'}
+                style={{ width: scaleSize(336), height: scaleSize(138), alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: scaleSize(50), fontWeight: '200', color: '#FFFFFF' }}>{'立即测评'}</Text>
               </ImageBackground>
             </TouchableHighlight>
           </View>

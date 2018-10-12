@@ -146,10 +146,12 @@ export default class HomePage extends Component {
             this.refs.toast.show(result.return_msg);
           }
           else if (result.return_code == '9965') {
-            this.showModalView(true, this.renderModal())
+            // this.showModalView(true, this.renderModal())
+            this.commonBlocker.checkRiskOpen('JeyxListItemDetail','/risk/preRisk',global.NetReqModel)
           }
           else if (result.return_code == '9964') {
-            this.showModalView(true, this.renderModal())
+            // this.showModalView(true, this.renderModal())
+            this.commonBlocker.checkRiskOpen('JeyxListItemDetail','/risk/preRisk',global.NetReqModel)
           }
           else if (result.return_code == '8888') {
             this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
