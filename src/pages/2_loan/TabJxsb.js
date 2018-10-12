@@ -114,7 +114,7 @@ export default class TabJxsb extends Component {
           this.props.navigation.navigate('JxsbListItemDetail',{
             data:{
               url:'/balanceQuery/queryBalanceApp',
-              title:'立即出借',
+              title: item.BorrowTypeId == '1' ?  '【车】' : '【信】' + item.Description,
               jsonObj:global.NetReqModel
             },
             ...this.props
@@ -124,10 +124,12 @@ export default class TabJxsb extends Component {
           this.refs.toast.show(result.return_msg);
         }
         else if(result.return_code == '9965'){
-          this.showModalView(true,this.renderModal())
+          // this.showModalView(true,this.renderModal())
+          this.commonBlocker.checkRiskOpen('JeyxListItemDetail','/risk/preRisk',global.NetReqModel)
         }
         else if(result.return_code == '9964'){
-          this.showModalView(true,this.renderModal())
+          // this.showModalView(true,this.renderModal())
+          this.commonBlocker.checkRiskOpen('JeyxListItemDetail','/risk/preRisk',global.NetReqModel)
         }
         else if(result.return_code == '8888'){
           this.refs.toast.show(ExceptionMsg.REQUEST_TIMEOUT);
@@ -238,7 +240,7 @@ export default class TabJxsb extends Component {
       this.props.navigation.navigate('JxsbListItemDetail',{
         data:{
           url:'/productDetails/queryStandardpowderDetail',
-          title:'精选散标',
+          title:item.BorrowTypeId == '1' ?  '【车】' : '【信】' + item.Description,
           jsonObj:global.NetReqModel
         },
         ...this.props
