@@ -57,7 +57,7 @@ export default class MyLoanPage extends PureComponent {
     return (
       <View style={GlobalStyles.rootContainer}>
         <NavigationBar 
-          title='出借'
+          title='我的出借'
           titleColor='#FFFFFF'
           titleSize={scaleSize(56)}
           navColor='#E8152E'
