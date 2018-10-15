@@ -130,7 +130,14 @@ export default class InvitingFriendsPage extends Component{
               </ImageBackground>
             </TouchableHighlight>
             <TouchableHighlight
-                onPress={()=>{}}
+                onPress={()=>{
+                    console.log(global.InitNetData.httpRes.inviteRule_url)
+                    this.goto('QualificationItemPage',{
+                        url:global.InitNetData.httpRes.inviteRule_url,
+                        jsonObj:global.NetReqModel,
+                        title:'邀请规则'
+                    })
+                }}
             >
                 <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{'邀请规则'}</Text>
             </TouchableHighlight>
