@@ -58,7 +58,12 @@ export default class FeedbackPage extends Component {
             if (!this.advice) {
                 this.refs.toast.show('请输入您的意见');
                 return false;
-            } else {
+            } 
+            else if(this.setState.adviceLength > 200){
+                this.refs.toast.show('您已超过字数限制，请修改.');
+                return false;
+            }
+            else {
                 // 启动Loading动画
                 this.setState({ isLoading: true });
                 // 设置远程接口访问参数 (同步执行)

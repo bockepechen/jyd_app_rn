@@ -3,7 +3,6 @@ import {
   Platform,
   Text,
   View,
-  TouchableOpacity,
   Image,
   TextInput,
   ImageBackground,
@@ -17,10 +16,9 @@ import ViewUtils from '../../utils/ViewUtils';
 import {scaleSize} from '../../utils/FitViewUtils';
 import {ImageStores} from '../../../res/styles/ImageStores';
 import DataResponsitory, { Storage_Key } from '../../dao/DataResponsitory';
-import Utils from '../../utils/Utils';
 import LoadingIcon from '../../common/LoadingIcon';
-import { AppConfig } from '../../config/AppConfig';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import Utils from '../../utils/Utils';
 
 export default class ResetpwdPage extends Component{
     constructor(props){
@@ -52,13 +50,21 @@ export default class ResetpwdPage extends Component{
     }
 
     resetpwd = async () => {
-        if(this.state.tel_pwdOld == '' || this.state.tel_pwdNew == '' || this.state.tel_pwdNewRe == '')
+        if(this.state.tel_pwdOld == '')
         {
           this.refs.toast.show('输入内容不能为空');
           return false;
         }
+        if(this.state.tel_pwdNew == ''){
+          this.refs.toast.show('新密码不能为空');
+          return false;
+        }
         if(this.state.tel_pwdNew != this.state.tel_pwdNewRe){
-          this.refs.toast.show('新密码前后输入的不一致');
+          this.refs.toast.show('两次输入的密码不一致');
+          return false;
+        }
+        if(!Utils.checkoutPWD(this.state.tel_pwdNew)){
+          this.refs.toast.show('新密码必须包含6-20位数字和字母');
           return false;
         }
         this.setState({isLoading:true});

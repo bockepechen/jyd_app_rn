@@ -178,7 +178,7 @@ export default class ProductCardCjz extends Component {
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预计利息(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improverate)}</Text>
+                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improveyearrate)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借奖励(元)'}</Text>
                         </View>
                     </View>

@@ -149,7 +149,8 @@ export default class AccountSecurityPage extends Component {
       return <Text style={{ marginTop: scaleSize(48), color: '#989898', marginRight: scaleSize(24) }}>{this.state.cardInfo}</Text>
     }
     else if (index == 2) {
-      return <Text style={{ marginTop: scaleSize(48), color: '#989898', marginRight: scaleSize(24) }}>{this.state.tel}</Text>
+      // return <Text style={{ marginTop: scaleSize(48), color: '#989898', marginRight: scaleSize(24) }}>{this.state.tel}</Text>
+      return null
     } else {
       return null
     }
@@ -191,9 +192,9 @@ export default class AccountSecurityPage extends Component {
 
   renderMainView() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <ScrollView
-          // style={{marginTop:scaleSize(120)}}
+          style={{marginTop:scaleSize(120)}}
           scrollEnabled={false}
         >
           {this._renderItem()}

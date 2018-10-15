@@ -71,6 +71,10 @@ export default class AddressPage extends Component {
   }
 
   async updateInfo() {
+    if(this.state.linkman_phone == ''){
+      this.refs.toast.show('手机号不能为空');
+      return false;
+    }
     this.setState({
       isLoading: true
     });
