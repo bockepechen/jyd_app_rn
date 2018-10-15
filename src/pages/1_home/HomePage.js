@@ -34,7 +34,7 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.dataResponsitory = new DataResponsitory();
-    this.AndroidBackHandler = new AndroidBackHandler(props);
+    this.AndroidBackHandler = new AndroidBackHandler(this);
     this.commonBlocker = new CommonBlocker(this);
     this.state = {
       sourceData: [

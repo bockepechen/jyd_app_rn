@@ -184,9 +184,7 @@ export default class DiscoverPage extends Component {
         <TouchableOpacity 
           style={{height:scaleSize(160)}}
           onPress={async () => {
-            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-              this.goto('RedPacketPage');
-            }
+            await this.commonBlocker.checkGroup({page:'RedPacketPage'});
           }}
         >
           <View style={{marginLeft:scaleSize(42), marginRight:scaleSize(112), height:scaleSize(150)}}>
@@ -203,9 +201,7 @@ export default class DiscoverPage extends Component {
       <View style={{marginTop:scaleSize(39), alignItems:'center', justifyContent:'center'}}>
         <TouchableOpacity
           onPress={async () => {
-            if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-              this.goto('RedPacketPage');
-            }
+            await this.commonBlocker.checkGroup({page:'RedPacketPage'});
           }}
         >
           <ImageBackground
