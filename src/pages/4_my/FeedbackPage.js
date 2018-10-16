@@ -63,6 +63,10 @@ export default class FeedbackPage extends Component {
                 this.refs.toast.show('您已超过字数限制，请修改.');
                 return false;
             }
+            else if(this.advice.length > 200){
+                this.refs.toast.show('您已超过字数限制，请修改.');
+                return false;
+            }
             else {
                 // 启动Loading动画
                 this.setState({ isLoading: true });
