@@ -168,7 +168,7 @@ export default class WithdrawPage extends Component {
   }
 
   renderInputView() {
-    let kbType = Platform.OS === 'ios' ? 'number-pad' : 'numeric';
+    let kbType = Platform.OS === 'ios' ? 'decimal-pad' : 'numeric';
     return (
       <View
         style={{

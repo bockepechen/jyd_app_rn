@@ -232,7 +232,7 @@ export default class RechargeShortcut extends Component {
   }
 
   renderMainView() {
-    let kbType = Platform.OS === 'ios' ? 'number-pad' : 'numeric';
+    let kbType = Platform.OS === 'ios' ? 'decimal-pad' : 'numeric';
     return (
       <View
         style={{
