@@ -106,6 +106,13 @@ export default class RechargeShortcut extends Component {
         });
         return false
       }
+      if(!Utils.checkMoneyFormat(this.tx_amount)){
+        this.refs.toast.show('格式不正确，请重新输入', 1000);
+        this.setState({
+          isLoading: false
+        });
+        return false
+      }
       global.NetReqModel.tx_amount = this.tx_amount
       this.goto('RechargeBankPage', {
         url: '/directRecharge',

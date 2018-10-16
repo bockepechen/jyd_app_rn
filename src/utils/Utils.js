@@ -79,7 +79,7 @@ export default class Utils {
      * @param {*} pwd
      */
     static checkoutPWD(pwd) {
-        var PWD_REG = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+        var PWD_REG = /(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}/;
         return PWD_REG.test(pwd);
     }
     /**
@@ -135,5 +135,13 @@ export default class Utils {
         console.log('*********************************************');
         console.log(global.NetReqModel);
         console.log('*********************************************');
+    }
+
+    /**
+     * 校验输入的钱小数点后不能超过3位
+     */
+    static checkMoneyFormat(p){
+        var PWD_REG = /^(-?\d+)(\.\d{1,2})?$/
+        return PWD_REG.test(p);
     }
 }
