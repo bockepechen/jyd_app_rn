@@ -207,7 +207,7 @@ export default class AccountSecurityPage extends Component {
     return (
       <View style={GlobalStyles.rootContainer}>
         <NavigationBar
-          title='设置'
+          title='账号与安全'
           titleColor='#FFFFFF'
           titleSize={scaleSize(56)}
           navColor='#E8152E'

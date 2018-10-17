@@ -89,7 +89,7 @@ export default class AddressPage extends Component {
           this.setState({
             isLoading: false,
           }, ()=>{
-            this.refs.toast.show('保存成功', 1000);
+            this.props.navigation.goBack();
           })
         }else{
           this.refs.toast.show(result.return_msg);

@@ -46,6 +46,7 @@ export default class FeedbackPage extends Component {
     }
 
     changeAdviceWordsCount(t) {
+        console.log(t)
         this.advice = t;
         this.setState({
             adviceLength: this.advice.length,
