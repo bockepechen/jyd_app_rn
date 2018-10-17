@@ -71,8 +71,13 @@ export default class ProductCardCjz extends Component {
     })
   }
 
-  getcjjl(contractexpectamount,improverate){
-    let res = parseFloat(contractexpectamount)*parseFloat(improverate)
+  getcjjl(contractexpectamount,improverate,expiresdays){
+    let res = parseFloat(contractexpectamount)*parseFloat(improverate)*parseFloat(expiresdays) / 365
+    return res.toFixed(2)
+  }
+
+  getYjlx(expectedyearyield,contractexpectamount,expiresdays){
+    let res = parseFloat(expectedyearyield) * parseFloat(contractexpectamount) * parseFloat(expiresdays) / 365
     return res.toFixed(2)
   }
 
@@ -174,11 +179,11 @@ export default class ProductCardCjz extends Component {
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借金额(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{Utils.formatMoney(this.paraData.expectprofit,2)}</Text>
+                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getYjlx(this.paraData.expectedyearyield,this.paraData.contractexpectamount,this.paraData.expiresdays)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预计利息(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
-                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improveyearrate)}</Text>
+                            <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improveyearrate,this.paraData.expiresdays)}</Text>
                             <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'出借奖励(元)'}</Text>
                         </View>
                     </View>
