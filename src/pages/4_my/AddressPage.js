@@ -79,9 +79,9 @@ export default class AddressPage extends Component {
       isLoading: true
     });
     let url = await '/accountSafety/saveContact';
-    global.NetReqModel.tel_phone = this.state.linkman_phone;
+    global.NetReqModel.link_tel_phone = this.state.linkman_phone;
     global.NetReqModel.address = this.state.linkman_address;
-    global.NetReqModel.real_name = this.state.linkman_name;
+    global.NetReqModel.link_real_name = this.state.linkman_name;
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         console.log(result);
