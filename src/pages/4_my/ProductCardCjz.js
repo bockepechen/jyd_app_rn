@@ -47,9 +47,9 @@ export default class ProductCardCjz extends Component {
   }
 
   jqgx(){
-    global.NetReqModel.SellLimitConfigId = this.paraData.SellLimitConfigId
+    global.NetReqModel.investid = this.paraData.id
     this.goto('WvItemPage',{
-        url:"/productObligatory/queryProductObligatory",
+        url:"/obligatoryRightRealation/queryProductObligatory",
         jsonObj:global.NetReqModel,
         title:'债权关系'
     })
