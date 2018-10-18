@@ -67,6 +67,10 @@ export default class ResetpwdPage extends Component{
           this.refs.toast.show('新密码必须包含6-20位数字和字母');
           return false;
         }
+        if(this.state.tel_pwdNew.indexOf(" ") != -1){
+          this.refs.toast.show('新密码必须包含6-20位数字和字母');
+          return false;
+        }
         this.setState({isLoading:true});
         // 设置远程接口访问参数 (同步执行)
         global.NetReqModel.tel_phone = await global.NetReqModel.tel_phone;
