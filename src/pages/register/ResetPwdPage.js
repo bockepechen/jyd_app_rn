@@ -117,7 +117,7 @@ export default class ResetPwdPage extends Component {
               style={{marginTop:scaleSize(0), marginLeft:scaleSize(18), marginRight:scaleSize(18), fontSize:scaleSize(54), paddingTop:0, paddingBottom:0}}
               maxLength={20}
               clearButtonMode={'while-editing'}
-              placeholder={'请设置6-20位数字和字母作为登录密码'}
+              placeholder={'新密码须为6-20位字母和数字的组合'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
               secureTextEntry={true}

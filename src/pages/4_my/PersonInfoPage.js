@@ -70,7 +70,7 @@ export default class PersonInfoPage extends Component {
     return (
       <View style={{ marginTop: scaleSize(105), width: GlobalStyles.WINDOW_WIDTH, alignItems: 'center', }}>
         <View style={{ marginTop: scaleSize(66), marginLeft: scaleSize(110), marginRight: scaleSize(110) }}>
-          <Text style={{ fontSize: scaleSize(36), color: '#989898' }}>(南昌银行已经更名为江西银行，如收不到江西银行，可选择南昌银行或者城市商业银行，开户地为江西省南昌市)</Text>
+          <Text style={{ fontSize: scaleSize(36), color: '#989898' }}>(南昌银行已经更名为江西银行，如搜不到江西银行，可选择南昌银行或者城市商业银行，开户地为江西省南昌市)</Text>
           <Text style={{ fontSize: scaleSize(36), marginTop: scaleSize(36), color: '#656565' }}>江西银行客服电话:400-78-96266</Text>
         </View>
       </View>

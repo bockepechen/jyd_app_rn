@@ -193,7 +193,7 @@ export default class AccountAgreementPage extends Component {
         </View>
         <View style={{ marginTop: scaleSize(87), marginLeft: scaleSize(111) }}>
           <View style={{ flexDirection: 'row' }}>
-            <Text onPress={() => { this.showXy('江西银行存管投资协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管投资协议》'}</Text>
+            <Text onPress={() => { this.showXy('江西银行存管账户投资协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管账户投资协议》'}</Text>
             <CheckBox
               style={{ flexDirection: 'row', marginLeft: scaleSize(201) }}
               disabled={this.state.jx_status == '1' ? true : false}
@@ -209,7 +209,7 @@ export default class AccountAgreementPage extends Component {
             />
           </View>
           <View style={{ flexDirection: 'row', marginTop: scaleSize(42) }}>
-            <Text onPress={() => { this.showXy('江西银行存管投资协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管债转协议》'}</Text>
+            <Text onPress={() => { this.showXy('江西银行资金存管账户债转协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管账户债转协议》'}</Text>
             <CheckBox
               style={{ flexDirection: 'row', marginLeft: scaleSize(201) }}
               disabled={this.state.jx_status == '1' ? true : false}
@@ -225,7 +225,7 @@ export default class AccountAgreementPage extends Component {
             />
           </View>
           <View style={{ flexDirection: 'row', marginTop: scaleSize(42) }}>
-            <Text onPress={() => { this.showXy('江西银行存管投资协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管缴费协议》'}</Text>
+            <Text onPress={() => { this.showXy('江西银行资金存管账户缴费协议') }} style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'《江西银行资金存管账户缴费协议》'}</Text>
             <CheckBox
               style={{ flexDirection: 'row', marginLeft: scaleSize(201) }}
               disabled={this.state.jx_status == '1' ? true : false}

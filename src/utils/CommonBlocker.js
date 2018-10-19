@@ -403,10 +403,10 @@ export default class CommonBlocker {
             <Text style={{ color: '#998675', fontSize: scaleSize(42) }}>{'积极响应国家政策'}</Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(54) }}>
-            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'银行存管系统正式上线，请先开通银行存管账户'}</Text>
+            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'您的出借决定与您可承受的风险程度等实际情'}</Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'开通后即可进行充值、提现、出借等操作'}</Text>
+            <Text style={{ color: '#989898', fontSize: scaleSize(36) }}>{'况不一致，请重新完成风险等级测评'}</Text>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: scaleSize(54) }}>
             <TouchableHighlight

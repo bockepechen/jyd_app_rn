@@ -331,13 +331,13 @@ export default class MyPage extends Component {
       },
       {
         img: ImageStores.me_49,
-        title: '风险评测',
+        title: '风险测评',
         callback: async () => {
           if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
             this.props.navigation.navigate('JeyxListItemDetail', {
               data: {
                 url: '/risk/haveRisk',
-                title: '风险评测',
+                title: '风险测评',
                 jsonObj: global.NetReqModel
               },
               ...this.props
