@@ -69,6 +69,7 @@ export default class RedPacketPage extends Component {
     let url = await '/redEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
+      console.log(result)
       var totalList = [];
       if(result.return_code == '0000'){
         totalList = (this.state.next_page === "1") ? [] : this.state.list;
@@ -107,11 +108,13 @@ export default class RedPacketPage extends Component {
     let url = await '/redEnvelope/openRedEnvelope';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
     .then((result) => {
+      console.log(result);
       this.setState({isLoading:false})
       if(result.return_code == '0000'){
         this.myModal(true,this.renderModal())
         let templist = this.state.list;
         templist[index].status = '2'
+        templist[index].use_time = result.use_time
         this.setState(
           {
             httpRes : result,
