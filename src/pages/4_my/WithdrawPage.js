@@ -93,7 +93,7 @@ export default class WithdrawPage extends Component {
       })
   }
 
-  withdraw = async () => {
+  async withdraw(){
     if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
       if (!this.apply_money) {
         this.refs.toast.show('请填写提现金额');
@@ -243,12 +243,12 @@ export default class WithdrawPage extends Component {
         <TouchableHighlight
           style={{ marginTop: scaleSize(42) }}
           underlayColor='rgba(0,0,0,0)'
-          onPress={this.withdraw}>
+          onPress={()=>{this.withdraw()}}>
           <ImageBackground
             source={ImageStores.sy_17}
             resizeMode={'stretch'}
             style={{ width: scaleSize(558), height: scaleSize(168), alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: scaleSize(50), fontWeight: 'bold', fontSize: scaleSize(50), color: '#FFFFFF' }}>{'确认提交'}</Text>
+            <Text style={{ fontSize: scaleSize(50), fontWeight: '200', color: '#FFFFFF' }}>{'确认提交'}</Text>
           </ImageBackground>
         </TouchableHighlight>
       </View>
@@ -267,7 +267,7 @@ export default class WithdrawPage extends Component {
           statusBarStyle='light-content'
           leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
         />
-        <ScrollView>
+        <View>
           <Image
             source={ImageStores.me_1}
             resizeMode={'stretch'}
@@ -276,7 +276,7 @@ export default class WithdrawPage extends Component {
           </Image>
           {this.renderInputView()}
           {this.renderRemark()}
-        </ScrollView>
+        </View>
         {this.state.isLoading ? (<LoadingIcon isModal={true} />) : null}
         {ViewUtils.renderToast()}
       </View>
