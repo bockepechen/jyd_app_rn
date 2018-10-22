@@ -82,6 +82,15 @@ export default class Utils {
         var PWD_REG = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
         return PWD_REG.test(pwd);
     }
+
+    /**
+     * 身份证号复杂度
+     * @param {*} 身份证号
+     */
+    static checkoutSFZ(p) {
+        var PWD_REG = /^[0-9A-Za-z]+$/;
+        return PWD_REG.test(p);
+    }
     /**
      * 格式化money
      * s为要格式化的money

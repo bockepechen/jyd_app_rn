@@ -19,6 +19,7 @@ import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import { StackActions } from 'react-navigation';
+import Utils from '../../utils/Utils';
 
 export default class AccountOpeningPage extends Component{
     constructor(props){
@@ -60,6 +61,13 @@ export default class AccountOpeningPage extends Component{
           isLoading:false
         })
         this.refs.toast.show('请输入身份证号');
+        return false
+      }
+      if(!Utils.checkoutSFZ(this.state.card_no)){
+        this.setState({
+          isLoading:false
+        })
+        this.refs.toast.show('身份证号码输入有误');
         return false
       }
       global.NetReqModel.name = this.name
