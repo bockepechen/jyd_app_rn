@@ -37,7 +37,7 @@ export default class ProductCardMain extends Component {
     let top2 = 
       <View style={{marginTop:isIOS?scaleSize(63):scaleSize(51), width:GlobalStyles.WINDOW_WIDTH, flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:scaleSize(148), fontWeight:'bold', fontSize:scaleSize(60), color:'#ff3a49'}}>{this.props.data.sellname}</Text>
-        <Text style={{marginRight:scaleSize(120), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+Utils.formatMoney(this.props.data.surplusmoney,2)}元</Text>
+        <Text style={{marginRight:scaleSize(120), fontSize:scaleSize(48), color:'#998675'}}>剩余{' '+Utils.formatMoney(this.props.data.restmoney,2)}元</Text>
       </View>
 
     return (
@@ -50,7 +50,7 @@ export default class ProductCardMain extends Component {
             source={ImageStores.sy_19} 
             resizeMode={'stretch'} 
             style={{width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(594), flexDirection:'column', alignItems:'center'}} >
-            {this.props.data.surplusmoney?top2:top1}
+            {this.props.data.restmoney?top2:top1}
             <Text style={{marginTop:scaleSize(81), fontWeight:'bold', fontSize:scaleSize(36), color:'#989898'}}>{'年化利率'}</Text>
             <View style={{marginTop:isIOS?scaleSize(30):scaleSize(24), width:GlobalStyles.WINDOW_WIDTH, height:scaleSize(90), flexDirection:'row', alignItems:'flex-end', justifyContent:'center'}}>
               <View style={{ height:scaleSize(72)}}>

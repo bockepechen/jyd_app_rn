@@ -58,7 +58,7 @@ export default class ProductCardJxsb extends Component {
           <View style={{marginLeft:scaleSize(135), marginTop:scaleSize(72), width:scaleSize(372), height:scaleSize(261), alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(48), color:'#998675'}}>{`借款期限 ${this.paraData.BorrowMonth}期`}</Text>
             {
-              this.paraData.isRestMoney?
+              this.paraData.restmoneyamount?
                 (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>{`剩余 ${Utils.formatMoney(this.paraData.restmoneyamount,2)}元`}</Text>):
                 null
             }
@@ -68,7 +68,7 @@ export default class ProductCardJxsb extends Component {
               <ImageBackground 
                 source={this.paraData.buyStatus == '0' ?ImageStores.sy_17:ImageStores.cp_1} 
                 resizeMode={'stretch'} 
-                style={{marginTop:this.paraData.isRestMoney?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                style={{marginTop:this.paraData.restmoneyamount?scaleSize(15):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
                 <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.paraData.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.paraData.disPlay}</Text>
               </ImageBackground>
             </TouchableHighlight>

@@ -104,6 +104,10 @@ export default class WithdrawPage extends Component {
         this.refs.toast.show('最低提现10元');
         return false
       }
+      if(!Utils.checkMoneyFormat(this.apply_money)){
+        this.refs.toast.show('格式不正确，请重新输入', 1000);
+        return false
+      }
       if (parseFloat(this.apply_money) > 50000 && !this.bank_cnapsNo) {
         this.refs.toast.show('提现金额大于50000元时，必须填写银行联行号', 2000);
         return false

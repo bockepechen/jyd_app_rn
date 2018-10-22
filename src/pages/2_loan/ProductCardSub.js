@@ -70,8 +70,8 @@ export default class ProductCardSub extends Component {
           <View style={{marginTop:scaleSize(78), marginLeft:0, width:scaleSize(522), height:scaleSize(261), flexDirection:'column', alignItems:'center'}}>
             <Text style={{fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
             {
-              this.props.data.SurplusMoney?
-                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+Utils.formatMoney(this.props.data.surplusmoney,2)}元</Text>)
+              this.props.data.restmoney?
+                (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+Utils.formatMoney(this.props.data.restmoney,2)}元</Text>)
                 :null
             }
             <TouchableHighlight
@@ -80,7 +80,7 @@ export default class ProductCardSub extends Component {
               <ImageBackground 
                 source={this.props.data.buyStatus == '0'?ImageStores.sy_15:ImageStores.cp_2} 
                 resizeMode={'stretch'} 
-                style={{marginTop:this.props.surplusmoney?scaleSize(21):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
+                style={{marginTop:this.props.data.restmoney?scaleSize(21):scaleSize(36), width:scaleSize(336), height:scaleSize(138), alignItems:'center', justifyContent:'center'}}>
                 <Text style={{fontSize:scaleSize(36), fontWeight:'200', color:this.props.data.buyStatus == '0' ?'#FFFFFF':'#656565'}}>{this.props.data.display}</Text>
               </ImageBackground>
             </TouchableHighlight>
