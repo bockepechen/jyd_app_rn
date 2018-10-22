@@ -180,7 +180,7 @@ export default class ProductCardCjz extends Component {
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
                             <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#998675',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getYjlx(this.paraData.expectedyearyield,this.paraData.contractexpectamount,this.paraData.expiresdays)}</Text>
-                            <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预计利息(元)'}</Text>
+                            <Text style={{fontSize:scaleSize(36),color:'#989898',marginTop:scaleSize(15)}}>{'预期利息(元)'}</Text>
                         </View>
                         <View style={{marginLeft:scaleSize(155)}}>
                             <Text style={{fontSize:isIOS ? scaleSize(48) : scaleSize(46),color:'#ff3a49',height:isIOS ? scaleSize(49) : scaleSize(53)}}>{this.getcjjl(this.paraData.contractexpectamount,this.paraData.improveyearrate,this.paraData.expiresdays)}</Text>
