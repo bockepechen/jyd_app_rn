@@ -79,7 +79,7 @@ export default class Utils {
      * @param {*} pwd
      */
     static checkoutPWD(pwd) {
-        var PWD_REG = /(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}/;
+        var PWD_REG = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$/;
         return PWD_REG.test(pwd);
     }
     /**
