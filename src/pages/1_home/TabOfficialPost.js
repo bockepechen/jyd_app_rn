@@ -152,7 +152,7 @@ export default class TabOfficialPost extends Component {
     this.props.navigation.navigate('MsgListItemDetail',{
       data:{
         url:'/userMail/readAnnouncement',
-        title:'消息中心',
+        title:'公告详情',
         id:item.an_id,
         jsonObj:global.NetReqModel
       },
