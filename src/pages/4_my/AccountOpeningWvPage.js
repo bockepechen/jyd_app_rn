@@ -35,7 +35,10 @@ export default class AccountOpeningWvPage extends Component {
   }
   
   _onNavigationStateChange = (navState) => {
-    if (this.commonBlocker.handleJXReturnCode(navState.url)) {
+    if (this.commonBlocker.handleJXReturnCode(navState.url, {
+      page: 'AccountAgreementPage',
+      emitType: 'refreshSignInfo'
+    })) {
       this.commonBlocker.handleLocalServCode(navState.url);
     }
     this.wv_url = navState.url

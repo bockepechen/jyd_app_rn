@@ -371,6 +371,7 @@ export default class CommonBlocker {
               style={{ flexDirection: 'row', justifyContent: 'center' }}
               underlayColor='rgba(0,0,0,0)'
               onPress={() => {
+                this._closeModal();
                 this.props.navigation.navigate(targetPage);
               }}>
               <ImageBackground
@@ -424,6 +425,7 @@ export default class CommonBlocker {
               style={{ flexDirection: 'row', justifyContent: 'center' }}
               underlayColor='rgba(0,0,0,0)'
               onPress={() => {
+                this._closeModal();
                 this.props.navigation.navigate(routeName,{
                   data:{
                     url:weburl,
