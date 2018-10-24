@@ -2,6 +2,11 @@ import {AsyncStorage} from 'react-native'
 const PRE_KEY = 'Initial_';
 export default class InitialDao {
 
+  /**
+   * tip
+   * @param {*} key 
+   * @param {*} data 
+   */
   saveInitialData(key, data) {
     AsyncStorage.setItem(PRE_KEY+key, JSON.stringify(data), (error) => {
       if (error) {
