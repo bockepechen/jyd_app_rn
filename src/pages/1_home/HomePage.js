@@ -463,6 +463,24 @@ export default class HomePage extends Component {
     let topNavIconViews = [];
     let IconDatas = [
       {
+        iconImg: ImageStores.sy_24,
+        iconName: '我的奖励',
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('RedPacketPage')
+          }
+        }
+      },
+      {
+        iconImg: ImageStores.sy_23,
+        iconName: '邀请好友',
+        callback: async () => {
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('InvitingFriendsPage')
+          }
+        }
+      },
+      {
         iconImg: ImageStores.sy_22,
         iconName: '每日签到',
         callback: async () => {
@@ -476,24 +494,6 @@ export default class HomePage extends Component {
               }
             }
           })
-        }
-      },
-      {
-        iconImg: ImageStores.sy_23,
-        iconName: '邀请好友',
-        callback: async () => {
-          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-            this.goto('InvitingFriendsPage')
-          }
-        }
-      },
-      {
-        iconImg: ImageStores.sy_24,
-        iconName: '我的奖励',
-        callback: async () => {
-          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-            this.goto('RedPacketPage')
-          }
         }
       },
       {
@@ -577,7 +577,7 @@ export default class HomePage extends Component {
         <ProductCardSub onPress={this._onPress} top={0} bottom={0} data={this.state.httpRes && this.state.httpRes.appsellinfos ? this.state.httpRes.appsellinfos[1] : ''} />
 
         <View style={{ marginTop: scaleSize(32), alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'*市场有风险, 投资需谨慎'}</Text>
+          <Text style={{ fontSize: scaleSize(36), color: '#3b92f0' }}>{'*市场有风险, 出借需谨慎'}</Text>
         </View>
 
         <View style={{ marginTop: scaleSize(69), alignItems: 'center', justifyContent: 'center' }}>

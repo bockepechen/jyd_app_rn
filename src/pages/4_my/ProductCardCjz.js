@@ -111,12 +111,12 @@ export default class ProductCardCjz extends Component {
         <View style={{marginTop:scaleSize(40)}}>
             <View style={{flexDirection:'column'}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'期待年回报率:'}</Text>
-                    <Text style={{marginRight:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{`${this.getqjnhbl(item.expectedyearyield,item.improveyearrate)}%`}</Text>
-                </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                     <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'加入时间:'}</Text>
                     <Text style={{marginRight:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{this.getDate2(item.starttime)}</Text>
+                </View>
+                <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
+                <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'期待年回报率:'}</Text>
+                    <Text style={{marginRight:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{`${this.getqjnhbl(item.expectedyearyield,item.improveyearrate)}%`}</Text>
                 </View>
                 <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:scaleSize(18)}}>
                     <Text style={{marginLeft:scaleSize(165),fontSize:scaleSize(36),color:'#989898'}}>{'账户管理费:'}</Text>

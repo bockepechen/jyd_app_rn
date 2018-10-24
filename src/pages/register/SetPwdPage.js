@@ -126,7 +126,7 @@ export default class SetPwdPage extends Component {
               style={{flex:1, marginLeft:scaleSize(18), marginRight:scaleSize(12), fontSize:scaleSize(48), paddingTop:0, paddingBottom:0, borderWidth:0}}
               maxLength={20}
               clearButtonMode={'while-editing'}
-              placeholder={'请设置6-20位数字和字母作为登录密码'}
+              placeholder={'请设置登录密码'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
               secureTextEntry={!this.state.isEyeOpen}
