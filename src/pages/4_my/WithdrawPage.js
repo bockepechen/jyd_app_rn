@@ -8,6 +8,7 @@ import {
   TextInput,
   ImageBackground,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -62,7 +63,6 @@ export default class WithdrawPage extends Component {
       isLoading: true
     });
     let url = await '/withdraw/preWithdraw';
-    console.log(JSON.stringify(global.NetReqModel));
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         console.log(result);
@@ -84,7 +84,6 @@ export default class WithdrawPage extends Component {
         }
       })
       .catch((e) => {
-        console.log(e);
         // TODO Toast提示异常
         // 关闭Loading动画
         if (this.state.isLoading) {
@@ -272,7 +271,7 @@ export default class WithdrawPage extends Component {
           statusBarStyle='light-content'
           leftButton={ViewUtils.renderBackBtn('#FFFFFF', this.navGoback)}
         />
-        <View>
+        <ScrollView>
           <Image
             source={ImageStores.me_1}
             resizeMode={'stretch'}
@@ -281,7 +280,7 @@ export default class WithdrawPage extends Component {
           </Image>
           {this.renderInputView()}
           {this.renderRemark()}
-        </View>
+        </ScrollView>
         {this.state.isLoading ? (<LoadingIcon isModal={true} />) : null}
         {ViewUtils.renderToast()}
       </View>

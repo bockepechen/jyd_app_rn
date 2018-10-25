@@ -120,7 +120,6 @@ export default class AccountSecurityPage extends Component {
           isLoading: true
       });
       let url = await '/accountSafety';
-      console.log(JSON.stringify(global.NetReqModel));
       this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
           .then((result) => {
               if (result.return_code == '0000') {

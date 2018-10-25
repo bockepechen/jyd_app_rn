@@ -171,6 +171,10 @@ export default class CommonBlocker {
    * @param {*} switchConf 各种校验是否开启的开关配置
    */
   checkGroup(navTarget, switchConf) {
+    // 再进行后续业务操作之前，先渲染一层透明遮罩，防止按钮连点，频繁调用方法
+    var securityModal = (<View/>)
+    this._openModal(securityModal);
+
     var skipCheckJXAccountOpen = false; // 跳过校验江西银行开户
     var skipCheckJXCardBind = false;    // 跳过校验江西银行绑卡
     var skipCheckJXPWDSet = false;      // 跳过校验江西银行设置交易密码
@@ -189,6 +193,9 @@ export default class CommonBlocker {
       } else {
         this.dataResponsitory.fetchNetResponsitory('/common', global.NetReqModel)
           .then((result) => {
+            // 复杂业务逻辑结束后，关闭防止按钮连续点击的安全遮罩
+            this._closeModal();
+            
             if (result.return_code == '0000') {
               if (!this.checkJXAccountOpen(result.jx_data.account_id, skipCheckJXAccountOpen)) {
                 resolve(false); // 校验是否开户
@@ -214,7 +221,6 @@ export default class CommonBlocker {
             }
           })
           .catch((e) => {
-            console.log(e);
             this.component.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
             resolve(false);
           })

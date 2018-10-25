@@ -464,11 +464,18 @@ export default class HomePage extends Component {
     let IconDatas = [
       {
         iconImg: ImageStores.sy_24,
-        iconName: '我的奖励',
+        iconName: '每日签到',
         callback: async () => {
-          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
-            this.goto('RedPacketPage')
-          }
+          await this.commonBlocker.checkGroup({
+            page: 'SignInPage',
+            params: {
+              data: {
+                url: '/checkIn',
+                title: '每日签到',
+                jsonObj: global.NetReqModel
+              }
+            }
+          })
         }
       },
       {
@@ -482,18 +489,11 @@ export default class HomePage extends Component {
       },
       {
         iconImg: ImageStores.sy_22,
-        iconName: '每日签到',
+        iconName: '我的奖励',
         callback: async () => {
-          await this.commonBlocker.checkGroup({
-            page: 'SignInPage',
-            params: {
-              data: {
-                url: '/checkIn',
-                title: '每日签到',
-                jsonObj: global.NetReqModel
-              }
-            }
-          })
+          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+            this.goto('RedPacketPage')
+          }
         }
       },
       {
