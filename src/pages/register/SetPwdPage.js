@@ -81,7 +81,8 @@ export default class SetPwdPage extends Component {
               Storage_Key.LS_REG_USERINFO,
               {
                 user_id: result.user_id,
-                token_id: global.NetReqModel.jyd_pubData.token_id
+                token_id: global.NetReqModel.jyd_pubData.token_id,
+                tel_phone : global.NetReqModel.tel_phone,
               },
               () => {
                 this.refs.toast.show('注册成功', 1000, () => {

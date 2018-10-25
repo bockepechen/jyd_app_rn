@@ -19,6 +19,9 @@ export default class ProductCardTbz extends Component {
   constructor(props) {
     super(props);
     this.paraData = this.props.data.item;
+    console.log('***********************************************************************');
+    console.log(this.paraData);
+    console.log('***********************************************************************');
     this.state={
         isSelect:-1
     }
@@ -85,7 +88,7 @@ export default class ProductCardTbz extends Component {
                             resizeMode={'stretch'} 
                             style={{height:scaleSize(48),width:scaleSize(48)}}
                         />
-                        <Text style={{marginLeft:scaleSize(27), width:scaleSize(327), fontSize:scaleSize(42),color:'#656565',fontWeight:'bold'}}>{`${this.paraData.sellname}`}</Text>
+                        <Text style={{marginLeft:scaleSize(27), width:scaleSize(327), fontSize:scaleSize(42),color:'#656565',fontWeight:'bold'}}>{`${this.paraData.description}`}</Text>
                     </View>
                     <TouchableOpacity 
                         style={{marginLeft:scaleSize(429),flexDirection:'row', alignItems:'center'}}

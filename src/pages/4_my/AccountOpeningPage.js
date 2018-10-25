@@ -46,6 +46,7 @@ export default class AccountOpeningPage extends Component{
     }
 
     accountOpen(){
+      Keyboard.dismiss();
       this.setState({
         isLoading: true,
       })
@@ -63,7 +64,7 @@ export default class AccountOpeningPage extends Component{
         this.refs.toast.show('请输入身份证号');
         return false
       }
-      if(!Utils.checkoutSFZ(this.state.card_no)){
+      if(!Utils.checkoutSFZ(this.card_no)){
         this.setState({
           isLoading:false
         })
@@ -72,17 +73,16 @@ export default class AccountOpeningPage extends Component{
       }
       global.NetReqModel.name = this.name
       global.NetReqModel.card_no = this.card_no
-      console.log(global.NetReqModel)
-      this.goto('AccountOpeningWvPage',{
-          url:'/openAccount',
-          title:'银行存管账号',
-          jsonObj:global.NetReqModel
-      })
       if(this.state.isLoading){
         this.setState({
           isLoading:false
         })
       }
+      this.goto('AccountOpeningWvPage',{
+          url:'/openAccount',
+          title:'银行存管账号',
+          jsonObj:global.NetReqModel
+      })
     }
 
     navGoback = () => {

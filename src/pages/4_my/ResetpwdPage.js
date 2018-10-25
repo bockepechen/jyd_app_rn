@@ -28,7 +28,9 @@ export default class ResetpwdPage extends Component{
         this.state = {
             isRotate:true,
             isLoading: false,
-            isEyeOpen: false,
+            isEyeOpen_ori: false,
+            isEyeOpen_new: false,
+            isEyeOpen_confirm: false,
             tel_pwdOld:'',
             tel_pwdNew:'',
             tel_pwdNewRe:'',
@@ -43,9 +45,21 @@ export default class ResetpwdPage extends Component{
         this.AndroidBackHandler.removePressBackListener();
     }
 
-    switchVisible = () => {
+    switchVisible4OriPWD = () => {
         this.setState({
-            isEyeOpen: !this.state.isEyeOpen
+          isEyeOpen_ori: !this.state.isEyeOpen_ori
+        })
+    }
+    
+    switchVisible4newPWD = () => {
+        this.setState({
+          isEyeOpen_new: !this.state.isEyeOpen_new
+        })
+    }
+
+    switchVisible4confirmPWD = () => {
+        this.setState({
+          isEyeOpen_confirm: !this.state.isEyeOpen_confirm
         })
     }
 
@@ -85,7 +99,9 @@ export default class ResetpwdPage extends Component{
            // 返回数据，关闭Loading动画
            this.setState({isLoading:false}, () => {
              if (result.return_code === '0000') {
-              this.refs.toast.show('修改成功');
+              this.refs.toast.show('修改成功', 200, () => {
+                this.props.navigation.goBack();
+              });
              } else {
               this.refs.toast.show(result.return_msg);
              }
@@ -160,13 +176,13 @@ export default class ResetpwdPage extends Component{
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.setState({tel_pwdOld:p})}}
                   value = {this.state.tel_pwdOld}
-                  secureTextEntry={!this.state.isEyeOpen}
+                  secureTextEntry={!this.state.isEyeOpen_ori}
                   />
                   <TouchableHighlight 
                     style={{marginRight:scaleSize(12)}}
                     underlayColor='rgba(0,0,0,0)'
-                    onPress={this.switchVisible}>
-                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                    onPress={this.switchVisible4OriPWD}>
+                    <Image source={this.state.isEyeOpen_ori?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
                   </TouchableHighlight>
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -179,13 +195,13 @@ export default class ResetpwdPage extends Component{
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.setState({tel_pwdNew:p})}}
                   value = {this.state.tel_pwdNew}
-                  secureTextEntry={!this.state.isEyeOpen}
+                  secureTextEntry={!this.state.isEyeOpen_new}
                   />
                   <TouchableHighlight 
                     style={{marginRight:scaleSize(12)}}
                     underlayColor='rgba(0,0,0,0)'
-                    onPress={this.switchVisible}>
-                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                    onPress={this.switchVisible4newPWD}>
+                    <Image source={this.state.isEyeOpen_new?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
                   </TouchableHighlight>
               </View>
               <View style={{marginTop:scaleSize(54), width:scaleSize(999), height:scaleSize(81), borderBottomWidth:GlobalStyles.PIXEL, borderBottomColor:'#c3c3c3', flexDirection:'row', alignItems:"center",}}>
@@ -198,13 +214,13 @@ export default class ResetpwdPage extends Component{
                   underlineColorAndroid='rgba(0,0,0,0)'
                   onChangeText = {(p) => {this.setState({tel_pwdNewRe:p})}}
                   value = {this.state.tel_pwdNewRe}
-                  secureTextEntry={!this.state.isEyeOpen}
+                  secureTextEntry={!this.state.isEyeOpen_confirm}
                   />
                   <TouchableHighlight 
                     style={{marginRight:scaleSize(12)}}
                     underlayColor='rgba(0,0,0,0)'
-                    onPress={this.switchVisible}>
-                    <Image source={this.state.isEyeOpen?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
+                    onPress={this.switchVisible4confirmPWD}>
+                    <Image source={this.state.isEyeOpen_confirm?ImageStores.me_3:ImageStores.me_2} resizeMode={'stretch'} style={{width:scaleSize(69), height:scaleSize(54)}}/>
                 </TouchableHighlight>
               </View>
             </View>

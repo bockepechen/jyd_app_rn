@@ -86,6 +86,13 @@ export default class SmsCodePage extends Component {
             // 针对签约页面的处理，如果一项签约成功，还要返回到签约页面，并通过DeviceEventEmitter方式，重新刷新页面签约状态
             DeviceEventEmitter.emit('refreshSignInfo');
             this.props.navigation.navigate(this.navData.nextPage);
+          } else if (result.return_code === '8888') {
+            this.refs.toast.show(ExceptionMsg.ESIGN_TIMEOUT, 1500, () => {
+              clearInterval(this.timer);
+              // 针对签约页面的处理，如果一项签约成功，还要返回到签约页面，并通过DeviceEventEmitter方式，重新刷新页面签约状态
+              DeviceEventEmitter.emit('refreshSignInfo');
+              this.props.navigation.navigate(this.navData.nextPage);
+            });
           } else {
             this.refs.toast.show(result.return_msg);
           }

@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableHighlight,
   Linking,
+  Keyboard,
 } from 'react-native';
 import { scaleSize } from '../../utils/FitViewUtils';
 import DataResponsitory from '../../dao/DataResponsitory';
@@ -74,6 +75,7 @@ export default class RechargeShortcut extends Component {
   }
 
   async recharge() {
+    Keyboard.dismiss();
     this.setState({
       isLoading: true
     });

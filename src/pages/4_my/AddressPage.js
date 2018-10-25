@@ -18,6 +18,7 @@ import { ImageStores } from '../../../res/styles/ImageStores';
 import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
+import {ExceptionMsg} from '../../dao/ExceptionMsg';
 
 export default class AddressPage extends Component {
   constructor(props) {
@@ -71,6 +72,7 @@ export default class AddressPage extends Component {
   }
 
   async updateInfo() {
+    Keyboard.dismiss();
     if(this.state.linkman_phone == ''){
       this.refs.toast.show('手机号不能为空');
       return false;
@@ -84,12 +86,13 @@ export default class AddressPage extends Component {
     global.NetReqModel.link_real_name = this.state.linkman_name;
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
-        console.log(result);
         if (result.return_code == '0000') {
           this.setState({
             isLoading: false,
           }, ()=>{
-            this.props.navigation.goBack();
+            this.refs.toast.show('地址修改成功', 200, () => {
+              this.props.navigation.goBack();
+            });
           })
         }else{
           this.refs.toast.show(result.return_msg);
@@ -99,8 +102,7 @@ export default class AddressPage extends Component {
         }
       })
       .catch((e) => {
-        console.log(e);
-        // TODO Toast提示异常
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         // 关闭Loading动画
         if (this.state.isLoading) {
           this.setState({ isLoading: false });

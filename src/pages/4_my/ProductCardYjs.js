@@ -84,7 +84,7 @@ export default class ProductCardYjs extends Component {
                             resizeMode={'stretch'} 
                             style={{marginTop:scaleSize(-7),height:scaleSize(48),width:scaleSize(48),marginRight:scaleSize(27)}}
                         />
-                        <Text style={{height:scaleSize(42),fontSize:scaleSize(36),color:'#656565',fontWeight:'bold'}}>{this.paraData.sellname}</Text>
+                        <Text style={{height:scaleSize(42),fontSize:scaleSize(36),color:'#656565',fontWeight:'bold'}}>{this.paraData.description}</Text>
                     </View>
                     <TouchableOpacity 
                         style={{flexDirection:'row',marginRight:scaleSize(108)}}

@@ -4,10 +4,10 @@ import {
   Text,
   View,
   Image,
+  Keyboard,
   TextInput,
   ImageBackground,
   TouchableHighlight,
-  ScrollView,
 } from 'react-native';
 import { GlobalStyles } from '../../../res/styles/GlobalStyles';
 import NavigationBar from '../../common/NavigationBar';
@@ -94,6 +94,7 @@ export default class WithdrawPage extends Component {
   }
 
   async withdraw(){
+    Keyboard.dismiss();
     if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
       if (!this.apply_money) {
         this.refs.toast.show('请填写提现金额');

@@ -61,7 +61,6 @@ export default class AccountAgreementPage extends Component {
     let url = await '/signStatus';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
-        console.log(result);
         if (result.return_code = '0000') {
           this.setState({
             isLoading: false,
@@ -78,7 +77,6 @@ export default class AccountAgreementPage extends Component {
         }
       })
       .catch((e) => {
-        console.log(e);
         if (this.state.isLoading) {
           this.setState({ isLoading: false })
         }
@@ -147,12 +145,13 @@ export default class AccountAgreementPage extends Component {
             if (result.return_code === '0000') {
               this.props.navigation.navigate('SmsCodePage', navigation_params);
             } else {
-              this.refs.toast.show(result.return_msg);
+              this.refs.toast.show(result.return_msg, 1500, () => {
+                this.getInfoData();
+              });
             }
           })
         })
         .catch((e) => {
-          console.log(e);
           this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
           // 关闭Loading动画
           if (this.state.isLoading) {
