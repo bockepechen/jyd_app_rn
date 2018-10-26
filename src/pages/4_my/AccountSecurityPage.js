@@ -129,6 +129,73 @@ export default class AccountSecurityPage extends Component {
                       tel: result.tel_phone,
                       cardInfo: result.card,
                       trade_pwd_status:result.trade_pwd_status
+                  },()=>{
+                    this.listItem = [
+                      {
+                        title: '用户信息',
+                        callback: async () => {
+                          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+                            this.goto('PersonInfoPage')
+                          }
+                        }
+                      },
+                      {
+                        title: '我的银行卡',
+                        callback: async () => {
+                          await this.commonBlocker.checkGroup({
+                            page: 'BankCardListPage'
+                          }, {
+                              skipCheckJXCardBind: true,
+                              skipCheckJXPWDSet: true,
+                              skipCheckJXSign: true
+                            })
+                        }
+                      },
+                      {
+                        title: '联系地址',
+                        callback: async () => {
+                          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+                            this.goto('AddressPage')
+                          }
+                        }
+                      },
+                      {
+                        title: '修改登录密码',
+                        callback: async () => {
+                          if (this.commonBlocker.checkLogin() && await this.commonBlocker.checkExpireLogin()) {
+                            this.goto('ResetpwdPage')
+                          }
+                        }
+                      },
+                      {
+                        title: this.state.trade_pwd_status == 0 ? '设置交易密码' : '重置交易密码',
+                        callback: async () => {
+                          await this.commonBlocker.checkGroup({
+                            page: 'ResetTradepwdPage',
+                            params: {
+                              data: {
+                                url: '/transPwd/setAndResetPassword',
+                                jsonObj: global.NetReqModel,
+                                title: '重置交易密码'
+                              }
+                            }
+                          }, {
+                              skipCheckJXCardBind: true,
+                              skipCheckJXSign: true
+                            })
+                        }
+                      },
+                      {
+                        title: '银行存管账户签约情况',
+                        callback: async () => {
+                          await this.commonBlocker.checkGroup({
+                            page: 'AccountAgreementPage'
+                          }, {
+                              skipCheckJXSign: true
+                            })
+                        }
+                      },
+                    ]
                   })
               }
               if (this.state.isLoading) {
