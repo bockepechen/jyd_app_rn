@@ -164,9 +164,6 @@ export default class Utils {
     }
 
     static clearNetReqModel() {
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-        console.log(global.NetReqModel);
-        console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
         Object.keys(global.NetReqModel).forEach(key => {
             if (key === 'jyd_pubData') {
                 var innerObj = global.NetReqModel[key];
@@ -179,9 +176,6 @@ export default class Utils {
                 global.NetReqModel[key] = '';
             }
         });
-        console.log('*********************************************');
-        console.log(global.NetReqModel);
-        console.log('*********************************************');
     }
 
     /**

@@ -18,7 +18,7 @@ import { ImageStores } from '../../../res/styles/ImageStores';
 import DataResponsitory from '../../dao/DataResponsitory';
 import LoadingIcon from '../../common/LoadingIcon';
 import AndroidBackHandler from '../../utils/AndroidBackHandler';
-import {ExceptionMsg} from '../../dao/ExceptionMsg';
+import { ExceptionMsg } from '../../dao/ExceptionMsg';
 
 export default class AddressPage extends Component {
   constructor(props) {
@@ -42,6 +42,12 @@ export default class AddressPage extends Component {
     this.AndroidBackHandler.removePressBackListener();
   }
 
+  shouldComponentUpdate(nextProps) {
+    return Platform.OS !== 'ios' || (this.props.value === nextProps.value &&
+      (nextProps.defaultValue == undefined || nextProps.defaultValue == '')) ||
+      (this.props.defaultValue === nextProps.defaultValue && (nextProps.value == undefined || nextProps.value == ''));
+  }
+
   async getInfoData() {
     this.setState({
       isLoading: true
@@ -62,8 +68,7 @@ export default class AddressPage extends Component {
         }
       })
       .catch((e) => {
-        console.log(e);
-        // TODO Toast提示异常
+        this.refs.toast.show(ExceptionMsg.COMMON_ERR_MSG);
         // 关闭Loading动画
         if (this.state.isLoading) {
           this.setState({ isLoading: false });
@@ -73,7 +78,7 @@ export default class AddressPage extends Component {
 
   async updateInfo() {
     Keyboard.dismiss();
-    if(this.state.linkman_phone == ''){
+    if (this.state.linkman_phone == '') {
       this.refs.toast.show('手机号不能为空');
       return false;
     }
@@ -81,20 +86,20 @@ export default class AddressPage extends Component {
       isLoading: true
     });
     let url = await '/accountSafety/saveContact';
-    global.NetReqModel.link_tel_phone = this.state.linkman_phone;
-    global.NetReqModel.address = this.state.linkman_address;
-    global.NetReqModel.link_real_name = this.state.linkman_name;
+    global.NetReqModel.link_tel_phone = this.linkman_phone;
+    global.NetReqModel.address = this.linkman_address;
+    global.NetReqModel.link_real_name = this.linkman_name;
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
         if (result.return_code == '0000') {
           this.setState({
             isLoading: false,
-          }, ()=>{
+          }, () => {
             this.refs.toast.show('地址修改成功', 200, () => {
               this.props.navigation.goBack();
             });
           })
-        }else{
+        } else {
           this.refs.toast.show(result.return_msg);
         }
         if (this.state.isLoading) {
@@ -129,16 +134,13 @@ export default class AddressPage extends Component {
             <Text style={{ color: '#998675', fontSize: scaleSize(36) }}>{'默认联系人:'}</Text>
             <TextInput
               style={{ flex: 1, color: '#996875', marginLeft: scaleSize(18), marginRight: scaleSize(18), fontSize: scaleSize(36), paddingTop: 0, paddingBottom: 0 }}
+              maxLength={11}
               clearButtonMode={'while-editing'}
               placeholder={'默认联系人'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              value={this.state.linkman_name}
-              onChangeText={(linkman_name) => {
-                this.setState({
-                  linkman_name: linkman_name
-                })
-              }}
+              defaultValue={this.state.linkman_name}
+              onChangeText={(t) => { this.linkman_name = t }}
             />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: scaleSize(54), width: scaleSize(999), height: scaleSize(81), borderBottomWidth: GlobalStyles.PIXEL, borderBottomColor: '#c3c3c3', flexDirection: 'row', alignItems: "center", }}>
@@ -151,12 +153,8 @@ export default class AddressPage extends Component {
               placeholder={'联系电话'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              value={this.state.linkman_phone}
-              onChangeText={(linkman_phone) => {
-                this.setState({
-                  linkman_phone: linkman_phone
-                })
-              }}
+              defaultValue={this.state.linkman_phone}
+              onChangeText={(t) => { this.linkman_phone = t }}
             />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: scaleSize(54), width: scaleSize(999), height: scaleSize(81), borderBottomWidth: GlobalStyles.PIXEL, borderBottomColor: '#c3c3c3', flexDirection: 'row', alignItems: "center", }}>
@@ -167,12 +165,8 @@ export default class AddressPage extends Component {
               placeholder={'详细地址'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              value={this.state.linkman_address}
-              onChangeText={(linkman_address) => {
-                this.setState({
-                  linkman_address: linkman_address
-                })
-              }}
+              defaultValue={this.state.linkman_address}
+              onChangeText={(t) => { this.linkman_address = t }}
             />
           </View>
         </View>
@@ -212,7 +206,7 @@ export default class AddressPage extends Component {
               style={{ width: GlobalStyles.WINDOW_WIDTH, height: scaleSize(456) }} />
             {this.renderInputView()}
           </View>
-          {this.state.isLoading ? (<LoadingIcon isModal={true}/>) : null}
+          {this.state.isLoading ? (<LoadingIcon isModal={true} />) : null}
           {ViewUtils.renderToast()}
         </View>
       </TouchableWithoutFeedback>
