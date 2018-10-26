@@ -149,7 +149,7 @@ export default class WithdrawPage extends Component {
           // alignItems:'center',
         }}
       >
-        {this.renderSubTitleLine('提现提示')}
+        {this.renderSubTitleLine('提现说明')}
         <View style={{ marginTop: scaleSize(60), flexDirection: 'column', marginLeft: scaleSize(110), marginRight: scaleSize(110) }}>
           <Text style={{ fontSize: scaleSize(36), color: '#989898' }}>
             {'1.快速提现单笔限额5万元，大额提现单笔限额50万元，每日最多可提现10次。'}

@@ -68,7 +68,7 @@ export default class ProductCardSub extends Component {
           </View>
           <View style={{backgroundColor:'#f2f2f2', width:GlobalStyles.PIXEL, marginTop:scaleSize(69), marginBottom:scaleSize(69), marginLeft:scaleSize(27)}}/>
           <View style={{marginTop:scaleSize(78), marginLeft:0, width:scaleSize(522), height:scaleSize(261), flexDirection:'column', alignItems:'center'}}>
-            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
+            <Text style={{fontSize:scaleSize(48), color:'#998675'}}>锁定期限 {' '+this.props.data.expiresdays}天</Text>
             {
               this.props.data.restmoney?
                 (<Text style={{marginTop:scaleSize(18), fontSize:scaleSize(36), color:'#989898'}}>剩余{' '+Utils.formatMoney(this.props.data.restmoney,2)}元</Text>)

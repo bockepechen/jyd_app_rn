@@ -75,7 +75,7 @@ export default class ProductCardMain extends Component {
                 <Text style={{fontSize:scaleSize(26), color:'#ff3a49'}}>{'出借奖励'}</Text>
               </ImageBackground>
             </View>
-            <Text style={{marginTop:isIOS?scaleSize(54):scaleSize(48), fontSize:scaleSize(48), color:'#998675'}}>服务期限 {' '+this.props.data.expiresdays}天</Text>
+            <Text style={{marginTop:isIOS?scaleSize(54):scaleSize(48), fontSize:scaleSize(48), color:'#998675'}}>锁定期限 {' '+this.props.data.expiresdays}天</Text>
           </ImageBackground>
           <TouchableHighlight
             underlayColor='rgba(0,0,0,0)'
