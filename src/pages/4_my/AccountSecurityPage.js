@@ -23,6 +23,12 @@ export default class AccountSecurityPage extends Component {
     this.dataResponsitory = new DataResponsitory();
     this.commonBlocker = new CommonBlocker(this);
     this.AndroidBackHandler = new AndroidBackHandler(this);
+    this.state = {
+      isLoading:false,
+      tel: '',
+      cardInfo: '',
+      trade_pwd_status:''
+    }
     this.listItem = [
       {
         title: '用户信息',
@@ -61,7 +67,7 @@ export default class AccountSecurityPage extends Component {
         }
       },
       {
-        title: '重置交易密码',
+        title: this.state.trade_pwd_status == 0 ? '设置交易密码' : '重置交易密码',
         callback: async () => {
           await this.commonBlocker.checkGroup({
             page: 'ResetTradepwdPage',
@@ -89,11 +95,6 @@ export default class AccountSecurityPage extends Component {
         }
       },
     ]
-    this.state = {
-      isLoading:false,
-      tel: '',
-      cardInfo: '',
-    }
   }
 
   componentDidMount() {
@@ -127,6 +128,7 @@ export default class AccountSecurityPage extends Component {
                       isLoading: false,
                       tel: result.tel_phone,
                       cardInfo: result.card,
+                      trade_pwd_status:result.trade_pwd_status
                   })
               }
               if (this.state.isLoading) {
