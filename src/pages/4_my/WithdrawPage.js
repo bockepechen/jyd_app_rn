@@ -73,7 +73,7 @@ export default class WithdrawPage extends Component {
             keyong: result.keyong,
             bank_no: result.bank_no,
             imgRight: result.bank_icon,
-            nameRight: result.bank_name,
+            nameRight: result.bank_no_text,
             imgLeft: result.jxbank_icon
           })
         } else {

@@ -49,13 +49,14 @@ export default class RechargeShortcut extends Component {
     this.setState({
       isLoading: true
     });
-    let url = await '/accountSafety/cardInfo';
+    let url = await '/accountSafety';
     this.dataResponsitory.fetchNetResponsitory(url, global.NetReqModel)
       .then((result) => {
+        console.log(result)
         if (result.return_code == '0000') {
           this.setState({
             isLoading: false,
-            card_no: result.card_no,
+            card_no: result.card,
             bank_name: result.bank_name,
           })
         }
@@ -252,7 +253,8 @@ export default class RechargeShortcut extends Component {
               placeholder={'银行账号'}
               placeholderTextColor='#c3c3c3'
               underlineColorAndroid='rgba(0,0,0,0)'
-              value={`${this.state.bank_name}(${this.state.card_no})`}
+              // value={`${this.state.bank_name}(${this.state.card_no})`}
+              value={`${this.state.card_no}`}
             />
           </View>
           <View style={{ marginTop: scaleSize(54), width: scaleSize(999), height: scaleSize(81), borderBottomWidth: GlobalStyles.PIXEL, borderBottomColor: '#c3c3c3', flexDirection: 'row', alignItems: "center", }}>
