@@ -75,7 +75,7 @@ export default class HomePage extends Component {
 
   componentDidMount() {
     this.AndroidBackHandler.addPressBackListener();
-    // this.getInfoData()
+    this.getInfoData()
   }
 
   componentWillUnmount() {
@@ -101,6 +101,7 @@ export default class HomePage extends Component {
           }
           this.setState({
             isLoading: false,
+            httpRes: global.InitNetData.httpRes,
             detail_url: global.InitNetData.httpRes && global.InitNetData.httpRes.detail_url ? global.InitNetData.httpRes.detail_url : '',
             sell_url: global.InitNetData.httpRes && global.InitNetData.httpRes.sell_url ? global.InitNetData.httpRes.sell_url : '',
             aboutUs_url: global.InitNetData.httpRes && global.InitNetData.httpRes.aboutUs_url ? global.InitNetData.httpRes.aboutUs_url : '',
