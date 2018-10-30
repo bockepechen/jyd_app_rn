@@ -185,4 +185,23 @@ export default class Utils {
         var PWD_REG = /^(-?\d+)(\.\d{1,2})?$/
         return PWD_REG.test(p);
     }
+
+    // 取2位小数的时候，不做四舍五入
+    static toFixed2(num) {
+        if (!num) {
+        return '0.00'
+        }
+    
+        const string = String(num)
+        const dotIndex = string.indexOf('.')
+        const hasDot = dotIndex > -1
+    
+        if (!hasDot) return num.toFixed(2)
+    
+        // 不足2位小数
+        const isLessThan2DecimalPlaces = string.length - dotIndex <= 2
+        if (isLessThan2DecimalPlaces) return num.toFixed(2)
+    
+        return string.substring(0, dotIndex + 3)
+    }
 }

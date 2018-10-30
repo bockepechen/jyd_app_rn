@@ -73,7 +73,7 @@ export default class ProductCardCjz extends Component {
 
   getcjjl(contractexpectamount,improverate,expiresdays){
     let res = parseFloat(contractexpectamount)*parseFloat(improverate)*parseFloat(expiresdays) / 365
-    return res.toFixed(2)
+    return Utils.toFixed2(res)
   }
 
   getYjlx(expectedyearyield,contractexpectamount,expiresdays){
