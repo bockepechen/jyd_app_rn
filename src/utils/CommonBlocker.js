@@ -189,6 +189,8 @@ export default class CommonBlocker {
     }
     return new Promise((resolve) => {
       if (!this.checkLogin()) {
+        // 验证未登录后，关闭防止按钮连续点击的安全遮罩
+        this._closeModal();
         resolve(false);
       } else {
         this.dataResponsitory.fetchNetResponsitory('/common', global.NetReqModel)

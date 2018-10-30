@@ -18,6 +18,7 @@ import AndroidBackHandler from '../../utils/AndroidBackHandler';
 import CheckBox from 'react-native-check-box'
 import { StackActions } from 'react-navigation';
 import CommonBlocker from '../../utils/CommonBlocker';
+import { ExceptionMsg } from '../../dao/ExceptionMsg';
 
 export default class AccountAgreementPage extends Component {
   constructor(props) {
@@ -28,7 +29,6 @@ export default class AccountAgreementPage extends Component {
     this.navData = {};
     if (this.props.navigation.state.params !== undefined) {
       this.navData = this.props.navigation.state.params.data;
-      console.log(this.navData.msg);
     }
     this.state = {
       isLoading: false,
