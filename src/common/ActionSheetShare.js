@@ -49,15 +49,17 @@ export default class ActionSheetShare extends Component {
 
             });
         }
-        this.itemsPartHeight = scaleSize(350);
-        this.cancelPartHeight = scaleSize(120);
-        this.seperatePartHeight=scaleSize(3);
+        // 分享内容项的高度
+        this.itemsPartHeight = scaleSize(400);
+        // 取消按钮的高度
+        this.cancelPartHeight = scaleSize(150);
+        // 中间和底部间隙的高度
+        this.seperatePartHeight = scaleSize(70);
         this.statusbar = isAndroid ? StatusBar.currentHeight : scaleSize(0);
-        console.log('===========');
-        // console.log(StatusBar.currentHeight)
-        // total content height
-        this.totalHeight = this.itemsPartHeight + this.cancelPartHeight + this.seperatePartHeight+this.statusbar;
-        this.contentWidth = width;
+        // 分享弹框的高度合计
+        this.totalHeight = this.itemsPartHeight + this.cancelPartHeight + this.seperatePartHeight + this.statusbar;
+        // 分享弹框的宽度
+        this.contentWidth = width - 20;
     }
     componentWillUnmount() {
         this.chooseTimer && clearTimeout(this.chooseTimer);
@@ -72,7 +74,7 @@ export default class ActionSheetShare extends Component {
                 this.state.opacity,
                 {
                     easing: Easing.linear,
-                    duration: 200,
+                    duration: 100,
                     toValue: 0,
                 }
             ),
@@ -80,7 +82,7 @@ export default class ActionSheetShare extends Component {
                 this.state.offset,
                 {
                     easing: Easing.linear,
-                    duration: 200,
+                    duration: 100,
                     toValue: 0,
                 }
             )
@@ -147,45 +149,38 @@ export default class ActionSheetShare extends Component {
         else
             Alert.alert('分享朋友圈');
     }
+
     _renderItem() {
         return (
-            <View style={{width:this.contentWidth,height:this.itemsPartHeight}}>
-                <View style={{justifyContent:'space-around',flexDirection: 'row', marginTop: 15}}>
-                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWx())}>
-                        <Image resizeMode='contain' style={styles.image}
-                               source={ImageStores.fx_59}/>
-                        <Text>微信朋友圈</Text>
+            <View style={[styles.shareCommon, { height: this.itemsPartHeight, justifyContent: 'space-around' }]}>
+                <View style={{ paddingLeft: 15 }}>
+                    <TouchableOpacity onPress={() => this._didSelect(this.shareWx())}>
+                        <Image resizeMode='contain' style={styles.image} source={ImageStores.fx_59} />
+                        <Text style={styles.shareText} >微信朋友圈</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.item} onPress={() => this._didSelect(this.shareWxToOne())}>
-                        <Image resizeMode='contain' style={styles.image}
-                               source={ImageStores.fx_60}/>
-                        <Text>微信好友</Text>
+                </View>
+                <View style={{ paddingRight: 15 }}>
+                    <TouchableOpacity onPress={() => this._didSelect(this.shareWxToOne())}>
+                        <Image resizeMode='contain' style={styles.image} source={ImageStores.fx_60} />
+                        <Text style={styles.shareText} >微信好友</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         )
     }
-    _renderCancelSeperateLine(show){
-        if (show){
-            return ( <View style={{width:this.contentWidth,height: this.seperatePartHeight, backgroundColor: '#CDCDCD'}}/>);
-        }else {
-            return null;
-        }
-    }
+
     //render cancel part
-    _renderCancelItem(){
+    _renderCancelItem() {
         return (
-          <View style={{width:this.contentWidth,height:this.cancelPartHeight}}>
-              {this._renderCancelSeperateLine(true)}
-              {/* Cancel Item */}
-                <TouchableOpacity onPress={()=>this._dismiss()} activeOpacity = {0.9}>
-                    <View style={{justifyContent: 'center',alignItems: 'center',width:this.contentWidth,height:this.cancelPartHeight}}>
-                        <Text style={[styles.textStyle,{fontSize:13,color:'#343434'}]}>取消</Text>
-                    </View>
-                </TouchableOpacity>
-          </View>
+            <TouchableOpacity onPress={() => this._dismiss()} activeOpacity={0.9}>
+                <View style={[styles.shareCommon, { height: this.cancelPartHeight, justifyContent: 'center' }]}>
+                    <Text style={[styles.cancelText]}>取消</Text>
+                </View>
+            </TouchableOpacity>
+
         );
     }
+
     render() {
         if(this.state.hide)
         {
@@ -193,35 +188,34 @@ export default class ActionSheetShare extends Component {
         }
         else{
             return (
-            <TouchableWithoutFeedback onPress={()=>this._fade()}>
-           
-                <View style={[styles.container]}>
-                    <StatusBar  />
-                    <Animated.View style={[styles.maskViewStyle,{opacity: this.state.maskOpacity}]}></Animated.View>
-                    <Animated.View style={[{
-                        width: width,
-                        height: this.totalHeight,
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }, {
-                        transform: [{
-                            translateY: this.state.offset.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [height ,height-this.totalHeight]
-                            }),
-                        }]
-                    }]}>
-                        <View style={{backgroundColor:'#f2f2f2'}}>
-                            {this._renderItem()}
-                            {this._renderCancelItem()}
-                        </View>
-                    </Animated.View>
-                </View>
-            </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this._fade()}>
+                    <View style={[styles.container]}>
+                        <StatusBar />
+                        <Animated.View style={[styles.maskViewStyle, { opacity: this.state.maskOpacity }]}></Animated.View>
+                        <Animated.View style={[{
+                            width: width,
+                            height: this.totalHeight,
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }, {
+                            transform: [{
+                                translateY: this.state.offset.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [height, height - this.totalHeight]
+                                }),
+                            }]
+                        }]}>
+                            <View style={{ flex: 1, width: this.contentWidth, height: this.totalHeight }}>
+                                {this._renderItem()}
+                                {this._renderCancelItem()}
+                            </View>
+                        </Animated.View>
+                    </View>
+                </TouchableWithoutFeedback>
             )
         }
     }
-    
+
 }
 
 const styles = StyleSheet.create({
@@ -241,20 +235,27 @@ const styles = StyleSheet.create({
         left: left,
         top: top,
     },
-    //style of text
-    textStyle:{
-        textAlign: "center",
-        justifyContent: 'center',
-    },
-
-    //style of content (title & item & cancel)
-    contentViewStyle:{
-        justifyContent: 'center',
+    shareCommon: {
+        flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 5,
+        marginBottom: 10,
     },
     image: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         marginBottom: 8
     },
+    shareText: {
+        fontSize: 11,
+        fontWeight: '200',
+        color: '#343434',
+        textAlign: 'center',
+    },
+    cancelText: {
+        fontSize: 17,
+        color: '#343434',
+        textAlign: 'center',
+    }
 });
